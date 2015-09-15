@@ -1,0 +1,4 @@
+.get
+vendor
+composer.lock
+.idea
