@@ -1,1 +1,0 @@
-# currencycloud-php
