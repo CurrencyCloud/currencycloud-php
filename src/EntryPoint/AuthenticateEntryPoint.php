@@ -27,6 +27,7 @@ class AuthenticateEntryPoint extends AbstractEntryPoint
      */
     public function close()
     {
-
+        $this->request('POST', 'authenticate/close_session');
+        $this->session->setAuthToken(null);
     }
 }
