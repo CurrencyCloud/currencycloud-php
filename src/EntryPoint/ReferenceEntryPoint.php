@@ -31,9 +31,9 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param string $currency
-     * @param string $bankAccountCountry
-     * @param string $beneficiaryCountry
+     * @param string|null $currency
+     * @param string|null $bankAccountCountry
+     * @param string|null $beneficiaryCountry
      * @return BeneficiaryRequiredDetail[]
      */
     public function beneficiaryRequiredDetails(
@@ -55,7 +55,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $conversionPair
-     * @param null $startDate
+     * @param string|null $startDate
      * @return ConversionDates
      */
     public function conversionDates($conversionPair, $startDate = null)
@@ -80,7 +80,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $currency
-     * @param null|string $startDate
+     * @param string|null $startDate
      * @return PaymentDates
      */
     public function paymentDates($currency, $startDate = null)
@@ -103,7 +103,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param string $currency
+     * @param string|null $currency
      * @return SettlementAccount[]
      */
     public function settlementAccounts($currency = null)

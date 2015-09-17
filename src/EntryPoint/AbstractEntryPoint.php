@@ -53,10 +53,6 @@ abstract class AbstractEntryPoint
      */
     protected function request($method, $uri, array $queryParams = [], array $options = [], $secured = true)
     {
-        $queryParams = array_filter($queryParams, function ($v) {
-            return null !== $v;
-        });
-
         if ($secured) {
             //Perhaps check here if auth token set?
             $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
