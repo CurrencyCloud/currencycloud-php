@@ -25,8 +25,8 @@ class ConversionDates
     public function __construct(array $invalidConversionDates, $firstConversionDay, $defaultConversionDay)
     {
         $this->invalidConversionDates = $invalidConversionDates;
-        $this->firstConversionDay = $firstConversionDay;
-        $this->defaultConversionDay = $defaultConversionDay;
+        $this->firstConversionDay = (string) $firstConversionDay;
+        $this->defaultConversionDay = (string) $defaultConversionDay;
     }
 
     /**

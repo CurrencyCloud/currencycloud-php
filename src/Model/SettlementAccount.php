@@ -94,20 +94,20 @@ class SettlementAccount
         $routingCodeValue2
     )
     {
-        $this->bankAccountHolderName = $bankAccountHolderName;
+        $this->bankAccountHolderName = (string) $bankAccountHolderName;
         $this->beneficiaryAddress = $beneficiaryAddress;
-        $this->beneficiaryCountry = $beneficiaryCountry;
-        $this->bankName = $bankName;
+        $this->beneficiaryCountry = (string) $beneficiaryCountry;
+        $this->bankName = (string) $bankName;
         $this->bankAddress = $bankAddress;
-        $this->bankCountry = $bankCountry;
-        $this->currency = $currency;
-        $this->bicSwift = $bicSwift;
-        $this->iban = $iban;
-        $this->accountNumber = $accountNumber;
-        $this->routingCodeType1 = $routingCodeType1;
-        $this->routingCodeValue1 = $routingCodeValue1;
-        $this->routingCodeType2 = $routingCodeType2;
-        $this->routingCodeValue2 = $routingCodeValue2;
+        $this->bankCountry = (string) $bankCountry;
+        $this->currency = (string) $currency;
+        $this->bicSwift = (string) $bicSwift;
+        $this->iban = (string) $iban;
+        $this->accountNumber = (string) $accountNumber;
+        $this->routingCodeType1 = (string) $routingCodeType1;
+        $this->routingCodeValue1 = (string) $routingCodeValue1;
+        $this->routingCodeType2 = (string) $routingCodeType2;
+        $this->routingCodeValue2 = (string) $routingCodeValue2;
     }
 
     /**

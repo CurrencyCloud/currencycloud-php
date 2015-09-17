@@ -20,7 +20,7 @@ class PaymentDates
     public function __construct(array $invalidPaymentDates, $firstPaymentDay)
     {
         $this->invalidPaymentDates = $invalidPaymentDates;
-        $this->firstPaymentDay = $firstPaymentDay;
+        $this->firstPaymentDay = (string) $firstPaymentDay;
     }
 
     /**
