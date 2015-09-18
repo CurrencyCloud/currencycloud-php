@@ -3,6 +3,7 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Session;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use stdClass;
@@ -45,34 +46,56 @@ abstract class AbstractEntryPoint
      * @param $method
      * @param $uri
      * @param array $queryParams
+     * @param array $requestParams
      * @param array $options
      * @param bool $secured
      * @return array|stdClass
      * @throws GuzzleException
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function request($method, $uri, array $queryParams = [], array $options = [], $secured = true)
-    {
+    protected function request(
+        $method,
+        $uri,
+        array $queryParams = [],
+        array $requestParams = [],
+        array $options = [],
+        $secured = true
+    ) {
         if ($secured) {
             //Perhaps check here if auth token set?
             $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
         }
-        try {
-            $response = $this->client->request($method, $this->applyApiBaseUrl($uri, $queryParams), $options);
-        } catch (GuzzleException $e) {
-            throw $e;
+        if (count($requestParams) > 0) {
+            $requestParams = array_filter($requestParams, function ($v) {
+                return null !== $v;
+            });
+            if (!isset($options['form_params'])) {
+                $options['form_params'] = [];
+            }
+            $options['form_params'] = array_merge($options['form_params'], $requestParams);
         }
 
-        $data = json_decode($response->getBody()->getContents());
+        //Force no-exceptions in order to provide descriptive error messages
+        $options['http_errors'] = false;
 
-        if (
-            !is_array($data)
-            &&
-            !is_object($data)
-        ) {
-            //throw exception
+        $response = $this->client->request($method, $this->applyApiBaseUrl($uri, $queryParams), $options);
+
+        switch ($response->getStatusCode()) {
+            case 200:
+                $data = json_decode($response->getBody()->getContents());
+
+                if (
+                    !is_array($data)
+                    &&
+                    !is_object($data)
+                ) {
+                    //throw exception
+                }
+
+                return $data;
+            default:
+                //Temporary
+                throw new Exception($response->getBody()->getContents());
         }
-
-        return $data;
     }
 }

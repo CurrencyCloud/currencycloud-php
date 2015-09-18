@@ -12,11 +12,9 @@ class AuthenticateEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'POST', 'authenticate/api', [], [
-                'form_params' => [
                     'login_id' => $this->session->getLoginId(),
-                    'api_key' => $this->session->getApiKey(),
-                ]
-            ], false
+                    'api_key' => $this->session->getApiKey()
+            ], [], false
         );
 
         $this->session->setAuthToken($response->auth_token);
