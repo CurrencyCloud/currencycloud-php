@@ -2,10 +2,12 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
+
 class InvalidConversionDate
 {
     /**
-     * @var string
+     * @var DateTime
      */
     private $date;
     /**
@@ -19,12 +21,12 @@ class InvalidConversionDate
      */
     public function __construct($date, $description)
     {
-        $this->date = (string) $date;
+        $this->date = new DateTime((string) $date);
         $this->description = (string) $description;
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getDate()
     {

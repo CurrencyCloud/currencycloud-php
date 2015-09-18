@@ -2,6 +2,8 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
+
 class Account
 {
     /**
@@ -53,11 +55,11 @@ class Account
      */
     private $spreadTable;
     /**
-     * @var string
+     * @var DateTime
      */
     private $createdAt;
     /**
-     * @var string
+     * @var DateTime
      */
     private $updatedAd;
     /**
@@ -124,8 +126,8 @@ class Account
         $this->country = (string) $country;
         $this->postalCode = (string) $postalCode;
         $this->spreadTable = (string) $spreadTable;
-        $this->createdAt = (string) $createdAt;
-        $this->updatedAd = (string) $updatedAd;
+        $this->createdAt = new DateTime((string) $createdAt);
+        $this->updatedAd = new DateTime((string) $updatedAd);
         $this->identificationType = (string) $identificationType;
         $this->identificationValue = (string) $identificationValue;
         $this->shortReference = (string) $shortReference;
@@ -228,7 +230,7 @@ class Account
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -236,7 +238,7 @@ class Account
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getUpdatedAd()
     {

@@ -2,6 +2,8 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
+
 class PaymentDates
 {
     /**
@@ -9,7 +11,7 @@ class PaymentDates
      */
     private $invalidPaymentDates;
     /**
-     * @var string
+     * @var DateTime
      */
     private $firstPaymentDay;
 
@@ -20,7 +22,7 @@ class PaymentDates
     public function __construct(array $invalidPaymentDates, $firstPaymentDay)
     {
         $this->invalidPaymentDates = $invalidPaymentDates;
-        $this->firstPaymentDay = (string) $firstPaymentDay;
+        $this->firstPaymentDay = new DateTime((string) $firstPaymentDay);
     }
 
     /**
@@ -32,7 +34,7 @@ class PaymentDates
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getFirstPaymentDay()
     {

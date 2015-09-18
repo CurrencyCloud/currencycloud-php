@@ -2,6 +2,8 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
+
 class ConversionDates
 {
     /**
@@ -9,11 +11,11 @@ class ConversionDates
      */
     private $invalidConversionDates;
     /**
-     * @var string
+     * @var DateTime
      */
     private $firstConversionDay;
     /**
-     * @var string
+     * @var DateTime
      */
     private $defaultConversionDay;
 
@@ -25,8 +27,8 @@ class ConversionDates
     public function __construct(array $invalidConversionDates, $firstConversionDay, $defaultConversionDay)
     {
         $this->invalidConversionDates = $invalidConversionDates;
-        $this->firstConversionDay = (string) $firstConversionDay;
-        $this->defaultConversionDay = (string) $defaultConversionDay;
+        $this->firstConversionDay = new DateTime((string) $firstConversionDay);
+        $this->defaultConversionDay = new DateTime((string) $defaultConversionDay);
     }
 
     /**
@@ -38,7 +40,7 @@ class ConversionDates
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getFirstConversionDay()
     {
@@ -46,7 +48,7 @@ class ConversionDates
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getDefaultConversionDay()
     {
