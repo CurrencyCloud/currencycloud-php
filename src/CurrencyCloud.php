@@ -4,6 +4,7 @@ namespace CurrencyCloud;
 
 use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\AuthenticateEntryPoint;
+use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
@@ -27,23 +28,30 @@ class CurrencyCloud
      * @var AccountsEntryPoint
      */
     private $accountsEntryPoint;
+    /**
+     * @var BalancesEntryPoint
+     */
+    private $balancesEntryPoint;
 
     /**
      * @param Session $session
      * @param AuthenticateEntryPoint $authenticateEntryPoint
      * @param AccountsEntryPoint $accountsEntryPoint
+     * @param BalancesEntryPoint $balancesEntryPoint
      * @param ReferenceEntryPoint $referenceEntryPoint
      */
     public function __construct(
         Session $session,
         AuthenticateEntryPoint $authenticateEntryPoint,
         AccountsEntryPoint $accountsEntryPoint,
+        BalancesEntryPoint $balancesEntryPoint,
         ReferenceEntryPoint $referenceEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
         $this->session = $session;
         $this->authenticateEntryPoint = $authenticateEntryPoint;
         $this->accountsEntryPoint = $accountsEntryPoint;
+        $this->balancesEntryPoint = $balancesEntryPoint;
     }
 
     public static function createDefault(Session $session, Client $client = null)
@@ -55,6 +63,7 @@ class CurrencyCloud
             $session,
             new AuthenticateEntryPoint($session, $client),
             new AccountsEntryPoint($session, $client),
+            new BalancesEntryPoint($session, $client),
             new ReferenceEntryPoint($session, $client)
         );
     }
@@ -73,6 +82,14 @@ class CurrencyCloud
     public function accounts()
     {
         return $this->accountsEntryPoint;
+    }
+
+    /**
+     * @return BalancesEntryPoint
+     */
+    public function balances()
+    {
+        return $this->balancesEntryPoint;
     }
 
     /**
