@@ -62,41 +62,64 @@ abstract class AbstractEntryPoint
         array $options = [],
         $secured = true
     ) {
-        if ($secured) {
-            //Perhaps check here if auth token set?
-            $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
-        }
-        if (count($requestParams) > 0) {
-            $requestParams = array_filter($requestParams, function ($v) {
-                return null !== $v;
-            });
-            if (!isset($options['form_params'])) {
-                $options['form_params'] = [];
-            }
-            $options['form_params'] = array_merge($options['form_params'], $requestParams);
-        }
-
-        //Force no-exceptions in order to provide descriptive error messages
-        $options['http_errors'] = false;
-
-        $response = $this->client->request($method, $this->applyApiBaseUrl($uri, $queryParams), $options);
-
-        switch ($response->getStatusCode()) {
-            case 200:
-                $data = json_decode($response->getBody()->getContents());
-
-                if (
-                    !is_array($data)
-                    &&
-                    !is_object($data)
-                ) {
-                    //throw exception
+        //Check for on behalf of in order to inject it if needed
+        $isOnBehalfOfUsedInParams = false;
+        foreach ([&$queryParams, &$requestParams] as &$paramsArray) {
+            if (array_key_exists('on_behalf_of', $paramsArray)) { //isset is not used because id skips null-s
+                if (null !== $paramsArray['on_behalf_of']) {
+                    $this->session->setOnBehalfOf($paramsArray['on_behalf_of']);
+                    $isOnBehalfOfUsedInParams = true;
+                } else {
+                    $onBehalfOf = $this->session->getOnBehalfOf();
+                    if (null !== $onBehalfOf) {
+                        $paramsArray['on_behalf_of'] = $onBehalfOf;
+                    }
                 }
+            }
+        }
+        try {
+            //Wrap whole section if someone, for example, throws exceptions for PHP warnings etc.
+            if ($secured) {
+                //Perhaps check here if auth token set?
+                $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
+            }
+            if (count($requestParams) > 0) {
+                $requestParams = array_filter($requestParams, function ($v) {
+                    return null !== $v;
+                });
+                if (!isset($options['form_params'])) {
+                    $options['form_params'] = [];
+                }
+                $options['form_params'] = array_merge($options['form_params'], $requestParams);
+            }
 
-                return $data;
-            default:
-                //Temporary
-                throw new Exception($response->getBody()->getContents());
+            //Force no-exceptions in order to provide descriptive error messages
+            $options['http_errors'] = false;
+
+            $response = $this->client->request($method, $this->applyApiBaseUrl($uri, $queryParams), $options);
+
+            switch ($response->getStatusCode()) {
+                case 200:
+                    $data = json_decode($response->getBody()->getContents());
+
+                    if (
+                        !is_array($data)
+                        &&
+                        !is_object($data)
+                    ) {
+                        //throw exception
+                    }
+
+                    return $data;
+                default:
+                    //Temporary
+                    throw new Exception($response->getBody()->getContents());
+            }
+        } finally {
+            //If on-behalf-of was injected through params, clear it now
+            if ($isOnBehalfOfUsedInParams) {
+                $this->session->clearOnBehalfOf();
+            }
         }
     }
 
