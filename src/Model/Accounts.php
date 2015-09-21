@@ -7,7 +7,7 @@ use ArrayIterator;
 class Accounts extends PaginatedData
 {
     /**
-     * @var array
+     * @var Account[]
      */
     private $accounts;
 
@@ -22,7 +22,7 @@ class Accounts extends PaginatedData
     }
 
     /**
-     * @return array
+     * @return Account[]
      */
     public function getAccounts()
     {
