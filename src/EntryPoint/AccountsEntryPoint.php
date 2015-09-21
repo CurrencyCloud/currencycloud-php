@@ -3,6 +3,7 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Account;
+use CurrencyCloud\Model\Accounts;
 use stdClass;
 
 class AccountsEntryPoint extends AbstractEntryPoint
@@ -119,38 +120,59 @@ class AccountsEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param string $accountName
-     * @param string $brand
-     * @param string $yourReference
-     * @param string $status
-     * @param string $street
-     * @param string $city
-     * @param string $stateOrProvince
-     * @param string $postalCode
-     * @param string $country
-     * @param string $spreadTable
-     * @param int $page
-     * @param int $perPage
-     * @param string $order
-     * @param string $orderAscDesc
+     * @param string|null $accountName
+     * @param string|null $brand
+     * @param string|null $yourReference
+     * @param string|null $status
+     * @param string|null $street
+     * @param string|null $city
+     * @param string|null $stateOrProvince
+     * @param string|null $postalCode
+     * @param string|null $country
+     * @param string|null $spreadTable
+     * @param int|null $page
+     * @param int|null $perPage
+     * @param string|null $order
+     * @param string|null $orderAscDesc
+     * @return Accounts
      */
     public function find(
-        $accountName,
-        $brand,
-        $yourReference,
-        $status,
-        $street,
-        $city,
-        $stateOrProvince,
-        $postalCode,
-        $country,
-        $spreadTable,
-        $page,
-        $perPage,
-        $order,
-        $orderAscDesc
+        $accountName = null,
+        $brand = null,
+        $yourReference = null,
+        $status = null,
+        $street = null,
+        $city = null,
+        $stateOrProvince = null,
+        $postalCode = null,
+        $country = null,
+        $spreadTable = null,
+        $page = null,
+        $perPage = null,
+        $order = null,
+        $orderAscDesc = null
     ) {
-
+        $response = $this->request('GET', 'accounts/find', [
+            'account_name' => $accountName,
+            'brand' => $brand,
+            'your_reference' => $yourReference,
+            'status' => $status,
+            'street' => $street,
+            'city' => $city,
+            'state_or_province' => $stateOrProvince,
+            'postal_code' => $postalCode,
+            'country' => $country,
+            'spread_Table' => $spreadTable,
+            'page' => $page,
+            'per_page' => $perPage,
+            'order' => $order,
+            'order_asc_desc' => $orderAscDesc
+        ]);
+        $accounts = [];
+        foreach ($response->accounts as $data) {
+            $accounts[] = $this->createAccountFromResponse($data);
+        }
+        return new Accounts($accounts, $this->createPaginatedDataFromResponse($response));
     }
 
     /**
