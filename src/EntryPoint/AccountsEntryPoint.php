@@ -62,7 +62,7 @@ class AccountsEntryPoint extends AbstractEntryPoint
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request('GET', sprintf('accounts/%d', $id), [
+        $response = $this->request('GET', sprintf('accounts/%s', $id), [
             'on_behalf_of' => $onBehalfOf
         ]);
 
@@ -100,7 +100,7 @@ class AccountsEntryPoint extends AbstractEntryPoint
         $identificationType,
         $identificationValue
     ) {
-        $response = $this->request('POST', sprintf('accounts/%d', $id), [], [
+        $response = $this->request('POST', sprintf('accounts/%s', $id), [], [
             'account_name' => $accountName,
             'legal_entity_type' => $legalEntityType,
             'your_reference' => $yourReference,
