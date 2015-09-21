@@ -5,6 +5,7 @@ namespace CurrencyCloud;
 use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\AuthenticateEntryPoint;
 use CurrencyCloud\EntryPoint\BalancesEntryPoint;
+use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
@@ -32,12 +33,17 @@ class CurrencyCloud
      * @var BalancesEntryPoint
      */
     private $balancesEntryPoint;
+    /**
+     * @var BeneficiariesEntryPoint
+     */
+    private $beneficiariesEntryPoint;
 
     /**
      * @param Session $session
      * @param AuthenticateEntryPoint $authenticateEntryPoint
      * @param AccountsEntryPoint $accountsEntryPoint
      * @param BalancesEntryPoint $balancesEntryPoint
+     * @param BeneficiariesEntryPoint $beneficiariesEntryPoint
      * @param ReferenceEntryPoint $referenceEntryPoint
      */
     public function __construct(
@@ -45,6 +51,7 @@ class CurrencyCloud
         AuthenticateEntryPoint $authenticateEntryPoint,
         AccountsEntryPoint $accountsEntryPoint,
         BalancesEntryPoint $balancesEntryPoint,
+        BeneficiariesEntryPoint $beneficiariesEntryPoint,
         ReferenceEntryPoint $referenceEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
@@ -52,6 +59,7 @@ class CurrencyCloud
         $this->authenticateEntryPoint = $authenticateEntryPoint;
         $this->accountsEntryPoint = $accountsEntryPoint;
         $this->balancesEntryPoint = $balancesEntryPoint;
+        $this->beneficiariesEntryPoint = $beneficiariesEntryPoint;
     }
 
     public static function createDefault(Session $session, Client $client = null)
@@ -64,6 +72,7 @@ class CurrencyCloud
             new AuthenticateEntryPoint($session, $client),
             new AccountsEntryPoint($session, $client),
             new BalancesEntryPoint($session, $client),
+            new BeneficiariesEntryPoint($session, $client),
             new ReferenceEntryPoint($session, $client)
         );
     }
@@ -90,6 +99,14 @@ class CurrencyCloud
     public function balances()
     {
         return $this->balancesEntryPoint;
+    }
+
+    /**
+     * @return BeneficiariesEntryPoint
+     */
+    public function beneficiaries()
+    {
+        return $this->beneficiariesEntryPoint;
     }
 
     /**
