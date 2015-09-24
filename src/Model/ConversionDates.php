@@ -3,6 +3,7 @@
 namespace CurrencyCloud\Model;
 
 use DateTime;
+use stdClass;
 
 class ConversionDates
 {
@@ -29,6 +30,25 @@ class ConversionDates
         $this->invalidConversionDates = $invalidConversionDates;
         $this->firstConversionDay = new DateTime((string) $firstConversionDay);
         $this->defaultConversionDay = new DateTime((string) $defaultConversionDay);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return ConversionDates
+     */
+    public static function createFromResponse(stdClass $response)
+    {
+        $invalidDates = [];
+
+        foreach ($response->invalid_conversion_dates as $date => $description) {
+            $invalidDates[] = new InvalidConversionDate($date, $description);
+        }
+
+        return new ConversionDates(
+            $invalidDates,
+            $response->first_conversion_date,
+            $response->default_conversion_date
+        );
     }
 
     /**

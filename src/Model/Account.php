@@ -3,6 +3,7 @@
 namespace CurrencyCloud\Model;
 
 use DateTime;
+use stdClass;
 
 class Account implements EntityInterface
 {
@@ -76,7 +77,6 @@ class Account implements EntityInterface
     private $shortReference;
 
     /**
-     * @param string $id
      * @param string $legalEntityType
      * @param string $accountName
      * @param string $brand
@@ -95,7 +95,6 @@ class Account implements EntityInterface
      * @param string $shortReference
      */
     public function __construct(
-        $id,
         $legalEntityType,
         $accountName,
         $brand,
@@ -113,8 +112,6 @@ class Account implements EntityInterface
         $identificationValue,
         $shortReference
     ) {
-
-        $this->id = (string) $id;
         $this->legalEntityType = (string) $legalEntityType;
         $this->accountName = (string) $accountName;
         $this->brand = (string) $brand;
@@ -131,6 +128,57 @@ class Account implements EntityInterface
         $this->identificationType = (string) $identificationType;
         $this->identificationValue = (string) $identificationValue;
         $this->shortReference = (string) $shortReference;
+    }
+
+    /**
+     * @param stdClass $response
+     * @return Account
+     */
+    public static function createFromResponse(stdClass $response)
+    {
+        $account = new Account(
+            $response->legal_entity_type,
+            $response->account_name,
+            $response->brand,
+            $response->your_reference,
+            $response->status,
+            $response->street,
+            $response->city,
+            $response->state_or_province,
+            $response->country,
+            $response->postal_code,
+            $response->spread_table,
+            $response->created_at,
+            $response->updated_at,
+            $response->identification_type,
+            $response->identification_value,
+            $response->short_reference
+        );
+        $account->id = (string) $response->id;
+        return $account;
+    }
+
+    /**
+     * @param Account $account
+     * @return array
+     */
+    public static function convertToRequest(Account $account)
+    {
+        return [
+            'id' => $account->id,
+            'account_name' => $account->accountName,
+            'legal_entity_type' => $account->legalEntityType,
+            'your_reference' => $account->yourReference,
+            'status' => $account->status,
+            'street' => $account->street,
+            'city' => $account->city,
+            'state_or_province' => $account->stateOrProvince,
+            'postal_code' => $account->postalCode,
+            'country' => $account->country,
+            'spread_table' => $account->spreadTable,
+            'identification_type' => $account->identificationType,
+            'identification_value' => $account->identificationValue
+        ];
     }
 
     /**
@@ -267,5 +315,133 @@ class Account implements EntityInterface
     public function getShortReference()
     {
         return $this->shortReference;
+    }
+
+    /**
+     * @param string $legalEntityType
+     */
+    public function setLegalEntityType($legalEntityType)
+    {
+        $this->legalEntityType = (string) $legalEntityType;
+    }
+
+    /**
+     * @param string $accountName
+     */
+    public function setAccountName($accountName)
+    {
+        $this->accountName = (string) $accountName;
+    }
+
+    /**
+     * @param string $brand
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = (string) $brand;
+    }
+
+    /**
+     * @param string $yourReference
+     */
+    public function setYourReference($yourReference)
+    {
+        $this->yourReference = (string) $yourReference;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = (string) $status;
+    }
+
+    /**
+     * @param string $street
+     */
+    public function setStreet($street)
+    {
+        $this->street = (string) $street;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = (string) $city;
+    }
+
+    /**
+     * @param string $stateOrProvince
+     */
+    public function setStateOrProvince($stateOrProvince)
+    {
+        $this->stateOrProvince = (string) $stateOrProvince;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = (string) $country;
+    }
+
+    /**
+     * @param string $postalCode
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = (string) $postalCode;
+    }
+
+    /**
+     * @param string $spreadTable
+     */
+    public function setSpreadTable($spreadTable)
+    {
+        $this->spreadTable = (string) $spreadTable;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @param DateTime $updatedAd
+     */
+    public function setUpdatedAd(DateTime $updatedAd)
+    {
+        $this->updatedAd = $updatedAd;
+    }
+
+    /**
+     * @param string $identificationType
+     */
+    public function setIdentificationType($identificationType)
+    {
+        $this->identificationType = (string) $identificationType;
+    }
+
+    /**
+     * @param string $identificationValue
+     */
+    public function setIdentificationValue($identificationValue)
+    {
+        $this->identificationValue = (string) $identificationValue;
+    }
+
+    /**
+     * @param string $shortReference
+     */
+    public function setShortReference($shortReference)
+    {
+        $this->shortReference = (string) $shortReference;
     }
 }

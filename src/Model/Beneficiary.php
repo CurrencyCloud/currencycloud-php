@@ -2,7 +2,7 @@
 
 namespace CurrencyCloud\Model;
 
-class Beneficiary extends BeneficiaryValidate
+class Beneficiary
 {
 
 }

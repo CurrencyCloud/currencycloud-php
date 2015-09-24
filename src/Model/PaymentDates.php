@@ -26,6 +26,24 @@ class PaymentDates
     }
 
     /**
+     * @param \stdClass $response
+     * @return PaymentDates
+     */
+    public static function createFromResponse(\stdClass $response)
+    {
+        $invalidDates = [];
+
+        foreach ($response->invalid_payment_dates as $date => $description) {
+            $invalidDates[] = new InvalidPaymentDate($date, $description);
+        }
+
+        return new PaymentDates(
+            $invalidDates,
+            $response->first_payment_date
+        );
+    }
+
+    /**
      * @return InvalidPaymentDate[]
      */
     public function getInvalidPaymentDates()

@@ -2,6 +2,8 @@
 
 namespace CurrencyCloud\Model;
 
+use stdClass;
+
 class Pagination
 {
     /**
@@ -66,6 +68,24 @@ class Pagination
         $this->nextPage = (int) $nextPage;
         $this->order = (string) $order;
         $this->orderAscDesc = (string) $orderAscDesc;
+    }
+
+    /**
+     * @param stdClass $response
+     * @return Pagination
+     */
+    public static function createFromResponse(stdClass $response)
+    {
+        return new Pagination(
+            $response->total_entries,
+            $response->total_pages,
+            $response->current_page,
+            $response->per_page,
+            $response->previous_page,
+            $response->next_page,
+            $response->order,
+            $response->order_asc_desc
+        );
     }
 
     /**

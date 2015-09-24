@@ -111,9 +111,6 @@ abstract class AbstractEntryPoint
                     }
 
                     return $data;
-                default:
-                    //Temporary
-                    throw new Exception($response->getBody()->getContents());
             }
         } finally {
             //If on-behalf-of was injected through params, clear it now
@@ -121,24 +118,6 @@ abstract class AbstractEntryPoint
                 $this->session->clearOnBehalfOf();
             }
         }
-    }
-
-    /**
-     * @param $data $pagination
-     * @return Pagination
-     */
-    protected function createPaginatedDataFromResponse(stdClass $data)
-    {
-        $pagination = $data->pagination;
-        return new Pagination(
-            $pagination->total_entries,
-            $pagination->total_pages,
-            $pagination->current_page,
-            $pagination->per_page,
-            $pagination->previous_page,
-            $pagination->next_page,
-            $pagination->order,
-            $pagination->order_asc_desc
-        );
+        throw new Exception($response->getBody()->getContents());
     }
 }

@@ -2,6 +2,9 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
+use stdClass;
+
 class BeneficiaryValidate
 {
     /**
@@ -73,7 +76,7 @@ class BeneficiaryValidate
      */
     private $beneficiaryStateOrProvince;
     /**
-     * @var string
+     * @var DateTime
      */
     private $beneficiaryDateOfBirth;
     /**
@@ -124,7 +127,7 @@ class BeneficiaryValidate
      * @param string $beneficiaryCity
      * @param string $beneficiaryPostCode
      * @param string $beneficiaryStateOrProvince
-     * @param string $beneficiaryDateOfBirth
+     * @param DateTime $beneficiaryDateOfBirth
      * @param string $beneficiaryIdentificationType
      * @param string $beneficiaryIdentificationValue
      * @param string $routingCodeType1
@@ -176,7 +179,7 @@ class BeneficiaryValidate
         $this->beneficiaryCity = (string) $beneficiaryCity;
         $this->beneficiaryPostCode = (string) $beneficiaryPostCode;
         $this->beneficiaryStateOrProvince = (string) $beneficiaryStateOrProvince;
-        $this->beneficiaryDateOfBirth = (string) $beneficiaryDateOfBirth;
+        $this->beneficiaryDateOfBirth = new DateTime((string) $beneficiaryDateOfBirth);
         $this->beneficiaryIdentificationType = (string) $beneficiaryIdentificationType;
         $this->beneficiaryIdentificationValue = (string) $beneficiaryIdentificationValue;
         $this->routingCodeType1 = (string) $routingCodeType1;
@@ -184,6 +187,77 @@ class BeneficiaryValidate
         $this->routingCodeType2 = (string) $routingCodeType2;
         $this->routingCodeValue2 = (string) $routingCodeValue2;
         $this->beneficiaryAddress = $beneficiaryAddress;
+    }
+
+    /**
+     * @param stdClass $response
+     * @return BeneficiaryValidate
+     */
+    public static function createFromResponse(stdClass $response)
+    {
+        return new BeneficiaryValidate(
+            $response->payment_types,
+            $response->bank_name,
+            $response->bank_address,
+            $response->beneficiary_country,
+            $response->currency,
+            $response->account_number,
+            $response->iban,
+            $response->bicSwift,
+            $response->bank_account_type,
+            $response->beneficiary_address,
+            $response->beneficiary_country,
+            $response->beneficiary_entity_type,
+            $response->beneficiary_company_name,
+            $response->beneficiary_first_name,
+            $response->beneficiary_last_name,
+            $response->beneficiary_city,
+            $response->beneficiary_postcode,
+            $response->beneficiary_state_or_province,
+            $response->beneficiary_date_of_birth,
+            $response->beneficiary_identification_type,
+            $response->beneficiary_identification_value,
+            $response->routing_code_value_1,
+            $response->routing_code_value_1,
+            $response->routing_code_type_2,
+            $response->routing_code_value_2
+        );
+    }
+
+    /**
+     * @param BeneficiaryValidate $beneficiaryValidate
+     * @return array
+     */
+    public static function toRequestArray(BeneficiaryValidate $beneficiaryValidate)
+    {
+        return [
+            'bank_country' => $beneficiaryValidate->bankCountry,
+            'currency' => $beneficiaryValidate->currency,
+            'beneficiary_country' => $beneficiaryValidate->beneficiaryCountry,
+            'account_number' => $beneficiaryValidate->accountNumber,
+            'routing_code_type_1' => $beneficiaryValidate->routingCodeType1,
+            'routing_code_value_1' => $beneficiaryValidate->routingCodeValue1,
+            'routing_code_type_2' => $beneficiaryValidate->routingCodeType2,
+            'routing_code_value_2' => $beneficiaryValidate->routingCodeValue2,
+            'bic_swift' => $beneficiaryValidate->bicSwift,
+            'iban' => $beneficiaryValidate->iban,
+            'bank_address' => $beneficiaryValidate->bankAddress,
+            'bank_name' => $beneficiaryValidate->bankName,
+            'bank_account_type' => $beneficiaryValidate->bankAccountType,
+            'beneficiary_entity_type' => $beneficiaryValidate->beneficiaryEntityType,
+            'beneficiary_company_name' => $beneficiaryValidate->beneficiaryCompanyName,
+            'beneficiary_first_name' => $beneficiaryValidate->beneficiaryFirstName,
+            'beneficiary_last_name' => $beneficiaryValidate->beneficiaryLastName,
+            'beneficiary_city' => $beneficiaryValidate->beneficiaryCity,
+            'beneficiary_postcode' => $beneficiaryValidate->beneficiaryPostCode,
+            'beneficiary_state_or_province' => $beneficiaryValidate->beneficiaryStateOrProvince,
+            'beneficiary_date_of_birth' => (null === $beneficiaryValidate->beneficiaryDateOfBirth) ? null : $beneficiaryValidate->beneficiaryDateOfBirth->format(
+                DateTime::ISO8601
+            ),
+            'beneficiary_identification_type' => $beneficiaryValidate->beneficiaryIdentificationType,
+            'beneficiary_identification_value' => $beneficiaryValidate->beneficiaryIdentificationValue,
+            'payment_types' => $beneficiaryValidate->paymentTypes
+        ];
     }
 
     /**
@@ -323,7 +397,7 @@ class BeneficiaryValidate
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getBeneficiaryDateOfBirth()
     {
@@ -384,5 +458,205 @@ class BeneficiaryValidate
     public function getBeneficiaryAddress()
     {
         return $this->beneficiaryAddress;
+    }
+
+    /**
+     * @param array $paymentTypes
+     */
+    public function setPaymentTypes(array $paymentTypes)
+    {
+        $this->paymentTypes = $paymentTypes;
+    }
+
+    /**
+     * @param string $bankCountry
+     */
+    public function setBankCountry($bankCountry)
+    {
+        $this->bankCountry = (string) $bankCountry;
+    }
+
+    /**
+     * @param string $bankName
+     */
+    public function setBankName($bankName)
+    {
+        $this->bankName = (string) $bankName;
+    }
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = (string) $currency;
+    }
+
+    /**
+     * @param string $accountNumber
+     */
+    public function setAccountNumber($accountNumber)
+    {
+        $this->accountNumber = (string) $accountNumber;
+    }
+
+    /**
+     * @param string $iban
+     */
+    public function setIban($iban)
+    {
+        $this->iban = (string) $iban;
+    }
+
+    /**
+     * @param array $bankAddress
+     */
+    public function setBankAddress(array $bankAddress)
+    {
+        $this->bankAddress = $bankAddress;
+    }
+
+    /**
+     * @param string $bicSwift
+     */
+    public function setBicSwift($bicSwift)
+    {
+        $this->bicSwift = (string) $bicSwift;
+    }
+
+    /**
+     * @param string $bankAccountType
+     */
+    public function setBankAccountType($bankAccountType)
+    {
+        $this->bankAccountType = (string) $bankAccountType;
+    }
+
+    /**
+     * @param string $beneficiaryCountry
+     */
+    public function setBeneficiaryCountry($beneficiaryCountry)
+    {
+        $this->beneficiaryCountry = (string) $beneficiaryCountry;
+    }
+
+    /**
+     * @param string $beneficiaryEntityType
+     */
+    public function setBeneficiaryEntityType($beneficiaryEntityType)
+    {
+        $this->beneficiaryEntityType = (string) $beneficiaryEntityType;
+    }
+
+    /**
+     * @param string $beneficiaryCompanyName
+     */
+    public function setBeneficiaryCompanyName($beneficiaryCompanyName)
+    {
+        $this->beneficiaryCompanyName = (string) $beneficiaryCompanyName;
+    }
+
+    /**
+     * @param string $beneficiaryFirstName
+     */
+    public function setBeneficiaryFirstName($beneficiaryFirstName)
+    {
+        $this->beneficiaryFirstName = (string) $beneficiaryFirstName;
+    }
+
+    /**
+     * @param string $beneficiaryLastName
+     */
+    public function setBeneficiaryLastName($beneficiaryLastName)
+    {
+        $this->beneficiaryLastName = (string) $beneficiaryLastName;
+    }
+
+    /**
+     * @param string $beneficiaryCity
+     */
+    public function setBeneficiaryCity($beneficiaryCity)
+    {
+        $this->beneficiaryCity = (string) $beneficiaryCity;
+    }
+
+    /**
+     * @param string $beneficiaryPostCode
+     */
+    public function setBeneficiaryPostCode($beneficiaryPostCode)
+    {
+        $this->beneficiaryPostCode = (string) $beneficiaryPostCode;
+    }
+
+    /**
+     * @param string $beneficiaryStateOrProvince
+     */
+    public function setBeneficiaryStateOrProvince($beneficiaryStateOrProvince)
+    {
+        $this->beneficiaryStateOrProvince = (string) $beneficiaryStateOrProvince;
+    }
+
+    /**
+     * @param DateTime $beneficiaryDateOfBirth
+     */
+    public function setBeneficiaryDateOfBirth(DateTime $beneficiaryDateOfBirth)
+    {
+        $this->beneficiaryDateOfBirth = $beneficiaryDateOfBirth;
+    }
+
+    /**
+     * @param string $beneficiaryIdentificationType
+     */
+    public function setBeneficiaryIdentificationType($beneficiaryIdentificationType)
+    {
+        $this->beneficiaryIdentificationType = (string) $beneficiaryIdentificationType;
+    }
+
+    /**
+     * @param string $beneficiaryIdentificationValue
+     */
+    public function setBeneficiaryIdentificationValue($beneficiaryIdentificationValue)
+    {
+        $this->beneficiaryIdentificationValue = (string) $beneficiaryIdentificationValue;
+    }
+
+    /**
+     * @param string $routingCodeType1
+     */
+    public function setRoutingCodeType1($routingCodeType1)
+    {
+        $this->routingCodeType1 = (string) $routingCodeType1;
+    }
+
+    /**
+     * @param string $routingCodeValue1
+     */
+    public function setRoutingCodeValue1($routingCodeValue1)
+    {
+        $this->routingCodeValue1 = (string) $routingCodeValue1;
+    }
+
+    /**
+     * @param string $routingCodeType2
+     */
+    public function setRoutingCodeType2($routingCodeType2)
+    {
+        $this->routingCodeType2 = (string) $routingCodeType2;
+    }
+
+    /**
+     * @param string $routingCodeValue2
+     */
+    public function setRoutingCodeValue2($routingCodeValue2)
+    {
+        $this->routingCodeValue2 = (string) $routingCodeValue2;
+    }
+
+    /**
+     * @param array $beneficiaryAddress
+     */
+    public function setBeneficiaryAddress($beneficiaryAddress)
+    {
+        $this->beneficiaryAddress = (string) $beneficiaryAddress;
     }
 }

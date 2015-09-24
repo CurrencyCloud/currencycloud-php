@@ -4,8 +4,8 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Balance;
 use CurrencyCloud\Model\Balances;
+use CurrencyCloud\Model\Pagination;
 use DateTime;
-use stdClass;
 
 class BalancesEntryPoint extends AbstractEntryPoint
 {
@@ -43,9 +43,9 @@ class BalancesEntryPoint extends AbstractEntryPoint
         ]);
         $balances = [];
         foreach ($response->balances as $data) {
-            $balances[] = $this->createBalanceFromResponse($data);
+            $balances[] = Balance::createFromResponse($data);
         }
-        return new Balances($balances, $this->createPaginatedDataFromResponse($response));
+        return new Balances($balances, Pagination::createFromResponse($response->pagination));
     }
 
     /**
@@ -59,22 +59,6 @@ class BalancesEntryPoint extends AbstractEntryPoint
             'on_behalf_of' => $onBehalfOf
         ]);
 
-        return $this->createBalanceFromResponse($response);
-    }
-
-    /**
-     * @param stdClass $data
-     * @return Balance
-     */
-    protected function createBalanceFromResponse(stdClass $data)
-    {
-        return new Balance(
-            $data->id,
-            $data->account_id,
-            $data->currency,
-            $data->amount,
-            $data->created_at,
-            $data->updated_at
-        );
+        return Balance::createFromResponse($response);
     }
 }
