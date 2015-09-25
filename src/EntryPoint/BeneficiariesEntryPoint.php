@@ -3,6 +3,7 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Beneficiary;
+use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
@@ -78,13 +79,54 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
     }
 
     /**
+     * @param Beneficiary|null $beneficiary
+     * @param null $onBehalfOf
+     * @param Pagination|null $pagination
+     * @return Beneficiary
+     */
+    public function find(Beneficiary $beneficiary = null, $onBehalfOf = null, Pagination $pagination = null)
+    {
+        if (null === $beneficiary) {
+            $beneficiary = Beneficiary::create();
+        }
+        if (null === $pagination) {
+            $pagination = Pagination::create();
+        }
+        $response = $this->request('GET', 'beneficiaries/find',[], $this->convertBeneficiaryToRequest(
+            $beneficiary,
+            $onBehalfOf,
+            false,
+            true
+        ) + $this->convertPaginationToRequest($pagination));
+        return $this->createBeneficiaryValidateFromResponse($response);
+    }
+
+    /**
+     * @param string $id
+     * @param null $onBehalfOf
+     * @return Beneficiary
+     */
+    public function delete($id, $onBehalfOf = null)
+    {
+        $response = $this->request('POST', sprintf('beneficiaries/%s/delete', $id), [], [
+            'on_behalf_of' => $onBehalfOf
+        ]);
+        return $this->createBeneficiaryValidateFromResponse($response);
+    }
+
+    /**
      * @param Beneficiary $beneficiary
      * @param string $onBehalfOf
      * @param bool $convertForValidate
+     * @param bool $convertForUpdate
      * @return array
      */
-    protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, $onBehalfOf, $convertForValidate = false)
-    {
+    protected function convertBeneficiaryToRequest(
+        Beneficiary $beneficiary,
+        $onBehalfOf,
+        $convertForValidate = false,
+        $convertForUpdate = false
+    ) {
         $common = [
             'bank_country' => $beneficiary->getBankCountry(),
             'currency' => $beneficiary->getCurrency(),
@@ -118,9 +160,16 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
             return $common;
         }
 
-        return $common + [
+        $common += [
             'bank_account_holder_name' => $beneficiary->getBankAccountHolderName(),
-            'name' => $beneficiary->getName(),
+            'name' => $beneficiary->getName()
+        ];
+
+        if ($convertForUpdate) {
+            return $common;
+        }
+
+        return $common + [
             'email' => $beneficiary->getEmail()
         ];
     }

@@ -187,10 +187,10 @@ class Beneficiary
         $beneficiaryIdentificationValue = null,
         array $paymentTypes = null
     ) {
-        $this->bankAccountHolderName = (string) $bankAccountHolderName;
-        $this->bankCountry = (string) $bankCountry;
-        $this->currency = (string) $currency;
-        $this->name = (string) $name;
+        $this->bankAccountHolderName = (null === $bankAccountHolderName) ? null : (string) $bankAccountHolderName;
+        $this->bankCountry = (null === $bankCountry) ? null : (string) $bankCountry;
+        $this->currency = (null === $currency) ? null : (string) $currency;
+        $this->name = (null === $name) ? null : (string) $name;
 
         $this->email = (null === $email) ? null : (string) $email;
         $this->beneficiaryAddress = (null === $beneficiaryAddress) ? null : $beneficiaryAddress;
@@ -232,6 +232,14 @@ class Beneficiary
     public static function createForValidate($bankCountry, $currency, $beneficiaryCountry)
     {
         return new Beneficiary(null, $bankCountry, $currency, null, null, null, null, $beneficiaryCountry);
+    }
+
+    /**
+     * @return Beneficiary
+     */
+    public static function create()
+    {
+        return new Beneficiary(null, null, null, null);
     }
 
     /**
