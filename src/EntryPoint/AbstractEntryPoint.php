@@ -128,15 +128,16 @@ abstract class AbstractEntryPoint
      */
     protected function createPaginationFromResponse(stdClass $response)
     {
+        $pagination = $response->pagination;
         return new Pagination(
-            $response->total_entries,
-            $response->total_pages,
-            $response->current_page,
-            $response->per_page,
-            $response->previous_page,
-            $response->next_page,
-            $response->order,
-            $response->order_asc_desc
+            $pagination->total_entries,
+            $pagination->total_pages,
+            $pagination->current_page,
+            $pagination->per_page,
+            $pagination->previous_page,
+            $pagination->next_page,
+            $pagination->order,
+            $pagination->order_asc_desc
         );
     }
 
