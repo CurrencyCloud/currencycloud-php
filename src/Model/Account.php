@@ -111,8 +111,8 @@ class Account implements EntityInterface
         $identificationValue = null,
         $shortReference = null
     ) {
-        $this->accountName = (string) $accountName;
-        $this->legalEntityType = (string) $legalEntityType;
+        $this->accountName = (null === $accountName) ? null : (string) $accountName;
+        $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
         $this->brand = (null === $brand) ? $brand : (string) $brand;
         $this->yourReference = (null === $yourReference) ? $yourReference : (string) $yourReference;
         $this->status = (null === $status) ? $status : (string) $status;
@@ -135,7 +135,7 @@ class Account implements EntityInterface
      */
     public static function create()
     {
-        return new Account();
+        return new Account(null, null);
     }
 
     /**
