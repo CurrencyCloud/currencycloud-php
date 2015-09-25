@@ -5,6 +5,7 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Account;
 use CurrencyCloud\Model\Accounts;
 use CurrencyCloud\Model\Pagination;
+use stdClass;
 
 class AccountsEntryPoint extends AbstractEntryPoint
 {
@@ -13,10 +14,22 @@ class AccountsEntryPoint extends AbstractEntryPoint
      * @param Account $account
      * @return Account
      */
-    public function create(Account $account) {
-        $response = $this->request('POST', 'accounts/create', [], Account::convertToRequest($account));
+    public function persist(Account $account)
+    {
+        if (null === $account->getId()) {
+            return $this->create($account);
+        }
+        return $this->update($account);
+    }
 
-        return Account::createFromResponse($response);
+    /**
+     * @param Account $account
+     * @return Account
+     */
+    public function create(Account $account) {
+        $response = $this->request('POST', 'accounts/create', [], $this->convertAccountToRequest($account));
+
+        return $this->createAccountFromResponse($response);
     }
 
     /**
@@ -30,7 +43,7 @@ class AccountsEntryPoint extends AbstractEntryPoint
             'on_behalf_of' => $onBehalfOf
         ]);
 
-        return Account::createFromResponse($response);
+        return $this->createAccountFromResponse($response);
     }
 
     /**
@@ -41,65 +54,36 @@ class AccountsEntryPoint extends AbstractEntryPoint
         $response = $this->request('POST', sprintf(
             'accounts/%s',
             $account->getId()
-        ), [], Account::convertToRequest($account));
+        ), [], $this->convertAccountToRequest($account));
 
-        return Account::createFromResponse($response);
+        return $this->createAccountFromResponse($response);
     }
 
     /**
-     * @param string|null $accountName
-     * @param string|null $brand
-     * @param string|null $yourReference
-     * @param string|null $status
-     * @param string|null $street
-     * @param string|null $city
-     * @param string|null $stateOrProvince
-     * @param string|null $postalCode
-     * @param string|null $country
-     * @param string|null $spreadTable
-     * @param int|null $page
-     * @param int|null $perPage
-     * @param string|null $order
-     * @param string|null $orderAscDesc
+     * @param Account|null $account
+     * @param Pagination|null $pagination
      * @return Accounts
      */
     public function find(
-        $accountName = null,
-        $brand = null,
-        $yourReference = null,
-        $status = null,
-        $street = null,
-        $city = null,
-        $stateOrProvince = null,
-        $postalCode = null,
-        $country = null,
-        $spreadTable = null,
-        $page = null,
-        $perPage = null,
-        $order = null,
-        $orderAscDesc = null
+        Account $account = null,
+        Pagination $pagination = null
     ) {
-        $response = $this->request('GET', 'accounts/find', [
-            'account_name' => $accountName,
-            'brand' => $brand,
-            'your_reference' => $yourReference,
-            'status' => $status,
-            'street' => $street,
-            'city' => $city,
-            'state_or_province' => $stateOrProvince,
-            'postal_code' => $postalCode,
-            'country' => $country,
-            'spread_Table' => $spreadTable,
-            'page' => $page,
-            'per_page' => $perPage,
-            'order' => $order,
-            'order_asc_desc' => $orderAscDesc
-        ]);
+        if (null === $account) {
+            $account = Account::create();
+        }
+        if (null === $pagination) {
+            $pagination = Pagination::create();
+        }
+        $response = $this->request(
+            'GET',
+            'accounts/find',
+            $this->convertAccountToRequest($account, true) + $this->convertPaginationToRequest($pagination)
+        );
         $accounts = [];
         foreach ($response->accounts as $data) {
-            $accounts[] = Account::createFromResponse($data);
+            $accounts[] = $this->createAccountFromResponse($data);
         }
-        return new Accounts($accounts, Pagination::createFromResponse($response->pagination));
+        return new Accounts($accounts, $this->createPaginationFromResponse($response));
     }
 
     /**
@@ -109,6 +93,67 @@ class AccountsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request('GET', 'accounts/current');
 
-        return Account::createFromResponse($response);
+        return $this->createAccountFromResponse($response);
+    }
+
+    /**
+     * @param Account $account
+     * @param bool $convertForSearch
+     * @return array
+     */
+    public function convertAccountToRequest(Account $account, $convertForSearch = false)
+    {
+        $common = [
+            'account_name' => $account->getAccountName(),
+            'your_reference' => $account->getYourReference(),
+            'status' => $account->getStatus(),
+            'street' => $account->getStreet(),
+            'city' => $account->getCity(),
+            'state_or_province' => $account->getStateOrProvince(),
+            'postal_code' => $account->getPostalCode(),
+            'country' => $account->getCountry()
+        ];
+
+        if ($convertForSearch) {
+            return $common + [
+                'brand' => $account->getBrand()
+            ];
+        }
+
+        return $common + [
+            'id' => $account->getId(),
+            'spread_table' => $account->getSpreadTable(),
+            'identification_type' => $account->getIdentificationType(),
+            'identification_value' => $account->getIdentificationValue()
+        ];
+    }
+
+
+    /**
+     * @param stdClass $response
+     * @return Account
+     */
+    public function createAccountFromResponse(stdClass $response)
+    {
+        $account = new Account(
+            $response->account_name,
+            $response->legal_entity_type,
+            $response->brand,
+            $response->your_reference,
+            $response->status,
+            $response->street,
+            $response->city,
+            $response->state_or_province,
+            $response->country,
+            $response->postal_code,
+            $response->spread_table,
+            $response->created_at,
+            $response->updated_at,
+            $response->identification_type,
+            $response->identification_value,
+            $response->short_reference
+        );
+        $this->setIdProperty($account, $response->id);
+        return $account;
     }
 }

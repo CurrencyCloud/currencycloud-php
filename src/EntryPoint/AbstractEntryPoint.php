@@ -7,6 +7,7 @@ use CurrencyCloud\Session;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use ReflectionClass;
 use stdClass;
 
 abstract class AbstractEntryPoint
@@ -119,5 +120,50 @@ abstract class AbstractEntryPoint
             }
         }
         throw new Exception($response->getBody()->getContents());
+    }
+
+    /**
+     * @param stdClass $response
+     * @return Pagination
+     */
+    protected function createPaginationFromResponse(stdClass $response)
+    {
+        return new Pagination(
+            $response->total_entries,
+            $response->total_pages,
+            $response->current_page,
+            $response->per_page,
+            $response->previous_page,
+            $response->next_page,
+            $response->order,
+            $response->order_asc_desc
+        );
+    }
+
+    /**
+     * @param Pagination $pagination
+     * @return array
+     */
+    protected function convertPaginationToRequest(Pagination $pagination)
+    {
+        return [
+            'page' => $pagination->getCurrentPage(),
+            'per_page' => $pagination->getPerPage(),
+            'order' => $pagination->getOrder(),
+            'order_asc_desc' => $pagination->getOrderAscDesc()
+        ];
+    }
+
+    /**
+     * @param object $object
+     * @param mixed $value
+     * @param string $propertyName
+     */
+    protected function setIdProperty($object, $value, $propertyName = 'id')
+    {
+        $reflection = new ReflectionClass($object);
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+        $property->setValue($object, $value);
     }
 }

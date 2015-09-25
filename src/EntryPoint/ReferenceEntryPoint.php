@@ -5,12 +5,15 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\BeneficiaryRequiredDetail;
 use CurrencyCloud\Model\ConversionDates;
 use CurrencyCloud\Model\Currency;
+use CurrencyCloud\Model\InvalidConversionDate;
+use CurrencyCloud\Model\InvalidPaymentDate;
 use CurrencyCloud\Model\PaymentDates;
 use CurrencyCloud\Model\SettlementAccount;
 
 class ReferenceEntryPoint extends AbstractEntryPoint
 {
 
+    //@todo move to factory methods things from here
     /**
      * @return Currency[]
      */
@@ -19,7 +22,11 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         $response = $this->request('GET', 'reference/currencies');
         $ret = [];
         foreach ($response->currencies as $currency) {
-            $ret[] = Currency::createFromResponse($currency);
+            $ret[] = new Currency(
+                $currency->code,
+                $currency->decimal_places,
+                $currency->name
+            );
         }
         return $ret;
     }
@@ -42,7 +49,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         ]);
         $ret = [];
         foreach ($response->details as $detail) {
-            $ret[] = BeneficiaryRequiredDetail::createFromResponse($detail);
+            $ret[] = new BeneficiaryRequiredDetail((array) $detail);
         }
         return $ret;
     }
@@ -58,7 +65,17 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             'conversion_pair' => $conversionPair,
             'start_date' => $startDate
         ]);
-        return ConversionDates::createFromResponse($response);
+        $invalidDates = [];
+
+        foreach ($response->invalid_conversion_dates as $date => $description) {
+            $invalidDates[] = new InvalidConversionDate($date, $description);
+        }
+
+        return new ConversionDates(
+            $invalidDates,
+            $response->first_conversion_date,
+            $response->default_conversion_date
+        );
     }
 
     /**
@@ -72,7 +89,16 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             'currency' => $currency,
             'start_date' => $startDate
         ]);
-        return PaymentDates::createFromResponse($response);
+        $invalidDates = [];
+
+        foreach ($response->invalid_payment_dates as $date => $description) {
+            $invalidDates[] = new InvalidPaymentDate($date, $description);
+        }
+
+        return new PaymentDates(
+            $invalidDates,
+            $response->first_payment_date
+        );;
     }
 
     /**
@@ -86,7 +112,24 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         ]);
         $ret = [];
         foreach ($response->settlement_accounts as $settlementAccount) {
-            $ret[] = SettlementAccount::createFromResponse($settlementAccount);
+            $ret[] = new SettlementAccount(
+                $settlementAccount->bank_account_holder_name,
+                (is_array($settlementAccount->beneficiary_address)) ?
+                    $settlementAccount->beneficiary_address : [],
+                $settlementAccount->beneficiary_country,
+                $settlementAccount->bank_name,
+                (is_array($settlementAccount->bank_address)) ?
+                    $settlementAccount->bank_address : [],
+                $settlementAccount->bank_country,
+                $settlementAccount->currency,
+                $settlementAccount->bic_swift,
+                $settlementAccount->iban,
+                $settlementAccount->account_number,
+                $settlementAccount->routing_code_type_1,
+                $settlementAccount->routing_code_value_1,
+                $settlementAccount->routing_code_type_2,
+                $settlementAccount->routing_code_value_2
+            );
         }
         return $ret;
     }

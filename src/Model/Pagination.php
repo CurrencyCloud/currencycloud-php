@@ -50,24 +50,24 @@ class Pagination
      * @param string $orderAscDesc
      */
     public function __construct(
-        $totalEntries,
-        $totalPages,
-        $currentPage,
-        $perPage,
-        $previousPage,
-        $nextPage,
-        $order,
-        $orderAscDesc
+        $totalEntries = null,
+        $totalPages = null,
+        $currentPage = null,
+        $perPage = null,
+        $previousPage = null,
+        $nextPage = null,
+        $order = null,
+        $orderAscDesc = null
     ) {
 
-        $this->totalEntries = (int) $totalEntries;
-        $this->totalPages = (int) $totalPages;
-        $this->currentPage = (int) $currentPage;
-        $this->perPage = (int) $perPage;
-        $this->previousPage = (int) $previousPage;
-        $this->nextPage = (int) $nextPage;
-        $this->order = (string) $order;
-        $this->orderAscDesc = (string) $orderAscDesc;
+        $this->totalEntries = (null === $totalEntries) ? null : (int) $totalEntries;
+        $this->totalPages = (null === $totalPages) ? null : (int) $totalPages;
+        $this->currentPage = (null === $currentPage) ? null : (int) $currentPage;
+        $this->perPage = (null === $perPage) ? null : (int) $perPage;
+        $this->previousPage = (null === $previousPage) ? null : (int) $previousPage;
+        $this->nextPage = (null === $nextPage) ? null : (int) $nextPage;
+        $this->order = (null === $order) ? null : (string) $order;
+        $this->orderAscDesc = (null === $orderAscDesc) ? null : (string) $orderAscDesc;
     }
 
     /**
@@ -76,18 +76,27 @@ class Pagination
      */
     public static function createFromResponse(stdClass $response)
     {
+        $pagination = $response->pagination;
         return new Pagination(
-            $response->total_entries,
-            $response->total_pages,
-            $response->current_page,
-            $response->per_page,
-            $response->previous_page,
-            $response->next_page,
-            $response->order,
-            $response->order_asc_desc
+            $pagination->total_entries,
+            $pagination->total_pages,
+            $pagination->current_page,
+            $pagination->per_page,
+            $pagination->previous_page,
+            $pagination->next_page,
+            $pagination->order,
+            $pagination->order_asc_desc
         );
     }
 
+    /**
+     * @return Pagination
+     */
+    public static function create()
+    {
+       return new Pagination(); 
+    }
+    
     /**
      * @return int
      */
@@ -166,5 +175,45 @@ class Pagination
     public function hasPreviousPage()
     {
         return -1 !== $this->previousPage;
+    }
+
+    /**
+     * @param string $orderAscDesc
+     * @return $this
+     */
+    public function setOrderAscDesc($orderAscDesc)
+    {
+        $this->orderAscDesc = (string) $orderAscDesc;
+        return $this;
+    }
+
+    /**
+     * @param string $order
+     * @return $this
+     */
+    public function setOrder($order)
+    {
+        $this->order = (string) $order;
+        return $this;
+    }
+
+    /**
+     * @param int $perPage
+     * @return $this
+     */
+    public function setPerPage($perPage)
+    {
+        $this->perPage = (int) $perPage;
+        return $this;
+    }
+
+    /**
+     * @param int $currentPage
+     * @return $this
+     */
+    public function setCurrentPage($currentPage)
+    {
+        $this->currentPage = (int) $currentPage;
+        return $this;
     }
 }

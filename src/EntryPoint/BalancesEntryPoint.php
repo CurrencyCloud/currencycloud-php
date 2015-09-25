@@ -6,6 +6,7 @@ use CurrencyCloud\Model\Balance;
 use CurrencyCloud\Model\Balances;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
+use stdClass;
 
 class BalancesEntryPoint extends AbstractEntryPoint
 {
@@ -14,10 +15,7 @@ class BalancesEntryPoint extends AbstractEntryPoint
      * @param null|double $amountFrom
      * @param null|double $amountTo
      * @param null|DateTime $asAtDate
-     * @param null|int $order
-     * @param null|int $page
-     * @param null|int $perPage
-     * @param null|string $orderAscDesc
+     * @param Pagination|null $pagination
      * @param null|string $onBehalfOf
      * @return Balances
      */
@@ -25,27 +23,27 @@ class BalancesEntryPoint extends AbstractEntryPoint
         $amountFrom = null,
         $amountTo = null,
         $asAtDate = null,
-        $order = null,
-        $page = null,
-        $perPage = null,
-        $orderAscDesc = null,
+        Pagination $pagination = null,
         $onBehalfOf = null
     ) {
+        if (null === $pagination) {
+            $pagination = Pagination::create();
+        }
         $response = $this->request('GET', 'balances/find', [
             'amount_from' => $amountFrom,
             'amount_to' => $amountTo,
             'as_at_date' => (null === $asAtDate) ? null : $asAtDate->format(DateTime::ISO8601),
-            'order' => $order,
-            'page' => $page,
-            'per_page' => $perPage,
-            'order_asc_desc' => $orderAscDesc,
+            'order' => $pagination->getOrder(),
+            'page' => $pagination->getCurrentPage(),
+            'per_page' => $pagination->getPerPage(),
+            'order_asc_desc' => $pagination->getOrderAscDesc(),
             'on_behalf_of' => $onBehalfOf
         ]);
         $balances = [];
         foreach ($response->balances as $data) {
-            $balances[] = Balance::createFromResponse($data);
+            $balances[] = $this->createBalanceFromResponse($data);
         }
-        return new Balances($balances, Pagination::createFromResponse($response->pagination));
+        return new Balances($balances, $this->createPaginationFromResponse($response));
     }
 
     /**
@@ -59,6 +57,23 @@ class BalancesEntryPoint extends AbstractEntryPoint
             'on_behalf_of' => $onBehalfOf
         ]);
 
-        return Balance::createFromResponse($response);
+        return $this->createBalanceFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return Balance
+     */
+    public function createBalanceFromResponse(stdClass $response)
+    {
+        $balance = new Balance(
+            $response->account_id,
+            $response->currency,
+            $response->amount,
+            $response->created_at,
+            $response->updated_at
+        );
+        $this->setIdProperty($balance, $response->id);
+        return $balance;
     }
 }

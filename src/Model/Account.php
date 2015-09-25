@@ -3,7 +3,6 @@
 namespace CurrencyCloud\Model;
 
 use DateTime;
-use stdClass;
 
 class Account implements EntityInterface
 {
@@ -77,108 +76,66 @@ class Account implements EntityInterface
     private $shortReference;
 
     /**
-     * @param string $legalEntityType
      * @param string $accountName
-     * @param string $brand
-     * @param string $yourReference
-     * @param string $status
-     * @param string $street
-     * @param string $city
-     * @param string $stateOrProvince
-     * @param string $country
-     * @param string $postalCode
-     * @param string $spreadTable
-     * @param string $createdAt
-     * @param string $updatedAd
-     * @param string $identificationType
-     * @param string $identificationValue
-     * @param string $shortReference
+     * @param string $legalEntityType
+     * @param string|null $brand
+     * @param string|null $yourReference
+     * @param string|null $status
+     * @param string|null $street
+     * @param string|null $city
+     * @param string|null $stateOrProvince
+     * @param string|null $country
+     * @param string|null $postalCode
+     * @param string|null $spreadTable
+     * @param string|null $createdAt
+     * @param string|null $updatedAd
+     * @param string|null $identificationType
+     * @param string|null $identificationValue
+     * @param string|null $shortReference
      */
     public function __construct(
-        $legalEntityType,
         $accountName,
-        $brand,
-        $yourReference,
-        $status,
-        $street,
-        $city,
-        $stateOrProvince,
-        $country,
-        $postalCode,
-        $spreadTable,
-        $createdAt,
-        $updatedAd,
-        $identificationType,
-        $identificationValue,
-        $shortReference
+        $legalEntityType,
+        $brand = null,
+        $yourReference = null,
+        $status = null,
+        $street = null,
+        $city = null,
+        $stateOrProvince = null,
+        $country = null,
+        $postalCode = null,
+        $spreadTable = null,
+        $createdAt = null,
+        $updatedAd = null,
+        $identificationType = null,
+        $identificationValue = null,
+        $shortReference = null
     ) {
-        $this->legalEntityType = (string) $legalEntityType;
         $this->accountName = (string) $accountName;
-        $this->brand = (string) $brand;
-        $this->yourReference = (string) $yourReference;
-        $this->status = (string) $status;
-        $this->street = (string) $street;
-        $this->city = (string) $city;
-        $this->stateOrProvince = (string) $stateOrProvince;
-        $this->country = (string) $country;
-        $this->postalCode = (string) $postalCode;
-        $this->spreadTable = (string) $spreadTable;
-        $this->createdAt = new DateTime((string) $createdAt);
-        $this->updatedAd = new DateTime((string) $updatedAd);
-        $this->identificationType = (string) $identificationType;
-        $this->identificationValue = (string) $identificationValue;
-        $this->shortReference = (string) $shortReference;
+        $this->legalEntityType = (string) $legalEntityType;
+        $this->brand = (null === $brand) ? $brand : (string) $brand;
+        $this->yourReference = (null === $yourReference) ? $yourReference : (string) $yourReference;
+        $this->status = (null === $status) ? $status : (string) $status;
+        $this->street = (null === $street) ? $street : (string) $street;
+        $this->city = (null === $city) ? $city : (string) $city;
+        $this->stateOrProvince = (null === $stateOrProvince) ? $stateOrProvince : (string) $stateOrProvince;
+        $this->country = (null === $country) ? $country : (string) $country;
+        $this->postalCode = (null === $postalCode) ? $postalCode : (string) $postalCode;
+        $this->spreadTable = (null === $spreadTable) ? $spreadTable : (string) $spreadTable;
+        $this->createdAt = (null === $createdAt) ? null : new DateTime((string) $createdAt);
+        $this->updatedAd = (null === $updatedAd) ? null : new DateTime((string) $updatedAd);
+        $this->identificationType = (null === $identificationType) ? $identificationType : (string) $identificationType;
+        $this->identificationValue = (null === $identificationValue) ?
+            $identificationValue : (string) $identificationValue;
+        $this->shortReference = (null === $shortReference) ? $shortReference : (string) $shortReference;
     }
 
     /**
-     * @param stdClass $response
      * @return Account
      */
-    public static function createFromResponse(stdClass $response)
+    public static function create()
     {
-        $account = new Account(
-            $response->legal_entity_type,
-            $response->account_name,
-            $response->brand,
-            $response->your_reference,
-            $response->status,
-            $response->street,
-            $response->city,
-            $response->state_or_province,
-            $response->country,
-            $response->postal_code,
-            $response->spread_table,
-            $response->created_at,
-            $response->updated_at,
-            $response->identification_type,
-            $response->identification_value,
-            $response->short_reference
-        );
-        $account->id = (string) $response->id;
-        return $account;
-    }
-
-    /**
-     * @param Account $account
-     * @return array
-     */
-    public static function convertToRequest(Account $account)
-    {
-        return [
-            'id' => $account->id,
-            'account_name' => $account->accountName,
-            'legal_entity_type' => $account->legalEntityType,
-            'your_reference' => $account->yourReference,
-            'status' => $account->status,
-            'street' => $account->street,
-            'city' => $account->city,
-            'state_or_province' => $account->stateOrProvince,
-            'postal_code' => $account->postalCode,
-            'country' => $account->country,
-            'spread_table' => $account->spreadTable,
-            'identification_type' => $account->identificationType,
-            'identification_value' => $account->identificationValue
-        ];
+        return new Account();
     }
 
     /**

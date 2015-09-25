@@ -2,8 +2,6 @@
 
 namespace CurrencyCloud\Model;
 
-use stdClass;
-
 class Currency
 {
     /**
@@ -29,19 +27,6 @@ class Currency
         $this->code = strtoupper($code);
         $this->decimalPlaces = (int) $decimalPlaces;
         $this->name = (string) $name;
-    }
-
-    /**
-     * @param stdClass $response
-     * @return Currency
-     */
-    public static function createFromResponse(stdClass $response)
-    {
-        return new Currency(
-            $response->code,
-            $response->decimal_places,
-            $response->name
-        );
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace CurrencyCloud\Model;
 
-use stdClass;
-
 class SettlementAccount
 {
     /**
@@ -110,32 +108,6 @@ class SettlementAccount
         $this->routingCodeValue1 = (string) $routingCodeValue1;
         $this->routingCodeType2 = (string) $routingCodeType2;
         $this->routingCodeValue2 = (string) $routingCodeValue2;
-    }
-
-    /**
-     * @param stdClass $settlementAccount
-     * @return SettlementAccount
-     */
-    public static function createFromResponse(stdClass $settlementAccount)
-    {
-        return new SettlementAccount(
-            $settlementAccount->bank_account_holder_name,
-            (is_array($settlementAccount->beneficiary_address)) ?
-                $settlementAccount->beneficiary_address : [],
-            $settlementAccount->beneficiary_country,
-            $settlementAccount->bank_name,
-            (is_array($settlementAccount->bank_address)) ?
-                $settlementAccount->bank_address : [],
-            $settlementAccount->bank_country,
-            $settlementAccount->currency,
-            $settlementAccount->bic_swift,
-            $settlementAccount->iban,
-            $settlementAccount->account_number,
-            $settlementAccount->routing_code_type_1,
-            $settlementAccount->routing_code_value_1,
-            $settlementAccount->routing_code_type_2,
-            $settlementAccount->routing_code_value_2
-        );
     }
 
     /**

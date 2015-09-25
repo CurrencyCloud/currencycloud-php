@@ -53,23 +53,6 @@ class Balance implements EntityInterface
     }
 
     /**
-     * @param $response
-     * @return Balance
-     */
-    public static function createFromResponse($response)
-    {
-        $balance = new Balance(
-            $response->account_id,
-            $response->currency,
-            $response->amount,
-            $response->created_at,
-            $response->updated_at
-        );
-        $balance->id = (string) $response->id;
-        return $balance;
-    }
-
-    /**
      * @return string
      */
     public function getId()
