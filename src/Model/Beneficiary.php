@@ -579,9 +579,9 @@ class Beneficiary
     }
 
     /**
-     * @param DateTime $beneficiaryDateOfBirth
+     * @param DateTime|null $beneficiaryDateOfBirth
      */
-    public function setBeneficiaryDateOfBirth(DateTime $beneficiaryDateOfBirth)
+    public function setBeneficiaryDateOfBirth(DateTime $beneficiaryDateOfBirth = null)
     {
         $this->beneficiaryDateOfBirth = $beneficiaryDateOfBirth;
     }

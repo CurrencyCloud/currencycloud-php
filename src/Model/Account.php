@@ -363,17 +363,17 @@ class Account implements EntityInterface
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param DateTime|null $createdAt
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
     }
 
     /**
-     * @param DateTime $updatedAd
+     * @param DateTime|null $updatedAd
      */
-    public function setUpdatedAd(DateTime $updatedAd)
+    public function setUpdatedAd(DateTime $updatedAd = null)
     {
         $this->updatedAd = $updatedAd;
     }

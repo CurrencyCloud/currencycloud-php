@@ -4,29 +4,29 @@ namespace CurrencyCloud\Model;
 
 use ArrayIterator;
 
-class Accounts extends PaginatedData
+class Transactions extends PaginatedData
 {
     /**
-     * @var Account[]
+     * @var Transaction[]
      */
-    private $accounts;
+    private $transactions;
 
     /**
-     * @param Account[] $transactions
+     * @param Transaction[] $transactions
      * @param Pagination $pagination
      */
     public function __construct(array $transactions, Pagination $pagination)
     {
         parent::__construct($pagination);
-        $this->accounts = $transactions;
+        $this->transactions = $transactions;
     }
 
     /**
-     * @return Account[]
+     * @return Transaction[]
      */
-    public function getAccounts()
+    public function getTransactions()
     {
-        return $this->accounts;
+        return $this->transactions;
     }
 
     /**
@@ -34,7 +34,7 @@ class Accounts extends PaginatedData
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->accounts);
+        return new ArrayIterator($this->transactions);
     }
 
     /**
@@ -42,6 +42,6 @@ class Accounts extends PaginatedData
      */
     public function count()
     {
-        return count($this->accounts);
+        return count($this->transactions);
     }
 }

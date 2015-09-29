@@ -39,9 +39,9 @@ abstract class AbstractEntryPoint
     protected function applyApiBaseUrl($path, array $queryParams)
     {
         if (count($queryParams) > 0) {
-            return sprintf('%s/%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));
+            return sprintf('%s%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));
         }
-        return sprintf('%s/%s', $this->session->getApiUrl(), $path);
+        return sprintf('%s%s', $this->session->getApiUrl(), $path);
     }
 
     /**
