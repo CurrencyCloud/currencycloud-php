@@ -9,7 +9,7 @@
       "role": "developer"
     }
   ],
-  "description": "A PHP library which implements the complete functionality of v1 of the The Currency Cloud API.",
+  "description": "A PHP library which implements the complete functionality of v2 of the The Currency Cloud API.",
   "keywords": ["currency", "cloud"],
   "homepage": "http://msuflaj.net",
   "license": "MIT",
