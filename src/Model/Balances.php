@@ -6,6 +6,7 @@ use ArrayIterator;
 
 class Balances extends PaginatedData
 {
+
     /**
      * @var Balance
      */

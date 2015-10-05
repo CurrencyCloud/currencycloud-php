@@ -4,6 +4,7 @@ namespace CurrencyCloud\Model;
 
 class Rate
 {
+
     /**
      * @var string
      */

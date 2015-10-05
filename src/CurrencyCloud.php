@@ -15,6 +15,7 @@ use LogicException;
 
 class CurrencyCloud
 {
+
     /**
      * @var ReferenceEntryPoint
      */
@@ -81,6 +82,7 @@ class CurrencyCloud
     /**
      * @param Session $session
      * @param Client|null $client
+     *
      * @return CurrencyCloud
      */
     public static function createDefault(Session $session, Client $client = null)
@@ -159,6 +161,7 @@ class CurrencyCloud
     /**
      * @param $contactId
      * @param callable $callable
+     *
      * @throws InvalidArgumentException When contact ID is not UUID
      * @throws LogicException If already in on-behalf-of call
      */

@@ -6,6 +6,7 @@ use OutOfBoundsException;
 
 class Rates
 {
+
     /**
      * @var Rate[]
      */
@@ -44,15 +45,7 @@ class Rates
 
     /**
      * @param string $pair
-     * @return bool
-     */
-    public function isAvailable($pair)
-    {
-        return isset($this->rates[$pair]);
-    }
-
-    /**
-     * @param string $pair
+     *
      * @return bool
      */
     public function isRateUnavailable($pair)
@@ -62,6 +55,7 @@ class Rates
 
     /**
      * @param string $pair
+     *
      * @return Rate
      * @throws OutOfBoundsException
      */
@@ -71,5 +65,15 @@ class Rates
             throw new OutOfBoundsException(sprintf('Pair "%s" not found', $pair));
         }
         return $this->rates[$pair];
+    }
+
+    /**
+     * @param string $pair
+     *
+     * @return bool
+     */
+    public function isAvailable($pair)
+    {
+        return isset($this->rates[$pair]);
     }
 }

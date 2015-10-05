@@ -6,6 +6,7 @@ use DateTime;
 
 class DetailedRate
 {
+
     /**
      * @var DateTime
      */
@@ -64,7 +65,7 @@ class DetailedRate
     private $depositCurrency;
 
     /**
-     * @param string $settlementCutOffTime
+     * @param DateTime $settlementCutOffTime
      * @param string $currencyPair
      * @param string $clientBuyCurrency
      * @param string $clientSellCurrency
@@ -80,7 +81,7 @@ class DetailedRate
      * @param string $depositCurrency
      */
     public function __construct(
-        $settlementCutOffTime,
+        DateTime $settlementCutOffTime,
         $currencyPair,
         $clientBuyCurrency,
         $clientSellCurrency,
@@ -95,7 +96,7 @@ class DetailedRate
         $depositAmount,
         $depositCurrency
     ) {
-        $this->settlementCutOffTime = new DateTime((string) $settlementCutOffTime);
+        $this->settlementCutOffTime = $settlementCutOffTime;
         $this->currencyPair = (string) $currencyPair;
         $this->clientBuyCurrency = (string) $clientBuyCurrency;
         $this->clientSellCurrency = (string) $clientSellCurrency;

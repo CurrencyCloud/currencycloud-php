@@ -12,6 +12,7 @@ use stdClass;
 
 abstract class AbstractEntryPoint
 {
+
     /**
      * @var Client
      */
@@ -34,6 +35,7 @@ abstract class AbstractEntryPoint
     /**
      * @param string $path
      * @param array $queryParams
+     *
      * @return string
      */
     protected function applyApiBaseUrl($path, array $queryParams)
@@ -51,6 +53,7 @@ abstract class AbstractEntryPoint
      * @param array $requestParams
      * @param array $options
      * @param bool $secured
+     *
      * @return array|stdClass
      * @throws GuzzleException
      * @throws Exception
@@ -85,9 +88,12 @@ abstract class AbstractEntryPoint
                 $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
             }
             if (count($requestParams) > 0) {
-                $requestParams = array_filter($requestParams, function ($v) {
-                    return null !== $v;
-                });
+                $requestParams = array_filter(
+                    $requestParams,
+                    function ($v) {
+                        return null !== $v;
+                    }
+                );
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];
                 }
@@ -101,12 +107,14 @@ abstract class AbstractEntryPoint
 
             switch ($response->getStatusCode()) {
                 case 200:
-                    $data = json_decode($response->getBody()->getContents());
+                    $data =
+                        json_decode(
+                            $response->getBody()
+                                ->getContents()
+                        );
 
-                    if (
-                        !is_array($data)
-                        &&
-                        !is_object($data)
+                    if (!is_array($data)
+                        && !is_object($data)
                     ) {
                         //throw exception
                     }
@@ -119,11 +127,15 @@ abstract class AbstractEntryPoint
                 $this->session->clearOnBehalfOf();
             }
         }
-        throw new Exception($response->getBody()->getContents());
+        throw new Exception(
+            $response->getBody()
+                ->getContents()
+        );
     }
 
     /**
      * @param stdClass $response
+     *
      * @return Pagination
      */
     protected function createPaginationFromResponse(stdClass $response)
@@ -143,6 +155,7 @@ abstract class AbstractEntryPoint
 
     /**
      * @param Pagination $pagination
+     *
      * @return array
      */
     protected function convertPaginationToRequest(Pagination $pagination)

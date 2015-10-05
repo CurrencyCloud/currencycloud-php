@@ -4,6 +4,7 @@ namespace CurrencyCloud\Model;
 
 class SettlementAccount
 {
+
     /**
      * @var string
      */
@@ -92,8 +93,7 @@ class SettlementAccount
         $routingCodeValue1,
         $routingCodeType2,
         $routingCodeValue2
-    )
-    {
+    ) {
         $this->bankAccountHolderName = (string) $bankAccountHolderName;
         $this->beneficiaryAddress = $beneficiaryAddress;
         $this->beneficiaryCountry = (string) $beneficiaryCountry;

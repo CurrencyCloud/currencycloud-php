@@ -7,6 +7,7 @@ use IteratorAggregate;
 
 abstract class PaginatedData implements Countable, IteratorAggregate
 {
+
     /**
      * @var Pagination
      */
@@ -15,7 +16,8 @@ abstract class PaginatedData implements Countable, IteratorAggregate
     /**
      * @param Pagination $pagination
      */
-    public function __construct(Pagination $pagination) {
+    public function __construct(Pagination $pagination)
+    {
         $this->pagination = $pagination;
     }
 

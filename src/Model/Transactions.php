@@ -6,6 +6,7 @@ use ArrayIterator;
 
 class Transactions extends PaginatedData
 {
+
     /**
      * @var Transaction[]
      */

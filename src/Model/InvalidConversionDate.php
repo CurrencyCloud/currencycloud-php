@@ -6,6 +6,7 @@ use DateTime;
 
 class InvalidConversionDate
 {
+
     /**
      * @var DateTime
      */
@@ -16,12 +17,12 @@ class InvalidConversionDate
     private $description;
 
     /**
-     * @param string $date
+     * @param DateTime $date
      * @param string $description
      */
-    public function __construct($date, $description)
+    public function __construct(DateTime $date, $description)
     {
-        $this->date = new DateTime((string) $date);
+        $this->date = $date;
         $this->description = (string) $description;
     }
 

@@ -4,6 +4,7 @@ namespace CurrencyCloud\Model;
 
 class Currency
 {
+
     /**
      * @var string
      */

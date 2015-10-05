@@ -5,6 +5,7 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Account;
 use CurrencyCloud\Model\Accounts;
 use CurrencyCloud\Model\Pagination;
+use DateTime;
 use stdClass;
 
 class AccountsEntryPoint extends AbstractEntryPoint
@@ -12,6 +13,7 @@ class AccountsEntryPoint extends AbstractEntryPoint
 
     /**
      * @param Account $account
+     *
      * @return Account
      */
     public function persist(Account $account)
@@ -24,9 +26,11 @@ class AccountsEntryPoint extends AbstractEntryPoint
 
     /**
      * @param Account $account
+     *
      * @return Account
      */
-    public function create(Account $account) {
+    public function create(Account $account)
+    {
         $response = $this->request('POST', 'accounts/create', [], $this->convertAccountToRequest($account));
 
         return $this->createAccountFromResponse($response);
@@ -35,13 +39,18 @@ class AccountsEntryPoint extends AbstractEntryPoint
     /**
      * @param string $id
      * @param null|string $onBehalfOf
+     *
      * @return Account
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request('GET', sprintf('accounts/%s', $id), [
-            'on_behalf_of' => $onBehalfOf
-        ]);
+        $response = $this->request(
+            'GET',
+            sprintf('accounts/%s', $id),
+            [
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
 
         return $this->createAccountFromResponse($response);
     }
@@ -50,11 +59,17 @@ class AccountsEntryPoint extends AbstractEntryPoint
      * @@param Account $account
      * @return Account
      */
-    public function update(Account $account) {
-        $response = $this->request('POST', sprintf(
-            'accounts/%s',
-            $account->getId()
-        ), [], $this->convertAccountToRequest($account));
+    public function update(Account $account)
+    {
+        $response = $this->request(
+            'POST',
+            sprintf(
+                'accounts/%s',
+                $account->getId()
+            ),
+            [],
+            $this->convertAccountToRequest($account)
+        );
 
         return $this->createAccountFromResponse($response);
     }
@@ -62,6 +77,7 @@ class AccountsEntryPoint extends AbstractEntryPoint
     /**
      * @param Account|null $account
      * @param Pagination|null $pagination
+     *
      * @return Accounts
      */
     public function find(
@@ -69,10 +85,10 @@ class AccountsEntryPoint extends AbstractEntryPoint
         Pagination $pagination = null
     ) {
         if (null === $account) {
-            $account = Account::create();
+            $account = new Account();
         }
         if (null === $pagination) {
-            $pagination = Pagination::create();
+            $pagination = new Pagination();
         }
         $response = $this->request(
             'GET',
@@ -99,6 +115,7 @@ class AccountsEntryPoint extends AbstractEntryPoint
     /**
      * @param Account $account
      * @param bool $convertForSearch
+     *
      * @return array
      */
     public function convertAccountToRequest(Account $account, $convertForSearch = false)
@@ -128,31 +145,31 @@ class AccountsEntryPoint extends AbstractEntryPoint
         ];
     }
 
-
     /**
      * @param stdClass $response
+     *
      * @return Account
      */
     public function createAccountFromResponse(stdClass $response)
     {
-        $account = new Account(
-            $response->account_name,
-            $response->legal_entity_type,
-            $response->brand,
-            $response->your_reference,
-            $response->status,
-            $response->street,
-            $response->city,
-            $response->state_or_province,
-            $response->country,
-            $response->postal_code,
-            $response->spread_table,
-            $response->created_at,
-            $response->updated_at,
-            $response->identification_type,
-            $response->identification_value,
-            $response->short_reference
-        );
+        $account =
+            (new Account())->setAccountName($response->account_name)
+                ->setLegalEntityType($response->legal_entity_type)
+                ->setBrand($response->brand)
+                ->setYourReference($response->your_reference)
+                ->setStatus($response->status)
+                ->setStreet($response->street)
+                ->setCity($response->city)
+                ->setStateOrProvince($response->state_or_province)
+                ->setCountry($response->country)
+                ->setPostalCode($response->postal_code)
+                ->setSpreadTable($response->spread_table)
+                ->setCreatedAt(new DateTime($response->created_at))
+                ->setUpdatedAt(new DateTime($response->updated_at))
+                ->setIdentificationType($response->identification_type)
+                ->setIdentificationValue($response->identification_value)
+                ->setShortReference($response->short_reference);
+
         $this->setIdProperty($account, $response->id);
         return $account;
     }

@@ -6,6 +6,7 @@ use DateTime;
 
 class PaymentDates
 {
+
     /**
      * @var InvalidPaymentDate[]
      */
@@ -17,12 +18,12 @@ class PaymentDates
 
     /**
      * @param InvalidPaymentDate[] $invalidPaymentDates
-     * @param string $firstPaymentDay
+     * @param DateTime $firstPaymentDay
      */
-    public function __construct(array $invalidPaymentDates, $firstPaymentDay)
+    public function __construct(array $invalidPaymentDates, DateTime $firstPaymentDay)
     {
         $this->invalidPaymentDates = $invalidPaymentDates;
-        $this->firstPaymentDay = new DateTime((string) $firstPaymentDay);
+        $this->firstPaymentDay = $firstPaymentDay;
     }
 
     /**

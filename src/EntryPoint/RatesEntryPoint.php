@@ -15,6 +15,7 @@ class RatesEntryPoint extends AbstractEntryPoint
      * @param string|array $currencyPairs
      * @param bool $ignoreInvalidPairs
      * @param null|string $onBehalfOf
+     *
      * @return Rates
      */
     public function multiple($currencyPairs, $ignoreInvalidPairs = true, $onBehalfOf = null)
@@ -22,11 +23,15 @@ class RatesEntryPoint extends AbstractEntryPoint
         if (!is_array($currencyPairs)) {
             $currencyPairs = [$currencyPairs];
         }
-        $response = $this->request('GET', 'rates/find', [
-            'currency_pair' => implode(',', $currencyPairs),
-            'ignore_invalid_pairs' => $ignoreInvalidPairs ? 'true' : 'false',
-            'on_behalf_of' => $onBehalfOf
-        ]);
+        $response = $this->request(
+            'GET',
+            'rates/find',
+            [
+                'currency_pair' => implode(',', $currencyPairs),
+                'ignore_invalid_pairs' => $ignoreInvalidPairs ? 'true' : 'false',
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
         $pairs = [];
         foreach ($response->rates as $pair => $data) {
             $pairs[$pair] = $this->createRateFromResponse($data);
@@ -41,6 +46,7 @@ class RatesEntryPoint extends AbstractEntryPoint
      * @param string $amount
      * @param DateTime|null $conversionDate
      * @param null|string $onBehalfOf
+     *
      * @return DetailedRate
      */
     public function detailed(
@@ -51,19 +57,24 @@ class RatesEntryPoint extends AbstractEntryPoint
         DateTime $conversionDate = null,
         $onBehalfOf = null
     ) {
-        $response = $this->request('GET', 'rates/detailed', [
-            'buy_currency' => $buyCurrency,
-            'sell_currency' => $sellCurrency,
-            'fixed_side' => $fixedSide,
-            'amount' => $amount,
-            'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::ISO8601),
-            'on_behalf_of' => $onBehalfOf
-        ]);
+        $response = $this->request(
+            'GET',
+            'rates/detailed',
+            [
+                'buy_currency' => $buyCurrency,
+                'sell_currency' => $sellCurrency,
+                'fixed_side' => $fixedSide,
+                'amount' => $amount,
+                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::ISO8601),
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
         return $this->createDetailedRateFromResponse($response);
     }
 
     /**
      * @param array $data
+     *
      * @return Rate
      */
     private function createRateFromResponse(array $data)
@@ -73,12 +84,13 @@ class RatesEntryPoint extends AbstractEntryPoint
 
     /**
      * @param stdClass $response
+     *
      * @return DetailedRate
      */
     protected function createDetailedRateFromResponse(stdClass $response)
     {
         return new DetailedRate(
-            $response->settlement_cut_off_time,
+            new DateTime($response->settlement_cut_off_time),
             $response->currency_pair,
             $response->client_buy_currency,
             $response->client_sell_currency,

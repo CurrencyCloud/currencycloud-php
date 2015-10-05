@@ -6,6 +6,7 @@ use DateTime;
 
 class Account implements EntityInterface
 {
+
     /**
      * @var string
      */
@@ -61,7 +62,7 @@ class Account implements EntityInterface
     /**
      * @var DateTime
      */
-    private $updatedAd;
+    private $updatedAt;
     /**
      * @var string
      */
@@ -78,64 +79,13 @@ class Account implements EntityInterface
     /**
      * @param string $accountName
      * @param string $legalEntityType
-     * @param string|null $brand
-     * @param string|null $yourReference
-     * @param string|null $status
-     * @param string|null $street
-     * @param string|null $city
-     * @param string|null $stateOrProvince
-     * @param string|null $country
-     * @param string|null $postalCode
-     * @param string|null $spreadTable
-     * @param string|null $createdAt
-     * @param string|null $updatedAd
-     * @param string|null $identificationType
-     * @param string|null $identificationValue
-     * @param string|null $shortReference
-     */
-    public function __construct(
-        $accountName,
-        $legalEntityType,
-        $brand = null,
-        $yourReference = null,
-        $status = null,
-        $street = null,
-        $city = null,
-        $stateOrProvince = null,
-        $country = null,
-        $postalCode = null,
-        $spreadTable = null,
-        $createdAt = null,
-        $updatedAd = null,
-        $identificationType = null,
-        $identificationValue = null,
-        $shortReference = null
-    ) {
-        $this->accountName = (null === $accountName) ? null : (string) $accountName;
-        $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
-        $this->brand = (null === $brand) ? $brand : (string) $brand;
-        $this->yourReference = (null === $yourReference) ? $yourReference : (string) $yourReference;
-        $this->status = (null === $status) ? $status : (string) $status;
-        $this->street = (null === $street) ? $street : (string) $street;
-        $this->city = (null === $city) ? $city : (string) $city;
-        $this->stateOrProvince = (null === $stateOrProvince) ? $stateOrProvince : (string) $stateOrProvince;
-        $this->country = (null === $country) ? $country : (string) $country;
-        $this->postalCode = (null === $postalCode) ? $postalCode : (string) $postalCode;
-        $this->spreadTable = (null === $spreadTable) ? $spreadTable : (string) $spreadTable;
-        $this->createdAt = (null === $createdAt) ? null : new DateTime((string) $createdAt);
-        $this->updatedAd = (null === $updatedAd) ? null : new DateTime((string) $updatedAd);
-        $this->identificationType = (null === $identificationType) ? $identificationType : (string) $identificationType;
-        $this->identificationValue = (null === $identificationValue) ?
-            $identificationValue : (string) $identificationValue;
-        $this->shortReference = (null === $shortReference) ? $shortReference : (string) $shortReference;
-    }
-
-    /**
+     *
      * @return Account
      */
-    public static function create()
+    public static function create($accountName, $legalEntityType)
     {
-        return new Account(null, null);
+        return (new Account())->setAccountName($accountName)
+            ->setLegalEntityType($legalEntityType);
     }
 
     /**
@@ -155,11 +105,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $legalEntityType
+     *
+     * @return $this
+     */
+    public function setLegalEntityType($legalEntityType)
+    {
+        $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getAccountName()
     {
         return $this->accountName;
+    }
+
+    /**
+     * @param string $accountName
+     *
+     * @return $this
+     */
+    public function setAccountName($accountName)
+    {
+        $this->accountName = (null === $accountName) ? null : (string) $accountName;
+        return $this;
     }
 
     /**
@@ -171,11 +143,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $brand
+     *
+     * @return $this
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = (null === $brand) ? null : (string) $brand;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getYourReference()
     {
         return $this->yourReference;
+    }
+
+    /**
+     * @param string $yourReference
+     *
+     * @return $this
+     */
+    public function setYourReference($yourReference)
+    {
+        $this->yourReference = (null === $yourReference) ? null : (string) $yourReference;
+        return $this;
     }
 
     /**
@@ -187,11 +181,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $status
+     *
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = (null === $status) ? null : (string) $status;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getStreet()
     {
         return $this->street;
+    }
+
+    /**
+     * @param string $street
+     *
+     * @return $this
+     */
+    public function setStreet($street)
+    {
+        $this->street = (null === $street) ? null : (string) $street;
+        return $this;
     }
 
     /**
@@ -203,11 +219,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $city
+     *
+     * @return $this
+     */
+    public function setCity($city)
+    {
+        $this->city = (null === $city) ? null : (string) $city;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getStateOrProvince()
     {
         return $this->stateOrProvince;
+    }
+
+    /**
+     * @param string $stateOrProvince
+     *
+     * @return $this
+     */
+    public function setStateOrProvince($stateOrProvince)
+    {
+        $this->stateOrProvince = (null === $stateOrProvince) ? null : (string) $stateOrProvince;
+        return $this;
     }
 
     /**
@@ -219,11 +257,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $country
+     *
+     * @return $this
+     */
+    public function setCountry($country)
+    {
+        $this->country = (null === $country) ? null : (string) $country;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * @param string $postalCode
+     *
+     * @return $this
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = (null === $postalCode) ? null : (string) $postalCode;
+        return $this;
     }
 
     /**
@@ -235,6 +295,17 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $spreadTable
+     *
+     * @return $this
+     */
+    public function setSpreadTable($spreadTable)
+    {
+        $this->spreadTable = (null === $spreadTable) ? null : (string) $spreadTable;
+        return $this;
+    }
+
+    /**
      * @return DateTime
      */
     public function getCreatedAt()
@@ -243,11 +314,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param DateTime|null $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt(DateTime $createdAt = null)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
      * @return DateTime
      */
-    public function getUpdatedAd()
+    public function getUpdatedAt()
     {
-        return $this->updatedAd;
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime|null $updatedAt
+     *
+     * @return $this
+     */
+    public function setUpdatedAt(DateTime $updatedAt = null)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
     }
 
     /**
@@ -259,11 +352,33 @@ class Account implements EntityInterface
     }
 
     /**
+     * @param string $identificationType
+     *
+     * @return $this
+     */
+    public function setIdentificationType($identificationType)
+    {
+        $this->identificationType = (null === $identificationType) ? null : (string) $identificationType;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getIdentificationValue()
     {
         return $this->identificationValue;
+    }
+
+    /**
+     * @param string $identificationValue
+     *
+     * @return $this
+     */
+    public function setIdentificationValue($identificationValue)
+    {
+        $this->identificationValue = (null === $identificationValue) ? null : (string) $identificationValue;
+        return $this;
     }
 
     /**
@@ -275,130 +390,13 @@ class Account implements EntityInterface
     }
 
     /**
-     * @param string $legalEntityType
-     */
-    public function setLegalEntityType($legalEntityType)
-    {
-        $this->legalEntityType = (string) $legalEntityType;
-    }
-
-    /**
-     * @param string $accountName
-     */
-    public function setAccountName($accountName)
-    {
-        $this->accountName = (string) $accountName;
-    }
-
-    /**
-     * @param string $brand
-     */
-    public function setBrand($brand)
-    {
-        $this->brand = (string) $brand;
-    }
-
-    /**
-     * @param string $yourReference
-     */
-    public function setYourReference($yourReference)
-    {
-        $this->yourReference = (string) $yourReference;
-    }
-
-    /**
-     * @param string $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = (string) $status;
-    }
-
-    /**
-     * @param string $street
-     */
-    public function setStreet($street)
-    {
-        $this->street = (string) $street;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity($city)
-    {
-        $this->city = (string) $city;
-    }
-
-    /**
-     * @param string $stateOrProvince
-     */
-    public function setStateOrProvince($stateOrProvince)
-    {
-        $this->stateOrProvince = (string) $stateOrProvince;
-    }
-
-    /**
-     * @param string $country
-     */
-    public function setCountry($country)
-    {
-        $this->country = (string) $country;
-    }
-
-    /**
-     * @param string $postalCode
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = (string) $postalCode;
-    }
-
-    /**
-     * @param string $spreadTable
-     */
-    public function setSpreadTable($spreadTable)
-    {
-        $this->spreadTable = (string) $spreadTable;
-    }
-
-    /**
-     * @param DateTime|null $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt = null)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @param DateTime|null $updatedAd
-     */
-    public function setUpdatedAd(DateTime $updatedAd = null)
-    {
-        $this->updatedAd = $updatedAd;
-    }
-
-    /**
-     * @param string $identificationType
-     */
-    public function setIdentificationType($identificationType)
-    {
-        $this->identificationType = (string) $identificationType;
-    }
-
-    /**
-     * @param string $identificationValue
-     */
-    public function setIdentificationValue($identificationValue)
-    {
-        $this->identificationValue = (string) $identificationValue;
-    }
-
-    /**
      * @param string $shortReference
+     *
+     * @return $this
      */
     public function setShortReference($shortReference)
     {
-        $this->shortReference = (string) $shortReference;
+        $this->shortReference = (null === $shortReference) ? null : (string) $shortReference;
+        return $this;
     }
 }

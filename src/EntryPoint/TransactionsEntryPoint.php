@@ -2,7 +2,6 @@
 
 namespace CurrencyCloud\EntryPoint;
 
-
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Transaction;
 use CurrencyCloud\Model\Transactions;
@@ -15,13 +14,19 @@ class TransactionsEntryPoint extends AbstractEntryPoint
     /**
      * @param string $id
      * @param null|string $onBehalfOf
+     *
      * @return Transaction
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request('POST', sprintf('transactions/%s', $id), [], [
-            'on_behalf_of' => $onBehalfOf
-        ]);
+        $response = $this->request(
+            'POST',
+            sprintf('transactions/%s', $id),
+            [],
+            [
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
         return $this->createTransactionFromResponse($response);
     }
 
@@ -37,6 +42,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
      * @param DateTime|null $updatedAtTo
      * @param null|string $onBehalfOf
      * @param Pagination|null $pagination
+     *
      * @return Transactions
      */
     public function find(
@@ -53,10 +59,10 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         Pagination $pagination = null
     ) {
         if (null === $transaction) {
-            $transaction = Transaction::create();
+            $transaction = new Transaction();
         }
         if (null === $pagination) {
-            $pagination = Pagination::create();
+            $pagination = new Pagination();
         }
         $response = $this->request(
             'GET',
@@ -82,6 +88,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
 
     /**
      * @param Transaction $transaction
+     *
      * @return array
      */
     public function convertTransactionToRequest(Transaction $transaction)
@@ -101,26 +108,25 @@ class TransactionsEntryPoint extends AbstractEntryPoint
 
     /**
      * @param stdClass $response
+     *
      * @return Transaction
      */
     protected function createTransactionFromResponse(stdClass $response)
     {
-        return new Transaction(
-            $response->balance_id,
-            $response->account_id,
-            $response->currency,
-            $response->amount,
-            $response->balance_amount,
-            $response->type,
-            $response->action,
-            $response->related_entity_type,
-            $response->related_entity_id,
-            $response->related_entity_short_reference,
-            $response->status,
-            $response->reason,
-            $response->settles_at,
-            $response->created_at,
-            $response->updated_at
-        );
+        return (new Transaction())->setBalanceId($response->balance_id)
+            ->setAccountId($response->account_id)
+            ->setCurrency($response->currency)
+            ->setAmount($response->amount)
+            ->setBalanceAmount($response->balance_amount)
+            ->setType($response->type)
+            ->setAction($response->action)
+            ->setRelatedEntityType($response->related_entity_type)
+            ->setRelatedEntityId($response->related_entity_id)
+            ->setRelatedEntityShortReference($response->related_entity_short_reference)
+            ->setStatus($response->status)
+            ->setReason($response->reason)
+            ->setSettlesAt(new DateTime($response->settles_at))
+            ->setCreatedAt(new DateTime($response->created_at))
+            ->setUpdatedAt(new DateTime($response->updated_at));
     }
 }

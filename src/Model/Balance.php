@@ -6,6 +6,7 @@ use DateTime;
 
 class Balance implements EntityInterface
 {
+
     /**
      * @var string
      */
@@ -35,21 +36,21 @@ class Balance implements EntityInterface
      * @param string $accountId
      * @param string $currency
      * @param string $amount
-     * @param string $createdAt
-     * @param string $updatedAt
+     * @param DateTime $createdAt
+     * @param DateTime $updatedAt
      */
     public function __construct(
         $accountId,
         $currency,
         $amount,
-        $createdAt,
-        $updatedAt
+        DateTime $createdAt,
+        DateTime $updatedAt
     ) {
         $this->accountId = (string) $accountId;
         $this->currency = (string) $currency;
         $this->amount = (string) $amount;
-        $this->createdAt = new DateTime((string) $createdAt);
-        $this->updatedAt = new DateTime((string) $updatedAt);
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**

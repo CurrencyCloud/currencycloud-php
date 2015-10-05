@@ -4,6 +4,7 @@ namespace CurrencyCloud\Model;
 
 interface EntityInterface
 {
+
     /**
      * @return string
      */
