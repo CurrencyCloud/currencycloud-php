@@ -13,13 +13,13 @@ class Accounts extends PaginatedData
     private $accounts;
 
     /**
-     * @param Account[] $transactions
+     * @param Account[] $accounts
      * @param Pagination $pagination
      */
-    public function __construct(array $transactions, Pagination $pagination)
+    public function __construct(array $accounts, Pagination $pagination)
     {
         parent::__construct($pagination);
-        $this->accounts = $transactions;
+        $this->accounts = $accounts;
     }
 
     /**
