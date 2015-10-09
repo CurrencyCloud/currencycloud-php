@@ -15,13 +15,13 @@ class Rate
     private $offerRate;
 
     /**
-     * @param double $bidRate
-     * @param double $offerRate
+     * @param string $bidRate
+     * @param string $offerRate
      */
     public function __construct($bidRate, $offerRate)
     {
-        $this->bidRate = (double) $bidRate;
-        $this->offerRate = (double) $offerRate;
+        $this->bidRate = (string) $bidRate;
+        $this->offerRate = (string) $offerRate;
     }
 
     /**
