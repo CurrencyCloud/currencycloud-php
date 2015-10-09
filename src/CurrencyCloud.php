@@ -6,6 +6,7 @@ use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\AuthenticateEntryPoint;
 use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
+use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
@@ -53,6 +54,10 @@ class CurrencyCloud
      * @var PayersEntryPoint
      */
     private $payersEntryPoint;
+    /**
+     * @var ConversionsEntryPoint
+     */
+    private $conversionsEntryPoint;
 
     /**
      * @param Session $session
@@ -60,6 +65,7 @@ class CurrencyCloud
      * @param AccountsEntryPoint $accountsEntryPoint
      * @param BalancesEntryPoint $balancesEntryPoint
      * @param BeneficiariesEntryPoint $beneficiariesEntryPoint
+     * @param ConversionsEntryPoint $conversionsEntryPoint
      * @param PayersEntryPoint $payersEntryPoint
      * @param ReferenceEntryPoint $referenceEntryPoint
      * @param RatesEntryPoint $ratesEntryPoint
@@ -71,6 +77,7 @@ class CurrencyCloud
         AccountsEntryPoint $accountsEntryPoint,
         BalancesEntryPoint $balancesEntryPoint,
         BeneficiariesEntryPoint $beneficiariesEntryPoint,
+        ConversionsEntryPoint $conversionsEntryPoint,
         PayersEntryPoint $payersEntryPoint,
         ReferenceEntryPoint $referenceEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
@@ -85,6 +92,7 @@ class CurrencyCloud
         $this->transactionsEntryPoint = $transactionsEntryPoint;
         $this->ratesEntryPoint = $ratesEntryPoint;
         $this->payersEntryPoint = $payersEntryPoint;
+        $this->conversionsEntryPoint = $conversionsEntryPoint;
     }
 
     /**
@@ -104,6 +112,7 @@ class CurrencyCloud
             new AccountsEntryPoint($session, $client),
             new BalancesEntryPoint($session, $client),
             new BeneficiariesEntryPoint($session, $client),
+            new ConversionsEntryPoint($session, $client),
             new PayersEntryPoint($session, $client),
             new ReferenceEntryPoint($session, $client),
             new RatesEntryPoint($session, $client),
@@ -141,6 +150,16 @@ class CurrencyCloud
     public function beneficiaries()
     {
         return $this->beneficiariesEntryPoint;
+    }
+
+    /**
+
+    /**
+     * @return ConversionsEntryPoint
+     */
+    public function conversions()
+    {
+        return $this->conversionsEntryPoint;
     }
 
     /**
