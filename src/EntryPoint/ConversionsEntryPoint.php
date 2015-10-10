@@ -2,7 +2,7 @@
 
 namespace CurrencyCloud\EntryPoint;
 
-use CurrencyCloud\Criteria\FindConversionCriteria;
+use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\Conversions;
 use DateTime;
@@ -110,15 +110,16 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param FindConversionCriteria|null $criteria
+     * @param FindConversionsCriteria|null $criteria
      * @param null $onBehalfOf
+
      *
-     * @return Conversions
+*@return Conversions
      */
-    public function find(FindConversionCriteria $criteria = null, $onBehalfOf = null)
+    public function find(FindConversionsCriteria $criteria = null, $onBehalfOf = null)
     {
         if (null === $criteria) {
-            $criteria = new FindConversionCriteria();
+            $criteria = new FindConversionsCriteria();
         }
 
         $response = $this->request(
@@ -138,11 +139,12 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param FindConversionCriteria $criteria
+     * @param FindConversionsCriteria $criteria
+
      *
-     * @return array
+*@return array
      */
-    private function convertFindConversionCriteriaToRequest(FindConversionCriteria $criteria)
+    private function convertFindConversionCriteriaToRequest(FindConversionsCriteria $criteria)
     {
         $createdAtFrom = $criteria->getCreatedAtFrom();
         $createdAtTo = $criteria->getCreatedAtTo();
