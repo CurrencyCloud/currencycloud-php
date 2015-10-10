@@ -25,7 +25,7 @@ class Conversions extends PaginatedData
     /**
      * @return Conversion[]
      */
-    public function getAccounts()
+    public function getConversions()
     {
         return $this->conversions;
     }

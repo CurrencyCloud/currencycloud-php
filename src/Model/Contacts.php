@@ -25,7 +25,7 @@ class Contacts extends PaginatedData
     /**
      * @return Contact[]
      */
-    public function getAccounts()
+    public function getContacts()
     {
         return $this->contacts;
     }
