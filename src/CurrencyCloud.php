@@ -9,6 +9,7 @@ use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
+use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
@@ -63,6 +64,10 @@ class CurrencyCloud
      * @var ContactsEntryPoint
      */
     private $contactsEntryPoint;
+    /**
+     * @var PaymentsEntryPoint
+     */
+    private $paymentsEntryPoint;
 
     /**
      * @param Session $session
@@ -73,6 +78,7 @@ class CurrencyCloud
      * @param ContactsEntryPoint $contactsEntryPoint
      * @param ConversionsEntryPoint $conversionsEntryPoint
      * @param PayersEntryPoint $payersEntryPoint
+     * @param PaymentsEntryPoint $paymentsEntryPoint
      * @param ReferenceEntryPoint $referenceEntryPoint
      * @param RatesEntryPoint $ratesEntryPoint
      * @param TransactionsEntryPoint $transactionsEntryPoint
@@ -86,6 +92,7 @@ class CurrencyCloud
         ContactsEntryPoint $contactsEntryPoint,
         ConversionsEntryPoint $conversionsEntryPoint,
         PayersEntryPoint $payersEntryPoint,
+        PaymentsEntryPoint $paymentsEntryPoint,
         ReferenceEntryPoint $referenceEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
         TransactionsEntryPoint $transactionsEntryPoint
@@ -123,6 +130,7 @@ class CurrencyCloud
             new ContactsEntryPoint($session, $client),
             new ConversionsEntryPoint($session, $client),
             new PayersEntryPoint($session, $client),
+            new PaymentsEntryPoint($session, $client),
             new ReferenceEntryPoint($session, $client),
             new RatesEntryPoint($session, $client),
             new TransactionsEntryPoint($session, $client)
@@ -186,6 +194,13 @@ class CurrencyCloud
     }
 
     /**
+     * @return PaymentsEntryPoint
+     */
+    public function payments()
+    {
+        return $this->paymentsEntryPoint;
+    }
+
      * @return ReferenceEntryPoint
      */
     public function reference()
