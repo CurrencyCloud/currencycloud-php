@@ -25,6 +25,10 @@ abstract class CurrencyCloudException extends RuntimeException
      * @var string
      */
     private $compiled;
+    /**
+     * @var string
+     */
+    private $apiCode;
 
     /**
      * CurrencyCloudException constructor.
@@ -33,15 +37,30 @@ abstract class CurrencyCloudException extends RuntimeException
      * @param string $httpMethod
      * @param string $url
      * @param string $message
-     * @param int $code
+     * @param string $apiCode
      * @param Exception|null $previous
      */
-    public function __construct($parameters, $httpMethod, $url, $message = '', $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
+    public function __construct(
+        $parameters,
+        $httpMethod,
+        $url,
+        $message = '',
+        $apiCode = '',
+        Exception $previous = null
+    ) {
+        parent::__construct($message, 0, $previous);
         $this->parameters = $parameters;
         $this->httpMethod = $httpMethod;
         $this->url = $url;
+        $this->apiCode = $apiCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiCode()
+    {
+        return $this->apiCode;
     }
 
     /**

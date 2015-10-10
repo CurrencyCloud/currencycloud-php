@@ -104,7 +104,7 @@ abstract class AbstractEntryPoint
 
             $response = $this->client->request($method, $url, $options);
 
-            $createApiException = function ($class = null) use ($response, $parameters, $method, $url) {
+            $throwApiException = function ($class = null) use ($response, $parameters, $method, $url) {
                 if (null === $class) {
                     switch ($response->getStatusCode()) {
                         case 400:
@@ -136,10 +136,10 @@ abstract class AbstractEntryPoint
                     $response->getBody()
                         ->getContents();
                 $decoded = json_decode($body, true);
-                if (!is_array($decoded)) {
+                if (is_array($decoded)) {
                     $errors = [];
                     $messages = [];
-                    foreach ($decoded->error_messages as $field => $messageContexts) {
+                    foreach ($decoded['error_messages'] as $field => $messageContexts) {
                         foreach ($messageContexts as $messageContext) {
                             $errors[] = [
                                 'field' => $field,
@@ -151,13 +151,13 @@ abstract class AbstractEntryPoint
                         }
                     }
                     $message = implode('; ', $messages);
-                    $code = $decoded->error_code;
+                    $code = $decoded['error_code'];
                 } else {
                     $message = 'Invalid JSON describing error returned';
                     $errors = null;
                     $code = 0;
                 }
-                return new $class($statusCode, $date, $requestId, $errors, $parameters, $method, $url, $message, $code);
+                throw new $class($statusCode, $date, $requestId, $errors, $parameters, $method, $url, $message, $code);
             };
 
             switch ($response->getStatusCode()) {
@@ -170,12 +170,12 @@ abstract class AbstractEntryPoint
                     if (!is_array($data)
                         && !is_object($data)
                     ) {
-                        throw $createApiException(ApiException::class);
+                        throw $throwApiException(ApiException::class);
                     }
 
                     return $data;
                 default:
-                    throw $createApiException();
+                    $throwApiException();
             }
         } finally {
             //If on-behalf-of was injected through params, clear it now
