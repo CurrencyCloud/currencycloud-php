@@ -12,6 +12,7 @@ use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
+use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
@@ -68,6 +69,10 @@ class CurrencyCloud
      * @var PaymentsEntryPoint
      */
     private $paymentsEntryPoint;
+    /**
+     * @var SettlementsEntryPoint
+     */
+    private $settlementsEntryPoint;
 
     /**
      * @param Session $session
@@ -81,6 +86,7 @@ class CurrencyCloud
      * @param PaymentsEntryPoint $paymentsEntryPoint
      * @param ReferenceEntryPoint $referenceEntryPoint
      * @param RatesEntryPoint $ratesEntryPoint
+     * @param SettlementsEntryPoint $settlementsEntryPoint
      * @param TransactionsEntryPoint $transactionsEntryPoint
      */
     public function __construct(
@@ -95,6 +101,7 @@ class CurrencyCloud
         PaymentsEntryPoint $paymentsEntryPoint,
         ReferenceEntryPoint $referenceEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
+        SettlementsEntryPoint $settlementsEntryPoint,
         TransactionsEntryPoint $transactionsEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
@@ -108,6 +115,8 @@ class CurrencyCloud
         $this->payersEntryPoint = $payersEntryPoint;
         $this->conversionsEntryPoint = $conversionsEntryPoint;
         $this->contactsEntryPoint = $contactsEntryPoint;
+        $this->paymentsEntryPoint = $paymentsEntryPoint;
+        $this->settlementsEntryPoint = $settlementsEntryPoint;
     }
 
     /**
@@ -133,6 +142,7 @@ class CurrencyCloud
             new PaymentsEntryPoint($session, $client),
             new ReferenceEntryPoint($session, $client),
             new RatesEntryPoint($session, $client),
+            new SettlementsEntryPoint($session, $client),
             new TransactionsEntryPoint($session, $client)
         );
     }
@@ -201,6 +211,7 @@ class CurrencyCloud
         return $this->paymentsEntryPoint;
     }
 
+    /**
      * @return ReferenceEntryPoint
      */
     public function reference()
@@ -214,6 +225,14 @@ class CurrencyCloud
     public function rates()
     {
         return $this->ratesEntryPoint;
+    }
+
+    /**
+     * @return SettlementsEntryPoint
+     */
+    public function settlements()
+    {
+        return $this->settlementsEntryPoint;
     }
 
     /**
