@@ -2,11 +2,18 @@
 
 namespace CurrencyCloud\EntryPoint;
 
+use CurrencyCloud\Exception\ApiException;
+use CurrencyCloud\Exception\AuthenticationException;
+use CurrencyCloud\Exception\BadRequestException;
+use CurrencyCloud\Exception\ForbiddenException;
+use CurrencyCloud\Exception\InternalApplicationException;
+use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Session;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\TooManyRedirectsException;
 use ReflectionClass;
 use stdClass;
 
@@ -30,20 +37,6 @@ abstract class AbstractEntryPoint
     {
         $this->client = $client;
         $this->session = $session;
-    }
-
-    /**
-     * @param string $path
-     * @param array $queryParams
-     *
-     * @return string
-     */
-    protected function applyApiBaseUrl($path, array $queryParams)
-    {
-        if (count($queryParams) > 0) {
-            return sprintf('%s%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));
-        }
-        return sprintf('%s%s', $this->session->getApiUrl(), $path);
     }
 
     /**
@@ -87,13 +80,12 @@ abstract class AbstractEntryPoint
                 //Perhaps check here if auth token set?
                 $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
             }
+            $filter = function ($v) {
+                return null !== $v;
+            };
+            $queryParams = array_filter($queryParams, $filter);
+            $requestParams = array_filter($requestParams, $filter);
             if (count($requestParams) > 0) {
-                $requestParams = array_filter(
-                    $requestParams,
-                    function ($v) {
-                        return null !== $v;
-                    }
-                );
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];
                 }
@@ -102,24 +94,88 @@ abstract class AbstractEntryPoint
 
             //Force no-exceptions in order to provide descriptive error messages
             $options['http_errors'] = false;
+            $url = $this->applyApiBaseUrl($uri, $queryParams);
 
-            $response = $this->client->request($method, $this->applyApiBaseUrl($uri, $queryParams), $options);
+            if ('GET' === $method) {
+                $parameters = $queryParams;
+            } else {
+                $parameters = $requestParams;
+            }
+
+            $response = $this->client->request($method, $url, $options);
+
+            $createApiException = function ($class = null) use ($response, $parameters, $method, $url) {
+                if (null === $class) {
+                    switch ($response->getStatusCode()) {
+                        case 400:
+                            $class = BadRequestException::class;
+                            break;
+                        case 401:
+                            $class = AuthenticationException::class;
+                            break;
+                        case 403:
+                            $class = ForbiddenException::class;
+                            break;
+                        case 404:
+                            $class = NotFoundException::class;
+                            break;
+                        case 429:
+                            $class = TooManyRedirectsException::class;
+                            break;
+                        case 500:
+                            $class = InternalApplicationException::class;
+                            break;
+                        default:
+                            $class = ApiException::class;
+                    }
+                }
+                $statusCode = $response->getStatusCode();
+                $date = current($response->getHeader('Date'));
+                $requestId = current($response->getHeader('X-Request-Id'));
+                $body =
+                    $response->getBody()
+                        ->getContents();
+                $decoded = json_decode($body, true);
+                if (!is_array($decoded)) {
+                    $errors = [];
+                    $messages = [];
+                    foreach ($decoded->error_messages as $field => $messageContexts) {
+                        foreach ($messageContexts as $messageContext) {
+                            $errors[] = [
+                                'field' => $field,
+                                'code' => $messageContext['code'],
+                                'message' => $messageContext['message'],
+                                'params' => $messageContext['params']
+                            ];
+                            $messages['message'] = $messageContext['message'];
+                        }
+                    }
+                    $message = implode('; ', $messages);
+                    $code = $decoded->error_code;
+                } else {
+                    $message = 'Invalid JSON describing error returned';
+                    $errors = null;
+                    $code = 0;
+                }
+                return new $class($statusCode, $date, $requestId, $errors, $parameters, $method, $url, $message, $code);
+            };
 
             switch ($response->getStatusCode()) {
                 case 200:
-                    $data =
-                        json_decode(
-                            $response->getBody()
-                                ->getContents()
-                        );
+                    $data = json_decode(
+                        $response->getBody()
+                            ->getContents()
+                    );
 
                     if (!is_array($data)
                         && !is_object($data)
                     ) {
-                        //throw exception
+                        throw $createApiException(ApiException::class);
                     }
 
                     return $data;
+                default:
+                    throw $createApiException();
             }
         } finally {
             //If on-behalf-of was injected through params, clear it now
@@ -131,6 +187,20 @@ abstract class AbstractEntryPoint
             $response->getBody()
                 ->getContents()
         );
+    }
+
+    /**
+     * @param string $path
+     * @param array $queryParams
+     *
+     * @return string
+     */
+    protected function applyApiBaseUrl($path, array $queryParams)
+    {
+        if (count($queryParams) > 0) {
+            return sprintf('%s%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));
+        }
+        return sprintf('%s%s', $this->session->getApiUrl(), $path);
     }
 
     /**
