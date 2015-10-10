@@ -1,26 +1,19 @@
-name: contains_full_details_for_api_error
-interactions:
-- request:
+-
+  request:
     method: POST
-    uri: http://vcr:3232/v2/authenticate/api
+    url: https://devapi.thecurrencycloud.com/v2/authenticate/api
     body: login_id=non-existent-login-id&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb57528f0
-    headers: {}
+    headers:
+      User-Agent: 'GuzzleHttp/6.1.0 curl/7.35.0 PHP/5.6.14-1+deb.sury.org~trusty+1'
+      Content-Type: application/x-www-form-urlencoded
   response:
     status: 400
     headers:
-      Server:
-      - nginx
-      Content-Type:
-      - application/json;charset=utf-8
-      Date:
-      - Wed, 29 Apr 2015 22:46:53 GMT
-      X-Request-Id:
-      - '2775253392756800903'
-      X-Content-Type-Options:
-      - nosniff
-      Connection:
-      - close
-      Content-Length:
-      - '190'
-    body: '{"error_code":"auth_invalid_user_login_details","error_messages":{"api_key":[{"code":"api_key_length_is_invalid","message":"api_key
-        should be 64 character(s) long","params":{"length":64}}]}}'
+      Server: nginx
+      Content-Type: application/json;charset=utf-8
+      Date: Wed, 29 Apr 2015 22:46:53 GMT
+      X-Request-Id: '2775253392756800903'
+      X-Content-Type-Options: nosniff
+      Connection: close
+      Content-Length: '190'
+    body: '{"error_code":"auth_invalid_user_login_details","error_messages":{"api_key":[{"code":"api_key_length_is_invalid","message":"api_key should be 64 character(s) long","params":{"length":64}}]}}'
