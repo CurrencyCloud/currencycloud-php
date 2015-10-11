@@ -260,4 +260,12 @@ class CurrencyCloud
             $this->session->clearOnBehalfOf();
         }
     }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace CurrencyCloud\Exception;
 
-class AuthenticationException
+class AuthenticationException extends ApiException
 {
 
 }

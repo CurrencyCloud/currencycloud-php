@@ -8,12 +8,12 @@ use CurrencyCloud\Exception\BadRequestException;
 use CurrencyCloud\Exception\ForbiddenException;
 use CurrencyCloud\Exception\InternalApplicationException;
 use CurrencyCloud\Exception\NotFoundException;
+use CurrencyCloud\Exception\ToManyRequestsException;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Session;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\TooManyRedirectsException;
 use ReflectionClass;
 use stdClass;
 
@@ -80,11 +80,8 @@ abstract class AbstractEntryPoint
                 //Perhaps check here if auth token set?
                 $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
             }
-            $filter = function ($v) {
-                return null !== $v;
-            };
-            $queryParams = array_filter($queryParams, $filter);
-            $requestParams = array_filter($requestParams, $filter);
+            $queryParams = array_filter($queryParams);
+            $requestParams = array_filter($requestParams);
             if (count($requestParams) > 0) {
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];
@@ -120,7 +117,7 @@ abstract class AbstractEntryPoint
                             $class = NotFoundException::class;
                             break;
                         case 429:
-                            $class = TooManyRedirectsException::class;
+                            $class = ToManyRequestsException::class;
                             break;
                         case 500:
                             $class = InternalApplicationException::class;

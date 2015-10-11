@@ -50,9 +50,9 @@ abstract class CurrencyCloudException extends RuntimeException
     ) {
         parent::__construct($message, 0, $previous);
         $this->parameters = $parameters;
-        $this->httpMethod = $httpMethod;
-        $this->url = $url;
-        $this->apiCode = $apiCode;
+        $this->httpMethod = strtolower($httpMethod);
+        $this->url = (string) $url;
+        $this->apiCode = (string) $apiCode;
     }
 
     /**
@@ -78,11 +78,11 @@ abstract class CurrencyCloudException extends RuntimeException
     {
         if (null === $this->compiled) {
             $dumper = new Dumper();
-            $this->compiled = sprintf(
+            $this->compiled = trim(sprintf(
                 "%s\n---\n%s",
                 basename(str_replace('\\', '/', get_class($this))),
                 $dumper->dump($this->getCompileProperties(), PHP_INT_MAX)
-            );
+            ));
         }
         return $this->compiled;
     }
@@ -96,7 +96,7 @@ abstract class CurrencyCloudException extends RuntimeException
             'platform' => sprintf('PHP %s', phpversion()),
             'request' => [
                 'parameters' => $this->parameters,
-                'verb' => strtolower($this->httpMethod),
+                'verb' => $this->httpMethod,
                 'url' => $this->url
             ]
         ];
@@ -111,14 +111,6 @@ abstract class CurrencyCloudException extends RuntimeException
     }
 
     /**
-     * @param string $parameters
-     */
-    public function setParameters($parameters)
-    {
-        $this->parameters = $parameters;
-    }
-
-    /**
      * @return string
      */
     public function getHttpMethod()
@@ -127,26 +119,10 @@ abstract class CurrencyCloudException extends RuntimeException
     }
 
     /**
-     * @param string $httpMethod
-     */
-    public function setHttpMethod($httpMethod)
-    {
-        $this->httpMethod = $httpMethod;
-    }
-
-    /**
      * @return string
      */
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
     }
 }

@@ -73,7 +73,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
     public function retrieve($id, $onBehalfOf = null)
     {
         $response = $this->request(
-            'POST',
+            'GET',
             sprintf('beneficiaries/%s', $id),
             [],
             [

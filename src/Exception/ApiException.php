@@ -3,10 +3,11 @@
 namespace CurrencyCloud\Exception;
 
 use Exception;
+
 class ApiException extends CurrencyCloudException
 {
     /**
-     * @var string
+     * @var int
      */
     private $date;
     /**
@@ -25,7 +26,7 @@ class ApiException extends CurrencyCloudException
     /**
      * ApiException constructor.
      *
-     * @param string $statusCode
+     * @param int $statusCode
      * @param string $date
      * @param string $requestId
      * @param array|null $errors
@@ -56,10 +57,10 @@ class ApiException extends CurrencyCloudException
             $code,
             $previous
         );
-        $this->date = $date;
-        $this->requestId = $requestId;
+        $this->date = (string) $date;
+        $this->requestId = (string) $requestId;
         $this->errors = $errors;
-        $this->statusCode = $statusCode;
+        $this->statusCode = (int) $statusCode;
     }
 
     protected function getCompileProperties()
@@ -102,7 +103,7 @@ class ApiException extends CurrencyCloudException
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getStatusCode()
     {
