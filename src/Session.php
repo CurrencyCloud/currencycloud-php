@@ -91,10 +91,10 @@ class Session
      */
     public function setOnBehalfOf($contactId)
     {
-        $patter = '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i';
+        $pattern = '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i';
 
         if (!is_string($contactId)
-            || !preg_match($patter, $contactId)
+            || !preg_match($pattern, $contactId)
         ) {
             throw new InvalidArgumentException('Contact ID expected to be UUID');
         }
