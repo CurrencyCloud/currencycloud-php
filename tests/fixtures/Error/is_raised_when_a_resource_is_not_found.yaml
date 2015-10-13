@@ -3,7 +3,8 @@
     method: GET
     url: http://devapi.thecurrencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
     headers:
-      X-Auth-Token: 656485646b068f6e9c81e3d885fa54f5
+      Host: devapi.thecurrencycloud.com
+      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
   response:
     status: 404
     headers:
