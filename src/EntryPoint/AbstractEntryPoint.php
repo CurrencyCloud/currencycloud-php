@@ -93,15 +93,9 @@ abstract class AbstractEntryPoint
             $options['http_errors'] = false;
             $url = $this->applyApiBaseUrl($uri, $queryParams);
 
-            if ('GET' === $method) {
-                $parameters = $queryParams;
-            } else {
-                $parameters = $requestParams;
-            }
-
             $response = $this->client->request($method, $url, $options);
 
-            $throwApiException = function ($class = null) use ($response, $parameters, $method, $url) {
+            $throwApiException = function ($class = null) use ($response, $requestParams, $method, $url) {
                 if (null === $class) {
                     switch ($response->getStatusCode()) {
                         case 400:
@@ -154,7 +148,7 @@ abstract class AbstractEntryPoint
                     $errors = null;
                     $code = 0;
                 }
-                throw new $class($statusCode, $date, $requestId, $errors, $parameters, $method, $url, $message, $code);
+                throw new $class($statusCode, $date, $requestId, $errors, $requestParams, $method, $url, $message, $code);
             };
 
             switch ($response->getStatusCode()) {
@@ -208,7 +202,7 @@ abstract class AbstractEntryPoint
     protected function createPaginationFromResponse(stdClass $response)
     {
         $pagination = $response->pagination;
-        return new Pagination(
+        return Pagination::create(
             $pagination->total_entries,
             $pagination->total_pages,
             $pagination->current_page,
