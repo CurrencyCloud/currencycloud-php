@@ -30,7 +30,7 @@ class Test extends BaseCurrencyCloudTestCase
             $expected = <<<EOT
 BadRequestException
 ---
-platform: 'PHP 5.6.14-1+deb.sury.org~trusty+1'
+platform: 'PHP %s'
 request:
     parameters:
         login_id: non-existent-login-id
@@ -49,7 +49,7 @@ errors:
         params:
             length: 64
 EOT;
-            $this->assertSame($expected, (string) $e);
+            $this->assertSame(sprintf($expected, phpversion()), (string) $e);
             $this->assertSame(
                 'api_key should be 64 character(s) long',
                 $e->getMessage()
