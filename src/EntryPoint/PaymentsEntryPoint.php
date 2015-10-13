@@ -164,19 +164,20 @@ class PaymentsEntryPoint extends AbstractEntryPoint
     }
 
     /**
+     * @param string $id
      * @param Payment $payment
      * @param Payer|null $payer
      * @param null|string $onBehalfOf
      *
      * @return Payment
      */
-    public function update(Payment $payment, Payer $payer = null, $onBehalfOf = null)
+    public function update($id, Payment $payment, Payer $payer = null, $onBehalfOf = null)
     {
         $response = $this->request(
             'POST',
             sprintf(
                 'payments/%s',
-                $payment->getId()
+                $id
             ),
             [],
             $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer) + [

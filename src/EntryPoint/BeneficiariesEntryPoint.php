@@ -84,18 +84,19 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
     }
 
     /**
+     * @param string $id
      * @param Beneficiary $beneficiary
      * @param null $onBehalfOf
      *
      * @return Beneficiary
      */
-    public function update(Beneficiary $beneficiary, $onBehalfOf = null)
+    public function update($id, Beneficiary $beneficiary, $onBehalfOf = null)
     {
         $response = $this->request(
             'POST',
             sprintf(
                 'beneficiaries/%s',
-                $beneficiary->getId()
+                $id
             ),
             [],
             $this->convertBeneficiaryToRequest($beneficiary, $onBehalfOf)

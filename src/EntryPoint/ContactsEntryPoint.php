@@ -136,15 +136,16 @@ class ContactsEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param $contact $contact
+     * @param string $id
+     * @param Contact $contact $contact
      *
      * @return Contact
      */
-    public function update(Contact $contact)
+    public function update($id, Contact $contact)
     {
         $response = $this->request(
             'POST',
-            sprintf('contacts/%s', $contact->getId()),
+            sprintf('contacts/%s', $id),
             [],
             $this->convertContactToRequest($contact)
         );

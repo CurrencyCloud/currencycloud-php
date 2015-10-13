@@ -56,16 +56,19 @@ class AccountsEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @@param Account $account
+     * @
+     * @param string $id
+     * @param Account $account
+     *
      * @return Account
      */
-    public function update(Account $account)
+    public function update($id, Account $account)
     {
         $response = $this->request(
             'POST',
             sprintf(
                 'accounts/%s',
-                $account->getId()
+                $id
             ),
             [],
             $this->convertAccountToRequest($account)
