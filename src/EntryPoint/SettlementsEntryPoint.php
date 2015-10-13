@@ -237,12 +237,12 @@ class SettlementsEntryPoint extends AbstractEntryPoint
         $releasedAtFrom = $criteria->getReleasedAtFrom();
         $releasedAtTo = $criteria->getReleasedAtTo();
         return [
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
-            'released_at_from' => (null === $releasedAtFrom) ? null : $releasedAtFrom->format(DateTime::ISO8601),
-            'released_at_to' => (null === $releasedAtTo) ? null : $releasedAtTo->format(DateTime::ISO8601)
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
+            'released_at_from' => (null === $releasedAtFrom) ? null : $releasedAtFrom->format(DateTime::RFC3339),
+            'released_at_to' => (null === $releasedAtTo) ? null : $releasedAtTo->format(DateTime::RFC3339)
         ];
     }
 }

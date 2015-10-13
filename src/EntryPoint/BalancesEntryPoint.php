@@ -36,7 +36,7 @@ class BalancesEntryPoint extends AbstractEntryPoint
             [
                 'amount_from' => $amountFrom,
                 'amount_to' => $amountTo,
-                'as_at_date' => (null === $asAtDate) ? null : $asAtDate->format(DateTime::ISO8601),
+                'as_at_date' => (null === $asAtDate) ? null : $asAtDate->format(DateTime::RFC3339),
                 'order' => $pagination->getOrder(),
                 'page' => $pagination->getCurrentPage(),
                 'per_page' => $pagination->getPerPage(),

@@ -189,7 +189,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
             'beneficiary_state_or_province' => $beneficiary->getBeneficiaryStateOrProvince(),
             'beneficiary_date_of_birth' => (null === $beneficiary->getBeneficiaryDateOfBirth()) ? null :
                 $beneficiary->getBeneficiaryDateOfBirth()
-                    ->format(DateTime::ISO8601),
+                    ->format(DateTime::RFC3339),
             'beneficiary_identification_type' => $beneficiary->getBeneficiaryIdentificationType(),
             'beneficiary_identification_value' => $beneficiary->getBeneficiaryIdentificationValue(),
             'payment_types' => $beneficiary->getPaymentTypes(),

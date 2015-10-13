@@ -70,12 +70,12 @@ class TransactionsEntryPoint extends AbstractEntryPoint
             $this->convertTransactionToRequest($transaction) + $this->convertPaginationToRequest($pagination) + [
                 'amount_from' => $amountFrom,
                 'amount_to' => $amountTo,
-                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::ISO8601),
-                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::ISO8601),
-                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
+                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::RFC3339),
+                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::RFC3339),
+                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
+                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
+                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
+                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
                 'on_behalf_of' => $onBehalfOf
             ]
         );

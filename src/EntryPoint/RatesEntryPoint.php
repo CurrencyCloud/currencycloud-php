@@ -65,7 +65,7 @@ class RatesEntryPoint extends AbstractEntryPoint
                 'sell_currency' => $sellCurrency,
                 'fixed_side' => $fixedSide,
                 'amount' => $amount,
-                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::ISO8601),
+                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
                 'on_behalf_of' => $onBehalfOf
             ]
         );

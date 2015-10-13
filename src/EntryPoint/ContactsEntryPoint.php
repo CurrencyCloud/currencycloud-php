@@ -58,7 +58,7 @@ class ContactsEntryPoint extends AbstractEntryPoint
             'login_id' => $contact->getLoginId(),
             'status' => $contact->getLocale(),
             'timezone' => $contact->getTimezone(),
-            'date_of_birth' => (null === $dateOfBirth) ? null : $dateOfBirth->format(DateTime::ISO8601)
+            'date_of_birth' => (null === $dateOfBirth) ? null : $dateOfBirth->format(DateTime::RFC3339)
         ];
         if ($convertForFind) {
             return $common;

@@ -63,7 +63,7 @@ class PaymentsEntryPoint extends AbstractEntryPoint
         $paymentDate = $payment->getPaymentDate();
         return [
             'reference' => $payment->getReference(),
-            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(DateTime::ISO8601),
+            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(DateTime::RFC3339),
             'payment_type' => $payment->getPaymentType()
         ];
     }
@@ -87,7 +87,7 @@ class PaymentsEntryPoint extends AbstractEntryPoint
             'payer_state_or_province' => $payer->getStateOrProvince(),
             'payer_country' => $payer->getCountry(),
             'payer_date_of_birth' => (null === $payerDateOfBirth) ? $payerDateOfBirth : $payerDateOfBirth->format(
-                DateTime::ISO8601
+                DateTime::RFC3339
             ),
             'payer_identification_type' => $payer->getIdentificationType(),
             'payer_identification_value' => $payer->getIdentificationValue()
@@ -239,14 +239,14 @@ class PaymentsEntryPoint extends AbstractEntryPoint
         $transferredAtFrom = $criteria->getTransferredAtFrom();
         $transferredAtTo = $criteria->getTransferredAtTo();
         return [
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
-            'payment_date_from' => (null === $paymentDateFrom) ? null : $paymentDateFrom->format(DateTime::ISO8601),
-            'payment_date_to' => (null === $paymentDateTo) ? null : $paymentDateTo->format(DateTime::ISO8601),
-            'transferred_at_from' => (null === $transferredAtFrom) ? null : $transferredAtFrom->format(DateTime::ISO8601),
-            'transferred_at_to' => (null === $transferredAtTo) ? null : $transferredAtTo->format(DateTime::ISO8601),
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
+            'payment_date_from' => (null === $paymentDateFrom) ? null : $paymentDateFrom->format(DateTime::RFC3339),
+            'payment_date_to' => (null === $paymentDateTo) ? null : $paymentDateTo->format(DateTime::RFC3339),
+            'transferred_at_from' => (null === $transferredAtFrom) ? null : $transferredAtFrom->format(DateTime::RFC3339),
+            'transferred_at_to' => (null === $transferredAtTo) ? null : $transferredAtTo->format(DateTime::RFC3339),
             'amount_from' => $criteria->getAmountFrom(),
             'amount_to' => $criteria->getAmountTo()
         ];
