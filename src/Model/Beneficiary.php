@@ -46,6 +46,10 @@ class Beneficiary
     /**
      * @var string
      */
+    private $creatorContactId;
+    /**
+     * @var string
+     */
     private $bankAccountType;
     /**
      * @var string
@@ -92,6 +96,10 @@ class Beneficiary
      */
     private $beneficiaryIdentificationValue;
     /**
+     * @var boolean
+     */
+    private $isDefaultBeneficiary;
+    /**
      * @var string
      */
     private $routingCodeType1;
@@ -123,6 +131,14 @@ class Beneficiary
      * @var string
      */
     private $email;
+    /**
+     * @var DateTime
+     */
+    private $createdAt;
+    /**
+     * @var DateTime
+     */
+    private $updatedAt;
 
     /**
      * Since PHP can not have two distinct constructors, this is easy to implement variant using static method
@@ -625,9 +641,9 @@ class Beneficiary
      *
      * @return $this
      */
-    public function setBeneficiaryAddress($beneficiaryAddress)
+    public function setBeneficiaryAddress(array $beneficiaryAddress = null)
     {
-        $this->beneficiaryAddress = (string) $beneficiaryAddress;
+        $this->beneficiaryAddress = $beneficiaryAddress;
         return $this;
     }
 
@@ -693,6 +709,82 @@ class Beneficiary
     public function setEmail($email)
     {
         $this->email = (string) $email;
+        return $this;
+    }
+
+    /**
+     * @param boolean $isDefaultBeneficiary
+     *
+     * @return $this
+     */
+    public function setIsDefaultBeneficiary($isDefaultBeneficiary)
+    {
+        $this->isDefaultBeneficiary = (boolean) $isDefaultBeneficiary;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDefaultBeneficiary()
+    {
+        return $this->isDefaultBeneficiary;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatorContactId()
+    {
+        return $this->creatorContactId;
+    }
+
+    /**
+     * @param string $creatorContactId
+     *
+     * @return $this
+     */
+    public function setCreatorContactId($creatorContactId)
+    {
+        $this->creatorContactId = (string) $creatorContactId;
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     *
+     * @return $this
+     */
+    public function setUpdatedAt(DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 }

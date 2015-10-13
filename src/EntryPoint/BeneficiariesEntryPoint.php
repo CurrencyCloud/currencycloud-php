@@ -2,6 +2,7 @@
 
 namespace CurrencyCloud\EntryPoint;
 
+use CurrencyCloud\Model\Beneficiaries;
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
@@ -9,20 +10,6 @@ use stdClass;
 
 class BeneficiariesEntryPoint extends AbstractEntryPoint
 {
-
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null|string $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function persist(Beneficiary $beneficiary, $onBehalfOf = null)
-    {
-        if (null === $beneficiary->getId()) {
-            return $this->create($beneficiary, $onBehalfOf);
-        }
-        return $this->update($beneficiary, $onBehalfOf);
-    }
 
     /**
      * @param Beneficiary $beneficiary
@@ -38,10 +25,11 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
             [],
             $this->convertBeneficiaryToRequest(
                 $beneficiary,
-                $onBehalfOf
+                $onBehalfOf,
+                true
             )
         );
-        return $this->createBeneficiaryValidateFromResponse($response);
+        return $this->createBeneficiaryFromResponse($response, true);
     }
 
     /**
@@ -61,7 +49,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 $onBehalfOf
             )
         );
-        return $this->createBeneficiaryValidateFromResponse($response);
+        return $this->createBeneficiaryFromResponse($response);
     }
 
     /**
@@ -80,7 +68,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 'on_behalf_of' => $onBehalfOf
             ]
         );
-        return $this->createBeneficiaryValidateFromResponse($response);
+        return $this->createBeneficiaryFromResponse($response);
     }
 
     /**
@@ -99,19 +87,19 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 $id
             ),
             [],
-            $this->convertBeneficiaryToRequest($beneficiary, $onBehalfOf)
+            $this->convertBeneficiaryToRequest($beneficiary, $onBehalfOf, false, true)
         );
-        return $this->createBeneficiaryValidateFromResponse($response);
+        return $this->createBeneficiaryFromResponse($response);
     }
 
     /**
      * @param Beneficiary|null $beneficiary
-     * @param null $onBehalfOf
      * @param Pagination|null $pagination
+     * @param null $onBehalfOf
      *
-     * @return Beneficiary
+     * @return Beneficiaries
      */
-    public function find(Beneficiary $beneficiary = null, $onBehalfOf = null, Pagination $pagination = null)
+    public function find(Beneficiary $beneficiary = null, Pagination $pagination = null, $onBehalfOf = null)
     {
         if (null === $beneficiary) {
             $beneficiary = new Beneficiary();
@@ -122,7 +110,6 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
         $response = $this->request(
             'GET',
             'beneficiaries/find',
-            [],
             $this->convertBeneficiaryToRequest(
                 $beneficiary,
                 $onBehalfOf,
@@ -130,7 +117,11 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 true
             ) + $this->convertPaginationToRequest($pagination)
         );
-        return $this->createBeneficiaryValidateFromResponse($response);
+        $beneficiaries = [];
+        foreach ($response->beneficiaries as $beneficiary) {
+            $beneficiaries[] = $this->createBeneficiaryFromResponse($beneficiary);
+        }
+        return new Beneficiaries($beneficiaries, $this->createPaginationFromResponse($response));
     }
 
     /**
@@ -149,7 +140,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 'on_behalf_of' => $onBehalfOf
             ]
         );
-        return $this->createBeneficiaryValidateFromResponse($response);
+        return $this->createBeneficiaryFromResponse($response);
     }
 
     /**
@@ -166,6 +157,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
         $convertForValidate = false,
         $convertForUpdate = false
     ) {
+        $isDefaultBeneficiary = $beneficiary->isDefaultBeneficiary();
         $common = [
             'bank_country' => $beneficiary->getBankCountry(),
             'currency' => $beneficiary->getCurrency(),
@@ -179,6 +171,8 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
             'iban' => $beneficiary->getIban(),
             'bank_address' => $beneficiary->getBankAddress(),
             'bank_name' => $beneficiary->getBankName(),
+            'default_beneficiary' => (null === $isDefaultBeneficiary) ? null :
+                ($isDefaultBeneficiary ? 'true' : 'false'),
             'bank_account_type' => $beneficiary->getBankAccountType(),
             'beneficiary_entity_type' => $beneficiary->getBeneficiaryEntityType(),
             'beneficiary_company_name' => $beneficiary->getBeneficiaryCompanyName(),
@@ -210,18 +204,22 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
         }
 
         return $common + [
-            'email' => $beneficiary->getEmail()
+            'email' => $beneficiary->getEmail(),
+            'creator_contact_id' => $beneficiary->getCreatorContactId()
         ];
     }
 
     /**
      * @param stdClass $response
+     * @param bool $fromValidate
      *
      * @return Beneficiary
      */
-    private function createBeneficiaryValidateFromResponse(stdClass $response)
+    private function createBeneficiaryFromResponse(stdClass $response, $fromValidate = false)
     {
-        return (new Beneficiary())->setBankCountry($response->bank_country)
+        $beneficiary = new Beneficiary();
+
+        $beneficiary->setBankCountry($response->bank_country)
             ->setCurrency($response->currency)
             ->setBeneficiaryCountry($response->beneficiary_country)
             ->setPaymentTypes($response->payment_types)
@@ -229,7 +227,7 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
             ->setBankAddress($response->bank_address)
             ->setAccountNumber($response->account_number)
             ->setIban($response->iban)
-            ->setBicSwift($response->bicSwift)
+            ->setBicSwift($response->bic_swift)
             ->setBankAccountType($response->bank_account_type)
             ->setBeneficiaryAddress($response->beneficiary_address)
             ->setBeneficiaryEntityType($response->beneficiary_entity_type)
@@ -239,12 +237,28 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
             ->setBeneficiaryCity($response->beneficiary_city)
             ->setBeneficiaryPostcode($response->beneficiary_postcode)
             ->setBeneficiaryStateOrProvince($response->beneficiary_state_or_province)
-            ->setBeneficiaryDateOfBirth(new DateTime($response->beneficiary_date_of_birth))
+            ->setBeneficiaryDateOfBirth(
+                (null !== $response->beneficiary_date_of_birth) ? new DateTime($response->beneficiary_date_of_birth) :
+                    null
+            )
             ->setBeneficiaryIdentificationType($response->beneficiary_identification_type)
             ->setBeneficiaryIdentificationValue($response->beneficiary_identification_value)
-            ->setRoutingCodeValue1($response->routing_code_value_1)
+            ->setRoutingCodeType1($response->routing_code_type_1)
             ->setRoutingCodeValue1($response->routing_code_value_1)
             ->setRoutingCodeType2($response->routing_code_type_2)
             ->setRoutingCodeValue2($response->routing_code_value_2);
+
+        if (!$fromValidate) {
+            $beneficiary->setName($response->name)
+                ->setCreatorContactId($response->creator_contact_id)
+                ->setEmail($response->email)
+                ->setIsDefaultBeneficiary('true' === $response->default_beneficiary)
+                ->setBankAccountHolderName($response->bank_account_holder_name)
+                ->setCreatedAt(new DateTime($response->created_at))
+                ->setUpdatedAt(new DateTime($response->updated_at));
+            $this->setIdProperty($beneficiary, $response->id);
+        }
+
+        return $beneficiary;
     }
 }

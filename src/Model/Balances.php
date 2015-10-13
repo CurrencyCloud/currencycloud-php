@@ -8,7 +8,7 @@ class Balances extends PaginatedData
 {
 
     /**
-     * @var Balance
+     * @var Balance[]
      */
     private $balances;
 
@@ -23,7 +23,7 @@ class Balances extends PaginatedData
     }
 
     /**
-     * @return Balance
+     * @return Balance[]
      */
     public function getBalances()
     {
