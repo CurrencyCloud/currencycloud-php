@@ -39,6 +39,31 @@ class Pagination
     private $orderAscDesc;
 
     /**
+     * @param int $totalEntries
+     * @param int $totalPages
+     * @param int $currentPage
+     * @param int $perPage
+     * @param int $previousPage
+     * @param int $nextPage
+     * @param string $order
+     * @param string $orderAscDesc
+     *
+     * @return $this
+     */
+    public static function create($totalEntries, $totalPages, $currentPage, $perPage, $previousPage, $nextPage, $order, $orderAscDesc)
+    {
+        return (new Pagination())
+            ->setTotalEntries($totalEntries)
+            ->setTotalPages($totalPages)
+            ->setCurrentPage($currentPage)
+            ->setPerPage($perPage)
+            ->setPreviousPage($previousPage)
+            ->setNextPage($nextPage)
+            ->setOrder($order)
+            ->setOrderAscDesc($orderAscDesc);
+    }
+
+    /**
      * @return int
      */
     public function getTotalEntries()
