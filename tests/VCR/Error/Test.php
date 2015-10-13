@@ -182,9 +182,7 @@ EOT;
 
         $this->setExpectedException(NotFoundException::class);
 
-        $client = $this->getClient();
-        $client->getSession()
-            ->setAuthToken('656485646b068f6e9c81e3d885fa54f5');
+        $client = $this->getAuthenticatedClient();
         $client->beneficiaries()
             ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
     }

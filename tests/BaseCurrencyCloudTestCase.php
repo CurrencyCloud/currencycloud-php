@@ -16,6 +16,7 @@ use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\Session;
+use DateTime;
 use GuzzleHttp\Client;
 use PHPUnit_Framework_TestCase;
 
@@ -51,5 +52,44 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
             new SettlementsEntryPoint($session, $client),
             new TransactionsEntryPoint($session, $client)
         );
+    }
+
+    /**
+     * @param string $authToken
+     *
+     * @return CurrencyCloud
+     */
+    protected function getAuthenticatedClient($authToken = 'e5070d4a16c5ffe4ed9fb268a2a716be')
+    {
+        $client = $this->getClient();
+        $client->getSession()->setAuthToken($authToken);
+        return $client;
+    }
+
+    protected function validateObjectStrictName($object, $dummy)
+    {
+        $this->assertInternalType('object', $object);
+        foreach ($dummy as $key => $original) {
+            $parts = explode('_', $key);
+            $uCased = implode('', array_map('ucfirst', $parts));
+            $getter = sprintf('get%s', $uCased);
+            if (!is_callable([$object, $getter])) {
+                $getter = sprintf('is%s', $uCased);
+                if (!is_callable([$object, $getter])) {
+                    $this->fail(
+                        sprintf('Found property "%s" but not method "(is|get)%s". Is it wrongly named?', $key, $uCased)
+                    );
+                }
+            }
+            $value = $object->$getter();
+            if ($value instanceof DateTime) {
+                $value = $value->format(DateTime::RFC3339);
+            } else if (is_bool($value)) {
+                $value = $value ? 'true' : 'false';
+            }
+            $this->assertEquals($original, $value, sprintf('Property "%s" with method "%s"', $key, $getter));
+            unset($dummy[$key]);
+        }
+        $this->assertEquals(0, count($dummy));
     }
 }
