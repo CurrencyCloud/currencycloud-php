@@ -14,6 +14,7 @@ use CurrencyCloud\Session;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use stdClass;
 
@@ -95,7 +96,7 @@ abstract class AbstractEntryPoint
 
             $response = $this->client->request($method, $url, $options);
 
-            $throwApiException = function ($class = null) use ($response, $requestParams, $method, $url) {
+            $throwApiException = function ($class = null, ResponseInterface $response, $requestParams, $method, $url) {
                 if (null === $class) {
                     switch ($response->getStatusCode()) {
                         case 400:
@@ -161,12 +162,12 @@ abstract class AbstractEntryPoint
                     if (!is_array($data)
                         && !is_object($data)
                     ) {
-                        throw $throwApiException(ApiException::class);
+                        throw $throwApiException(ApiException::class, $response, $requestParams, $method, $url);
                     }
 
                     return $data;
                 default:
-                    $throwApiException();
+                    $throwApiException(null, $response, $requestParams, $method, $url);
             }
         } finally {
             //If on-behalf-of was injected through params, clear it now
