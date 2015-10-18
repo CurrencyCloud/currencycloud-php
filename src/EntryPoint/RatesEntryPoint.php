@@ -18,7 +18,7 @@ class RatesEntryPoint extends AbstractEntryPoint
      *
      * @return Rates
      */
-    public function multiple($currencyPairs, $ignoreInvalidPairs = true, $onBehalfOf = null)
+    public function multiple($currencyPairs, $ignoreInvalidPairs = null, $onBehalfOf = null)
     {
         if (!is_array($currencyPairs)) {
             $currencyPairs = [$currencyPairs];
@@ -28,7 +28,7 @@ class RatesEntryPoint extends AbstractEntryPoint
             'rates/find',
             [
                 'currency_pair' => implode(',', $currencyPairs),
-                'ignore_invalid_pairs' => $ignoreInvalidPairs ? 'true' : 'false',
+                'ignore_invalid_pairs' => (null === $ignoreInvalidPairs) ? null : ($ignoreInvalidPairs ? 'true' : 'false'),
                 'on_behalf_of' => $onBehalfOf
             ]
         );
@@ -65,7 +65,7 @@ class RatesEntryPoint extends AbstractEntryPoint
                 'sell_currency' => $sellCurrency,
                 'fixed_side' => $fixedSide,
                 'amount' => $amount,
-                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
+                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format('Y-m-d'),
                 'on_behalf_of' => $onBehalfOf
             ]
         );
