@@ -55,8 +55,10 @@ $parametersMatcher = function ($first, $second) {
             //Remove headers
             unset($firstHeaders['User-Agent']);
             unset($firstHeaders['Content-Type']);
+            unset($firstHeaders['Content-Length']);
             unset($secondHeaders['User-Agent']);
             unset($secondHeaders['Content-Type']);
+            unset($secondHeaders['Content-Length']);
             return array_filter($firstHeaders) == array_filter($secondHeaders);
         }
     );
