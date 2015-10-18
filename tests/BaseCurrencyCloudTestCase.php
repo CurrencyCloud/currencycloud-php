@@ -83,7 +83,8 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
             }
             $value = $object->$getter();
             if ($value instanceof DateTime) {
-                $value = $value->format(DateTime::RFC3339);
+                $value = $value->getTimestamp();
+                $original = (new DateTime($original))->getTimestamp();
             } else if (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
