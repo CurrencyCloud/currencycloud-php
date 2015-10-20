@@ -2,8 +2,26 @@
 
 namespace CurrencyCloud\EntryPoint;
 
+use CurrencyCloud\Client;
+use CurrencyCloud\Session;
+
 class AuthenticateEntryPoint extends AbstractEntryPoint
 {
+
+    /**
+     * @var Session
+     */
+    private $session;
+
+    /**
+     * @param Session $session
+     * @param Client $client
+     */
+    public function __construct(Session $session, Client $client)
+    {
+        parent::__construct($client);
+        $this->session = $session;
+    }
 
     /**
      *

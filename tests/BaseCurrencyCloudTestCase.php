@@ -2,6 +2,7 @@
 
 namespace CurrencyCloud\Tests;
 
+use CurrencyCloud\Client;
 use CurrencyCloud\CurrencyCloud;
 use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\AuthenticateEntryPoint;
@@ -17,7 +18,6 @@ use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\Session;
 use DateTime;
-use GuzzleHttp\Client;
 use PHPUnit_Framework_TestCase;
 
 class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
@@ -36,21 +36,21 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
-        $client = new Client();
+        $client = new Client($session, new \GuzzleHttp\Client());
         return new CurrencyCloud(
             $session,
             new AuthenticateEntryPoint($session, $client),
-            new AccountsEntryPoint($session, $client),
-            new BalancesEntryPoint($session, $client),
-            new BeneficiariesEntryPoint($session, $client),
-            new ContactsEntryPoint($session, $client),
-            new ConversionsEntryPoint($session, $client),
-            new PayersEntryPoint($session, $client),
-            new PaymentsEntryPoint($session, $client),
-            new ReferenceEntryPoint($session, $client),
-            new RatesEntryPoint($session, $client),
-            new SettlementsEntryPoint($session, $client),
-            new TransactionsEntryPoint($session, $client)
+            new AccountsEntryPoint($client),
+            new BalancesEntryPoint($client),
+            new BeneficiariesEntryPoint($client),
+            new ContactsEntryPoint($client),
+            new ConversionsEntryPoint($client),
+            new PayersEntryPoint($client),
+            new PaymentsEntryPoint($client),
+            new ReferenceEntryPoint($client),
+            new RatesEntryPoint($client),
+            new SettlementsEntryPoint($client),
+            new TransactionsEntryPoint($client)
         );
     }
 

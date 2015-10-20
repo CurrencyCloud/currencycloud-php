@@ -14,7 +14,6 @@ use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
-use GuzzleHttp\Client;
 use InvalidArgumentException;
 use LogicException;
 
@@ -128,22 +127,22 @@ class CurrencyCloud
     public static function createDefault(Session $session, Client $client = null)
     {
         if (null === $client) {
-            $client = new Client();
+            $client = new Client($session, new \GuzzleHttp\Client());
         }
         return new CurrencyCloud(
             $session,
             new AuthenticateEntryPoint($session, $client),
-            new AccountsEntryPoint($session, $client),
-            new BalancesEntryPoint($session, $client),
-            new BeneficiariesEntryPoint($session, $client),
-            new ContactsEntryPoint($session, $client),
-            new ConversionsEntryPoint($session, $client),
-            new PayersEntryPoint($session, $client),
-            new PaymentsEntryPoint($session, $client),
-            new ReferenceEntryPoint($session, $client),
-            new RatesEntryPoint($session, $client),
-            new SettlementsEntryPoint($session, $client),
-            new TransactionsEntryPoint($session, $client)
+            new AccountsEntryPoint($client),
+            new BalancesEntryPoint($client),
+            new BeneficiariesEntryPoint($client),
+            new ContactsEntryPoint($client),
+            new ConversionsEntryPoint($client),
+            new PayersEntryPoint($client),
+            new PaymentsEntryPoint($client),
+            new ReferenceEntryPoint($client),
+            new RatesEntryPoint($client),
+            new SettlementsEntryPoint($client),
+            new TransactionsEntryPoint($client)
         );
     }
 
