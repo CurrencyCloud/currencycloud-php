@@ -14,8 +14,13 @@ use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
+use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
+use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
+use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
+use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use InvalidArgumentException;
 use LogicException;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CurrencyCloud
 {
@@ -127,11 +132,24 @@ class CurrencyCloud
     public static function createDefault(Session $session, Client $client = null)
     {
         if (null === $client) {
-            $client = new Client($session, new \GuzzleHttp\Client());
+            $eventDispatcher = new EventDispatcher();
+
+            $client = new Client($session, new \GuzzleHttp\Client(), $eventDispatcher);
+
+            $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
+
+            $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
+                    new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
+            ], -255);
+            $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
+                    new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
+            ], -255);
+        } else {
+            $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
         }
         return new CurrencyCloud(
             $session,
-            new AuthenticateEntryPoint($session, $client),
+            $authenticateEntryPoint,
             new AccountsEntryPoint($client),
             new BalancesEntryPoint($client),
             new BeneficiariesEntryPoint($client),

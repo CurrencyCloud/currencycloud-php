@@ -16,9 +16,17 @@ use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
+use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
+use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
+use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
+use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use CurrencyCloud\Session;
 use DateTime;
+use GuzzleHttp\Handler\CurlFactory;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 use PHPUnit_Framework_TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
 {
@@ -36,10 +44,26 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
-        $client = new Client($session, new \GuzzleHttp\Client());
+        $eventDispatcher = new EventDispatcher();
+
+        $client = new Client($session, new \GuzzleHttp\Client([
+            'sync' => true,
+            'handler' => HandlerStack::create(new CurlHandler([
+                'handle_factory' => new CurlFactory(0)
+            ]))
+        ]), $eventDispatcher);
+
+        $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
+
+        $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
+            new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
+        ], -255);
+        $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
+            new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
+        ], -255);
         return new CurrencyCloud(
             $session,
-            new AuthenticateEntryPoint($session, $client),
+            $authenticateEntryPoint,
             new AccountsEntryPoint($client),
             new BalancesEntryPoint($client),
             new BeneficiariesEntryPoint($client),
