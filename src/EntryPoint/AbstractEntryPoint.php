@@ -26,8 +26,8 @@ abstract class AbstractEntryPoint
     }
 
     /**
-     * @param $method
-     * @param $uri
+     * @param string$method
+     * @param string$uri
      * @param array $queryParams
      * @param array $requestParams
      * @param array $options
