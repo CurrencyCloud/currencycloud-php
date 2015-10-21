@@ -20,6 +20,7 @@ use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
 use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
+use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
 use CurrencyCloud\Session;
 use DateTime;
 use GuzzleHttp\Handler\CurlFactory;
@@ -58,6 +59,9 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
         $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
             new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
         ], -255);
+        $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
+            new SessionTimeoutListener($client, $authenticateEntryPoint), 'onClientHttpErrorEvent'
+        ], -254);
         $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
             new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
         ], -255);

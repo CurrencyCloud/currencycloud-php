@@ -65,4 +65,25 @@ class Test extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
         $this->assertEquals('038022bcd2f372cac7bab448db7b5c3b', $client->getSession()->getAuthToken());
     }
+
+    /**
+     * @vcr Authentication/handles_session_timeout_error.yaml
+     * @test
+     */
+    public function handlesSessionTimeoutError()
+    {
+        $client = $this->getAuthenticatedClient();
+
+        $beneficiaries = $client->beneficiaries()->find();
+
+        $this->assertTrue($beneficiaries instanceof Beneficiaries);
+        $this->assertCount(0, $beneficiaries->getBeneficiaries());
+
+        $dummy = json_decode(
+            '{"beneficiaries":[],"pagination":{"total_entries":0,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":-1,"order":"created_at","order_asc_desc":"asc"}}',
+            true
+        );
+        $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
+        $this->assertEquals('038022bcd2f372cac7bab448db7b5c3b', $client->getSession()->getAuthToken());
+    }
 }
