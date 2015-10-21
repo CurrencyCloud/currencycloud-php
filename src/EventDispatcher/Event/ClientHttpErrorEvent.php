@@ -24,23 +24,33 @@ final class ClientHttpErrorEvent extends Event
      * @var
      */
     private $url;
+    /**
+     * @var array
+     */
+    private $originalRequest;
+    /**
+     * @var mixed
+     */
+    private $interceptedResponse;
 
     /**
      * @param ResponseInterface $response
      * @param array $requestParams
      * @param string $method
      * @param string $url
+     * @param array $originalRequest
      */
-    public function __construct(ResponseInterface $response, array $requestParams, $method, $url)
+    public function __construct(ResponseInterface $response, array $requestParams, $method, $url, array $originalRequest)
     {
         $this->response = $response;
         $this->requestParams = $requestParams;
         $this->method = $method;
         $this->url = $url;
+        $this->originalRequest = $originalRequest;
     }
 
     /**
-     * @return mixed
+     * @return ResponseInterface
      */
     public function getResponse()
     {
@@ -69,5 +79,29 @@ final class ClientHttpErrorEvent extends Event
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOriginalRequest()
+    {
+        return $this->originalRequest;
+    }
+
+    /**
+     * @param mixed $response
+     */
+    public function setInterceptedResponse($response)
+    {
+        $this->interceptedResponse = $response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInterceptedResponse()
+    {
+        return $this->interceptedResponse;
     }
 }

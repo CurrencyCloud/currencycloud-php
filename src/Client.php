@@ -67,6 +67,15 @@ class Client
             $secured
         ));
 
+        $originalRequest = [
+            'method' => $method,
+            'uri' => $uri,
+            'queryParams' => $queryParams,
+            'requestParams' => $requestParams,
+            'option' => $options,
+            'secured' => $secured
+        ];
+
         //Check for on behalf of in order to inject it if needed
         $isOnBehalfOfUsedInParams = false;
         foreach ([&$queryParams, &$requestParams] as &$paramsArray) {
@@ -112,12 +121,18 @@ class Client
                     return $data;
                 default:
                     //Everything that's not 200 consider error and dispatch event
-                    $this->eventDispatcher->dispatch(ClientHttpErrorEvent::NAME, new ClientHttpErrorEvent(
+                    $event = new ClientHttpErrorEvent(
                         $response,
                         $requestParams,
                         $method,
-                        $url
-                    ));
+                        $url,
+                        $originalRequest
+                    );
+                    $this->eventDispatcher->dispatch(ClientHttpErrorEvent::NAME, $event);
+                    $interceptedResponse = $event->getInterceptedResponse();
+                    if (null !== $interceptedResponse) {
+                        return $interceptedResponse;
+                    }
             }
         } finally {
             //If on-behalf-of was injected through params, clear it now

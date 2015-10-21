@@ -18,6 +18,7 @@ use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
 use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
+use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
 use InvalidArgumentException;
 use LogicException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -141,6 +142,9 @@ class CurrencyCloud
             $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
                     new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
             ], -255);
+            $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
+                new SessionTimeoutListener($client, $authenticateEntryPoint), 'onClientHttpErrorEvent'
+            ], -254);
             $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
                     new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
             ], -255);
