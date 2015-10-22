@@ -41,6 +41,7 @@ class Test extends BaseCurrencyCloudTestCase
         $this->assertEquals($dummy['first_conversion_date'], $conversionDates->getFirstConversionDate()->format('Y-m-d'));
         $this->assertEquals($dummy['default_conversion_date'], $conversionDates->getDefaultConversionDate()->format('Y-m-d'));
         $invalidConversionDates = $conversionDates->getInvalidConversionDates();
+        $this->assertEquals(count($dummy['invalid_conversion_dates']), count($invalidConversionDates));
         $i = 0;
         foreach ($dummy['invalid_conversion_dates'] as $date => $description) {
             $this->assertArrayHasKey($i, $invalidConversionDates);
@@ -63,6 +64,7 @@ class Test extends BaseCurrencyCloudTestCase
             true
         );
 
+        $this->assertEquals(count($dummy['currencies']), count($currencies));
         foreach ($dummy['currencies'] as $k => $currency) {
             $this->assertArrayHasKey($k, $currencies);
             $this->assertEquals($currency['code'], $currencies[$k]->getCode());
