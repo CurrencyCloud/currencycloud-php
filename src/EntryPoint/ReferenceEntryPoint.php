@@ -81,7 +81,9 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         }
 
         return new ConversionDates(
-            $invalidDates, $response->first_conversion_date, $response->default_conversion_date
+            $invalidDates,
+            new DateTime($response->first_conversion_date),
+            new DateTime($response->default_conversion_date)
         );
     }
 

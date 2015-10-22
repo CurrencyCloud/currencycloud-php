@@ -24,4 +24,28 @@ class Test extends BaseCurrencyCloudTestCase
             $this->assertTrue($detail == (array) $requiredDetails[$k]);
         }
     }
+
+    /**
+     * @vcr Reference/can_retrieve_conversion_dates.yaml
+     * @test
+     */
+    public function canRetrieveConversionDates()
+    {
+
+        $conversionDates = $this->getAuthenticatedClient()->reference()->conversionDates('GBPUSD');
+
+        $dummy = json_decode(
+            '{"invalid_conversion_dates":{"2015-05-02":"No trading on Saturday","2015-05-03":"No trading on Sunday","2015-05-04":"Early May bank holiday","2015-05-09":"No trading on Saturday","2015-05-10":"No trading on Sunday","2015-05-16":"No trading on Saturday","2015-05-17":"No trading on Sunday","2015-05-23":"No trading on Saturday","2015-05-24":"No trading on Sunday","2015-05-25":"Spring bank holiday","2015-05-30":"No trading on Saturday","2015-05-31":"No trading on Sunday","2015-06-06":"No trading on Saturday","2015-06-07":"No trading on Sunday","2015-06-13":"No trading on Saturday","2015-06-14":"No trading on Sunday","2015-06-20":"No trading on Saturday","2015-06-21":"No trading on Sunday","2015-06-27":"No trading on Saturday","2015-06-28":"No trading on Sunday"},"first_conversion_date":"2015-04-30","default_conversion_date":"2015-04-30"}',
+            true
+        );
+        $this->assertEquals($dummy['first_conversion_date'], $conversionDates->getFirstConversionDate()->format('Y-m-d'));
+        $this->assertEquals($dummy['default_conversion_date'], $conversionDates->getDefaultConversionDate()->format('Y-m-d'));
+        $invalidConversionDates = $conversionDates->getInvalidConversionDates();
+        $i = 0;
+        foreach ($dummy['invalid_conversion_dates'] as $date => $description) {
+            $this->assertArrayHasKey($i, $invalidConversionDates);
+            $this->assertEquals($date, $invalidConversionDates[$i]->getDate()->format('Y-m-d'));
+            $this->assertEquals($description, $invalidConversionDates[$i++]->getDescription());
+        }
+    }
 }

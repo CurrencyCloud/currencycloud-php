@@ -46,7 +46,7 @@ class ConversionDates
     /**
      * @return DateTime
      */
-    public function getFirstConversionDay()
+    public function getFirstConversionDate()
     {
         return $this->firstConversionDay;
     }
@@ -54,7 +54,7 @@ class ConversionDates
     /**
      * @return DateTime
      */
-    public function getDefaultConversionDay()
+    public function getDefaultConversionDate()
     {
         return $this->defaultConversionDay;
     }
