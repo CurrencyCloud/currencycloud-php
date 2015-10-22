@@ -48,4 +48,26 @@ class Test extends BaseCurrencyCloudTestCase
             $this->assertEquals($description, $invalidConversionDates[$i++]->getDescription());
         }
     }
+
+    /**
+     * @vcr Reference/can_retrieve_currencies.yaml
+     * @test
+     */
+    public function canRetrieveCurrencies()
+    {
+
+        $currencies = $this->getAuthenticatedClient()->reference()->availableCurrencies();
+
+        $dummy = json_decode(
+            '{"currencies":[{"code":"AED","decimal_places":2,"name":"United Arab Emirates Dirham"},{"code":"AUD","decimal_places":2,"name":"Australian Dollar"},{"code":"CAD","decimal_places":2,"name":"Canadian Dollar"},{"code":"CHF","decimal_places":2,"name":"Swiss Franc"},{"code":"CZK","decimal_places":2,"name":"Czech Koruna"},{"code":"DKK","decimal_places":2,"name":"Danish Krone"},{"code":"EUR","decimal_places":2,"name":"Euro"},{"code":"GBP","decimal_places":2,"name":"Pound Sterling"},{"code":"HKD","decimal_places":2,"name":"Hong Kong Dollar"},{"code":"HUF","decimal_places":2,"name":"Hungarian Forint"},{"code":"ILS","decimal_places":2,"name":"Israeli New Sheqel"},{"code":"JPY","decimal_places":0,"name":"Japanese Yen"},{"code":"MXN","decimal_places":2,"name":"Mexican Peso"},{"code":"NOK","decimal_places":2,"name":"Norwegian Krone"},{"code":"NZD","decimal_places":2,"name":"New Zealand Dollar"},{"code":"PLN","decimal_places":2,"name":"Polish Zloty"},{"code":"RON","decimal_places":2,"name":"Romanian New Leu"},{"code":"SEK","decimal_places":2,"name":"Swedish Krona"},{"code":"SGD","decimal_places":2,"name":"Singapore Dollar"},{"code":"THB","decimal_places":2,"name":"Thai Baht"},{"code":"TRY","decimal_places":2,"name":"Turkish Lira"},{"code":"USD","decimal_places":2,"name":"United States Dollar"},{"code":"ZAR","decimal_places":2,"name":"South African Rand"}]}',
+            true
+        );
+
+        foreach ($dummy['currencies'] as $k => $currency) {
+            $this->assertArrayHasKey($k, $currencies);
+            $this->assertEquals($currency['code'], $currencies[$k]->getCode());
+            $this->assertEquals($currency['decimal_places'], $currencies[$k]->getDecimalPlaces());
+            $this->assertEquals($currency['name'], $currencies[$k]->getName());
+        }
+    }
 }
