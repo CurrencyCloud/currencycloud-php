@@ -72,4 +72,25 @@ class Test extends BaseCurrencyCloudTestCase
             $this->assertEquals($currency['name'], $currencies[$k]->getName());
         }
     }
+
+    /**
+     * @vcr Reference/can_retrieve_settlement_accounts.yaml
+     * @test
+     */
+    public function canRetrieveSettlementAccounts()
+    {
+
+        $settlementAccounts = $this->getAuthenticatedClient()->reference()->settlementAccounts('GBP');
+
+        $dummy = json_decode(
+            '{"settlement_accounts":[{"bank_account_holder_name":"The Currency Cloud GBP - Client Seg A/C","beneficiary_address":"","beneficiary_country":"","bank_name":"Barclays Bank plc","bank_address":[],"bank_country":"","currency":"GBP","bic_swift":"BARCGB22","iban":"GB06 BARC 2006 0513 0714 72","account_number":"13071472","routing_code_type_1":"sort_code","routing_code_value_1":"200605","routing_code_type_2":"","routing_code_value_2":""}]}',
+            true
+        );
+
+        $this->assertEquals(count($dummy['settlement_accounts']), count($settlementAccounts));
+        foreach ($dummy['settlement_accounts'] as $k => $settlementAccount) {
+            $this->assertArrayHasKey($k, $settlementAccounts);
+            $this->validateObjectStrictName($settlementAccounts[$k], $settlementAccount);
+        }
+    }
 }

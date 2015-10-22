@@ -64,7 +64,7 @@ class SettlementAccount
 
     /**
      * @param string $bankAccountHolderName
-     * @param array $beneficiaryAddress
+     * @param string $beneficiaryAddress
      * @param string $beneficiaryCountry
      * @param string $bankName
      * @param array $bankAddress
@@ -80,7 +80,7 @@ class SettlementAccount
      */
     public function __construct(
         $bankAccountHolderName,
-        array $beneficiaryAddress,
+        $beneficiaryAddress,
         $beneficiaryCountry,
         $bankName,
         array $bankAddress,
@@ -95,7 +95,7 @@ class SettlementAccount
         $routingCodeValue2
     ) {
         $this->bankAccountHolderName = (string) $bankAccountHolderName;
-        $this->beneficiaryAddress = $beneficiaryAddress;
+        $this->beneficiaryAddress = (string) $beneficiaryAddress;
         $this->beneficiaryCountry = (string) $beneficiaryCountry;
         $this->bankName = (string) $bankName;
         $this->bankAddress = $bankAddress;

@@ -132,7 +132,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         foreach ($response->settlement_accounts as $settlementAccount) {
             $ret[] = new SettlementAccount(
                 $settlementAccount->bank_account_holder_name,
-                (is_array($settlementAccount->beneficiary_address)) ? $settlementAccount->beneficiary_address : [],
+                $settlementAccount->beneficiary_address,
                 $settlementAccount->beneficiary_country,
                 $settlementAccount->bank_name,
                 (is_array($settlementAccount->bank_address)) ? $settlementAccount->bank_address : [],
