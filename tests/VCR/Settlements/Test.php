@@ -76,4 +76,23 @@ class Test extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($settlement, $dummy);
     }
 
+    /**
+     * @vcr Settlements/can_remove_conversion.yaml
+     * @test
+     */
+    public function canRemoveConversion()
+    {
+        $client = $this->getAuthenticatedClient();
+
+        $settlement =
+            $client->settlements()
+                ->removeConversion('63eeef54-3531-4e65-827a-7d0f37503fcc', '24d2ee7f-c7a3-4181-979e-9c58dbace992');
+
+        $dummy = json_decode(
+            '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:40:56+00:00","released_at":""}',
+            true
+        );
+
+        $this->validateObjectStrictName($settlement, $dummy);
+    }
 }
