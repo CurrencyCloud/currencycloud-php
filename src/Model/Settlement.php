@@ -18,6 +18,10 @@ class Settlement implements EntityInterface
     /**
      * @var string
      */
+    private $type;
+    /**
+     * @var string
+     */
     private $status;
     /**
      * @var array
@@ -175,9 +179,28 @@ class Settlement implements EntityInterface
      *
      * @return $this
      */
-    public function setReleasedAt(DateTime $releasedAt)
+    public function setReleasedAt(DateTime $releasedAt = null)
     {
         $this->releasedAt = $releasedAt;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
         return $this;
     }
 }

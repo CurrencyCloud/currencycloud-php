@@ -49,11 +49,12 @@ class SettlementsEntryPoint extends AbstractEntryPoint
         $settlement = new Settlement();
         $settlement->setShortReference($response->short_reference)
             ->setStatus($response->status)
+            ->setType($response->type)
             ->setConversionIds($response->conversion_ids)
             ->setEntries($entries)
             ->setCreatedAt(new DateTime($response->created_at))
             ->setUpdatedAt(new DateTime($response->updated_at))
-            ->setReleasedAt(new DateTime($response->released_at));
+            ->setReleasedAt($response->released_at ? new DateTime($response->released_at) : null);
 
         $this->setIdProperty($settlement, $response->id);
         return $settlement;

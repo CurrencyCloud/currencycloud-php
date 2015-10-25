@@ -15,16 +15,17 @@ class ConversionsEntryPoint extends AbstractEntryPoint
      * @param Conversion $conversion
      * @param string $amount
      * @param string $reason
-     * @param boolean $teamAgreement
+     * @param boolean $termAgreement
      * @param null|string $onBehalfOf
+
      *
-     * @return Conversion
+*@return Conversion
      */
     public function create(
         Conversion $conversion,
         $amount,
         $reason,
-        $teamAgreement,
+        $termAgreement,
         $onBehalfOf = null
     ) {
         $conversionDate = $conversion->getConversionDate();
@@ -38,10 +39,10 @@ class ConversionsEntryPoint extends AbstractEntryPoint
                 'fixed_side' => $conversion->getFixedSide(),
                 'amount' => $amount,
                 'reason' => $reason,
-                'teamAgreement' => $teamAgreement ? "true" : "false",
-                'conversionDate' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
-                'clientBuyAmount' => $conversion->getClientBuyAmount(),
-                'clientSellAmount' => $conversion->getClientSellAmount(),
+                'term_agreement' => $termAgreement ? "true" : "false",
+                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
+                'client_buy_amount' => $conversion->getClientBuyAmount(),
+                'client_sell_amount' => $conversion->getClientSellAmount(),
                 'on_behalf_of' => $onBehalfOf
             ]
         );
@@ -59,30 +60,30 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         $conversion = new Conversion();
         $conversion->setAccountId($response->account_id)
             ->setCreatorContactId($response->creator_contact_id)
-            ->setShortReference($response->creator_contact_id)
-            ->setSettlementDate(new DateTime($response->creator_contact_id))
-            ->setConversionDate(new DateTime($response->creator_contact_id))
-            ->setStatus($response->creator_contact_id)
-            ->setPartnerStatus($response->creator_contact_id)
-            ->setCurrencyPair($response->creator_contact_id)
-            ->setBuyCurrency($response->creator_contact_id)
-            ->setSellCurrency($response->creator_contact_id)
-            ->setFixedSide($response->creator_contact_id)
-            ->setPartnerBuyAmount($response->creator_contact_id)
-            ->setPartnerSellAmount($response->creator_contact_id)
-            ->setClientBuyAmount($response->creator_contact_id)
-            ->setClientSellAmount($response->creator_contact_id)
-            ->setMidMarketRate($response->creator_contact_id)
-            ->setCoreRate($response->creator_contact_id)
-            ->setPartnerRate($response->creator_contact_id)
-            ->setClientRate($response->creator_contact_id)
-            ->setDepositRequired($response->creator_contact_id)
-            ->setDepositAmount($response->creator_contact_id)
-            ->setDepositCurrency($response->creator_contact_id)
-            ->setDepositStatus($response->creator_contact_id)
-            ->setDepositRequiredAt(new DateTime($response->creator_contact_id))
-            ->setPaymentIds($response->creator_contact_id)
-            ->setCreatedAt(new DateTime($response->creator_contact_id))
+            ->setShortReference($response->short_reference)
+            ->setSettlementDate(new DateTime($response->settlement_date))
+            ->setConversionDate(new DateTime($response->conversion_date))
+            ->setStatus($response->status)
+            ->setPartnerStatus($response->partner_status)
+            ->setCurrencyPair($response->currency_pair)
+            ->setBuyCurrency($response->buy_currency)
+            ->setSellCurrency($response->sell_currency)
+            ->setFixedSide($response->fixed_side)
+            ->setPartnerBuyAmount($response->partner_buy_amount)
+            ->setPartnerSellAmount($response->partner_sell_amount)
+            ->setClientBuyAmount($response->client_buy_amount)
+            ->setClientSellAmount($response->client_sell_amount)
+            ->setMidMarketRate($response->mid_market_rate)
+            ->setCoreRate($response->core_rate)
+            ->setPartnerRate($response->partner_rate)
+            ->setClientRate($response->client_rate)
+            ->setDepositRequired($response->deposit_required)
+            ->setDepositAmount($response->deposit_amount)
+            ->setDepositCurrency($response->deposit_currency)
+            ->setDepositStatus($response->deposit_status)
+            ->setDepositRequiredAt(new DateTime($response->deposit_required_at))
+            ->setPaymentIds($response->payment_ids)
+            ->setCreatedAt(new DateTime($response->created_at))
             ->setUpdatedAt(new DateTime($response->updated_at));
 
         $this->setIdProperty($conversion, $response->id);
