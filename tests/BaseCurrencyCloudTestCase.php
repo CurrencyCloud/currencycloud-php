@@ -114,7 +114,9 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
                 $value = $value->getTimestamp();
                 $original = (new DateTime($original))->getTimestamp();
             } else if (is_bool($value)) {
-                $value = $value ? 'true' : 'false';
+                if (!is_bool($original)) {
+                    $value = $value ? 'true' : 'false';
+                }
             }
             $this->assertEquals($original, $value, sprintf('Property "%s" with method "%s"', $key, $getter));
             unset($dummy[$key]);
