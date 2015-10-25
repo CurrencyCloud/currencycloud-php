@@ -95,4 +95,29 @@ class Test extends BaseCurrencyCloudTestCase
 
         $this->validateObjectStrictName($settlement, $dummy);
     }
+
+    /**
+     * @vcr Settlements/can_unrelease.yaml
+     * @test
+     */
+    public function canUnrelease()
+    {
+        $client = $this->getAuthenticatedClient();
+
+        $settlement =
+            $client->settlements()
+                ->unRelease('51c619e0-0256-40ad-afba-ca4114b936f9');
+
+        $dummy = json_decode(
+            '{"id":"51c619e0-0256-40ad-afba-ca4114b936f9","status":"open","short_reference":"20150504-SHKTFD","type":"bulk","conversion_ids":["9bb4a49b-f959-402f-8bb8-4463b18d93c7"],"entries":[{"USD":{"receive_amount":"0.00","send_amount":"1512.00"}},{"GBP":{"receive_amount":"1000.00","send_amount":"0.00"}}],"created_at":"2015-05-04T21:14:48+00:00","updated_at":"2015-05-04T21:51:51+00:00","released_at":""}',
+            true
+        );
+
+        $dummy['entries'] = [
+            'GBP' => new SettlementEntry('0.00', '1000.00'),
+            'USD' => new SettlementEntry('1512.00', '0.00')
+        ];
+
+        $this->validateObjectStrictName($settlement, $dummy);
+    }
 }
