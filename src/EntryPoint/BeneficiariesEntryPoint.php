@@ -8,7 +8,7 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
-class BeneficiariesEntryPoint extends AbstractEntryPoint
+class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 {
 
     /**
@@ -49,7 +49,9 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 $onBehalfOf
             )
         );
-        return $this->createBeneficiaryFromResponse($response);
+        $entity = $this->createBeneficiaryFromResponse($response);
+        $this->entityManager->add($entity);
+        return $entity;
     }
 
     /**
@@ -68,28 +70,41 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
                 'on_behalf_of' => $onBehalfOf
             ]
         );
-        return $this->createBeneficiaryFromResponse($response);
+        $entity = $this->createBeneficiaryFromResponse($response);
+
+        $this->entityManager->add($entity);
+
+        return $entity;
     }
 
     /**
-     * @param string $id
      * @param Beneficiary $beneficiary
      * @param null $onBehalfOf
      *
      * @return Beneficiary
      */
-    public function update($id, Beneficiary $beneficiary, $onBehalfOf = null)
+    public function update(Beneficiary $beneficiary, $onBehalfOf = null)
     {
+        /* @var Beneficiary $changeSet */
+        $changeSet = $this->entityManager->computeChangeSet($beneficiary);
+        if (null === $changeSet) {
+            return $beneficiary;
+        }
         $response = $this->request(
             'POST',
             sprintf(
                 'beneficiaries/%s',
-                $id
+                $beneficiary->getId()
             ),
             [],
-            $this->convertBeneficiaryToRequest($beneficiary, $onBehalfOf, false, true)
+            $this->convertBeneficiaryToRequest($changeSet, $onBehalfOf, false, true)
         );
-        return $this->createBeneficiaryFromResponse($response);
+        $entity = $this->createBeneficiaryFromResponse($response);
+
+        $this->entityManager->remove($beneficiary);
+        $this->entityManager->add($entity);
+
+        return $entity;
     }
 
     /**
@@ -119,27 +134,30 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
         );
         $beneficiaries = [];
         foreach ($response->beneficiaries as $beneficiary) {
-            $beneficiaries[] = $this->createBeneficiaryFromResponse($beneficiary);
+            $entity = $this->createBeneficiaryFromResponse($beneficiary);
+            $this->entityManager->add($entity);
+            $beneficiaries[] = $entity;
         }
         return new Beneficiaries($beneficiaries, $this->createPaginationFromResponse($response));
     }
 
     /**
-     * @param string $id
+     * @param Beneficiary $beneficiary
      * @param null $onBehalfOf
      *
      * @return Beneficiary
      */
-    public function delete($id, $onBehalfOf = null)
+    public function delete(Beneficiary $beneficiary, $onBehalfOf = null)
     {
         $response = $this->request(
             'POST',
-            sprintf('beneficiaries/%s/delete', $id),
+            sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
             [],
             [
                 'on_behalf_of' => $onBehalfOf
             ]
         );
+        $this->entityManager->remove($beneficiary);
         return $this->createBeneficiaryFromResponse($response);
     }
 
@@ -196,7 +214,8 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
 
         $common += [
             'bank_account_holder_name' => $beneficiary->getBankAccountHolderName(),
-            'name' => $beneficiary->getName()
+            'name' => $beneficiary->getName(),
+            'email' => $beneficiary->getEmail()
         ];
 
         if ($convertForUpdate) {
@@ -204,7 +223,6 @@ class BeneficiariesEntryPoint extends AbstractEntryPoint
         }
 
         return $common + [
-            'email' => $beneficiary->getEmail(),
             'creator_contact_id' => $beneficiary->getCreatorContactId()
         ];
     }

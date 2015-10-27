@@ -4,7 +4,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Beneficiary
+class Beneficiary implements EntityInterface
 {
 
     /**
@@ -299,7 +299,7 @@ class Beneficiary
      *
      * @return $this
      */
-    public function setBankAddress(array $bankAddress)
+    public function setBankAddress(array $bankAddress = null)
     {
         $this->bankAddress = $bankAddress;
         return $this;

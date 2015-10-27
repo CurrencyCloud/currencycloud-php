@@ -151,12 +151,13 @@ class CurrencyCloud
         } else {
             $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
         }
+        $entityManager = new SimpleEntityManager();
         return new CurrencyCloud(
             $session,
             $authenticateEntryPoint,
             new AccountsEntryPoint($client),
             new BalancesEntryPoint($client),
-            new BeneficiariesEntryPoint($client),
+            new BeneficiariesEntryPoint($entityManager, $client),
             new ContactsEntryPoint($client),
             new ConversionsEntryPoint($client),
             new PayersEntryPoint($client),

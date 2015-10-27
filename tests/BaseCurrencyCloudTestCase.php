@@ -22,6 +22,7 @@ use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
 use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
 use CurrencyCloud\Session;
+use CurrencyCloud\SimpleEntityManager;
 use DateTime;
 use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
@@ -65,12 +66,13 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
         $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
             new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
         ], -255);
+        $entityManager = new SimpleEntityManager();
         return new CurrencyCloud(
             $session,
             $authenticateEntryPoint,
             new AccountsEntryPoint($client),
             new BalancesEntryPoint($client),
-            new BeneficiariesEntryPoint($client),
+            new BeneficiariesEntryPoint($entityManager, $client),
             new ContactsEntryPoint($client),
             new ConversionsEntryPoint($client),
             new PayersEntryPoint($client),
