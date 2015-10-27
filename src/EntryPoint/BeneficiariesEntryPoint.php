@@ -40,18 +40,11 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      */
     public function create(Beneficiary $beneficiary, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'POST',
-            'beneficiaries/create',
-            [],
-            $this->convertBeneficiaryToRequest(
-                $beneficiary,
-                $onBehalfOf
-            )
-        );
-        $entity = $this->createBeneficiaryFromResponse($response);
-        $this->entityManager->add($entity);
-        return $entity;
+        return $this->doCreate('beneficiaries/create', $beneficiary, function ($beneficiary, $onBehalfOf) {
+            return $this->convertBeneficiaryToRequest($beneficiary, $onBehalfOf);
+        }, function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -62,19 +55,9 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'GET',
-            sprintf('beneficiaries/%s', $id),
-            [],
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-        $entity = $this->createBeneficiaryFromResponse($response);
-
-        $this->entityManager->add($entity);
-
-        return $entity;
+        return $this->doRetrieve(sprintf('beneficiaries/%s', $id), function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -85,26 +68,14 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      */
     public function update(Beneficiary $beneficiary, $onBehalfOf = null)
     {
-        /* @var Beneficiary $changeSet */
-        $changeSet = $this->entityManager->computeChangeSet($beneficiary);
-        if (null === $changeSet) {
-            return $beneficiary;
-        }
-        $response = $this->request(
-            'POST',
-            sprintf(
-                'beneficiaries/%s',
-                $beneficiary->getId()
-            ),
-            [],
-            $this->convertBeneficiaryToRequest($changeSet, $onBehalfOf, false, true)
-        );
-        $entity = $this->createBeneficiaryFromResponse($response);
-
-        $this->entityManager->remove($beneficiary);
-        $this->entityManager->add($entity);
-
-        return $entity;
+        return $this->doUpdate(sprintf(
+            'beneficiaries/%s',
+            $beneficiary->getId()
+        ), $beneficiary, function ($entity, $onBehalfOf) {
+            return $this->convertBeneficiaryToRequest($entity, $onBehalfOf, false, true);
+        }, function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        });
     }
 
     /**
@@ -122,23 +93,13 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        $response = $this->request(
-            'GET',
-            'beneficiaries/find',
-            $this->convertBeneficiaryToRequest(
-                $beneficiary,
-                $onBehalfOf,
-                false,
-                true
-            ) + $this->convertPaginationToRequest($pagination)
-        );
-        $beneficiaries = [];
-        foreach ($response->beneficiaries as $beneficiary) {
-            $entity = $this->createBeneficiaryFromResponse($beneficiary);
-            $this->entityManager->add($entity);
-            $beneficiaries[] = $entity;
-        }
-        return new Beneficiaries($beneficiaries, $this->createPaginationFromResponse($response));
+        return $this->doFind('beneficiaries/find', $beneficiary, $pagination, function ($entity, $onBehalfOf) {
+            return $this->convertBeneficiaryToRequest($entity, $onBehalfOf);
+        }, function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, function (array $entities, Pagination $pagination) {
+            return new Beneficiaries($entities, $pagination);
+        }, 'beneficiaries', $onBehalfOf);
     }
 
     /**
@@ -149,16 +110,14 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      */
     public function delete(Beneficiary $beneficiary, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'POST',
+        return $this->doDelete(
             sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
-            [],
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
+            $beneficiary,
+            function ($response) {
+                return $this->createBeneficiaryFromResponse($response);
+            },
+            $onBehalfOf
         );
-        $this->entityManager->remove($beneficiary);
-        return $this->createBeneficiaryFromResponse($response);
     }
 
     /**
