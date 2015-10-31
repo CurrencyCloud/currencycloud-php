@@ -10,7 +10,7 @@ use CurrencyCloud\Model\Settlements;
 use DateTime;
 use stdClass;
 
-class SettlementsEntryPoint extends AbstractEntryPoint
+class SettlementsEntryPoint extends AbstractEntityEntryPoint
 {
 
     /**
@@ -21,17 +21,11 @@ class SettlementsEntryPoint extends AbstractEntryPoint
      */
     public function create($type = null, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'POST',
-            'settlements/create',
-            [],
-            [
-                'type' => $type,
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createSettlementFromResponse($response);
+        return $this->doCreate('settlements/create', $type, function ($type) {
+            return ['type' => $type];
+        }, function (stdClass $response) {
+            return $this->createSettlementFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -68,35 +62,22 @@ class SettlementsEntryPoint extends AbstractEntryPoint
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'GET',
-            sprintf('settlements/%s', $id),
-            [],
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createSettlementFromResponse($response);
+        return $this->doRetrieve(sprintf('settlements/%s', $id), function (stdClass $response) {
+            return $this->createSettlementFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
-     * @param string $id
+     * @param Settlement $settlement
      * @param null|string $onBehalfOf
      *
      * @return Settlement
      */
-    public function delete($id, $onBehalfOf = null)
+    public function delete(Settlement $settlement, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'POST',
-            sprintf('settlements/%s/delete', $id),
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createSettlementFromResponse($response);
+        return $this->doDelete(sprintf('settlements/%s/delete', $settlement->getId()), $settlement, function (stdClass $response) {
+            return $this->createSettlementFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -199,29 +180,22 @@ class SettlementsEntryPoint extends AbstractEntryPoint
         Pagination $pagination = null,
         $onBehalfOf = null
     ) {
-
         if (null === $criteria) {
             $criteria = new FindSettlementsCriteria();
         }
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        $response = $this->request(
-            'GET',
-            'settlements/find',
-            $this->convertPaginationToRequest($pagination)
-            + $this->convertFindSettlementsCriteriaToRequest($criteria)
-            + [
-                'on_behalf_of' => $onBehalfOf,
+        return $this->doFind('settlements/find', $criteria, $pagination, function ($criteria) use ($shortReference, $status) {
+            return $this->convertFindSettlementsCriteriaToRequest($criteria) + [
                 'short_reference' => $shortReference,
                 'status' => $status
-            ]
-        );
-        $settlements = [];
-        foreach ($response->settlements as $data) {
-            $settlements[] = $this->createSettlementFromResponse($data);
-        }
-        return new Settlements($settlements, $this->createPaginationFromResponse($response));
+            ];
+        }, function (stdClass $response) {
+            return $this->createSettlementFromResponse($response);
+        }, function ($items, $pagination) {
+            return new Settlements($items, $pagination);
+        }, 'settlements', $onBehalfOf);
     }
 
     /**

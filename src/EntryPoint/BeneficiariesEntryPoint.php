@@ -40,8 +40,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      */
     public function create(Beneficiary $beneficiary, $onBehalfOf = null)
     {
-        return $this->doCreate('beneficiaries/create', $beneficiary, function ($beneficiary, $onBehalfOf) {
-            return $this->convertBeneficiaryToRequest($beneficiary, $onBehalfOf);
+        return $this->doCreate('beneficiaries/create', $beneficiary, function ($beneficiary) {
+            return $this->convertBeneficiaryToRequest($beneficiary);
         }, function ($response) {
             return $this->createBeneficiaryFromResponse($response);
         }, $onBehalfOf);
@@ -122,7 +122,6 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 
     /**
      * @param Beneficiary $beneficiary
-     * @param string $onBehalfOf
      * @param bool $convertForValidate
      * @param bool $convertForUpdate
      *
@@ -130,7 +129,6 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      */
     protected function convertBeneficiaryToRequest(
         Beneficiary $beneficiary,
-        $onBehalfOf,
         $convertForValidate = false,
         $convertForUpdate = false
     ) {
@@ -163,8 +161,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
                     ->format(DateTime::RFC3339),
             'beneficiary_identification_type' => $beneficiary->getBeneficiaryIdentificationType(),
             'beneficiary_identification_value' => $beneficiary->getBeneficiaryIdentificationValue(),
-            'payment_types' => $beneficiary->getPaymentTypes(),
-            'on_behalf_of' => $onBehalfOf
+            'payment_types' => $beneficiary->getPaymentTypes()
         ];
 
         if ($convertForValidate) {

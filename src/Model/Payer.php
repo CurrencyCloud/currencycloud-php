@@ -4,7 +4,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Payer implements EntityInterface
+class Payer
 {
 
     /**

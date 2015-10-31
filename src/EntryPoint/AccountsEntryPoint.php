@@ -8,21 +8,8 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
-class AccountsEntryPoint extends AbstractEntryPoint
+class AccountsEntryPoint extends AbstractEntityEntryPoint
 {
-
-    /**
-     * @param Account $account
-     *
-     * @return Account
-     */
-    public function persist(Account $account)
-    {
-        if (null === $account->getId()) {
-            return $this->create($account);
-        }
-        return $this->update($account);
-    }
 
     /**
      * @param Account $account
@@ -31,9 +18,11 @@ class AccountsEntryPoint extends AbstractEntryPoint
      */
     public function create(Account $account)
     {
-        $response = $this->request('POST', 'accounts/create', [], $this->convertAccountToRequest($account));
-
-        return $this->createAccountFromResponse($response);
+        return $this->doCreate('accounts/create', $account, function ($account) {
+            return $this->convertAccountToRequest($account);
+        }, function (stdClass $response) {
+            return $this->createAccountFromResponse($response);
+        });
     }
 
     /**
@@ -44,37 +33,23 @@ class AccountsEntryPoint extends AbstractEntryPoint
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'GET',
-            sprintf('accounts/%s', $id),
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createAccountFromResponse($response);
+        return $this->doRetrieve(sprintf('accounts/%s', $id), function (stdClass $response) {
+            return $this->createAccountFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
-     * @
-     * @param string $id
      * @param Account $account
      *
      * @return Account
      */
-    public function update($id, Account $account)
+    public function update(Account $account)
     {
-        $response = $this->request(
-            'POST',
-            sprintf(
-                'accounts/%s',
-                $id
-            ),
-            [],
-            $this->convertAccountToRequest($account)
-        );
-
-        return $this->createAccountFromResponse($response);
+        return $this->doUpdate(sprintf('accounts/%s', $account->getId()), $account, function ($account) {
+            return $this->convertAccountToRequest($account);
+        }, function (stdClass $response) {
+            return $this->createAccountFromResponse($response);
+        });
     }
 
     /**
@@ -93,16 +68,13 @@ class AccountsEntryPoint extends AbstractEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        $response = $this->request(
-            'GET',
-            'accounts/find',
-            $this->convertAccountToRequest($account, true) + $this->convertPaginationToRequest($pagination)
-        );
-        $accounts = [];
-        foreach ($response->accounts as $data) {
-            $accounts[] = $this->createAccountFromResponse($data);
-        }
-        return new Accounts($accounts, $this->createPaginationFromResponse($response));
+        return $this->doFind('accounts/find', $account, $pagination, function ($account) {
+            return $this->convertAccountToRequest($account);
+        }, function (stdClass $response) {
+            return $this->createAccountFromResponse($response);
+        }, function ($items, $pagination) {
+            return new Accounts($items, $pagination);
+        }, 'accounts');
     }
 
     /**
@@ -110,9 +82,9 @@ class AccountsEntryPoint extends AbstractEntryPoint
      */
     public function current()
     {
-        $response = $this->request('GET', 'accounts/current');
-
-        return $this->createAccountFromResponse($response);
+        return $this->doRetrieve('accounts/current', function (stdClass $response) {
+            return $this->createAccountFromResponse($response);
+        });
     }
 
     /**

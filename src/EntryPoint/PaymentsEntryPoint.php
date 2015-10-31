@@ -10,7 +10,7 @@ use CurrencyCloud\Model\Payments;
 use DateTime;
 use stdClass;
 
-class PaymentsEntryPoint extends AbstractEntryPoint
+class PaymentsEntryPoint extends AbstractEntityEntryPoint
 {
 
     /**
@@ -27,16 +27,11 @@ class PaymentsEntryPoint extends AbstractEntryPoint
             $payer = new Payer();
         }
 
-        $response = $this->request(
-            'POST',
-            'payments/create',
-            [],
-            $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer) + [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createPaymentFromResponse($response);
+        return $this->doCreate('payments/create', $payment, function ($payment) use ($payer) {
+            return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer);
+        }, function (stdClass $response) {
+            return $this->createPaymentFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -126,22 +121,16 @@ class PaymentsEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param string $id
+     * @param Payment $payment
      * @param null $onBehalfOf
      *
      * @return Payment
      */
-    public function delete($id, $onBehalfOf = null)
+    public function delete(Payment $payment, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'POST',
-            sprintf('payments/%s/delete', $id),
-            [],
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-        return $this->createPaymentFromResponse($response);
+        return $this->doDelete(sprintf('payments/%s/delete', $payment->getId()), $payment, function (stdClass $response) {
+            return $this->createPaymentFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -152,40 +141,28 @@ class PaymentsEntryPoint extends AbstractEntryPoint
      */
     public function retrieve($id, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'GET',
-            sprintf('payments/%s', $id),
-            [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createPaymentFromResponse($response);
+        return $this->doRetrieve(sprintf('payments/%s', $id), function (stdClass $response) {
+            return $this->createPaymentFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
-     * @param string $id
      * @param Payment $payment
      * @param Payer|null $payer
      * @param null|string $onBehalfOf
      *
      * @return Payment
      */
-    public function update($id, Payment $payment, Payer $payer = null, $onBehalfOf = null)
+    public function update(Payment $payment, Payer $payer = null, $onBehalfOf = null)
     {
-        $response = $this->request(
-            'POST',
-            sprintf(
-                'payments/%s',
-                $id
-            ),
-            [],
-            $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer) + [
-                'on_behalf_of' => $onBehalfOf
-            ]
-        );
-
-        return $this->createPaymentFromResponse($response);
+        if (null === $payer) {
+            $payer = new Payer();
+        }
+        return $this->doUpdate(sprintf('payments/%s', $payment->getId()), $payment, function ($payment) use ($payer) {
+            return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer);
+        }, function (stdClass $response) {
+            return $this->createPaymentFromResponse($response);
+        }, $onBehalfOf);
     }
 
     /**
@@ -208,19 +185,14 @@ class PaymentsEntryPoint extends AbstractEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        $response = $this->request(
-            'GET',
-            'accounts/find',
-            $this->convertPaymentToRequest($payment, true)
-            + $this->convertPaginationToRequest($pagination)
-            + $this->convertFindPaymentsCriteriaToRequest($criteria)
-            + ['on_behalf_of' => $onBehalfOf]
-        );
-        $payments = [];
-        foreach ($response->payments as $data) {
-            $payments[] = $this->createPaymentFromResponse($data);
-        }
-        return new Payments($payments, $this->createPaginationFromResponse($response));
+        return $this->doFind('payments/find', $payment, $pagination, function ($payment) use ($criteria) {
+            return $this->convertPaymentToRequest($payment, true)
+            + $this->convertFindPaymentsCriteriaToRequest($criteria);
+        }, function (stdClass $response) {
+            return $this->createPaymentFromResponse($response);
+        }, function ($items, $pagination) {
+            return new Payments($items, $pagination);
+        }, 'payments', $onBehalfOf);
     }
 
     /**

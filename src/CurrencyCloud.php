@@ -155,16 +155,16 @@ class CurrencyCloud
         return new CurrencyCloud(
             $session,
             $authenticateEntryPoint,
-            new AccountsEntryPoint($client),
+            new AccountsEntryPoint($entityManager, $client),
             new BalancesEntryPoint($client),
             new BeneficiariesEntryPoint($entityManager, $client),
-            new ContactsEntryPoint($client),
+            new ContactsEntryPoint($entityManager, $client),
             new ConversionsEntryPoint($client),
             new PayersEntryPoint($client),
-            new PaymentsEntryPoint($client),
+            new PaymentsEntryPoint($entityManager, $client),
             new ReferenceEntryPoint($client),
             new RatesEntryPoint($client),
-            new SettlementsEntryPoint($client),
+            new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client)
         );
     }

@@ -4,7 +4,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Conversion implements EntityInterface
+class Conversion
 {
 
     /**

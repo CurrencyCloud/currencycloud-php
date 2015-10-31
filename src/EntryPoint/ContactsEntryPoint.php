@@ -8,7 +8,7 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
-class ContactsEntryPoint extends AbstractEntryPoint
+class ContactsEntryPoint extends AbstractEntityEntryPoint
 {
 
     /**
@@ -33,9 +33,11 @@ class ContactsEntryPoint extends AbstractEntryPoint
      */
     public function create(Contact $contact)
     {
-        $response = $this->request('POST', 'contacts/create', [], $this->convertContactToRequest($contact));
-
-        return $this->createContactFromResponse($response);
+        return $this->doCreate('contacts/create', $contact, function ($contact) {
+            return $this->convertContactToRequest($contact);
+        }, function (stdClass $response) {
+            return $this->createContactFromResponse($response);
+        });
     }
 
     /**
@@ -109,18 +111,13 @@ class ContactsEntryPoint extends AbstractEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        $response =
-            $this->request(
-                'POST',
-                'contacts/find',
-                $this->convertContactToRequest($contact) + $this->convertPaginationToRequest($pagination)
-            );
-
-        $contacts = [];
-        foreach ($response->contacts as $contact) {
-            $contacts[] = $this->createContactFromResponse($contact);
-        }
-        return new Contacts($contacts, $this->createPaginationFromResponse($response));
+        return $this->doFind('contacts/find', $contact, $pagination, function ($contact) {
+            return $this->convertContactToRequest($contact);
+        }, function (stdClass $response) {
+            return $this->createContactFromResponse($response);
+        }, function ($items, $pagination) {
+            return new Contacts($items, $pagination);
+        }, 'contacts');
     }
 
     /**
@@ -130,9 +127,9 @@ class ContactsEntryPoint extends AbstractEntryPoint
      */
     public function retrieve($id)
     {
-        $response = $this->request('GET', sprintf('contacts/%s', $id));
-
-        return $this->createContactFromResponse($response);
+        return $this->doRetrieve(sprintf('contacts/%s', $id), function (stdClass $response) {
+            return $this->createContactFromResponse($response);
+        });
     }
 
     /**
@@ -158,8 +155,8 @@ class ContactsEntryPoint extends AbstractEntryPoint
      */
     public function current()
     {
-        $response = $this->request('GET', 'contacts/current');
-
-        return $this->createContactFromResponse($response);
+        return $this->doRetrieve('contacts/current', function (stdClass $response) {
+            return $this->createContactFromResponse($response);
+        });
     }
 }

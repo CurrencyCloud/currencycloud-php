@@ -28,7 +28,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $entryPoint
-     * @param EntityInterface $entity
+     * @param mixed $data
      * @param callable $converterToRequest
      * @param callable $converterFromResponse
      * @param null|string $onBehalfOf
@@ -37,7 +37,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
      */
     protected function doCreate(
         $entryPoint,
-        EntityInterface $entity,
+        $data,
         callable $converterToRequest,
         callable $converterFromResponse,
         $onBehalfOf = null
@@ -47,11 +47,13 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             'POST',
             $entryPoint,
             [],
-            call_user_func($converterToRequest, $entity, $onBehalfOf)
+            call_user_func($converterToRequest, $data) + [
+                'on_behalf_of' => $onBehalfOf
+            ]
         );
-        $entity = call_user_func($converterFromResponse, $response);
-        $this->entityManager->add($entity);
-        return $entity;
+        $data = call_user_func($converterFromResponse, $response);
+        $this->entityManager->add($data);
+        return $data;
     }
 
     /**
@@ -105,7 +107,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $entryPoint
-     * @param EntityInterface $searchModel
+     * @param mixed $searchModel
      * @param Pagination $pagination
      * @param callable $converterToRequest
      * @param callable $converterFromResponse
@@ -117,7 +119,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
      */
     protected function doFind(
         $entryPoint,
-        EntityInterface $searchModel,
+        $searchModel,
         Pagination $pagination,
         callable $converterToRequest,
         callable $converterFromResponse,

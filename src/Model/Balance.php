@@ -4,7 +4,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Balance implements EntityInterface
+class Balance
 {
 
     /**
