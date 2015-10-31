@@ -11,7 +11,7 @@ use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
 {
 
-    protected $out = array(
+    protected $out = [
         'id' => 'B7DE235A-FF5D-4252-83C2-06A605267FEA',
         'legal_entity_type' => 'company',
         'account_name' => 'Company PLC',
@@ -29,9 +29,9 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'identification_type' => 'green_card',
         'identification_value' => '123',
         'short_reference' => '110104-00004'
-    );
+    ];
 
-    protected $in = array(
+    protected $in = [
         'legal_entity_type' => 'A',
         'account_name' => 'B',
         'brand' => null,
@@ -46,7 +46,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'identification_type' => null,
         'identification_value' => null,
         'on_behalf_of' => null
-    );
+    ];
 
     /**
      * @test
@@ -74,7 +74,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
      */
     public function allFieldsCanBeSet()
     {
-        $in = array(
+        $in = [
             'legal_entity_type' => 'A',
             'account_name' => 'B',
             'brand' => 'C',
@@ -89,7 +89,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'identification_type' => 'L',
             'identification_value' => 'M',
             'on_behalf_of' => null
-        );
+        ];
 
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
