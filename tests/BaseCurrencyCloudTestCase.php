@@ -101,6 +101,19 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array
+     */
+    protected function getDummyPaginationRequest()
+    {
+        return [
+            'page' => null,
+            'per_page' => null,
+            'order' => null,
+            'order_asc_desc' => null
+        ];
+    }
+
+    /**
      * @param object $object
      * @param mixed $value
      * @param string $propertyName
