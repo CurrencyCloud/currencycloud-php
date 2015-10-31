@@ -4,9 +4,9 @@ namespace CurrencyCloud\Tests\VCR\Rates;
 
 use CurrencyCloud\Model\DetailedRate;
 use CurrencyCloud\Model\Rates;
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
     /**
      * @vcr Rates/can_find.yaml

@@ -4,9 +4,9 @@ namespace CurrencyCloud\Tests\VCR\Settlements;
 
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\SettlementEntry;
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
 
     /**

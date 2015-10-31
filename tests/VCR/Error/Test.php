@@ -9,10 +9,10 @@ use CurrencyCloud\Exception\ForbiddenException;
 use CurrencyCloud\Exception\InternalApplicationException;
 use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Exception\ToManyRequestsException;
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use Exception;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
 
     /**

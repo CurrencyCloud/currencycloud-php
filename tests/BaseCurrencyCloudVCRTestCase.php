@@ -30,7 +30,7 @@ use GuzzleHttp\HandlerStack;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
+class BaseCurrencyCloudVCRTestCase extends PHPUnit_Framework_TestCase
 {
 
     /**

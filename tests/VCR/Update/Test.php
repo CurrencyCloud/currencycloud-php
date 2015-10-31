@@ -2,9 +2,9 @@
 
 namespace CurrencyCloud\Tests\VCR\Update;
 
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
     /**
      * @vcr Update/does_nothing_if_nothing_has_changed.yaml

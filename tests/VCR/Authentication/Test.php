@@ -3,9 +3,9 @@
 namespace CurrencyCloud\Tests\VCR\Authentication;
 
 use CurrencyCloud\Model\Beneficiaries;
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
 
     /**

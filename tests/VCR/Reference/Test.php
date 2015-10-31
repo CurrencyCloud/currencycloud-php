@@ -2,9 +2,9 @@
 
 namespace CurrencyCloud\Tests\VCR\Reference;
 
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
     /**
      * @vcr Reference/can_retrieve_beneficiary_required_details.yaml

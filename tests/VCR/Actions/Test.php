@@ -4,9 +4,9 @@ namespace CurrencyCloud\Tests\VCR\Actions;
 
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
-use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudTestCase
+class Test extends BaseCurrencyCloudVCRTestCase
 {
 
     /**
