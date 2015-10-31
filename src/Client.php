@@ -55,7 +55,7 @@ class Client
         $uri,
         array $queryParams,
         array $requestParams,
-        array $options ,
+        array $options,
         $secured
     ) {
         $this->eventDispatcher->dispatch(BeforeClientRequestEvent::NAME, new BeforeClientRequestEvent(

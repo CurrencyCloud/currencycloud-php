@@ -23,14 +23,12 @@ use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
 use CurrencyCloud\Session;
 use CurrencyCloud\SimpleEntityManager;
-use DateTime;
 use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
-use PHPUnit_Framework_TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class BaseCurrencyCloudVCRTestCase extends PHPUnit_Framework_TestCase
+class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
 {
 
     /**
@@ -94,35 +92,5 @@ class BaseCurrencyCloudVCRTestCase extends PHPUnit_Framework_TestCase
         $client = $this->getClient();
         $client->getSession()->setAuthToken($authToken);
         return $client;
-    }
-
-    protected function validateObjectStrictName($object, $dummy)
-    {
-        $this->assertInternalType('object', $object);
-        foreach ($dummy as $key => $original) {
-            $parts = explode('_', $key);
-            $uCased = implode('', array_map('ucfirst', $parts));
-            $getter = sprintf('get%s', $uCased);
-            if (!is_callable([$object, $getter])) {
-                $getter = sprintf('is%s', $uCased);
-                if (!is_callable([$object, $getter])) {
-                    $this->fail(
-                        sprintf('Found property "%s" but not method "(is|get)%s". Is it wrongly named?', $key, $uCased)
-                    );
-                }
-            }
-            $value = $object->$getter();
-            if ($value instanceof DateTime) {
-                $value = $value->getTimestamp();
-                $original = (new DateTime($original))->getTimestamp();
-            } else if (is_bool($value)) {
-                if (!is_bool($original)) {
-                    $value = $value ? 'true' : 'false';
-                }
-            }
-            $this->assertEquals($original, $value, sprintf('Property "%s" with method "%s"', $key, $getter));
-            unset($dummy[$key]);
-        }
-        $this->assertEquals(0, count($dummy));
     }
 }

@@ -69,7 +69,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
             $pagination = new Pagination();
         }
         return $this->doFind('accounts/find', $account, $pagination, function ($account) {
-            return $this->convertAccountToRequest($account);
+            return $this->convertAccountToRequest($account, true);
         }, function (stdClass $response) {
             return $this->createAccountFromResponse($response);
         }, function ($items, $pagination) {
@@ -96,6 +96,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
     public function convertAccountToRequest(Account $account, $convertForSearch = false)
     {
         $common = [
+            'legal_entity_type' => $account->getLegalEntityType(),
             'account_name' => $account->getAccountName(),
             'your_reference' => $account->getYourReference(),
             'status' => $account->getStatus(),
@@ -103,17 +104,15 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
             'city' => $account->getCity(),
             'state_or_province' => $account->getStateOrProvince(),
             'postal_code' => $account->getPostalCode(),
-            'country' => $account->getCountry()
+            'country' => $account->getCountry(),
+            'brand' => $account->getBrand()
         ];
 
         if ($convertForSearch) {
-            return $common + [
-                'brand' => $account->getBrand()
-            ];
+            return $common;
         }
 
         return $common + [
-            'id' => $account->getId(),
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),
             'identification_value' => $account->getIdentificationValue()
