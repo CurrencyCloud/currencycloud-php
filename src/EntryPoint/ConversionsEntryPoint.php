@@ -17,9 +17,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
      * @param string $reason
      * @param boolean $termAgreement
      * @param null|string $onBehalfOf
-
      *
-*@return Conversion
+     * @return Conversion
      */
     public function create(
         Conversion $conversion,
@@ -113,9 +112,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     /**
      * @param FindConversionsCriteria|null $criteria
      * @param null $onBehalfOf
-
      *
-*@return Conversions
+     * @return Conversions
      */
     public function find(FindConversionsCriteria $criteria = null, $onBehalfOf = null)
     {
@@ -141,9 +139,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
 
     /**
      * @param FindConversionsCriteria $criteria
-
      *
-*@return array
+     * @return array
      */
     private function convertFindConversionCriteriaToRequest(FindConversionsCriteria $criteria)
     {
@@ -151,25 +148,26 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         $createdAtTo = $criteria->getCreatedAtTo();
         $updatedAtFrom = $criteria->getUpdatedAtFrom();
         $updatedAtTo = $criteria->getUpdatedAtTo();
+        $conversionIds = $criteria->getConversionIds();
         return [
             'short_reference' => $criteria->getShortReference(),
             'status' => $criteria->getStatus(),
             'partner_status' => $criteria->getParentStatus(),
             'buy_currency' => $criteria->getBuyCurrency(),
             'sell_currency' => $criteria->getSellCurrency(),
-            'conversion_ids' => $criteria->getConversionIds(),
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
+            'conversion_ids' => (null === $conversionIds) ? null : implode(',', $conversionIds),
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
             'currency_pair' => $criteria->getCurrencyPair(),
             'partner_buy_amount_from' => $criteria->getPartnerBuyAmountFrom(),
             'partner_buy_amount_to' => $criteria->getPartnerBuyAmountTo(),
             'partner_sell_amount_from' => $criteria->getPartnerSellAmountFrom(),
             'partner_sell_amount_to' => $criteria->getPartnerSellAmountTo(),
             'buy_amount_from' => $criteria->getBuyAmountFrom(),
-            'buy_amount_to' => $criteria->getSellAmountTo(),
-            'sell_amount_from' => $criteria->getBuyAmountFrom(),
+            'buy_amount_to' => $criteria->getBuyAmountTo(),
+            'sell_amount_from' => $criteria->getSellAmountFrom(),
             'sell_amount_to' => $criteria->getSellAmountTo()
         ];
     }
