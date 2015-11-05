@@ -56,7 +56,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ];
         }
         $paymentDate = $payment->getPaymentDate();
-        return [
+        return $common + [
             'reference' => $payment->getReference(),
             'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(DateTime::RFC3339),
             'payment_type' => $payment->getPaymentType()
@@ -77,12 +77,12 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'payer_first_name' => $payer->getFirstName(),
             'payer_last_name' => $payer->getLastName(),
             'payer_city' => $payer->getCity(),
-            'payer_address' => $payer->getAddress(),
+            'payer_address' => (null === $payer->getAddress()) ? null : implode(' ', $payer->getAddress()),
             'payer_postcode' => $payer->getPostcode(),
             'payer_state_or_province' => $payer->getStateOrProvince(),
             'payer_country' => $payer->getCountry(),
             'payer_date_of_birth' => (null === $payerDateOfBirth) ? $payerDateOfBirth : $payerDateOfBirth->format(
-                DateTime::RFC3339
+                'Y-m-d'
             ),
             'payer_identification_type' => $payer->getIdentificationType(),
             'payer_identification_value' => $payer->getIdentificationValue()
@@ -110,9 +110,10 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setTransferredAt(new DateTime($response->transferred_at))
             ->setAuthorisationStepsRequired($response->authorisation_steps_required)
             ->setCreatorContactId($response->creator_contact_id)
-            ->setLastUpdatedContactId($response->last_updated_contact_id)
+            ->setLastUpdaterContactId($response->last_updater_contact_id)
             ->setFailureReason($response->failure_reason)
             ->setPayerId($response->payer_id)
+            ->setPayerDetailsSource($response->payer_details_source)
             ->setCreatedAt(new DateTime($response->created_at))
             ->setUpdatedAt(new DateTime($response->updated_at));
 
@@ -158,8 +159,10 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         if (null === $payer) {
             $payer = new Payer();
         }
-        return $this->doUpdate(sprintf('payments/%s', $payment->getId()), $payment, function ($payment) use ($payer) {
-            return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer);
+        return $this->doUpdate(sprintf('payments/%s', $payment->getId()), $payment, function ($payment, $onBehalfOf) use ($payer) {
+            return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer) + [
+                'on_behalf_of' => $onBehalfOf
+            ];
         }, function (stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, $onBehalfOf);
@@ -175,19 +178,24 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
      */
     public function find(
         Payment $payment = null,
-        FindPaymentsCriteria $criteria,
+        FindPaymentsCriteria $criteria = null,
         Pagination $pagination = null,
         $onBehalfOf = null
     ) {
         if (null === $payment) {
             $payment = new Payment();
         }
+        if (null === $criteria) {
+            $criteria = new FindPaymentsCriteria();
+        }
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('payments/find', $payment, $pagination, function ($payment) use ($criteria) {
+        return $this->doFind('payments/find', $payment, $pagination, function ($payment, $onBehalfOf) use ($criteria) {
             return $this->convertPaymentToRequest($payment, true)
-            + $this->convertFindPaymentsCriteriaToRequest($criteria);
+            + $this->convertFindPaymentsCriteriaToRequest($criteria) + [
+                'on_behalf_of' => $onBehalfOf
+            ];
         }, function (stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, function ($items, $pagination) {
@@ -200,7 +208,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
      *
      * @return array
      */
-    private function convertFindPaymentsCriteriaToRequest(FindPaymentsCriteria $criteria)
+    private function convertFindPaymentsCriteriaToRequest(FindPaymentsCriteria $criteria = null)
     {
         $createdAtFrom = $criteria->getCreatedAtFrom();
         $createdAtTo = $criteria->getCreatedAtTo();

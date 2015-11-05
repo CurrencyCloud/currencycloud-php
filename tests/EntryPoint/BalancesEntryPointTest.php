@@ -2,11 +2,7 @@
 
 namespace CurrencyCloud\Tests\EntryPoint;
 
-use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\BalancesEntryPoint;
-use CurrencyCloud\Model\Account;
-use CurrencyCloud\Model\Pagination;
-use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 

@@ -66,11 +66,15 @@ class Payment implements EntityInterface
     /**
      * @var string
      */
-    private $lastUpdatedContactId;
+    private $lastUpdaterContactId;
     /**
      * @var string
      */
     private $failureReason;
+    /**
+     * @var string
+     */
+    private $payerDetailsSource;
     /**
      * @var string
      */
@@ -83,6 +87,25 @@ class Payment implements EntityInterface
      * @var DateTime
      */
     private $updatedAt;
+
+    /**
+     * @param string $currency
+     * @param string $beneficiaryId
+     * @param string $amount
+     * @param string $reason
+     * @param string $reference
+     *
+     * @return $this
+     */
+    public static function create($currency, $beneficiaryId, $amount, $reason, $reference)
+    {
+        return (new Payment())
+            ->setCurrency($currency)
+            ->setBeneficiaryId($beneficiaryId)
+            ->setAmount($amount)
+            ->setReason($reason)
+            ->setReference($reference);
+    }
 
     /**
      * @return string
@@ -342,19 +365,19 @@ class Payment implements EntityInterface
     /**
      * @return string
      */
-    public function getLastUpdatedContactId()
+    public function getLastUpdaterContactId()
     {
-        return $this->lastUpdatedContactId;
+        return $this->lastUpdaterContactId;
     }
 
     /**
-     * @param string $lastUpdatedContactId
+     * @param string $lastUpdaterContactId
      *
      * @return $this
      */
-    public function setLastUpdatedContactId($lastUpdatedContactId)
+    public function setLastUpdaterContactId($lastUpdaterContactId)
     {
-        $this->lastUpdatedContactId = $lastUpdatedContactId;
+        $this->lastUpdaterContactId = $lastUpdaterContactId;
         return $this;
     }
 
@@ -431,6 +454,25 @@ class Payment implements EntityInterface
     public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayerDetailsSource()
+    {
+        return $this->payerDetailsSource;
+    }
+
+    /**
+     * @param string $payerDetailsSource
+     *
+     * @return $this
+     */
+    public function setPayerDetailsSource($payerDetailsSource)
+    {
+        $this->payerDetailsSource = $payerDetailsSource;
         return $this;
     }
 }

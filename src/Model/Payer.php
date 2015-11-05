@@ -69,48 +69,48 @@ class Payer
     private $updatedAt;
 
     /**
-     * @param string $legalEntityType
-     * @param string $companyName
-     * @param string $firstName
-     * @param string $lastName
-     * @param array $address
-     * @param $city
-     * @param string $stateOrProvince
-     * @param string $country
-     * @param string $identificationType
-     * @param string $identificationValue
-     * @param $postcode
-     * @param DateTime $dateOfBirth
-     * @param DateTime $createdAt
-     * @param DateTime $updatedAt
+     * @param string|null $legalEntityType
+     * @param string|null $companyName
+     * @param string|null $firstName
+     * @param string|null $lastName
+     * @param array|null $address
+     * @param string|null $city
+     * @param string|null $stateOrProvince
+     * @param string|null $country
+     * @param string|null $identificationType
+     * @param string|null $identificationValue
+     * @param string|null $postcode
+     * @param DateTime|null $dateOfBirth
+     * @param DateTime|null $createdAt
+     * @param DateTime|null $updatedAt
      */
     public function __construct(
-        $legalEntityType,
-        $companyName,
-        $firstName,
-        $lastName,
-        array $address,
-        $city,
-        $stateOrProvince,
-        $country,
-        $identificationType,
-        $identificationValue,
-        $postcode,
-        DateTime $dateOfBirth,
-        DateTime $createdAt,
-        DateTime $updatedAt
+        $legalEntityType = null,
+        $companyName = null,
+        $firstName = null,
+        $lastName = null,
+        array $address = null,
+        $city = null,
+        $stateOrProvince = null,
+        $country = null,
+        $identificationType = null,
+        $identificationValue = null,
+        $postcode = null,
+        DateTime $dateOfBirth = null,
+        DateTime $createdAt = null,
+        DateTime $updatedAt = null
     ) {
-        $this->legalEntityType = (string) $legalEntityType;
-        $this->companyName = (string) $companyName;
-        $this->firstName = (string) $firstName;
-        $this->lastName = (string) $lastName;
+        $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
+        $this->companyName = (null === $companyName) ? null : (string) $companyName;
+        $this->firstName = (null === $firstName) ? null : (string) $firstName;
+        $this->lastName = (null === $lastName) ? null : (string) $lastName;
         $this->address = $address;
-        $this->city = (string) $city;
-        $this->stateOrProvince = (string) $stateOrProvince;
-        $this->country = (string) $country;
-        $this->identificationType = (string) $identificationType;
-        $this->identificationValue = (string) $identificationValue;
-        $this->postcode = (string) $postcode;
+        $this->city = (null === $city) ? null : (string) $city;
+        $this->stateOrProvince = (null === $stateOrProvince) ? null : (string) $stateOrProvince;
+        $this->country = (null === $country) ? null : (string) $country;
+        $this->identificationType = (null === $identificationType) ? null : (string) $identificationType;
+        $this->identificationValue = (null === $identificationValue) ? null : (string) $identificationValue;
+        $this->postcode = (null === $postcode) ? null : (string) $postcode;
         $this->dateOfBirth = $dateOfBirth;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -234,5 +234,159 @@ class Payer
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @param null|string $legalEntityType
+     *
+     * @return $this
+     */
+    public function setLegalEntityType($legalEntityType)
+    {
+        $this->legalEntityType = $legalEntityType;
+        return $this;
+    }
+
+    /**
+     * @param null|string $companyName
+     *
+     * @return $this
+     */
+    public function setCompanyName($companyName)
+    {
+        $this->companyName = $companyName;
+        return $this;
+    }
+
+    /**
+     * @param null|string $firstName
+     *
+     * @return $this
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * @param null|string $lastName
+     *
+     * @return $this
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    /**
+     * @param array|null $address
+     *
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @param null|string $city
+     *
+     * @return $this
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * @param null|string $stateOrProvince
+     *
+     * @return $this
+     */
+    public function setStateOrProvince($stateOrProvince)
+    {
+        $this->stateOrProvince = $stateOrProvince;
+        return $this;
+    }
+
+    /**
+     * @param null|string $country
+     *
+     * @return $this
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+        return $this;
+    }
+
+    /**
+     * @param null|string $identificationType
+     *
+     * @return $this
+     */
+    public function setIdentificationType($identificationType)
+    {
+        $this->identificationType = $identificationType;
+        return $this;
+    }
+
+    /**
+     * @param null|string $identificationValue
+     *
+     * @return $this
+     */
+    public function setIdentificationValue($identificationValue)
+    {
+        $this->identificationValue = $identificationValue;
+        return $this;
+    }
+
+    /**
+     * @param null|string $postcode
+     *
+     * @return $this
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+        return $this;
+    }
+
+    /**
+     * @param DateTime|null $dateOfBirth
+     *
+     * @return $this
+     */
+    public function setDateOfBirth($dateOfBirth)
+    {
+        $this->dateOfBirth = $dateOfBirth;
+        return $this;
+    }
+
+    /**
+     * @param DateTime|null $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @param DateTime|null $updatedAt
+     *
+     * @return $this
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
     }
 }
