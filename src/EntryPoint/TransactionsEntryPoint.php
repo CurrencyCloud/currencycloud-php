@@ -20,9 +20,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
     public function retrieve($id, $onBehalfOf = null)
     {
         $response = $this->request(
-            'POST',
+            'GET',
             sprintf('transactions/%s', $id),
-            [],
             [
                 'on_behalf_of' => $onBehalfOf
             ]
@@ -70,12 +69,12 @@ class TransactionsEntryPoint extends AbstractEntryPoint
             $this->convertTransactionToRequest($transaction) + $this->convertPaginationToRequest($pagination) + [
                 'amount_from' => $amountFrom,
                 'amount_to' => $amountTo,
-                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::RFC3339),
-                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::RFC3339),
-                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
-                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
-                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
-                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
+                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::ISO8601),
+                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::ISO8601),
+                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
+                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
+                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
+                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
                 'on_behalf_of' => $onBehalfOf
             ]
         );
@@ -113,7 +112,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
      */
     protected function createTransactionFromResponse(stdClass $response)
     {
-        return (new Transaction())->setBalanceId($response->balance_id)
+        $transaction = (new Transaction())->setBalanceId($response->balance_id)
             ->setAccountId($response->account_id)
             ->setCurrency($response->currency)
             ->setAmount($response->amount)
@@ -125,8 +124,13 @@ class TransactionsEntryPoint extends AbstractEntryPoint
             ->setRelatedEntityShortReference($response->related_entity_short_reference)
             ->setStatus($response->status)
             ->setReason($response->reason)
-            ->setSettlesAt(new DateTime($response->settles_at))
-            ->setCreatedAt(new DateTime($response->created_at))
-            ->setUpdatedAt(new DateTime($response->updated_at));
+            ->setSettlesAt((null === $response->settles_at) ? null : new DateTime($response->settles_at))
+            ->setCreatedAt((null === $response->created_at) ? null : new DateTime($response->created_at))
+            ->setCompletedAt((null === $response->created_at) ? null : new DateTime($response->created_at))
+            ->setUpdatedAt((null === $response->updated_at) ? null : new DateTime($response->updated_at));
+
+        $this->setIdProperty($transaction, $response->id);
+
+        return $transaction;
     }
 }

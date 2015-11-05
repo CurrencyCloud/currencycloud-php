@@ -6,7 +6,10 @@ use DateTime;
 
 class Transaction
 {
-
+    /**
+     * @var string
+     */
+    private $id;
     /**
      * @var null|string
      */
@@ -67,6 +70,18 @@ class Transaction
      * @var DateTime|null
      */
     private $updatedAt;
+    /**
+     * @var DateTime|null
+     */
+    private $completedAt;
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return null|string
@@ -351,6 +366,25 @@ class Transaction
     public function setUpdatedAt(DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getCompletedAt()
+    {
+        return $this->completedAt;
+    }
+
+    /**
+     * @param DateTime|null $completedAt
+     *
+     * @return $this
+     */
+    public function setCompletedAt($completedAt)
+    {
+        $this->completedAt = $completedAt;
         return $this;
     }
 }
