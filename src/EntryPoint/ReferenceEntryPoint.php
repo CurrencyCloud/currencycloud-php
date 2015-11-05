@@ -60,18 +60,18 @@ class ReferenceEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $conversionPair
-     * @param string|null $startDate
+     * @param DateTime|null $startDate
      *
      * @return ConversionDates
      */
-    public function conversionDates($conversionPair, $startDate = null)
+    public function conversionDates($conversionPair, DateTime $startDate = null)
     {
         $response = $this->request(
             'GET',
             'reference/conversion_dates',
             [
                 'conversion_pair' => $conversionPair,
-                'start_date' => $startDate
+                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTime::ISO8601)
             ]
         );
         $invalidDates = [];
@@ -89,18 +89,18 @@ class ReferenceEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $currency
-     * @param string|null $startDate
+     * @param DateTime|null $startDate
      *
      * @return PaymentDates
      */
-    public function paymentDates($currency, $startDate = null)
+    public function paymentDates($currency, DateTime $startDate = null)
     {
         $response = $this->request(
             'GET',
             'reference/payment_dates',
             [
                 'currency' => $currency,
-                'start_date' => $startDate
+                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTime::ISO8601)
             ]
         );
         $invalidDates = [];
@@ -110,7 +110,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         }
 
         return new PaymentDates(
-            $invalidDates, $response->first_payment_date
+            $invalidDates, new DateTime($response->first_payment_date)
         );;
     }
 
