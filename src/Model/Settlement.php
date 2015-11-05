@@ -148,7 +148,7 @@ class Settlement implements EntityInterface
     }
 
     /**
-     * @return SettlementEntry[]
+     * @return array
      */
     public function getEntries()
     {

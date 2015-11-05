@@ -36,14 +36,18 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
     protected function createSettlementFromResponse(stdClass $response)
     {
         $entries = [];
-        foreach ($response->entries as $currency => $entry) {
-            $entries[$currency] = new SettlementEntry($entry->send_amount, $entry->receive_amount);
+        foreach ($response->entries as $temp) {
+            $r = [];
+            foreach ($temp as $currency => $entry) {
+                $r[$currency] = new SettlementEntry($entry->send_amount, $entry->receive_amount);
+            }
+            $entries[] = $r;
         }
 
         $settlement = new Settlement();
         $settlement->setShortReference($response->short_reference)
             ->setStatus($response->status)
-            ->setType($response->type)
+            ->setType(isset($response->type) ? $response->type : null)
             ->setConversionIds($response->conversion_ids)
             ->setEntries($entries)
             ->setCreatedAt(new DateTime($response->created_at))
@@ -186,10 +190,11 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('settlements/find', $criteria, $pagination, function ($criteria) use ($shortReference, $status) {
+        return $this->doFind('settlements/find', $criteria, $pagination, function ($criteria, $onBehalfOf) use ($shortReference, $status) {
             return $this->convertFindSettlementsCriteriaToRequest($criteria) + [
                 'short_reference' => $shortReference,
-                'status' => $status
+                'status' => $status,
+                'on_behalf_of' => $onBehalfOf
             ];
         }, function (stdClass $response) {
             return $this->createSettlementFromResponse($response);
@@ -212,12 +217,12 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
         $releasedAtFrom = $criteria->getReleasedAtFrom();
         $releasedAtTo = $criteria->getReleasedAtTo();
         return [
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
-            'released_at_from' => (null === $releasedAtFrom) ? null : $releasedAtFrom->format(DateTime::RFC3339),
-            'released_at_to' => (null === $releasedAtTo) ? null : $releasedAtTo->format(DateTime::RFC3339)
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
+            'released_at_from' => (null === $releasedAtFrom) ? null : $releasedAtFrom->format(DateTime::ISO8601),
+            'released_at_to' => (null === $releasedAtTo) ? null : $releasedAtTo->format(DateTime::ISO8601)
         ];
     }
 }
