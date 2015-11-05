@@ -1,6 +1,6 @@
 <?php
 
-namespace CurrencyCloud\Tests;
+namespace CurrencyCloud\Tests\Core;
 
 use CurrencyCloud\Session;
 use InvalidArgumentException;
