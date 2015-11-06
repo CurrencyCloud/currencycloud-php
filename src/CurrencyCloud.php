@@ -19,6 +19,9 @@ use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
 use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
+use GuzzleHttp\Handler\CurlFactory;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 use InvalidArgumentException;
 use LogicException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -135,7 +138,12 @@ class CurrencyCloud
         if (null === $client) {
             $eventDispatcher = new EventDispatcher();
 
-            $client = new Client($session, new \GuzzleHttp\Client(), $eventDispatcher);
+            $client = new Client($session, new \GuzzleHttp\Client([
+                'sync' => true,
+                'handler' => HandlerStack::create(new CurlHandler([
+                    'handle_factory' => new CurlFactory(0)
+                ]))
+            ]), $eventDispatcher);
 
             $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
 
