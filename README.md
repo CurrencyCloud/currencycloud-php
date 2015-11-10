@@ -32,7 +32,7 @@ If you do not have composer installed check [Composer installation guide](https:
 Assuming you have composer installed globally you can require Currency Cloud SDK into you project by executing:
 
 ```bash
-composer require guzzlehttp/guzzle
+composer require currency-cloud/client
 ```
 
 After installing, you need to require Composer's autoloader if you did not require it before:
