@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-java)
+[![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
 # Currency Cloud API v2 PHP client
 
@@ -8,28 +8,21 @@ This is the official PHP SDK for the Currency Cloud API. Additional documentatio
 for each API endpoint can be found at [connect.currencycloud.com](https://connect.currencycloud.com/documentation/getting-started/introduction). 
 
 If you have any queries or you require support, please contact our implementation team at implementation@currencycloud.com.  Please quote your login id in any correspondence as this makes
-it far simpler for us to locate your account and give you the support you need.
+it simpler for us to locate your account and give you the support you need.
 
 ## Prerequisites
 
-### 1. Composer (optional, but highly recommended)
+### Composer (optional, but highly recommended)
 
 CurrencyCloud-PHP is a Composer project. While using Composer is not strictly required, 
 it will be far easier to simply make use of Composer to do the dependency management and autoloading for you.
 
 
-### 2. PHP 5.5
+### Supported PHP version
 
-CurrencyCloud-PHP requires at least a PHP 5.5.
+This library aims to support and is tested against PHP 5.5 and greater.
 
-### 3. A valid sandbox login id and api key on the CurrencyCloud sandbox API environment.
-
-You can register for demo API key at [connect.currencycloud.com](https://connect.currencycloud.com/). 
-
-While we expose certain routes on the sandbox API without the requirement for authentication, we rate-limit these requests aggressively to prevent abuse of the sandbox.  Rate-limiting on authenticated requests
- is far more lenient.
-
-## Installing the Currency Cloud SDK
+## Installation
 
 The recommended way to install Currency Cloud SDK is through
 [Composer](http://getcomposer.org).
@@ -39,7 +32,7 @@ If you do not have composer installed check [Composer installation guide](https:
 Assuming you have composer installed globally you can require Currency Cloud SDK into you project by executing:
 
 ```bash
-composer require <to-be-defined>
+composer require guzzlehttp/guzzle
 ```
 
 After installing, you need to require Composer's autoloader if you did not require it before:
@@ -49,6 +42,8 @@ require 'vendor/autoload.php';
 ```
 
 # Usage
+
+You can register for demo API key at [connect.currencycloud.com](https://connect.currencycloud.com/). 
 
 An example in PHP 5.5:
 
@@ -106,25 +101,17 @@ foreach ($balances->getBalances() as $balance) {
 $client->authenticate()->close();
 ```
 
-For a slightly longer example, see
-[cook-book.php](/examples/cook-book.php),
-which is an implementation of the [Cookbook](https://connect.currencycloud.com/documentation/getting-started/cookbook) 
-from the documentation.
+For a slightly longer example, see [cook-book.php](/examples/cook-book.php), which is an implementation of the [Cookbook](https://connect.currencycloud.com/documentation/getting-started/cookbook) from the documentation.
 
-## Common Misconceptions and Antipatterns
+## Common Patterns
 
-### 1. Creating a client for each request.
+### Reusing client for multiple requests
 
-Avoid creating one client per request.  Sessions have a timeout of several tens of minutes; this is specifically because we want customers to reuse existing sessions for as long as is feasible.
-Try to write your application so that it reuses authentication token.  
-
-This will translate into fewer requests on your part and less server load on our part.
-
-We rate-limit connections on the sandbox in order to encourage users to follow the above pattern.  
+Authentication tokens are long-livedand are meant to be reused for multiple requests. This will improve performance of calls through the api. 
 
 ## On Behalf Of
 
-If you want to make calls on behalf of another user (e.g. someone who has a sub-account with you), you 
+If you want to make calls on behalf of another user (e.g. someone who is your end-client), you 
 can execute certain commands 'on behalf of' the user's contact id. Here is an example:
 
 ```php
@@ -144,8 +131,7 @@ $client->onBehalfOf('c6ece846-6df1-461d-acaa-b42a6aa74045', function (CurrencyCl
 });
 ```
 
-Each of the above transactions will be executed in scope of the limits for that contact and linked to that contact. Note
-that the real user who executed the transaction will also be stored.
+Each of the above transactions will be executed in scope of the limits for that contact and linked to that contact. Note that the real user who executed the transaction will also be stored.
 
 ## Errors
 When an error occurs in the API, the library aims to give us much information
