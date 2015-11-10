@@ -1,0 +1,215 @@
+[![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-java)
+
+# Currency Cloud API v2 PHP client
+
+## Version: 0.7.0
+
+This is the official PHP SDK for the Currency Cloud API. Additional documentation 
+for each API endpoint can be found at [connect.currencycloud.com](https://connect.currencycloud.com/documentation/getting-started/introduction). 
+
+If you have any queries or you require support, please contact our implementation team at implementation@currencycloud.com.  Please quote your login id in any correspondence as this makes
+it far simpler for us to locate your account and give you the support you need.
+
+## Prerequisites
+
+### 1. Composer (optional, but highly recommended)
+
+CurrencyCloud-PHP is a Composer project. While using Composer is not strictly required, 
+it will be far easier to simply make use of Composer to do the dependency management and autoloading for you.
+
+
+### 2. PHP 5.5
+
+CurrencyCloud-PHP requires at least a PHP 5.5.
+
+### 3. A valid sandbox login id and api key on the CurrencyCloud sandbox API environment.
+
+You can register for demo API key at [connect.currencycloud.com](https://connect.currencycloud.com/). 
+
+While we expose certain routes on the sandbox API without the requirement for authentication, we rate-limit these requests aggressively to prevent abuse of the sandbox.  Rate-limiting on authenticated requests
+ is far more lenient.
+
+## Installing the Currency Cloud SDK
+
+The recommended way to install Currency Cloud SDK is through
+[Composer](http://getcomposer.org).
+
+If you do not have composer installed check [Composer installation guide](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+
+Assuming you have composer installed globally you can require Currency Cloud SDK into you project by executing:
+
+```bash
+composer require <to-be-defined>
+```
+
+After installing, you need to require Composer's autoloader if you did not require it before:
+
+```php
+require 'vendor/autoload.php';
+```
+
+# Usage
+
+An example in PHP 5.5:
+
+```php
+use CurrencyCloud\CurrencyCloud;
+use CurrencyCloud\Session;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$session = new Session(
+    Session::ENVIRONMENT_DEMONSTRATION,
+    '<user-id>',
+    '<api-key>'
+);
+
+$client = CurrencyCloud::createDefault($session);
+
+//Authenticate
+$client->authenticate()
+    ->login();
+
+//Get available currencies
+$currencies =
+    $client->reference()
+        ->availableCurrencies();
+
+echo "Supproted currencies:\n";
+
+foreach ($currencies as $currency) {
+    printf(
+        "Currency: %s; Code: %s; Decimal places: %d\n",
+        $currency->getName(),
+        $currency->getCode(),
+        $currency->getDecimalPlaces()
+    );
+}
+
+echo "Balances:\n";
+
+//Find balances
+$balances =
+    $client->balances()
+        ->find();
+
+foreach ($balances->getBalances() as $balance) {
+    printf(
+        "Balance ID: %s; Currency: %s; Amount: %s\n",
+        $balance->getId(),
+        $balance->getCurrency(),
+        $balance->getAmount()
+    );
+}
+
+//Close session
+$client->authenticate()->close();
+```
+
+For a slightly longer example, see
+[cook-book.php](/examples/cook-book.php),
+which is an implementation of the [Cookbook](https://connect.currencycloud.com/documentation/getting-started/cookbook) 
+from the documentation.
+
+## Common Misconceptions and Antipatterns
+
+### 1. Creating a client for each request.
+
+Avoid creating one client per request.  Sessions have a timeout of several tens of minutes; this is specifically because we want customers to reuse existing sessions for as long as is feasible.
+Try to write your application so that it reuses authentication token.  
+
+This will translate into fewer requests on your part and less server load on our part.
+
+We rate-limit connections on the sandbox in order to encourage users to follow the above pattern.  
+
+## On Behalf Of
+
+If you want to make calls on behalf of another user (e.g. someone who has a sub-account with you), you 
+can execute certain commands 'on behalf of' the user's contact id. Here is an example:
+
+```php
+$client->onBehalfOf('c6ece846-6df1-461d-acaa-b42a6aa74045', function (CurrencyCloud $client) {
+    $balances =
+        $client->balances()
+            ->find();
+
+    foreach ($balances->getBalances() as $balance) {
+        printf(
+            "Balance ID: %s; Currency: %s; Amount: %s\n",
+            $balance->getId(),
+            $balance->getCurrency(),
+            $balance->getAmount()
+        );
+    }
+});
+```
+
+Each of the above transactions will be executed in scope of the limits for that contact and linked to that contact. Note
+that the real user who executed the transaction will also be stored.
+
+## Errors
+When an error occurs in the API, the library aims to give us much information
+as possible. A `CurrencyCloudException` will be thrown that contains much useful information
+that you can access via its methods.
+When the exception converted to string, it will provide information such as the following:
+
+```yaml
+BadRequestException
+---
+platform: 'PHP 5.6.14-1+deb.sury.org~trusty+1'
+request:
+    parameters: {  }
+    verb: get
+    url: 'https://devapi.thecurrencycloud.com/v2/rates/detailed?buy_currency=EUR&sell_currency=GBP&fixed_side=buy&amount=10000.00'
+response:
+    status_code: 400
+    date: 'Sun, 06 Nov 2015 18:22:47 GMT'
+    request_id: '2915002181730358306'
+errors:
+    -
+        field: base
+        code: rate_could_not_be_retrieved
+        message: 'Rate could not be retrieved'
+        params: {  }
+```
+
+This is split into 5 sections:
+
+1. Error Type: In this case `BadRequestException` represents an HTTP 400 error
+2. Platform: The PHP implementation that was used in the client
+3. Request: Details about the HTTP request that was made, e.g. the POST parameters
+4. Response: Details about the HTTP response that was returned, e.g. HTTP status code
+5. Errors: A list of errors that provide additional information
+
+The final section contains valuable information:
+
+- Field: The parameter that the error is linked to
+- Code: A code representing this error
+- Message: A human readable message that explains the error
+- Params: A map that contains dynamic parts of the error message for building custom error messages
+
+When troubleshooting API calls with Currency Cloud support, including the full
+error in any correspondence can be very helpful.
+
+# Development
+
+## Testing
+
+Test cases can be run with `vendor/bin/phpunit`. 
+
+## Dependencies
+
+* [Guzzle](https://github.com/guzzle/guzzle)
+* [Symfony YAML](https://github.com/symfony/yaml)
+* [Symfony event dispatcher](https://github.com/symfony/event-dispatcher)
+
+
+# Versioning
+
+This project uses [semantic versioning](http://semver.org/). You can safely
+express a dependency on a major version and expect all minor and patch versions
+to be backwards compatible.
+
+# Copyright
+
+Copyright (c) 2015 Currency Cloud. See [LICENSE](/LICENSE.md) for details.
