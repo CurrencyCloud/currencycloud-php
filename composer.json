@@ -3,9 +3,9 @@
   "type": "library",
   "authors": [
     {
-      "name": "Marijan Šuflaj",
-      "email": "marijan@toptal.com",
-      "homepage": "http://msuflaj.net",
+      "name": "CurrencyCloud",
+      "email": "richard.nienaber@currencycloud.com",
+      "homepage": "https://developer.currencycloud.com/documentation/getting-started/introduction",
       "role": "developer"
     }
   ],
