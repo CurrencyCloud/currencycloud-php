@@ -127,11 +127,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      *
      * @return array
      */
-    protected function convertBeneficiaryToRequest(
-        Beneficiary $beneficiary,
-        $convertForValidate = false,
-        $convertForUpdate = false
-    ) {
+    protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, $convertForValidate = false, $convertForUpdate = false)
+	{
         $isDefaultBeneficiary = $beneficiary->isDefaultBeneficiary();
         $common = [
             'bank_country' => $beneficiary->getBankCountry(),
