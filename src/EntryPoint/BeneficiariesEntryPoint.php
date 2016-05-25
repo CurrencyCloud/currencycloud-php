@@ -25,8 +25,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             [],
             $this->convertBeneficiaryToRequest(
                 $beneficiary,
-                $onBehalfOf,
-                true
+                true,
+                $onBehalfOf
             )
         );
         return $this->createBeneficiaryFromResponse($response, true);
