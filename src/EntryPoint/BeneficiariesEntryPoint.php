@@ -151,6 +151,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'bank_account_type' => $beneficiary->getBankAccountType(),
             'beneficiary_entity_type' => $beneficiary->getBeneficiaryEntityType(),
             'beneficiary_company_name' => $beneficiary->getBeneficiaryCompanyName(),
+            'beneficiary_address' => $beneficiary->getBeneficiaryAddress(),
             'beneficiary_first_name' => $beneficiary->getBeneficiaryFirstName(),
             'beneficiary_last_name' => $beneficiary->getBeneficiaryLastName(),
             'beneficiary_city' => $beneficiary->getBeneficiaryCity(),
