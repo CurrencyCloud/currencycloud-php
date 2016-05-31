@@ -116,7 +116,7 @@ class Beneficiary implements EntityInterface
      */
     private $routingCodeValue2;
     /**
-     * @var array
+     * @var string
      */
     private $beneficiaryAddress;
     /**
@@ -637,11 +637,11 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * @param array $beneficiaryAddress
+     * @param string $beneficiaryAddress
      *
      * @return $this
      */
-    public function setBeneficiaryAddress(array $beneficiaryAddress = null)
+    public function setBeneficiaryAddress($beneficiaryAddress = null)
     {
         $this->beneficiaryAddress = $beneficiaryAddress;
         return $this;
