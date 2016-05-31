@@ -2,7 +2,7 @@
 
 # Currency Cloud API v2 PHP client
 
-## Version: 0.7.0
+## Version: 0.8.0
 
 This is the official PHP SDK for the Currency Cloud API. Additional documentation 
 for each API endpoint can be found at [connect.currencycloud.com](https://connect.currencycloud.com/documentation/getting-started/introduction). 
