@@ -24,7 +24,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         $ret = [];
         foreach ($response->currencies as $currency) {
             $ret[] = new Currency(
-                $currency->code, $currency->decimal_places, $currency->name
+                $currency->code, $currency->decimal_places, $currency->name, $currency->online_trading
             );
         }
         return $ret;
