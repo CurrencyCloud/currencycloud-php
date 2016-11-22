@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
-# Currency Cloud API v2 PHP client
+# Currencycloud API v2 PHP client
 
 ## Version: 0.8.0
 
-This is the official PHP SDK for the Currency Cloud API. Additional documentation 
-for each API endpoint can be found at [connect.currencycloud.com](https://connect.currencycloud.com/documentation/getting-started/introduction). 
+This is the official PHP SDK for the Currencycloud API. Additional documentation 
+for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
 
 If you have any queries or you require support, please contact our sales team at sales@currencycloud.com.  Please quote your login id in any correspondence as this makes
 it simpler for us to locate your account and give you the support you need.
@@ -24,12 +24,12 @@ This library aims to support and is tested against PHP 5.5 and greater.
 
 ## Installation
 
-The recommended way to install Currency Cloud SDK is through
+The recommended way to install Currencycloud SDK is through
 [Composer](http://getcomposer.org).
 
 If you do not have composer installed check [Composer installation guide](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
 
-Assuming you have composer installed globally you can require Currency Cloud SDK into you project by executing:
+Assuming you have composer installed globally you can require Currencycloud SDK into you project by executing:
 
 ```bash
 composer require currency-cloud/client
@@ -43,7 +43,7 @@ require 'vendor/autoload.php';
 
 # Usage
 
-You can register for demo API key at [connect.currencycloud.com](https://connect.currencycloud.com/). 
+You can register for demo API key at [developer.currencycloud.com](https://developer.currencycloud.com/api-register/). 
 
 An example in PHP 5.5:
 
@@ -101,7 +101,7 @@ foreach ($balances->getBalances() as $balance) {
 $client->authenticate()->close();
 ```
 
-For a slightly longer example, see [cook-book.php](/examples/cook-book.php), which is an implementation of the [Cookbook](https://connect.currencycloud.com/documentation/getting-started/cookbook) from the documentation.
+For a slightly longer example, see [cook-book.php](/examples/cook-book.php), which is an implementation of the [Cookbook](https://developer.currencycloud.com/documentation/getting-started/cookbook/) from the documentation.
 
 ## Common Patterns
 
@@ -174,7 +174,7 @@ The final section contains valuable information:
 - Message: A human readable message that explains the error
 - Params: A map that contains dynamic parts of the error message for building custom error messages
 
-When troubleshooting API calls with Currency Cloud support, including the full
+When troubleshooting API calls with Currencycloud support, including the full
 error in any correspondence can be very helpful.
 
 # Development
@@ -198,4 +198,4 @@ to be backwards compatible.
 
 # Copyright
 
-Copyright (c) 2015 Currency Cloud. See [LICENSE](/LICENSE.md) for details.
+Copyright (c) 2016 Currencycloud. See [LICENSE](/LICENSE.md) for details.
