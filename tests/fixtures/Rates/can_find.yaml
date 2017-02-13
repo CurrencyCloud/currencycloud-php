@@ -1,7 +1,7 @@
 -
   request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/rates/find?currency_pair=GBPUSD%2CEURGBP
+    url: https://devapi.currencycloud.com/v2/rates/find?currency_pair=GBPUSD%2CEURGBP
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

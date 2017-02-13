@@ -1,10 +1,10 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/beneficiaries/create
+    url: https://devapi.currencycloud.com/v2/beneficiaries/create
     body: bank_account_holder_name=Test+User&bank_country=GB&currency=GBP&name=Test+User&account_number=12345678&routing_code_type_1=sort_code&routing_code_value_1=123456&payment_types[]=regular
     headers:
-      Host: devapi.thecurrencycloud.com
+      Host: devapi.currencycloud.com
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
   response:
     status: 200

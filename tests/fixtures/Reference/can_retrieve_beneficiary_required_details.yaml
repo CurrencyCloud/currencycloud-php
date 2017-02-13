@@ -1,7 +1,7 @@
 -
   request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/reference/beneficiary_required_details?currency=GBP&bank_account_country=GB&beneficiary_country=GB
+    url: https://devapi.currencycloud.com/v2/reference/beneficiary_required_details?currency=GBP&bank_account_country=GB&beneficiary_country=GB
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

@@ -63,8 +63,8 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $mockedClient = $this->getMock(\GuzzleHttp\Client::class, ['request']);
 
         $mockedClient->expects($this->exactly(2))->method('request')->withConsecutive(
-            [$this->equalTo('GET'), 'https://devapi.thecurrencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'],
-            [$this->equalTo('POST'), 'https://devapi.thecurrencycloud.com/v2/payments/me/delete', $this->equalTo([
+            [$this->equalTo('GET'), 'https://devapi.currencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'],
+            [$this->equalTo('POST'), 'https://devapi.currencycloud.com/v2/payments/me/delete', $this->equalTo([
                 'headers' => [
                     'X-Auth-Token' => null
                 ],
@@ -127,7 +127,7 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $transactionsData = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
 
         $mockedClient->expects($this->once())->method('request')->withConsecutive(
-            [$this->equalTo('GET'), 'https://devapi.thecurrencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']
+            [$this->equalTo('GET'), 'https://devapi.currencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']
         )
             ->will($this->onConsecutiveCalls(
                 new Response(200, [], $transactionsData)

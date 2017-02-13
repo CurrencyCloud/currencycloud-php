@@ -1,7 +1,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/conversions/create
+    url: https://devapi.currencycloud.com/v2/conversions/create
     body: buy_currency=GBP&sell_currency=USD&fixed_side=buy&amount=1000&reason=mortgage+payment&term_agreement=true
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
@@ -16,7 +16,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/settlements/create
+    url: https://devapi.currencycloud.com/v2/settlements/create
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
@@ -31,7 +31,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/add_conversion
+    url: https://devapi.currencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/add_conversion
     body: conversion_id=24d2ee7f-c7a3-4181-979e-9c58dbace992
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

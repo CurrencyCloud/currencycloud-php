@@ -1,7 +1,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/remove_conversion
+    url: https://devapi.currencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/remove_conversion
     body: conversion_id=24d2ee7f-c7a3-4181-979e-9c58dbace992
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

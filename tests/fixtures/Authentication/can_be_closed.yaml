@@ -1,7 +1,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/authenticate/close_session
+    url: https://devapi.currencycloud.com/v2/authenticate/close_session
     body: ''
     headers:
       X-Auth-Token: 2ec8a86c8cf6e0378a20ca6793f3260c

@@ -13,8 +13,8 @@ class Session
     const ENVIRONMENT_UAT           = 'uat';
 
     private static $urls = [
-        self::ENVIRONMENT_PRODUCTION => 'https://api.thecurrencycloud.com/v2/',
-        self::ENVIRONMENT_DEMONSTRATION => 'https://devapi.thecurrencycloud.com/v2/',
+        self::ENVIRONMENT_PRODUCTION => 'https://api.currencycloud.com/v2/',
+        self::ENVIRONMENT_DEMONSTRATION => 'https://devapi.currencycloud.com/v2/',
         self::ENVIRONMENT_UAT => 'https://api-uat1.ccycloud.com'
     ];
 

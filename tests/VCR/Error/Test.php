@@ -36,7 +36,7 @@ request:
         login_id: non-existent-login-id
         api_key: ef0fd50fca1fb14c1fab3a8436b9ecb57528f0
     verb: post
-    url: 'https://devapi.thecurrencycloud.com/v2/authenticate/api'
+    url: 'https://devapi.currencycloud.com/v2/authenticate/api'
 response:
     status_code: 400
     date: 'Wed, 29 Apr 2015 22:46:53 GMT'
@@ -61,7 +61,7 @@ EOT;
             $this->assertSame('Wed, 29 Apr 2015 22:46:53 GMT', $e->getDate());
             $this->assertSame('2775253392756800903', $e->getRequestId());
             $this->assertSame(400, $e->getStatusCode());
-            $this->assertSame('https://devapi.thecurrencycloud.com/v2/authenticate/api', $e->getUrl());
+            $this->assertSame('https://devapi.currencycloud.com/v2/authenticate/api', $e->getUrl());
             $this->assertSame('post', $e->getHttpMethod());
             $this->assertSame(400, $e->getStatusCode());
             $this->assertSame('auth_invalid_user_login_details', $e->getApiCode());

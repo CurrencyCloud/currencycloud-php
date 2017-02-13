@@ -1,9 +1,9 @@
 - request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/beneficiaries/find
+    url: https://devapi.currencycloud.com/v2/beneficiaries/find
     body: ''
     headers:
-      Host: devapi.thecurrencycloud.com
+      Host: devapi.currencycloud.com
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
   response:
     status: 200

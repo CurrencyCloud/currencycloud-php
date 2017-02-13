@@ -1,7 +1,7 @@
 -
   request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/rates/detailed?buy_currency=GBP&sell_currency=USD&fixed_side=buy&amount=10000
+    url: https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=GBP&sell_currency=USD&fixed_side=buy&amount=10000
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

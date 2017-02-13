@@ -1,10 +1,10 @@
 -
   request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/beneficiaries/find?bank_account_holder_name=Test+User&per_page=1
+    url: https://devapi.currencycloud.com/v2/beneficiaries/find?bank_account_holder_name=Test+User&per_page=1
     body: ''
     headers:
-      Host: devapi.thecurrencycloud.com
+      Host: devapi.currencycloud.com
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
   response:
     status: 200

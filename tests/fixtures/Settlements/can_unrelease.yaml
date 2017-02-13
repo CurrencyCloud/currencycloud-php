@@ -1,7 +1,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/settlements/51c619e0-0256-40ad-afba-ca4114b936f9/unrelease
+    url: https://devapi.currencycloud.com/v2/settlements/51c619e0-0256-40ad-afba-ca4114b936f9/unrelease
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

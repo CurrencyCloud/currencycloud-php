@@ -1,7 +1,7 @@
 -
   request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/reference/conversion_dates?conversion_pair=GBPUSD
+    url: https://devapi.currencycloud.com/v2/reference/conversion_dates?conversion_pair=GBPUSD
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be

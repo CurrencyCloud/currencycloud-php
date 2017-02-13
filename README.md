@@ -146,7 +146,7 @@ platform: 'PHP 5.6.14-1+deb.sury.org~trusty+1'
 request:
     parameters: {  }
     verb: get
-    url: 'https://devapi.thecurrencycloud.com/v2/rates/detailed?buy_currency=EUR&sell_currency=GBP&fixed_side=buy&amount=10000.00'
+    url: 'https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=EUR&sell_currency=GBP&fixed_side=buy&amount=10000.00'
 response:
     status_code: 400
     date: 'Sun, 06 Nov 2015 18:22:47 GMT'

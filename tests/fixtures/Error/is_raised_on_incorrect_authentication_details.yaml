@@ -1,7 +1,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/authenticate/api
+    url: https://devapi.currencycloud.com/v2/authenticate/api
     body: login_id=non-existent-login-id&api_key=efb5ae2af84978b7a37f18dd61c8bbe139b403009faea83484405a3dcb64c4d8
   response:
     status: 401

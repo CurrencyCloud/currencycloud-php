@@ -191,7 +191,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
 
         $dummy =
             json_decode(
-                '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"thecurrencycloud","your_reference":null,"status":"enabled","street":null,"city":null,"state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2015-04-24T15:57:55+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002"}', true
+                '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"currencycloud","your_reference":null,"status":"enabled","street":null,"city":null,"state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2015-04-24T15:57:55+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002"}', true
             );
 
         $this->validateObjectStrictName($account, $dummy);

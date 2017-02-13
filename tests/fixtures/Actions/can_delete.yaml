@@ -1,7 +1,7 @@
 -
   request:
     method: GET
-    url: https://devapi.thecurrencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
+    url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
@@ -16,7 +16,7 @@
 -
   request:
     method: POST
-    url: https://devapi.thecurrencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c/delete
+    url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c/delete
     body: ''
     headers:
       X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
