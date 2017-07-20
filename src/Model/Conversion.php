@@ -123,6 +123,11 @@ class Conversion
     private $updatedAt;
 
     /**
+     * @var string
+     */
+    private $uniqueRequestId;
+
+    /**
      * @param string $buyCurrency
      * @param string $sellCurrency
      * @param string $fixedSide
@@ -657,4 +662,24 @@ class Conversion
         $this->coreRate = $coreRate;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
+    }
+
+    /**
+     * @param string $uniqueRequestId
+     *
+     * @return $this
+     */
+    public function setUniqueRequestId($uniqueRequestId)
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
+        return $this;
+    }
+
 }

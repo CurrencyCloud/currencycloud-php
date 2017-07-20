@@ -49,6 +49,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_id' => $payment->getBeneficiaryId(),
             'conversion_id' => $payment->getConversionId()
         ];
+        if (!empty($payment->getUniqueRequestId())) {
+            $common['unique_request_id'] = $payment->getUniqueRequestId();
+        }
         if ($convertForFind) {
             return $common + [
                 'short_reference' => $payment->getShortReference(),
