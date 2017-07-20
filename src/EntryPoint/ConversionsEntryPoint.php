@@ -42,6 +42,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
                 'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
                 'client_buy_amount' => $conversion->getClientBuyAmount(),
                 'client_sell_amount' => $conversion->getClientSellAmount(),
+                'unique_request_id' => empty($conversion->getUniqueRequestId()) ? null : $conversion->getUniqueRequestId(),
                 'on_behalf_of' => $onBehalfOf
             ]
         );

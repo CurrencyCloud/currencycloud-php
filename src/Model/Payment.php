@@ -89,6 +89,11 @@ class Payment implements EntityInterface
     private $updatedAt;
 
     /**
+     * @var string
+     */
+    private $uniqueRequestId;
+
+    /**
      * @param string $currency
      * @param string $beneficiaryId
      * @param string $amount
@@ -473,6 +478,25 @@ class Payment implements EntityInterface
     public function setPayerDetailsSource($payerDetailsSource)
     {
         $this->payerDetailsSource = $payerDetailsSource;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
+    }
+
+    /**
+     * @param string $uniqueRequestId
+     *
+     * @return $this
+     */
+    public function setUniqueRequestId($uniqueRequestId)
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
         return $this;
     }
 }
