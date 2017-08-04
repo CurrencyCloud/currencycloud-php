@@ -87,6 +87,10 @@ class Payment implements EntityInterface
      * @var DateTime
      */
     private $updatedAt;
+    /**
+     * @var String
+     */
+    private $uniqueRequestId;
 
     /**
      * @param string $currency
@@ -454,6 +458,25 @@ class Payment implements EntityInterface
     public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @return String
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
+    }
+
+    /**
+     * @param String $uniqueRequestId
+     *
+     * @return $this
+     */
+    public function setUniqueRequestId($uniqueRequestId)
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
         return $this;
     }
 

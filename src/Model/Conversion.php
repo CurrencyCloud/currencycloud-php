@@ -121,6 +121,10 @@ class Conversion
      * @var DateTime
      */
     private $updatedAt;
+    /**
+     * @var String
+     */
+    private $uniqueRequestId;
 
     /**
      * @param string $buyCurrency
@@ -655,6 +659,25 @@ class Conversion
     public function setCoreRate($coreRate)
     {
         $this->coreRate = $coreRate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
+    }
+
+    /**
+     * @param string $uniqueRequestId
+     *
+     * @return $this
+     */
+    public function setUniqueRequestId($uniqueRequestId)
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
         return $this;
     }
 }
