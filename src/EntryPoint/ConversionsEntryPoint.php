@@ -42,6 +42,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
                 'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
                 'client_buy_amount' => $conversion->getClientBuyAmount(),
                 'client_sell_amount' => $conversion->getClientSellAmount(),
+                'unique_request_id' => $conversion->getUniqueRequestId(),
                 'on_behalf_of' => $onBehalfOf
             ]
         );
@@ -83,7 +84,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             ->setDepositRequiredAt(new DateTime($response->deposit_required_at))
             ->setPaymentIds($response->payment_ids)
             ->setCreatedAt(new DateTime($response->created_at))
-            ->setUpdatedAt(new DateTime($response->updated_at));
+            ->setUpdatedAt(new DateTime($response->updated_at))
+            ->setUniqueRequestId($response->unique_request_id);
 
         $this->setIdProperty($conversion, $response->id);
 
@@ -168,7 +170,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'buy_amount_from' => $criteria->getBuyAmountFrom(),
             'buy_amount_to' => $criteria->getBuyAmountTo(),
             'sell_amount_from' => $criteria->getSellAmountFrom(),
-            'sell_amount_to' => $criteria->getSellAmountTo()
+            'sell_amount_to' => $criteria->getSellAmountTo(),
+            'unique_request_id' => $criteria->getUniqueRequestId()
         ];
     }
 }

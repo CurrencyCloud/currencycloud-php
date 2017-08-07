@@ -83,6 +83,10 @@ class FindConversionsCriteria
      * @var string|null
      */
     private $sellAmountTo;
+    /**
+     * @var string|null
+     */
+    private $uniqueRequestId;
 
     /**
      * @param string $shortReference
@@ -294,6 +298,17 @@ class FindConversionsCriteria
     }
 
     /**
+     * @param string $uniqueRequestId
+     *
+     * @return $this
+     */
+    public function setUniqueRequestId($uniqueRequestId)
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
+        return $this;
+    }
+
+    /**
      * @return null|string
      */
     public function getShortReference()
@@ -443,5 +458,13 @@ class FindConversionsCriteria
     public function getSellAmountTo()
     {
         return $this->sellAmountTo;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
     }
 }
