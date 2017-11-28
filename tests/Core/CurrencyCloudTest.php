@@ -66,7 +66,8 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
             [$this->equalTo('GET'), 'https://devapi.currencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'],
             [$this->equalTo('POST'), 'https://devapi.currencycloud.com/v2/payments/me/delete', $this->equalTo([
                 'headers' => [
-                    'X-Auth-Token' => null
+                    'X-Auth-Token' => null,
+                    'User-Agent' => 'CurrencyCloud/2.0 PHP/0.9.0'
                 ],
                 'form_params' => [
                     'on_behalf_of' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'

@@ -97,6 +97,9 @@ class Client
                 //Perhaps check here if auth token set?
                 $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
             }
+
+            $options['headers']['User-Agent'] = "CurrencyCloud/2.0 PHP/0.9.0";
+
             $queryParams = array_filter($queryParams);
             $requestParams = array_filter($requestParams);
             if (count($requestParams) > 0) {
