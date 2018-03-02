@@ -97,6 +97,8 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'created_at_to' => null,
                 'updated_at_from' => null,
                 'updated_at_to' => null,
+                'completed_at_from' => null,
+                'completed_at_to' => null,
                 'page' => null,
                 'per_page' => null,
                 'order' => null,
@@ -130,7 +132,9 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
             (new DateTime())->modify('-2 hour'),
             (new DateTime())->modify('-3 hour'),
             (new DateTime())->modify('-4 hour'),
-            (new DateTime())->modify('-5 hour')
+            (new DateTime())->modify('-5 hour'),
+            (new DateTime())->modify('-6 hour'),
+            (new DateTime())->modify('-7 hour'),
         ];
 
         $entryPoint = new TransactionsEntryPoint(
@@ -157,6 +161,8 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'created_at_to' => $dateTimes[3]->format(DateTime::ISO8601),
                 'updated_at_from' => $dateTimes[4]->format(DateTime::ISO8601),
                 'updated_at_to' => $dateTimes[5]->format(DateTime::ISO8601),
+                'completed_at_from' => $dateTimes[6]->format(DateTime::ISO8601),
+                'completed_at_to' => $dateTimes[7]->format(DateTime::ISO8601),
                 'page' => null,
                 'per_page' => null,
                 'order' => null,
@@ -187,7 +193,10 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
             $dateTimes[3],
             $dateTimes[4],
             $dateTimes[5],
-            'L'
+            'L',
+            null,
+            $dateTimes[6],
+            $dateTimes[7]
         );
 
         $this->assertInstanceOf(Transactions::class, $transactions);
