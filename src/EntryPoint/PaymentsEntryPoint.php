@@ -117,7 +117,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setPayerDetailsSource($response->payer_details_source)
             ->setCreatedAt(new DateTime($response->created_at))
             ->setUpdatedAt(new DateTime($response->updated_at))
-            ->setUniqueRequestId($response->unique_request_id);
+            ->setUniqueRequestId($response->unique_request_id)
+            ->setFailureReturnedAmount($response->failure_returned_amount);
 
         $this->setIdProperty($payment, $response->id);
         return $payment;

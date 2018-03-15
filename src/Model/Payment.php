@@ -91,6 +91,10 @@ class Payment implements EntityInterface
      * @var String
      */
     private $uniqueRequestId;
+    /**
+     * @var string
+     */
+    private $failureReturnedAmount;
 
     /**
      * @param string $currency
@@ -496,6 +500,25 @@ class Payment implements EntityInterface
     public function setPayerDetailsSource($payerDetailsSource)
     {
         $this->payerDetailsSource = $payerDetailsSource;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailureReturnedAmount()
+    {
+        return $this->failureReturnedAmount;
+    }
+
+    /**
+     * @param string $failureReturnedAmount
+     *
+     * @return $this
+     */
+    public function setFailureReturnedAmount($failureReturnedAmount)
+    {
+        $this->failureReturnedAmount = $failureReturnedAmount;
         return $this;
     }
 }

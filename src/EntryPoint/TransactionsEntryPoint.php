@@ -41,6 +41,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
      * @param DateTime|null $updatedAtTo
      * @param null|string $onBehalfOf
      * @param Pagination|null $pagination
+     * @param DateTime|null $completedAtFrom
+     * @param DateTime|null $completedAtTo
      *
      * @return Transactions
      */
@@ -55,7 +57,9 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         DateTime $updatedAtFrom = null,
         DateTime $updatedAtTo = null,
         $onBehalfOf = null,
-        Pagination $pagination = null
+        Pagination $pagination = null,
+        DateTime $completedAtFrom = null,
+        DateTime $completedAtTo = null
     ) {
         if (null === $transaction) {
             $transaction = new Transaction();
@@ -75,6 +79,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
                 'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
                 'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
                 'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
+                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(DateTime::ISO8601),
+                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(DateTime::ISO8601),
                 'on_behalf_of' => $onBehalfOf
             ]
         );
