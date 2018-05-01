@@ -4,6 +4,9 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\Model\Conversion;
+use CurrencyCloud\Model\ConversionDateChanged;
+use CurrencyCloud\Model\CancelledConversion;
+use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\Conversions;
 use DateTime;
 use stdClass;
@@ -26,7 +29,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         $reason,
         $termAgreement,
         $onBehalfOf = null
-    ) {
+    )
+    {
         $conversionDate = $conversion->getConversionDate();
         $response = $this->request(
             'POST',
@@ -90,6 +94,89 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         $this->setIdProperty($conversion, $response->id);
 
         return $conversion;
+    }
+
+    /**
+     * @param stdClass $response
+     *
+     * @return CancelledConversion
+     */
+    private function createConversionCancellationFromResponse(stdClass $response)
+    {
+
+        //var_dump($response);
+        $conversionCancellation = new CancelledConversion();
+        $conversionCancellation->setAccountId($response->account_id)
+            ->setContactId($response->contact_id)
+            ->setEventAccountId($response->event_account_id)
+            ->setEventContactId($response->event_contact_id)
+            ->setConversionId($response->conversion_id)
+            ->setEventType($response->event_type)
+            ->setAmount($response->amount)
+            ->setCurrency($response->currency)
+            ->setNotes($response->notes)
+            ->setEventDateTime(new DateTime($response->event_date_time));
+
+        return $conversionCancellation;
+    }
+
+    /**
+     * @param stdClass $response
+     *
+     * @return ConversionDateChanged
+     */
+    private function createConversionDateChangeFromResponse(stdClass $response)
+    {
+
+        $conversionDateChanged = new ConversionDateChanged();
+        $conversionDateChanged->setConversionId($response->conversion_id)
+            ->setAmount($response->amount)
+            ->setCurrency($response->currency)
+            ->setNewConversionDate($response->new_conversion_date)
+            ->setNewSettlementDate($response->new_settlement_date)
+            ->setOldConversionDate($response->old_conversion_date)
+            ->setOldSettlementDate($response->old_conversion_date)
+            ->setEventDateTime(new DateTime($response->event_date_time));
+
+        return $conversionDateChanged;
+    }
+
+    /**
+     * @param stdClass $response
+     *
+     * @return ConversionSplit
+     */
+    private function createConversionSplitFromResponse(stdClass $response)
+    {
+        $conversionSplit = new ConversionSplit();
+
+        $parent_conversion = new Conversion();
+        $parent_conversion->setId($response->parent_conversion->id)
+            ->setShortReference($response->parent_conversion->short_reference)
+            ->setClientSellAmount($response->parent_conversion->sell_amount)
+            ->setSellCurrency($response->parent_conversion->sell_currency)
+            ->setClientBuyAmount($response->parent_conversion->buy_amount)
+            ->setBuyCurrency($response->parent_conversion->buy_currency)
+            ->setSettlementDate($response->parent_conversion->settlement_date)
+            ->setConversionDate($response->parent_conversion->conversion_date)
+            ->setStatus($response->parent_conversion->status);
+
+        $child_conversion = new Conversion();
+        $child_conversion->setId($response->child_conversion->id)
+            ->setShortReference($response->child_conversion->short_reference)
+            ->setClientSellAmount($response->child_conversion->sell_amount)
+            ->setSellCurrency($response->child_conversion->sell_currency)
+            ->setClientBuyAmount($response->child_conversion->buy_amount)
+            ->setBuyCurrency($response->child_conversion->buy_currency)
+            ->setSettlementDate($response->child_conversion->settlement_date)
+            ->setConversionDate($response->child_conversion->conversion_date)
+            ->setStatus($response->child_conversion->status);
+
+        $conversionSplit->setParentConversion($parent_conversion)
+            ->setChildConversion($child_conversion);
+
+        #var_dump($conversionSplit);
+        return $conversionSplit;
     }
 
     /**
@@ -173,5 +260,68 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'sell_amount_to' => $criteria->getSellAmountTo(),
             'unique_request_id' => $criteria->getUniqueRequestId()
         ];
+    }
+
+
+    /**
+     * @param string $id
+     * @param string|null $onBehalfOf
+     *
+     * @return CancelledConversion
+     */
+    public function cancel($id, $onBehalfOf = null)
+    {
+        $response = $this->request(
+            'POST',
+            sprintf('conversions/%s/cancel', $id),
+            [
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
+
+        return $this->createConversionCancellationFromResponse($response);
+    }
+
+
+    /**
+     * @param string $id
+     * @param string $new_settlement_date
+     * @param string|null $onBehalfOf
+     *
+     * @return CancelledConversion
+     */
+    public function date_change($id, $new_settlement_date, $onBehalfOf = null)
+    {
+        $response = $this->request(
+            'POST',
+            sprintf('conversions/%s/date_change', $id),
+            [
+                'new_settlement_date' => $new_settlement_date,
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
+
+        return $this->createConversionDateChangeFromResponse($response);
+    }
+
+    /**
+     * @param string $id
+     * @param string $amount
+     * @param string|null $onBehalfOf
+     *
+     * @return ConversionSplit
+     */
+    public function split($id, $amount, $onBehalfOf = null)
+    {
+        $response = $this->request(
+            'POST',
+            sprintf('conversions/%s/split', $id),
+            [
+                'amount' => $amount,
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
+
+        return $this->createConversionSplitFromResponse($response);
     }
 }

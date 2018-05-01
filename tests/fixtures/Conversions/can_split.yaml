@@ -1,0 +1,16 @@
+-
+  request:
+    method: POST
+    url: https://devapi.currencycloud.com/v2/conversions/13909849-1dbd-45c1-83c7-25930132f02c/split
+    body: amount=100
+    headers:
+      Host: devapi.currencycloud.com
+      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+  response:
+    status: 200
+    headers:
+      Date: Sat, 25 Apr 2015 09:21:00 GMT
+      Content-Type: application/json
+      Content-Size: 1019
+      X-Request-Id: '2771948673934289802'
+    body: '{"parent_conversion":{"id":"13909849-1dbd-45c1-83c7-25930132f02c","short_reference":"20180501-JLWFFS","sell_amount":"7031.75","sell_currency":"GBP","buy_amount":"9900.00","buy_currency":"USD","settlement_date":"2018-05-14T15:30:00+00:00","conversion_date":"2018-05-14T00:00:00+00:00","status":"awaiting_funds"},"child_conversion":{"id":"bd054ea4-0e81-48de-bb49-b0373ae34180","short_reference":"20180501-XGYQDR","sell_amount":"71.03","sell_currency":"GBP","buy_amount":"100.00","buy_currency":"USD","settlement_date":"2018-05-14T15:30:00+00:00","conversion_date":"2018-05-14T00:00:00+00:00","status":"awaiting_funds"}}'

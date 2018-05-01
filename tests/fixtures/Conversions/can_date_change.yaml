@@ -1,0 +1,16 @@
+-
+  request:
+    method: POST
+    url: https://devapi.currencycloud.com/v2/conversions/13909849-1dbd-45c1-83c7-25930132f02c/date_change
+    body: new_settlement_date=2028-05-12
+    headers:
+      Host: devapi.currencycloud.com
+      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+  response:
+    status: 200
+    headers:
+      Date: Sat, 25 Apr 2015 09:21:00 GMT
+      Content-Type: application/json
+      Content-Size: 1019
+      X-Request-Id: '2771948673934289802'
+    body: '{"conversion_id":"13909849-1dbd-45c1-83c7-25930132f02c","amount":"19.12","currency":"GBP","new_conversion_date":"2018-05-14T00:00:00+00:00","new_settlement_date":"2018-05-14T15:30:00+00:00","old_conversion_date":"2018-05-03T00:00:00+00:00","old_settlement_date":"2018-05-03T15:30:00+00:00","event_date_time":"2018-05-01T14:08:17+00:00"}';
