@@ -59,7 +59,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         $paymentDate = $payment->getPaymentDate();
         return $common + [
             'reference' => $payment->getReference(),
-            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(DateTime::RFC3339),
+            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format('Y-m-d'),
             'payment_type' => $payment->getPaymentType()
         ];
     }
