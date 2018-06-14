@@ -5,6 +5,9 @@ namespace CurrencyCloud\Tests\EntryPoint;
 use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
 use CurrencyCloud\Model\Conversion;
+use CurrencyCloud\Model\ConversionDateChanged;
+use CurrencyCloud\Model\CancelledConversion;
+use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 
@@ -138,5 +141,73 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $item = $entryPoint->retrieve('hi');
 
         $this->validateObjectStrictName($item, json_decode($data, true));
+    }
+
+
+    /**
+     * @test
+     */
+    public function canCancel()
+    {
+        $data = '{"account_id":"f054ef5d-3cfa-4d2c-ad84-caee50e5fc83","contact_id":"0ff0ea60-d976-4c7f-ad7f-3eb94da68452","event_account_id":"f054ef5d-3cfa-4d2c-ad84-caee50e5fc83","event_contact_id":"0ff0ea60-d976-4c7f-ad7f-3eb94da68452","conversion_id":"740a64c5-fd0a-47d4-b690-51310501f470","event_type":"self_service_cancellation","amount":"-1.00","currency":"GBP","notes":"Cancelduetoveryimportantreason","event_date_time":"2018-05-01T09:22:11+00:00"}';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'conversions/0ff0ea60-d976-4c7f-ad7f-3eb94da68452/cancel',
+            [
+                'on_behalf_of' => null
+            ]
+        ));
+
+        $conversionCancellation = $entryPoint->cancel('0ff0ea60-d976-4c7f-ad7f-3eb94da68452');
+
+        $this->assertInstanceOf(CancelledConversion::class, $conversionCancellation);
+    }
+
+
+    /**
+     * @test
+     */
+    public function canDateChange()
+    {
+        $data = '{"conversion_id":"13909849-1dbd-45c1-83c7-25930132f02c","amount":"19.12","currency":"GBP","new_conversion_date":"2018-05-14T00:00:00+00:00","new_settlement_date":"2018-05-14T15:30:00+00:00","old_conversion_date":"2018-05-03T00:00:00+00:00","old_settlement_date":"2018-05-03T15:30:00+00:00","event_date_time":"2018-05-01T14:08:17+00:00"}';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'conversions/13909849-1dbd-45c1-83c7-25930132f02c/date_change',
+            [
+                'new_settlement_date' => '2028-05-12',
+                'on_behalf_of' => null
+            ]
+        ));
+
+        $conversionDateChanged = $entryPoint->date_change('13909849-1dbd-45c1-83c7-25930132f02c', '2028-05-12');
+
+        $this->assertInstanceOf(ConversionDateChanged::class, $conversionDateChanged);
+    }
+
+
+    /**
+     * @test
+     */
+    public function canSplit()
+    {
+        $data = '{"parent_conversion":{"id":"13909849-1dbd-45c1-83c7-25930132f02c","short_reference":"20180501-JLWFFS","sell_amount":"7031.75","sell_currency":"GBP","buy_amount":"9900.00","buy_currency":"USD","settlement_date":"2018-05-14T15:30:00+00:00","conversion_date":"2018-05-14T00:00:00+00:00","status":"awaiting_funds"},"child_conversion":{"id":"bd054ea4-0e81-48de-bb49-b0373ae34180","short_reference":"20180501-XGYQDR","sell_amount":"71.03","sell_currency":"GBP","buy_amount":"100.00","buy_currency":"USD","settlement_date":"2018-05-14T15:30:00+00:00","conversion_date":"2018-05-14T00:00:00+00:00","status":"awaiting_funds"}}';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'conversions/13909849-1dbd-45c1-83c7-25930132f02c/split',
+            [
+                'amount' => '100',
+                'on_behalf_of' => null
+            ]
+        ));
+
+        $conversionSplit = $entryPoint->split('13909849-1dbd-45c1-83c7-25930132f02c', '100');
+
+        $this->assertInstanceOf(ConversionSplit::class, $conversionSplit);
     }
 }
