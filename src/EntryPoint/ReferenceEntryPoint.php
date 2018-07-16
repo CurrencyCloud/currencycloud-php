@@ -161,6 +161,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
               'currency' => $bank_account_country
           ]
       );
+
       $ret = [];
       foreach ($response->purpose_codes as $purpose_code) {
           $ret[] = new PurposeCode(
