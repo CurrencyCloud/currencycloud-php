@@ -44,6 +44,8 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
+        print_r("Hello Travis!");
+
         $eventDispatcher = new EventDispatcher();
 
         $client = new Client($session, new \GuzzleHttp\Client([
