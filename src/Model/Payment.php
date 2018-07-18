@@ -95,7 +95,14 @@ class Payment implements EntityInterface
      * @var string
      */
     private $failureReturnedAmount;
-
+    /**
+     * @var string
+     */
+    private $paymentGroupId;
+    /**
+     * @var string
+     */
+    private $ultimateBeneficiaryName;
     /**
      * @param string $currency
      * @param string $beneficiaryId
@@ -521,4 +528,24 @@ class Payment implements EntityInterface
         $this->failureReturnedAmount = $failureReturnedAmount;
         return $this;
     }
+
+    /**
+     * @param string $paymentGroupId
+     *
+     * @return $this
+     */
+     public function getPaymentGroupId()
+     {
+         return $this->paymentGroupId;
+     }
+
+     /**
+      * @param string $ultimateBeneficiaryName
+      *
+      * @return $this
+      */
+      public function getUltimateBeneficiaryName()
+      {
+          return $this->ultimateBeneficiaryName;
+      }
 }
