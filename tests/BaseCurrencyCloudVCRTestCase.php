@@ -44,8 +44,6 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
-        print_r("Hello Travis!");
-
         $eventDispatcher = new EventDispatcher();
 
         $client = new Client($session, new \GuzzleHttp\Client([
@@ -89,7 +87,7 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
      *
      * @return CurrencyCloud
      */
-    protected function getAuthenticatedClient($authToken = 'e5070d4a16c5ffe4ed9fb268a2a716be')
+    protected function getAuthenticatedClient($authToken = '43814754e0f16a8e8b0bbd1395dd1692')
     {
         $client = $this->getClient();
         $client->getSession()->setAuthToken($authToken);
