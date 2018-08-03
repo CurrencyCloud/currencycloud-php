@@ -38,8 +38,8 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
      * @return CurrencyCloud
      */
     protected function getClient(
-        $loginId = 'rjnienaber@gmail.com',
-        $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+        $loginId = LOGIN_ID,
+        $apiKey = API_KEY
     ) {
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
@@ -90,7 +90,7 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
     protected function getAuthenticatedClient($authToken = '43814754e0f16a8e8b0bbd1395dd1692')
     {
         $client = $this->getClient();
-        $client->getSession()->setAuthToken($authToken);
+        // $client->getSession()->setAuthToken($authToken);
         return $client;
     }
 }

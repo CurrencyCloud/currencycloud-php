@@ -44,8 +44,6 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
     {
 
         $result = array();
-        print_r("\n========== Response ($response->authorisations) ==============");
-        print_r($response->authorisations);
 
         foreach($response->authorisations as $authorisation) {
             $payment_authorisation = new PaymentAuthorisation();
