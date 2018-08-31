@@ -1,0 +1,16 @@
+-
+  request:
+    method: POST
+    url: https://devapi.currencycloud.com/v2/conversions/0ff0ea60-d976-4c7f-ad7f-3eb94da68452/cancel
+    body: id=0ff0ea60-d976-4c7f-ad7f-3eb94da68452
+    headers:
+      Host: devapi.currencycloud.com
+      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+  response:
+    status: 200
+    headers:
+      Date: Sat, 25 Apr 2015 09:21:00 GMT
+      Content-Type: application/json
+      Content-Size: 1019
+      X-Request-Id: '2771948673934289802'
+    body: '{"account_id":"f054ef5d-3cfa-4d2c-ad84-caee50e5fc83","contact_id":"0ff0ea60-d976-4c7f-ad7f-3eb94da68452","event_account_id":"f054ef5d-3cfa-4d2c-ad84-caee50e5fc83","event_contact_id":"0ff0ea60-d976-4c7f-ad7f-3eb94da68452","conversion_id":"740a64c5-fd0a-47d4-b690-51310501f470","event_type":"self_service_cancellation","amount":"-1.00","currency":"GBP","notes":"Cancelduetoveryimportantreason","event_date_time":"2018-05-01T09:22:11+00:00"}';

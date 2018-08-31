@@ -152,6 +152,14 @@ class Conversion
     /**
      * @return string
      */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+    /**
+     * @return string
+     */
     public function getAccountId()
     {
         return $this->accountId;
