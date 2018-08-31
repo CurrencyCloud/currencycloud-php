@@ -5,9 +5,9 @@ namespace CurrencyCloud\Tests\Core;
 use CurrencyCloud\Session;
 use InvalidArgumentException;
 use LogicException;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SessionTest extends PHPUnit_Framework_TestCase
+class SessionTest extends TestCase
 {
 
     /**

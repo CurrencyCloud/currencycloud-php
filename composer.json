@@ -20,9 +20,11 @@
     "symfony/event-dispatcher": "^2.7"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.7",
-    "php-vcr/php-vcr": "~1.2",
-    "php-vcr/phpunit-testlistener-vcr": "~1.1"
+    "phpunit/phpunit": "*",
+    "php-vcr/php-vcr": "*",
+    "php-vcr/phpunit-testlistener-vcr": "*",
+    "codedungeon/phpunit-result-printer": "*"
+
   },
   "suggest": {
 

@@ -1,24 +1,20 @@
-<phpunit
-    bootstrap="tests/bootstrap.php"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
->
+<?xml version="1.0"?>
+<phpunit bootstrap="tests/bootstrap.php" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
 
     <testsuites>
         <testsuite name="VCR">
-            <directory>./tests/VCR</directory>>
+            <directory>./tests/VCR</directory>&gt;
         </testsuite>
         <testsuite name="EntryPoint">
-            <directory>./tests/EntryPoint</directory>>
+            <directory>./tests/EntryPoint</directory>&gt;
         </testsuite>
         <testsuite name="Core">
-            <directory>./tests/Core</directory>>
+            <directory>./tests/Core</directory>&gt;
         </testsuite>
     </testsuites>
 
     <listeners>
-        <listener class="PHPUnit_Util_Log_VCR" file="vendor/php-vcr/phpunit-testlistener-vcr/PHPUnit/Util/Log/VCR.php" />
+        <listener class="PHPUnit_Util_Log_VCR" file="vendor/php-vcr/phpunit-testlistener-vcr/PHPUnit/Util/Log/VCR.php"/>
     </listeners>
 
     <filter>
