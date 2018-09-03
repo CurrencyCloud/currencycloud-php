@@ -1,22 +1,24 @@
-<?xml version="1.0"?>
-<phpunit bootstrap="tests/bootstrap.php" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
+<phpunit
+        bootstrap="tests/bootstrap.php"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+>
+
     <testsuites>
-        <testsuite name="VCR">
-            <directory>./tests/VCR</directory>
-        </testsuite>
-        <testsuite name="EntryPoint">
-            <directory>./tests/EntryPoint</directory>
-        </testsuite>
-        <testsuite name="Core">
-            <directory>./tests/Core</directory>
+        <testsuite>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
+
     <listeners>
-        <listener class="VCR\PHPUnit\TestListener\VCRTestListener" file="vendor/php-vcr/phpunit-testlistener-vcr/src/VCRTestListener.php"/>
+        <listener class="PHPUnit_Util_Log_VCR" file="vendor/php-vcr/phpunit-testlistener-vcr/PHPUnit/Util/Log/VCR.php"/>
     </listeners>
+
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
+
 </phpunit>
