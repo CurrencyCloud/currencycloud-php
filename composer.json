@@ -14,10 +14,10 @@
   "homepage": "https://github.com/CurrencyCloud/currencycloud-php",
   "license": "MIT",
   "require": {
-    "php": ">=5.5",
-    "guzzlehttp/guzzle": "~6.1",
-    "symfony/yaml": "~2.7",
-    "symfony/event-dispatcher": "^2.7"
+    "php": "*",
+    "guzzlehttp/guzzle": "*",
+    "symfony/yaml": "*",
+    "symfony/event-dispatcher": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "*",

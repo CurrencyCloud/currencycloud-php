@@ -25,7 +25,7 @@ class SessionTest extends TestCase
      */
     public function invalidEnvironmentThrowsException()
     {
-        $this->setExpectedException(
+        $this->expectException(
             InvalidArgumentException::class,
             'Invalid environment test provided, expected one of [prod, demonstration, uat]'
         );
@@ -37,7 +37,7 @@ class SessionTest extends TestCase
      */
     public function invalidLoginIdThrowsException()
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Login ID can not be nul');
+        $this->expectException(InvalidArgumentException::class, 'Login ID can not be nul');
         new Session(Session::ENVIRONMENT_DEMONSTRATION, null, 'test');
     }
 
@@ -46,7 +46,7 @@ class SessionTest extends TestCase
      */
     public function invalidApiKeyThrowsException()
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'API key can not be null');
+        $this->expectException(InvalidArgumentException::class, 'API key can not be null');
         new Session(Session::ENVIRONMENT_DEMONSTRATION, 'test', null);
     }
 
@@ -55,7 +55,7 @@ class SessionTest extends TestCase
      */
     public function onBehalfOfCanNotBeNull()
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Contact ID expected to be UUID');
+        $this->expectException(InvalidArgumentException::class, 'Contact ID expected to be UUID');
         $this->session->setOnBehalfOf(null);
     }
 
@@ -64,7 +64,7 @@ class SessionTest extends TestCase
      */
     public function onBehalfOfMustBeValidUUID()
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Contact ID expected to be UUID');
+        $this->expectException(InvalidArgumentException::class, 'Contact ID expected to be UUID');
         $this->session->setOnBehalfOf('bok');
     }
 
@@ -73,7 +73,7 @@ class SessionTest extends TestCase
      */
     public function onBehalfOfCanNotBeSetBeforeItIsUnset()
     {
-        $this->setExpectedException(LogicException::class, 'Already in on-behalf-of call with ID: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->expectException(LogicException::class, 'Already in on-behalf-of call with ID: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
     }

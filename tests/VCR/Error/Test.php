@@ -124,7 +124,7 @@ EOT;
     public function isRaisedOnABadRequest()
     {
 
-        $this->setExpectedException(BadRequestException::class);
+        $this->expectException(BadRequestException::class);
 
         $this->getInvalidClient()
             ->authenticate()
@@ -138,7 +138,7 @@ EOT;
     public function isRaisedOnAForbiddenRequest()
     {
 
-        $this->setExpectedException(ForbiddenException::class);
+        $this->expectException(ForbiddenException::class);
 
         $this->getClient()
             ->authenticate()
@@ -152,7 +152,7 @@ EOT;
     public function isRaisedOnAnInternalServerError()
     {
 
-        $this->setExpectedException(InternalApplicationException::class);
+        $this->expectException(InternalApplicationException::class);
 
         $this->getClient()
             ->authenticate()
@@ -166,7 +166,7 @@ EOT;
     public function isRaisedOnIncorrectAuthenticationDetails()
     {
 
-        $this->setExpectedException(AuthenticationException::class);
+        $this->expectException(AuthenticationException::class);
 
         $this->getInvalidClient('efb5ae2af84978b7a37f18dd61c8bbe139b403009faea83484405a3dcb64c4d8')
             ->authenticate()
@@ -180,7 +180,7 @@ EOT;
     public function isRaisedWhenAResourceIsNotFound()
     {
 
-        $this->setExpectedException(NotFoundException::class);
+        $this->expectException(NotFoundException::class);
 
         $client = $this->getAuthenticatedClient();
         $client->beneficiaries()
@@ -194,7 +194,7 @@ EOT;
     public function isRaisedWhenToManyRequestsHaveBeenIssued()
     {
 
-        $this->setExpectedException(ToManyRequestsException::class);
+        $this->expectException(ToManyRequestsException::class);
 
         $this->getClient()
             ->authenticate()
