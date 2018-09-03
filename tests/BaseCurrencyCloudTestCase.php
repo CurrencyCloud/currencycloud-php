@@ -5,10 +5,10 @@ namespace CurrencyCloud\Tests;
 use CurrencyCloud\Client;
 use CurrencyCloud\SimpleEntityManager;
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
+class BaseCurrencyCloudTestCase extends TestCase
 {
 
     /**
