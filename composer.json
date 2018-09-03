@@ -14,16 +14,16 @@
   "homepage": "https://github.com/CurrencyCloud/currencycloud-php",
   "license": "MIT",
   "require": {
-    "php": "*",
-    "guzzlehttp/guzzle": "*",
-    "symfony/yaml": "*",
-    "symfony/event-dispatcher": "*"
+    "php": ">=5.5",
+    "guzzlehttp/guzzle": "~6.3",
+    "symfony/yaml": "~4.1",
+    "symfony/event-dispatcher": "^4.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "php-vcr/php-vcr": "*",
-    "php-vcr/phpunit-testlistener-vcr": "*",
-    "codedungeon/phpunit-result-printer": "*"
+    "phpunit/phpunit": "~7.1",
+    "php-vcr/php-vcr": "~1.4",
+    "php-vcr/phpunit-testlistener-vcr": "~3.2",
+    "codedungeon/phpunit-result-printer": "~0.19"
 
   },
   "suggest": {
