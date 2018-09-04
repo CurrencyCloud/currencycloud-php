@@ -1,6 +1,7 @@
 <?php
 
 use VCR\Request;
+include('.env-config.php');
 
 $parametersMatcher = function ($first, $second) {
     if (!is_array($first)) {
