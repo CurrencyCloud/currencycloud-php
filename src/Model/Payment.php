@@ -533,7 +533,8 @@ class Payment implements EntityInterface
     {
         return $this->purposeCode;
     }
-     /**
+
+    /**
      * @param null|string purposeCode
      *
      * @return $this
