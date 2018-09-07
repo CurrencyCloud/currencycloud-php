@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+   phpdev:
+    build:
+      context: ./.
+      dockerfile: ./Dockerfile.phpdev
+    ports:
+      - "8889:80"
+    volumes:
+      - ./:/root
+    environment:
+      #change the line below with your IP address
+      XDEBUG_CONFIG: remote_host=10.254.254.254

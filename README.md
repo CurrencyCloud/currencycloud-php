@@ -179,6 +179,33 @@ error in any correspondence can be very helpful.
 
 # Development
 
+This repo includes a Docker development environment specifically configured for debugging with PHPStorm.  
+
+Before running the container, you must configure PHPStorm to accept incoming xdebug connections:
+
+1. In the `docker-compose.yml`, configure the IP of your hostmachine here:  
+`XDEBUG_CONFIG: remote_host=IP_ADDRESS_OF_YOUR_HOST_MACHINE`
+
+2. Create a new server in Preferences -> Languages and Frameworks -> PHP -> Servers, with the following settings
+    - Name: `PHPDocker` (Important!)
+    - Host: `localhost`
+    - Port: `8889`
+    - Debugger: `Xdebug`
+    - Ensure `Use path mappings` is selected
+    - Path mapping for the project files entry: `/root`
+
+3. To start the environment, run:  
+`docker-compose up`
+
+4. You can access the container by running:  
+`docker exec -it currencycloudphp_phpdev_1 /bin/bash`
+
+5. Try it out!
+    - Set a breakpoint in the code for one of the tests
+    - Bash into the container (step 3)
+    - Run `vendor/bin/phpunit`
+    - The code should pause execution at your breakpoint in PHPStorm
+
 ## Testing
 
 Test cases can be run with `vendor/bin/phpunit`. 
@@ -198,4 +225,4 @@ to be backwards compatible.
 
 # Copyright
 
-Copyright (c) 2016 Currencycloud. See [LICENSE](/LICENSE.md) for details.
+Copyright (c) 2018 Currencycloud. See [LICENSE](/LICENSE.md) for details.
