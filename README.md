@@ -2,7 +2,7 @@
 
 # Currencycloud API v2 PHP client
 
-## Version: 0.13.0
+## Version: 0.14.0
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
@@ -198,4 +198,4 @@ to be backwards compatible.
 
 # Copyright
 
-Copyright (c) 2016 Currencycloud. See [LICENSE](/LICENSE.md) for details.
+Copyright (c) 2018 Currencycloud. See [LICENSE](/LICENSE.md) for details.
