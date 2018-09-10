@@ -8,6 +8,7 @@ use CurrencyCloud\Model\Currency;
 use CurrencyCloud\Model\InvalidConversionDate;
 use CurrencyCloud\Model\InvalidPaymentDate;
 use CurrencyCloud\Model\PaymentDates;
+use CurrencyCloud\Model\PurposeCode;
 use CurrencyCloud\Model\SettlementAccount;
 use DateTime;
 
@@ -148,5 +149,28 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             );
         }
         return $ret;
+    }
+
+    public function paymentPurposeCodes($currency, $entity_type = null, $bank_account_country = null) {
+      $response = $this->request(
+          'GET',
+          'reference/payment_purpose_codes',
+          [
+              'currency' => $currency,
+              'entity_type' => $entity_type,
+              'currency' => $bank_account_country
+          ]
+      );
+
+      $ret = [];
+      foreach ($response->purpose_codes as $purpose_code) {
+          $ret[] = new PurposeCode(
+              $purpose_code->currency,
+              $purpose_code->entity_type,
+              $purpose_code->purpose_code,
+              $purpose_code->purpose_description
+          );
+      }
+      return $ret;
     }
 }

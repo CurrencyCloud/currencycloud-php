@@ -95,6 +95,10 @@ class Payment implements EntityInterface
      * @var string
      */
     private $failureReturnedAmount;
+    /**
+     * @var string|null
+     */
+    private $purposeCode;
 
     /**
      * @param string $currency
@@ -519,6 +523,25 @@ class Payment implements EntityInterface
     public function setFailureReturnedAmount($failureReturnedAmount)
     {
         $this->failureReturnedAmount = $failureReturnedAmount;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPurposeCode()
+    {
+        return $this->purposeCode;
+    }
+
+    /**
+     * @param null|string purposeCode
+     *
+     * @return $this
+     */
+    public function setPurposeCode($purposeCode)
+    {
+        $this->purposeCode = $purposeCode;
         return $this;
     }
 }
