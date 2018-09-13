@@ -186,10 +186,21 @@ Before running the container, you must configure PHPStorm to accept incoming xde
 1. In the `docker-compose.yml`, configure the IP of your hostmachine here:  
 `XDEBUG_CONFIG: remote_host=IP_ADDRESS_OF_YOUR_HOST_MACHINE`
 
-2. Create a new server in Preferences -> Languages and Frameworks -> PHP -> Servers, with the following settings
-    - Name: `PHPDocker` (Important!)
+2. Create new servers in Preferences -> Languages and Frameworks -> PHP -> Servers, with the following settings
+
+
+    1. PHP5:
+    - Name: `PHP5 Docker` (Important!)
     - Host: `localhost`
-    - Port: `8889`
+    - Port: `8885`
+    - Debugger: `Xdebug`
+    - Ensure `Use path mappings` is selected
+    - Path mapping for the project files entry: `/root`  
+    
+    2. PHP7:
+    - Name: `PHP7 Docker` (Important!)
+    - Host: `localhost`
+    - Port: `8887`
     - Debugger: `Xdebug`
     - Ensure `Use path mappings` is selected
     - Path mapping for the project files entry: `/root`
@@ -198,7 +209,8 @@ Before running the container, you must configure PHPStorm to accept incoming xde
 `docker-compose up`
 
 4. You can access the container by running:  
-`docker exec -it currencycloudphp_phpdev_1 /bin/bash`
+PHP 5: `docker exec -it currencycloudphp_phpdev5_1 /bin/bash`  
+PHP 7: `docker exec -it currencycloudphp_phpdev7_1 /bin/bash`  
 
 5. Try it out!
     - Set a breakpoint in the code for one of the tests

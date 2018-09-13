@@ -1,0 +1,29 @@
+FROM php:5.6-apache
+
+WORKDIR /root
+
+# Packages
+RUN apt-get update && apt-get install -y vim git zip mysql-client
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+RUN a2enmod rewrite
+
+# Xdebug / PHP Configs + Tools
+RUN pecl install xdebug-2.5.0
+RUN docker-php-ext-enable xdebug
+RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
+RUN echo "display_errors=0" >> /usr/local/etc/php/php.ini
+RUN echo "max_execution_time=120" >> /usr/local/etc/php/php.ini
+RUN echo "memory_limit=256M" >> /usr/local/etc/php/php.ini
+RUN export PHP_IDE_CONFIG="serverName=PHPDocker"
+
+# Soap Extension
+RUN rm /etc/apt/preferences.d/no-debian-php
+RUN apt-get install -y libxml2-dev php-soap && docker-php-ext-install soap
+
+# Composer
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
+RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+# Logs
+RUN echo "log_errors = On" >> /usr/local/etc/php/conf.d/docker-php-logging.ini
+RUN echo "error_log = /dev/stderr" >> /usr/local/etc/php/conf.d/docker-php-logging.ini
