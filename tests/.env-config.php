@@ -4,8 +4,8 @@ define('SDK_BASE_DIR', getenv('SDK_BASE_DIR'));
 
 // global login ID
 // e.g. david.thomas@example.com
-define('LOGIN_ID', getenv('LOGIN_ID'));
-define('API_KEY', getenv('API_KEY'));
+define('LOGIN_ID', 'development@currencycloud.com');
+define('API_KEY', 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef');
 
 // e.g. developmnet+authroisation@example.com
 // this account will require payments created to be authorised

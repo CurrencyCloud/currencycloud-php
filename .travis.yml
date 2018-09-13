@@ -6,6 +6,8 @@ php:
 
 env:
   global:
+    - LOGIN_ID=development@currencycloud.com
+    - API_KEY=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
     - SDK_SETTLEMENTS_LOGIN_ID=development+settlements
     - SDK_SETTLEMENTS_API_KEY=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
 
