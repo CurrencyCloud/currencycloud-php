@@ -4,6 +4,13 @@ php:
   - 7.1
   - 5.6
 
+env:
+  global:
+    - LOGIN_ID=development@currencycloud.com
+    - API_KEY=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+    - SDK_SETTLEMENTS_LOGIN_ID=development+settlements
+    - SDK_SETTLEMENTS_API_KEY=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction
