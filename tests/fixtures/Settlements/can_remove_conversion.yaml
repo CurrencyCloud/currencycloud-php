@@ -1,15 +1,68 @@
+
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/remove_conversion
-    body: conversion_id=24d2ee7f-c7a3-4181-979e-9c58dbace992
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Mon, 04 May 2015 21:13:48 GMT
-      Content-Type: application/json
-      Content-Length: '243'
-      X-Request-Id: '2778830425365638278'
-    body: '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:40:56+00:00","released_at":""}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=development%2Bsettlements&api_key=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Wed, 12 Sep 2018 15:47:33 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d7bf04406b9e5f514dbce5eab0cc27df91536767251; expires=Thu, 12-Sep-19 15:47:31 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=66xD7CVpVfD8sCyGCrm4shG6L7JyVxdvxkOI/pNXeZYV4V/P7B4YgTPjWP5yWlC8/GzUCRf0VAGgQZ9jr8v7+Ipe/xH3SkwphrXzNCkpZ1s9Jl69kkb6M17zV8UX; Expires=Wed, 19 Sep 2018 15:47:31 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: cb500fa6-b6bf-4d0a-8787-b0e4ac43ecc4
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4593835a5e5dbc14-LHR
+        body: '{"auth_token":"c74847139f4d746549938ecf4dd79d5a"}'
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/settlements/015783bd-d9f5-4319-a648-d3dc50ea3e66/remove_conversion'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: c74847139f4d746549938ecf4dd79d5a
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: conversion_id=50f2467a-6e1c-4d78-81aa-9caedc901dff
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Wed, 12 Sep 2018 15:47:33 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d468196392c888c2afbe58515569b7d8e1536767253; expires=Thu, 12-Sep-19 15:47:33 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=my1jhNo4kq/spvHQlS4w277fMMQgvlQOIs2pnC8O9zhi729QoDdiR7KY0D7bIuAakf62HCpUbsiYuGsU+u5nN3gEvMYL4tu7mHyNLRuJ+8n5TWCq97zru9p6EoyQ; Expires=Wed, 19 Sep 2018 15:47:33 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: a96423f0-7032-43cd-a198-52972c33ac0f
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 459383654fbbbbfc-LHR
+        body: '{"id":"015783bd-d9f5-4319-a648-d3dc50ea3e66","status":"open","short_reference":"20180912-WSYQCF","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2018-09-12T15:47:26+00:00","updated_at":"2018-09-12T15:47:31+00:00","released_at":""}'
