@@ -1,16 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=GBP&sell_currency=USD&fixed_side=buy&amount=10000
-    body: ''
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Mon, 27 Apr 2015 20:35:49 GMT
-      Content-Type: application/json
-      Content-Length: '377'
-      X-Request-Id: '2773737871964103057'
-      X-Content-Type-Options:
-    body: '{"settlement_cut_off_time":"2015-04-29T14:00:00Z","currency_pair":"GBPUSD","client_buy_currency":"GBP","client_sell_currency":"USD","client_buy_amount":"10000.00","client_sell_amount":"15234.00","fixed_side":"buy","mid_market_rate":"1.5231","client_rate":"1.5234","partner_rate":null,"core_rate":"1.5234","deposit_required":null,"deposit_amount":"0.0","deposit_currency":"USD"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 15:56:26 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d82c40c90528c5aa4e6cf1594b46df56e1537286184; expires=Wed, 18-Sep-19 15:56:24 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=QqjdwJ9DjKvhlB8SxFaWEXaBbH9+v/SNtS/HF5g6Lp7kz+KgMFSxpQi+TYnDQUY2Cvw9HTuf0/rJ4yA84dJg2MRtpKt6pR/AJVbhFkjOEggX5CUgvLRLEkw9luq4; Expires=Tue, 25 Sep 2018 15:56:24 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: d71a02d6-d83d-49a8-93ff-c951ee47fed3
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c5009ecd35bbde-LHR
+        body: '{"auth_token":"9a82fc132fe0643b6bda4d55e0c22060"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=GBP&sell_currency=EUR&fixed_side=buy&amount=1000'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 9a82fc132fe0643b6bda4d55e0c22060
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 15:56:26 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d9f74291e3f9fc9f948f7ce7233c094b81537286186; expires=Wed, 18-Sep-19 15:56:26 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=Kaa8qDWwhU1ChdTE6oyIVzhesgJzhiAS7y9bjec6TOU0jwskfOe8/WH9fdR8d1xwCqj2aQrbmrltmcEqr3aeephylN0vqg9Y05YZrKBDuqoSDrkb5clNtKaiQpvc; Expires=Tue, 25 Sep 2018 15:56:26 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 4cdaa965-6784-490a-8039-af4909c266a8
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c500a9cdbabba8-LHR
+        body: '{"settlement_cut_off_time":"2018-09-20T13:00:00Z","currency_pair":"EURGBP","client_buy_currency":"GBP","client_sell_currency":"EUR","client_buy_amount":"1000.00","client_sell_amount":"1241.46","fixed_side":"buy","client_rate":"0.8055","partner_rate":null,"core_rate":"0.8055","deposit_required":false,"deposit_amount":"0.0","deposit_currency":"EUR","mid_market_rate":"0.8056"}'
