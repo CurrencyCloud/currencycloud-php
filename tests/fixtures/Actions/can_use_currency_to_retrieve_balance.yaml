@@ -1,16 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/balances/GBP
-    body: ''
-    headers:
-      Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Sun, 03 May 2015 17:51:04 GMT
-      Content-Type: application/json
-      Content-Length: '217'
-      X-Request-Id: '2778003612846482730'
-    body: '{"id":"5a998e06-3eb7-46d6-ba58-f749864159ce","account_id":"e7483671-5dc6-0132-e126-002219414986","currency":"GBP","amount":"999866.78","created_at":"2014-12-04T09:50:35+00:00","updated_at":"2015-03-23T14:33:37+00:00"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:19 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dff2005474c642d311005670b3f6ef9241537282217; expires=Wed, 18-Sep-19 14:50:17 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=irML13M9ZyggkpqeyoJ1Ax8asnhDGPHpHcTYFWTz8EG9ZLlXPrJBUXVpDrkf8AtsFE6SOm63l/V/TbglaiOQ4KA2OrrFWbzakvd+BKqIggmPohCbIaJ0JsnWcOkC; Expires=Tue, 25 Sep 2018 14:50:17 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 26dd68ac-7206-4973-a434-1f5f50e5a41a
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49fc23b75bc26-LHR
+        body: '{"auth_token":"376e2f63b4c8f448ec9ab8a25c10f1d2"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/balances/GBP'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 376e2f63b4c8f448ec9ab8a25c10f1d2
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:19 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d0e2c47c09bc5cff1a170632a56b162201537282219; expires=Wed, 18-Sep-19 14:50:19 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=0VJtPVuhM2PDsXjjxDSx8XuUq6E7hv6QEvt35fN2VCVCksNlb+9zr1x50QvsFoi4SJ7w84KzDmMhZrxf3CCxo4ChWtyDjt5rSS2G81/Fxb9ldbHevGbIO+1MPb/L; Expires=Tue, 25 Sep 2018 14:50:19 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 3678c74f-7179-4b33-9e83-f6c4252ef875
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49fcd79f8bc3e-LHR
+        body: '{"id":"6e87663f-7d5d-486d-8cd2-d7c67ac9f840","account_id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","currency":"GBP","amount":"0.00","created_at":"2015-06-24T15:31:24+00:00","updated_at":"2015-06-24T15:31:24+00:00"}'

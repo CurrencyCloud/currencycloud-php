@@ -1,16 +1,68 @@
+
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/beneficiaries/validate
-    body: bank_country=GB&currency=GBP&account_number=12345678&routing_code_type_1=sort_code&routing_code_value_1=123456&payment_types[]=regular&beneficiary_country=GB
-    headers:
-      Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Sun, 03 May 2015 16:55:03 GMT
-      Content-Type: application/json
-      Content-Length: '732'
-      X-Request-Id: '2777975414238700878'
-    body: '{"payment_types":["regular"],"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","beneficiary_address":[],"beneficiary_country":"GB","beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"]}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:06 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dceebb4611129a6839fcac30f90e2a0451537282204; expires=Wed, 18-Sep-19 14:50:04 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=PhGAebtQp4pGZXWUl9NPL5+Y0Oy4NHzF5xZalGub8UYSgM9fh5IV9Nqf4by3hrBmCkUj9UeCOCMBsq1PPh5E5vdjHn055vc43WetmGI4KiB+VYB9a7SQo8yFpUI1; Expires=Tue, 25 Sep 2018 14:50:04 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 7324d3d2-aaf2-420f-ac4d-d933f1e0fc44
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f72983cbc2c-LHR
+        body: '{"auth_token":"38040b89730d49e376fd2990148b5693"}'
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/beneficiaries/validate'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: 38040b89730d49e376fd2990148b5693
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'bank_country=GB&currency=GBP&beneficiary_country=GB&account_number=12345678&routing_code_type_1=sort_code&routing_code_value_1=123456'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:06 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d4c5fa0f3ea9439937b41b775a14c8a811537282206; expires=Wed, 18-Sep-19 14:50:06 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=yj2Sc2wS92tpw1BqsvygPdnbPDjFHXJczBY0WqlYLDZtgQmphXWHh07mapKwIkq70ZNSm0Tyg4g8Rbknl/mhjeX+hplepm6HfFFIqeTwgCljPCBQRUop09gaTXCx; Expires=Tue, 25 Sep 2018 14:50:06 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 785b50b6-373f-4615-975e-4543c6b13f6c
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f7ddf60bc14-LHR
+        body: '{"payment_types":["regular"],"bank_country":"GB","bank_name":"TEST BANK NAME","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","beneficiary_address":[],"beneficiary_country":"GB","beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"bank_address":["TEST BANK ADDRESS"," NOT USING EXTERNAL SERVICE"," DEVELOPMENT ENVIRONMENT."]}'

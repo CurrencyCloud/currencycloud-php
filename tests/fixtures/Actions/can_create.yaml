@@ -1,16 +1,68 @@
+
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/beneficiaries/create
-    body: bank_account_holder_name=Test+User&bank_country=GB&currency=GBP&name=Test+User&account_number=12345678&routing_code_type_1=sort_code&routing_code_value_1=123456&payment_types[]=regular
-    headers:
-      Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Sat, 25 Apr 2015 09:21:00 GMT
-      Content-Type: application/json
-      Content-Size: 1019
-      X-Request-Id: '2771948673934289802'
-    body: '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T09:21:00+00:00"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:04 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=df0295135c3b55d1db2b81705b67de8551537282201; expires=Wed, 18-Sep-19 14:50:01 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=HWyPbnEElQgzuwHoimHGGyA971WrTMKAzh49uxy0uKSvvDte7b/BROY7l7/15pPl5NhGn0IaOXvv6vdaeRAJEfI0uVFSqO/wpmSLSRcYZi1AZZLIi46Wlo0ik9ty; Expires=Tue, 25 Sep 2018 14:50:02 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 3099e1b2-8103-4563-b76f-f3c462c09b94
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f622d2ebc14-LHR
+        body: '{"auth_token":"fb4c15aaa6c7036051e34cef60438fb8"}'
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/beneficiaries/create'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: fb4c15aaa6c7036051e34cef60438fb8
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'bank_country=GB&currency=GBP&account_number=12345678&routing_code_type_1=sort_code&routing_code_value_1=123456&bank_account_holder_name=Test+User&name=Test+User'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:04 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=da8292f3c833a3a00ae22572fb53e6a7f1537282204; expires=Wed, 18-Sep-19 14:50:04 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=LTscyxBKOhtwJ00h4vVfZ9yQgu3z4M6qAnXh91bl9nZzpgkrEDzV3pxWZch9oSHL6eaD6oO36v0/OoV60kiHgLvw+pv3nfqENzNmqzRP6tyGCVNOsMI/EkRhqnqe; Expires=Tue, 25 Sep 2018 14:50:04 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 7707dfed-cef4-48b8-9ec0-f863a41a438a
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f6ffaf2bc38-LHR
+        body: '{"id":"a3d38524-6ea1-475a-84e5-cc67d248a001","bank_account_holder_name":"Test User","name":"Test User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"TEST BANK NAME","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["TEST BANK ADDRESS"," NOT USING EXTERNAL SERVICE"," DEVELOPMENT ENVIRONMENT."],"created_at":"2018-09-18T14:50:04+00:00","updated_at":"2018-09-18T14:50:04+00:00","beneficiary_external_reference":null}'

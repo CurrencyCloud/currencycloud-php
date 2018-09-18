@@ -1,30 +1,133 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
-    body: ''
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Sat, 25 Apr 2015 11:01:36 GMT
-      Content-Type: application/json
-      Content-Length: '1021'
-      X-Request-Id: '2771999306691376475'
-    body: '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T11:01:36+00:00"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:08 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=df953c610ef67c45acb1d6ce04e10d6431537282206; expires=Wed, 18-Sep-19 14:50:06 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=4ZeocT1zKBXXtzY9SmTZI/PC+fKQO9spi/o9KRhQScxQtoBbq4xtppEuywlh+/thwVZsdamYvw7gPjPui0wBjAwGX5tpULijrkSKj5BzZW/ObHJBzuRa2Ldr59sz; Expires=Tue, 25 Sep 2018 14:50:06 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 4b1f5ec4-f706-45bc-8ccd-a9619d9ae873
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f800d92bc5c-LHR
+        body: '{"auth_token":"21d90661c766eed08d83b4c856ef5479"}'
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
-    body: bank_account_holder_name=Test+User+2
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Sat, 25 Apr 2015 11:01:36 GMT
-      Content-Type: application/json
-      Content-Length: '1021'
-      X-Request-Id: '2771999306691376475'
-    body: '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User 2","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T11:01:36+00:00"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/beneficiaries/create'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: 21d90661c766eed08d83b4c856ef5479
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'bank_country=DE&currency=EUR&beneficiary_country=DE&bic_swift=COBADEFF&iban=DE89370400440532013000&bank_account_holder_name=Acme+GmbH&name=John+Doe'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:08 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d5f019cc3dd3b72188d5ebcaadd84947c1537282208; expires=Wed, 18-Sep-19 14:50:08 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=2moQqLgkoMiG5c0e3tgjskUr0b82+aeGdfmJ9R59rjWOP5WdFYdghb+SJ6blCNp/wKy9DvxxTFS5i2b3w7bGXjyHXHhUqfjfbiqV8cxAzkp68iRZy5t6NZhLf8z+; Expires=Tue, 25 Sep 2018 14:50:08 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 2a4cbd18-cfec-4e66-a162-7be3f38f9158
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f8b8942bc0e-LHR
+        body: '{"id":"007f6103-7c52-4d0d-8df5-df0c97a972d7","bank_account_holder_name":"Acme GmbH","name":"John Doe","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":"DE","beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"DE","bank_name":"TEST BANK NAME","bank_account_type":null,"currency":"EUR","account_number":null,"routing_code_type_1":null,"routing_code_value_1":null,"routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":"COBADEFF","iban":"DE89370400440532013000","default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["TEST BANK ADDRESS"," NOT USING EXTERNAL SERVICE"," DEVELOPMENT ENVIRONMENT."],"created_at":"2018-09-18T14:50:08+00:00","updated_at":"2018-09-18T14:50:08+00:00","beneficiary_external_reference":null}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/beneficiaries/007f6103-7c52-4d0d-8df5-df0c97a972d7'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 21d90661c766eed08d83b4c856ef5479
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:09 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d1d4e2359826767184ada11f9b181ff8d1537282208; expires=Wed, 18-Sep-19 14:50:08 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=q4i49XFjHaaTjpduo4QJk8mxX1hpKPZXCFvpXmLW1d406JqnWe5MYTz1oJyfnQskb2Tzy/yhhAoc7+A6LSfoV4d5amDK5cpG5tuSTcZAlIZMXqa1EcZlI0EBQgec; Expires=Tue, 25 Sep 2018 14:50:08 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 13228ebe-b0bd-49ba-b6c3-8c8bda26765d
+            Access-Control-Allow-Methods: 'POST,GET'
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f8e1973bc3e-LHR
+        body: '{"id":"007f6103-7c52-4d0d-8df5-df0c97a972d7","bank_account_holder_name":"Acme GmbH","name":"John Doe","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":"DE","beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"DE","bank_name":"TEST BANK NAME","bank_account_type":null,"currency":"EUR","account_number":null,"routing_code_type_1":null,"routing_code_value_1":null,"routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":"COBADEFF","iban":"DE89370400440532013000","default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["TEST BANK ADDRESS"," NOT USING EXTERNAL SERVICE"," DEVELOPMENT ENVIRONMENT."],"created_at":"2018-09-18T14:50:08+00:00","updated_at":"2018-09-18T14:50:08+00:00","beneficiary_external_reference":null}'
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/beneficiaries/007f6103-7c52-4d0d-8df5-df0c97a972d7'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: 21d90661c766eed08d83b4c856ef5479
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'beneficiary_first_name=Dave&bank_account_holder_name=Test+User+2'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:11 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d28326bfeb89886bd2fa4ba504a145d771537282211; expires=Wed, 18-Sep-19 14:50:11 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=3tgVHA5xNWqRmRgWZUGWZ9PEy1OKrzB8ZxicYSEo1onrUzoMT/QjTZqrRD9gXJ+b0vTf6xqUwxtPM2GwXlJ6nSkQL/Xzp1AZRwI+2BvuaaMQy/iun8RUWAYZDvU8; Expires=Tue, 25 Sep 2018 14:50:11 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 62493525-5c43-4388-96a6-5d76b385d423
+            Access-Control-Allow-Methods: 'POST,GET'
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f9bc9bebc2c-LHR
+        body: '{"id":"007f6103-7c52-4d0d-8df5-df0c97a972d7","bank_account_holder_name":"Test User 2","name":"John Doe","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":"Dave","beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"DE","bank_name":"TEST BANK NAME","bank_account_type":null,"currency":"EUR","account_number":null,"routing_code_type_1":null,"routing_code_value_1":null,"routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":"COBADEFF","iban":"DE89370400440532013000","default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["TEST BANK ADDRESS"," NOT USING EXTERNAL SERVICE"," DEVELOPMENT ENVIRONMENT."],"created_at":"2018-09-18T14:50:08+00:00","updated_at":"2018-09-18T14:50:11+00:00","beneficiary_external_reference":null}'

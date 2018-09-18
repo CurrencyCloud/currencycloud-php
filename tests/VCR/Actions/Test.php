@@ -2,6 +2,10 @@
 
 namespace CurrencyCloud\Tests\VCR\Actions;
 
+use CurrencyCloud\Exception\NotFoundException;
+use Exception;
+use CurrencyCloud\Model\Account;
+use CurrencyCloud\Model\Balance;
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
@@ -23,15 +27,15 @@ class Test extends BaseCurrencyCloudVCRTestCase
                     (new Pagination())->setPerPage(1)
                 );
 
-        $dummy = json_decode(
-            '{"beneficiaries":[{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T10:58:21+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":1,"previous_page":-1,"next_page":-1,"order":"created_at","order_asc_desc":"asc"}}',
-            true
-        );
 
         foreach ($beneficiaries->getBeneficiaries() as $k => $beneficiary) {
-            $this->validateObjectStrictName($beneficiary, $dummy['beneficiaries'][$k]);
+          $this->assertTrue($beneficiary instanceof Beneficiary);
         }
-        $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
+
+        // print_r($beneficiaries->getBeneficiaries());
+
+          $this->assertCount(1,$beneficiaries->getBeneficiaries());
+
     }
 
     /**
@@ -44,15 +48,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
             ->beneficiaries()
             ->find();
 
-        $dummy =
-            json_decode(
-                '{"beneficiaries":[{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test+User","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T09:21:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":-1,"order":"created_at","order_asc_desc":"asc"}}', true
-            );
-
         foreach ($beneficiaries->getBeneficiaries() as $k => $beneficiary) {
-            $this->validateObjectStrictName($beneficiary, $dummy['beneficiaries'][$k]);
+          $this->assertTrue($beneficiary instanceof Beneficiary);
         }
-        $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
+
     }
 
     /**
@@ -61,16 +60,20 @@ class Test extends BaseCurrencyCloudVCRTestCase
      */
     public function canRetrieve()
     {
-        $beneficiary = $this->getAuthenticatedClient()
-            ->beneficiaries()
-            ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
+      $client = $this->getAuthenticatedClient();
 
-        $dummy =
-            json_decode(
-                '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T09:21:00+00:00"}', true
-            );
+      $beneficiary = Beneficiary::create('Acme INC GmbH', 'DE', 'EUR', 'Martin Smith', 'martin@email.com')
+          ->setBeneficiaryCountry('DE')
+          ->setBicSwift('COBADEFF')
+          ->setIban('DE89370400440532013000');
 
-        $this->validateObjectStrictName($beneficiary, $dummy);
+      // create the beneficiary
+      $beneficiary = $client->beneficiaries()->create($beneficiary);
+      // retrieve the beneficiary using the UUID
+      $retrievedBeneficiary = $client->beneficiaries()->retrieve($beneficiary->getId());
+
+      $this->assertTrue($retrievedBeneficiary instanceof Beneficiary);
+
     }
 
     /**
@@ -79,21 +82,21 @@ class Test extends BaseCurrencyCloudVCRTestCase
      */
     public function canDelete()
     {
-        $beneficiary = $this->getAuthenticatedClient()
-            ->beneficiaries()
-            ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
 
-        $dummy =
-            json_decode(
-                '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User 2","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T11:06:27+00:00"}', true
-            );
+        $this->setExpectedException(NotFoundException::class);
 
-        $this->validateObjectStrictName($beneficiary, $dummy);
+        $client = $this->getAuthenticatedClient();
 
-        $this->getAuthenticatedClient()
-            ->beneficiaries()->delete($beneficiary);
+        $beneficiary = Beneficiary::create('Acme INC GmbH', 'DE', 'EUR', 'Martin Smith', 'martin@email.com')
+            ->setBeneficiaryCountry('DE')
+            ->setBicSwift('COBADEFF')
+            ->setIban('DE89370400440532013000');
 
-        $this->validateObjectStrictName($beneficiary, $dummy);
+        // create the beneficiary
+        $beneficiary = $client->beneficiaries()->create($beneficiary);
+        // delete the beneficiary
+        $response = $client->beneficiaries()->delete($beneficiary);
+        $retrievedBeneficiary = $client->beneficiaries()->retrieve($beneficiary->getId());
 
     }
 
@@ -103,23 +106,17 @@ class Test extends BaseCurrencyCloudVCRTestCase
      */
     public function canCreate()
     {
+        $client = $this->getAuthenticatedClient();
         $beneficiary =
             Beneficiary::create('Test User', 'GB', 'GBP', 'Test User')
                 ->setAccountNumber('12345678')
                 ->setRoutingCodeType1('sort_code')
-                ->setRoutingCodeValue1('123456')
-                ->setPaymentTypes(['regular']);
+                ->setRoutingCodeValue1('123456');
 
-        $beneficiary = $this->getAuthenticatedClient()
-            ->beneficiaries()
-            ->create($beneficiary);
+        $beneficiary = $client->beneficiaries()->create($beneficiary);
 
-        $dummy =
-            json_decode(
-                '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T09:21:00+00:00"}', true
-            );
+        $this->assertTrue($beneficiary instanceof Beneficiary);
 
-        $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
     /**
@@ -128,23 +125,17 @@ class Test extends BaseCurrencyCloudVCRTestCase
      */
     public function canValidateBeneficiaries()
     {
+        $client = $this->getAuthenticatedClient();
+
         $beneficiary =
             Beneficiary::createForValidate('GB', 'GBP', 'GB')
                 ->setAccountNumber('12345678')
                 ->setRoutingCodeType1('sort_code')
-                ->setRoutingCodeValue1('123456')
-                ->setPaymentTypes(['regular']);
+                ->setRoutingCodeValue1('123456');
 
-        $beneficiary = $this->getAuthenticatedClient()
-            ->beneficiaries()
-            ->validate($beneficiary);
+        $beneficiary = $client->beneficiaries()->validate($beneficiary);
+        $this->assertTrue($beneficiary instanceof Beneficiary);
 
-        $dummy =
-            json_decode(
-                '{"payment_types":["regular"],"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"12345678","routing_code_type_1":"sort_code","beneficiary_address":[],"beneficiary_country":"GB","beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"routing_code_value_1":"123456","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"]}', true
-            );
-
-        $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
     /**
@@ -155,29 +146,56 @@ class Test extends BaseCurrencyCloudVCRTestCase
     {
         $client = $this->getAuthenticatedClient();
 
-        $beneficiary =
-            $client
-                ->beneficiaries()
-                ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
+        $beneficiary = Beneficiary::create('Acme GmbH', 'DE', 'EUR', 'John Doe', 'adsdasasdasd@adsdsaads.com')
+            ->setBeneficiaryCountry('DE')
+            ->setBicSwift('COBADEFF')
+            ->setIban('DE89370400440532013000');
 
-        $dummy = json_decode(
-            '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T11:01:36+00:00"}',
-            true
-        );
+        // create the beneficiary
+        $beneficiary = $client->beneficiaries()->create($beneficiary);
+        // retrieve the beneficiary using the UUID
+        $retrievedBeneficiary = $client->beneficiaries()->retrieve($beneficiary->getId());
 
-        $this->validateObjectStrictName($beneficiary, $dummy);
+        // modify the record updating the bank account holders name and beneficiary first name
+        $retrievedBeneficiary->setBankAccountHolderName('Test User 2')->setBeneficiaryFirstName('Dave');
 
-        $beneficiary->setBankAccountHolderName('Test User 2');
+        // pause the script for 2 seconds to check that the active record updated date changes
+        sleep(2);
+        // update the record
+        $beneficiary = $client->beneficiaries()->update($retrievedBeneficiary);
 
-        $beneficiary = $client->beneficiaries()->update($beneficiary);
+        // assert that the bank account holders name is the same as the update sent
+        $this->assertSame($beneficiary->getBankAccountHolderName(), $retrievedBeneficiary->getBankAccountHolderName());
+        // assert that the first name is the same as the update sent
+        $this->assertSame($beneficiary->getBeneficiaryFirstName(), $retrievedBeneficiary->getBeneficiaryFirstName());
+        // finally validate that the updated date does not match the created date
+        // this is how we know the record has been modified programatically
+        $this->assertNotSame($retrievedBeneficiary->getUpdatedAt()->format('Y-m-d H:i:s'), $beneficiary->getUpdatedAt()->format('Y-m-d H:i:s'));
+    }
 
+    /**
+     * @vcr Actions/does_nothing_if_nothing_updated.yaml
+     * @test
+     */
+    public function doesNothingIfNothingUpdated()
+    {
+        $client = $this->getAuthenticatedClient();
+        $beneficiary = Beneficiary::create('Acmea GmbH', 'DE', 'EUR', 'John Doe')
+            ->setBeneficiaryCountry('DE')
+            ->setBicSwift('COBADEFF')
+            ->setIban('DE79370400440532013000');
 
-        $dummy = json_decode(
-            '{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User 2","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T11:01:36+00:00"}',
-            true
-        );
+        // create the beneficiary
+        $beneficiary = $client->beneficiaries()->create($beneficiary);
+        // retrieve the beneficiary using the UUID
+        $retrievedBeneficiary = $client->beneficiaries()->retrieve($beneficiary->getId());
 
-        $this->validateObjectStrictName($beneficiary, $dummy);
+        // perform and update but dont modify anything
+        $beneficiary = $client->beneficiaries()->update($retrievedBeneficiary);
+
+        // assert that the updatedAt and createdAt are the same - this proves that the record
+        // has not been updated.
+        $this->assertSame($retrievedBeneficiary->getUpdatedAt()->format('Y-m-d H:i:s'), $beneficiary->getUpdatedAt()->format('Y-m-d H:i:s'));
     }
 
     /**
@@ -186,15 +204,8 @@ class Test extends BaseCurrencyCloudVCRTestCase
      */
     public function canCurrent()
     {
-        $account = $this->getAuthenticatedClient()
-            ->accounts()->current();
-
-        $dummy =
-            json_decode(
-                '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"currencycloud","your_reference":null,"status":"enabled","street":null,"city":null,"state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2015-04-24T15:57:55+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002"}', true
-            );
-
-        $this->validateObjectStrictName($account, $dummy);
+        $account = $this->getAuthenticatedClient()->accounts()->current();
+        $this->assertTrue($account instanceof Account);
     }
 
     /**
@@ -203,14 +214,9 @@ class Test extends BaseCurrencyCloudVCRTestCase
      */
     public function canUseCurrencyToRetrieveBalance()
     {
-        $balance = $this->getAuthenticatedClient()
-            ->balances()->retrieve('GBP');
+        $balance = $this->getAuthenticatedClient()->balances()->retrieve('GBP');
 
-        $dummy =
-            json_decode(
-                '{"id":"5a998e06-3eb7-46d6-ba58-f749864159ce","account_id":"e7483671-5dc6-0132-e126-002219414986","currency":"GBP","amount":"999866.78","created_at":"2014-12-04T09:50:35+00:00","updated_at":"2015-03-23T14:33:37+00:00"}', true
-            );
+        $this->assertTrue($balance instanceof Balance);
 
-        $this->validateObjectStrictName($balance, $dummy);
     }
 }

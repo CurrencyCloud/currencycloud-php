@@ -1,16 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/accounts/current
-    body: ''
-    headers:
-      Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Mon, 27 Apr 2015 21:52:17 GMT
-      Content-Type: application/json
-      Content-Length: '459'
-      X-Request-Id: '2773776363343519430'
-    body: '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"currencycloud","your_reference":null,"status":"enabled","street":null,"city":null,"state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2015-04-24T15:57:55+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:15 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d56897157ce72c1b74f044a29d7353a331537282214; expires=Wed, 18-Sep-19 14:50:14 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=FpU9UaoQd7hWcm32XRATqv/qIvxBadSR1iy0RHpnmS2CVBg9eu0LsLBmtx/22d973T+klKsklFZFa8q9D6MqFmx1sJOolSq/ipQ+cRKBP4wenSeDS8CM08NDO2EQ; Expires=Tue, 25 Sep 2018 14:50:14 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 0d12cf6d-7c33-4337-a19a-00d61d351837
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49fae8be2bc1a-LHR
+        body: '{"auth_token":"0e069e340ae93bcbd1807103cc4ff935"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/accounts/current'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 0e069e340ae93bcbd1807103cc4ff935
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:50:17 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=decc42f3a85501aea7c21d557062d11f91537282217; expires=Wed, 18-Sep-19 14:50:17 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=yVPRdIToJSGZ6rQb4672nSA3QKsRPZZn3Cwxu57Vwiq+Q88iM0DwKvua9JzXkB0EEfJ33RcQz4l6c2rkts2CEc80J3nHIcvDqvGJ3iVXqcT/dQSv+PRhs+o7huCI; Expires=Tue, 25 Sep 2018 14:50:17 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: bf3334bb-bce2-4172-afd4-125a9082df1e
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49fc089c9bc5c-LHR
+        body: '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"currencycloud","your_reference":"","status":"enabled","street":null,"city":"Manchester","state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2017-05-15T09:04:37+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002","api_trading":true,"online_trading":true,"phone_trading":true,"process_third_party_funds":false,"settlement_type":"bulk"}'

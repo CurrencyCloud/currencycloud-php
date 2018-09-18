@@ -1,16 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/beneficiaries/find?bank_account_holder_name=Test+User&per_page=1
-    body: ''
-    headers:
-      Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Sat, 25 Apr 2015 11:00:42 GMT
-      Content-Type: application
-      Content-Length: '1196'
-      X-Request-Id: '2771998857632350489'
-    body: '{"beneficiaries":[{"id":"081596c9-02de-483e-9f2a-4cf55dcdf98c","bank_account_holder_name":"Test User","name":"Test+User","email":null,"payment_types":["regular"],"beneficiary_address":[],"beneficiary_country":null,"beneficiary_entity_type":null,"beneficiary_company_name":null,"beneficiary_first_name":null,"beneficiary_last_name":null,"beneficiary_city":null,"beneficiary_postcode":null,"beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"41854372","routing_code_type_1":"sort_code","routing_code_value_1":"400730","routing_code_type_2":null,"routing_code_value_2":null,"bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-04-25T09:21:00+00:00","updated_at":"2015-04-25T10:58:21+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":1,"previous_page":-1,"next_page":-1,"order":"created_at","order_asc_desc":"asc"}}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:49:52 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d8075b7b3cba1f9468c2429981438d9201537282190; expires=Wed, 18-Sep-19 14:49:50 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=PqapW2Dn0qRGXOKDRs0Au30PEuChRIZ/loFpdlSE3HtFeX4MsPdUjijSu7uO2uavGaK8aqTju7iMpYPFXDrCDfPHPLbw2ZjFhKl8u78hQi0AK+xd6AzqAYxvzwX9; Expires=Tue, 25 Sep 2018 14:49:50 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: b95d2df4-0552-4e71-a8c3-88bd0758b112
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f1c289cbc20-LHR
+        body: '{"auth_token":"6c4e53551e5fe1e485bd9cfec0fb13e4"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/beneficiaries/find?bank_account_holder_name=Test+User&per_page=1'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 6c4e53551e5fe1e485bd9cfec0fb13e4
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 14:49:52 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d735d50fa2ca5604303511c6102f3dfc01537282192; expires=Wed, 18-Sep-19 14:49:52 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=cJf/iM+9GBn0ksg1PgP59zja8m4sYOgODx2LGd1yRrjq+In2lnDirP5fOSHgud/HSoISv1d9mR6YjM+YOyM1SQa1j/2tT1Szq6mGAiq0SL4GwaaNFwy9bB/3eUmH; Expires=Tue, 25 Sep 2018 14:49:52 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: c4c82083-6839-4d6d-ba7c-046562fa119a
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c49f281d48bc26-LHR
+        body: '{"beneficiaries":[{"id":"8993e123-2974-4d04-93d2-1e89dd4c068a","bank_account_holder_name":"Test User","name":"Test User Nick","email":null,"payment_types":[],"beneficiary_address":["Address 42"],"beneficiary_country":"GB","beneficiary_entity_type":"individual","beneficiary_company_name":null,"beneficiary_first_name":"Dr.","beneficiary_last_name":"Who","beneficiary_city":"The Citadel","beneficiary_postcode":"42424","beneficiary_state_or_province":null,"beneficiary_date_of_birth":null,"beneficiary_identification_type":null,"beneficiary_identification_value":null,"bank_country":"GB","bank_name":"HSBC BANK PLC","bank_account_type":null,"currency":"GBP","account_number":"4185 4372","routing_code_type_1":null,"routing_code_value_1":null,"routing_code_type_2":"sort_code","routing_code_value_2":"400730","bic_swift":null,"iban":null,"default_beneficiary":"false","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","bank_address":["5 Wimbledon Hill Rd","Wimbledon","London"],"created_at":"2015-06-24T14:03:06+00:00","updated_at":"2015-06-24T14:03:07+00:00","beneficiary_external_reference":null}],"pagination":{"total_entries":12,"total_pages":12,"current_page":1,"per_page":1,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}'
