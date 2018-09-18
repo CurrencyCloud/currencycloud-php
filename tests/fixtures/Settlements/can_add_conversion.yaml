@@ -1,45 +1,134 @@
+
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/conversions/create
-    body: buy_currency=GBP&sell_currency=USD&fixed_side=buy&amount=1000&reason=mortgage+payment&term_agreement=true
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Mon, 04 May 2015 20:28:29 GMT
-      Content-Type: applicaiton/json
-      Content-Length: '865'
-      X-Request-Id: '2778807612227406608'
-    body: '{"id":"24d2ee7f-c7a3-4181-979e-9c58dbace992","settlement_date":"2015-05-06T14:00:00+00:00","conversion_date":"2015-05-06T00:00:00+00:00","short_reference":"20150504-PGRNVJ","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","account_id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","currency_pair":"GBPUSD","status":"awaiting_funds","buy_currency":"GBP","sell_currency":"USD","client_buy_amount":"1000.00","client_sell_amount":"1511.70","fixed_side":"buy","mid_market_rate":"1.5118","core_rate":"1.5117","partner_rate":"","partner_status":"funds_arrived","partner_buy_amount":"0.00","partner_sell_amount":"0.00","client_rate":"1.5117","deposit_required":false,"deposit_amount":"0.00","deposit_currency":"","deposit_status":"not_required","deposit_required_at":"","payment_ids":[],"created_at":"2015-05-04T20:28:29+00:00","updated_at":"2015-05-04T20:28:29+00:00","unique_request_id":null}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=development%2Bsettlements&api_key=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 16:08:33 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d9a33bae943da9a3ee2320ef58d43f9491537286911; expires=Wed, 18-Sep-19 16:08:31 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=r2eNaRD26SvTbd6WKkE+dqFXwb4390PI086o4DXP74lCHC8eSaTlvXcEeySplL3OGT8EoeWHGkoWbh6UOO+ikHnA431n+o915FR45PjOdYeZelPScamBVjp01N8b; Expires=Tue, 25 Sep 2018 16:08:31 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 82f9d1f5-ae2f-4591-b7da-55ef2681d58a
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c5125de9a2bc14-LHR
+        body: '{"auth_token":"b20c8e9256835b7ca89349a1f441a5e2"}'
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/settlements/create
-    body: ''
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Mon, 04 May 2015 20:29:16 GMT
-      Content-Type: applicaiton/json
-      Content-Length: '243'
-      X-Request-Id: '2778808011768427319'
-    body: '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:29:16+00:00","released_at":""}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/conversions/create'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: b20c8e9256835b7ca89349a1f441a5e2
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'buy_currency=GBP&sell_currency=EUR&fixed_side=buy&amount=750&reason=1&term_agreement=true'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 16:08:34 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d1e351343b86f3be8c9e218e630b4b7481537286913; expires=Wed, 18-Sep-19 16:08:33 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=zFtaiEJXBMVnrkTQ2FIKyiZqkgNH/YDUrJco4oMj4PGtyMaIUeRwBKFiExGz4v8pOmC3OaabBwT+1MjtAxsduZUEpsqQtRwQwoY++MP4ks/HDEbRj9OQM/m/DUWk; Expires=Tue, 25 Sep 2018 16:08:33 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 74f356b3-1c5b-4208-9ca3-1b79d1f09f23
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c5126b08d8bc14-LHR
+        body: '{"id":"eb8cfde6-b934-43de-b61e-fbf012cdc2a1","settlement_date":"2018-09-20T13:00:00+00:00","conversion_date":"2018-09-20T00:00:00+00:00","short_reference":"20180918-YWXLGK","creator_contact_id":"8de1afa8-5360-426e-ace2-f7932e5cc1fe","account_id":"d3130cdf-7237-499d-833e-1e0cb379bf7c","currency_pair":"EURGBP","status":"awaiting_funds","buy_currency":"GBP","sell_currency":"EUR","client_buy_amount":"750.00","client_sell_amount":"931.10","fixed_side":"buy","core_rate":"0.8055","partner_rate":"","partner_status":"awaiting_funds","partner_buy_amount":"0.00","partner_sell_amount":"0.00","client_rate":"0.8055","deposit_required":false,"deposit_amount":"0.00","deposit_currency":"","deposit_status":"not_required","deposit_required_at":"","payment_ids":[],"unallocated_funds":"750.00","unique_request_id":null,"created_at":"2018-09-18T16:08:34+00:00","updated_at":"2018-09-18T16:08:34+00:00","mid_market_rate":"0.8056"}'
 -
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/add_conversion
-    body: conversion_id=24d2ee7f-c7a3-4181-979e-9c58dbace992
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Mon, 04 May 2015 20:40:57 GMT
-      Content-Type: applicaiton/json
-      Content-Length: '396'
-      X-Request-Id: '2778813884314110346'
-    body: '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":["24d2ee7f-c7a3-4181-979e-9c58dbace992"],"entries":[{"GBP":{"receive_amount":"1000.00","send_amount":"0.00"}},{"USD":{"receive_amount":"0.00","send_amount":"1511.70"}}],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:40:56+00:00","released_at":""}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/settlements/create'
+        headers:
+            Host: devapi.currencycloud.com
+            Content-Length: '0'
+            Accept-Encoding: null
+            X-Auth-Token: b20c8e9256835b7ca89349a1f441a5e2
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 16:08:34 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d498dcaf455a5e816cac479e19e1042111537286914; expires=Wed, 18-Sep-19 16:08:34 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=6Yhueyj+7++qGk9l7eO0xVsDqMiqxDD11pHGX3WZQY78qyl+Zlkucr5q2LyG3gUmoVVu0uSj9U6Uq81n0j2PcTYROCU7zGBnoO4feEncm8WEmQVAJbAmOYEl+/T4; Expires=Tue, 25 Sep 2018 16:08:34 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 95ffc960-b0c6-4cba-98bb-03aa33d1ca54
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c5126ffc34bbea-LHR
+        body: '{"id":"06e8ee81-1a2b-4dc3-8ad3-179aa3ede68c","status":"open","short_reference":"20180918-RJBJLT","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2018-09-18T16:08:34+00:00","updated_at":"2018-09-18T16:08:34+00:00","released_at":""}'
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/settlements/06e8ee81-1a2b-4dc3-8ad3-179aa3ede68c/add_conversion'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: b20c8e9256835b7ca89349a1f441a5e2
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: conversion_id=eb8cfde6-b934-43de-b61e-fbf012cdc2a1
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 18 Sep 2018 16:08:34 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d498dcaf455a5e816cac479e19e1042111537286914; expires=Wed, 18-Sep-19 16:08:34 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=O7ZngXqr93Rrb6hXg4Oh+9AswvDd40CbkHihKMeYhlmseNQWOYcglLwZ2BNcHbJgMNobBp50JVfuCjE+GLKysdXFCZKfsmBadeivaLFsZutLeDaJunaUCY3p6whU; Expires=Tue, 25 Sep 2018 16:08:34 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: eb5b4626-b718-47cb-b6b7-439e88498600
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 45c512712ddbbbea-LHR
+        body: '{"id":"06e8ee81-1a2b-4dc3-8ad3-179aa3ede68c","status":"open","short_reference":"20180918-RJBJLT","type":"bulk","conversion_ids":["eb8cfde6-b934-43de-b61e-fbf012cdc2a1"],"entries":[{"GBP":{"receive_amount":"750.00","send_amount":"0.00"}},{"EUR":{"receive_amount":"0.00","send_amount":"931.10"}}],"created_at":"2018-09-18T16:08:34+00:00","updated_at":"2018-09-18T16:08:34+00:00","released_at":""}'

@@ -8,109 +8,122 @@ use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
+  // setup - credentials will need to be changed if the cassettes are to be re-recorded
+  private static $SDK_SETTLEMENTS_LOGIN_ID = 'development+settlements';
+  private static $SDK_SETTLEMENTS_API_KEY  = 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef';
 
-    /**
-     * @vcr Settlements/can_add_conversion.yaml
-     * @test
-     */
-    public function canAddConversion()
-    {
-        $client = $this->getAuthenticatedClient();
+  // test config
+  private static $conversionId;
+  private static $settlementId;
+  private static $buyCurrency    = 'GBP';
+  private static $sellCurrency   = 'EUR';
+  private static $fixedSide      = 'buy';
+  private static $amount         = 750;
+  private static $term_agreement = true;
+  private static $reason         = 'Mortgage Payment';
 
-        $conversion =
-            $client->conversions()
-                ->create(Conversion::create('GBP', 'USD', 'buy'), '1000', 'mortgage payment', true);
+  protected function createConversion(){
+    $client = $this->getClient(self::$SDK_SETTLEMENTS_LOGIN_ID, self::$SDK_SETTLEMENTS_API_KEY);
 
-        $dummy = json_decode(
-            '{"id":"24d2ee7f-c7a3-4181-979e-9c58dbace992","settlement_date":"2015-05-06T14:00:00+00:00","conversion_date":"2015-05-06T00:00:00+00:00","short_reference":"20150504-PGRNVJ","creator_contact_id":"c4d838e8-1625-44c6-a9fb-39bcb1fe353d","account_id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","currency_pair":"GBPUSD","status":"awaiting_funds","buy_currency":"GBP","sell_currency":"USD","client_buy_amount":"1000.00","client_sell_amount":"1511.70","fixed_side":"buy","mid_market_rate":"1.5118","core_rate":"1.5117","partner_rate":"","partner_status":"funds_arrived","partner_buy_amount":"0.00","partner_sell_amount":"0.00","client_rate":"1.5117","deposit_required":false,"deposit_amount":"0.00","deposit_currency":"","deposit_status":"not_required","deposit_required_at":"","payment_ids":[],"created_at":"2015-05-04T20:28:29+00:00","updated_at":"2015-05-04T20:28:29+00:00"}',
-            true
-        );
+    $conversion = $client->conversions()
+      ->create(Conversion::create(self::$buyCurrency, self::$sellCurrency, self::$fixedSide), self::$amount, self::$term_agreement, self::$reason);
 
-        $this->validateObjectStrictName($conversion, $dummy);
+    self::$conversionId = $conversion->getId();
 
-        $settlement = $client->settlements()->create();
+    return $conversion;
+  }
 
-        $dummy = json_decode(
-            '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:29:16+00:00","released_at":""}',
-            true
-        );
+  /**
+   * @vcr Settlements/can_add_conversion.yaml
+   * @test
+   */
+  public function canAddConversion()
+  {
+    $client = $this->getClient(self::$SDK_SETTLEMENTS_LOGIN_ID, self::$SDK_SETTLEMENTS_API_KEY);
 
-        unset($dummy['entries']);
+    $conversion = $this->createConversion();
 
-        $this->validateObjectStrictName($settlement, $dummy);
+    // assert we have an object
+    $this->assertTrue($conversion instanceof Conversion);
+    // check that the currency_pair match what we sent
+    $this->assertEquals(self::$sellCurrency.self::$buyCurrency, $conversion->getCurrencyPair());
+    // check we have the buy currency set correctly
+    $this->assertEquals(self::$buyCurrency, $conversion->getBuyCurrency());
+    // check we have the sell currency set correctly
+    $this->assertEquals(self::$sellCurrency, $conversion->getSellCurrency());
+    // check we have the fixed side set correctly
+    $this->assertEquals(self::$fixedSide, $conversion->getFixedSide());
+    // check the clientBuyAmount is the value of amount
+    $this->assertEquals(self::$amount, $conversion->getClientBuyAmount());
 
-        $settlement = $client->settlements()->addConversion($settlement->getId(), $conversion->getId());
+    // Create the settlement
+    $settlement = $client->settlements()->create();
 
-        $dummy = json_decode(
-            '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":["24d2ee7f-c7a3-4181-979e-9c58dbace992"],"entries":[{"GBP":{"receive_amount":"1000.00","send_amount":"0.00"}},{"USD":{"receive_amount":"0.00","send_amount":"1511.70"}}],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:40:56+00:00","released_at":""}',
-            true
-        );
+    // Add conversion to settlement
+    $settlementsWithConversion = $client->settlements()->addConversion($settlement->getId(), $conversion->getId());
 
-        unset($dummy['entries']);
+    // assert settlementId is that of the settlement passed
+    $this->assertEquals($settlement->getId(), $settlementsWithConversion->getId());
+    // assert conversionId is that of the conversion passed
 
-        $this->validateObjectStrictName($settlement, $dummy);
-    }
+    $this->assertTrue(in_array($conversion->getId(), $settlementsWithConversion->getConversionIds()));
+    // assert the settlement has not yet been released
+    $this->assertNull($settlement->getReleasedAt());
+    // assert the settlement has an 'open' status
+    $this->assertEquals($settlement->getStatus(), 'open');
 
-    /**
-     * @vcr Settlements/can_release.yaml
-     * @test
-     */
-    public function canRelease()
-    {
-        $client = $this->getAuthenticatedClient();
+    self::$settlementId = $settlement->getId();
+  }
 
-        $settlement =
-            $client->settlements()->release('51c619e0-0256-40ad-afba-ca4114b936f9');
+  /**
+   * @vcr Settlements/can_release.yaml
+   * @test
+   */
+  public function canRelease()
+  {
+    $client = $this->getClient(self::$SDK_SETTLEMENTS_LOGIN_ID, self::$SDK_SETTLEMENTS_API_KEY);
 
-        $dummy = json_decode(
-            '{"id":"51c619e0-0256-40ad-afba-ca4114b936f9","status":"released","short_reference":"20150504-SHKTFD","type":"bulk","conversion_ids":["9bb4a49b-f959-402f-8bb8-4463b18d93c7"],"entries":[{"USD":{"receive_amount":"0.00","send_amount":"1512.00"}},{"GBP":{"receive_amount":"1000.00","send_amount":"0.00"}}],"created_at":"2015-05-04T21:14:48+00:00","updated_at":"2015-05-04T21:44:23+00:00","released_at":"2015-05-04T21:44:23+00:00"}',
-            true
-        );
+    $settlementReleased = $client->settlements()->release(self::$settlementId);
 
-        unset($dummy['entries']);
+    $this->assertEquals($settlementReleased->getId(), self::$settlementId);
 
-        $this->validateObjectStrictName($settlement, $dummy);
-    }
+    $this->assertNotNull($settlementReleased->getReleasedAt());
 
-    /**
-     * @vcr Settlements/can_remove_conversion.yaml
-     * @test
-     */
-    public function canRemoveConversion()
-    {
-        $client = $this->getAuthenticatedClient();
+    $this->assertEquals($settlementReleased->getStatus(), 'released');
+  }
 
-        $settlement =
-            $client->settlements()
-                ->removeConversion('63eeef54-3531-4e65-827a-7d0f37503fcc', '24d2ee7f-c7a3-4181-979e-9c58dbace992');
+  /**
+   * @vcr Settlements/can_unrelease.yaml
+   * @test
+   */
+  public function canUnrelease()
+  {
+    $client = $this->getClient(self::$SDK_SETTLEMENTS_LOGIN_ID, self::$SDK_SETTLEMENTS_API_KEY);
 
-        $dummy = json_decode(
-            '{"id":"63eeef54-3531-4e65-827a-7d0f37503fcc","status":"open","short_reference":"20150504-RKNNBH","type":"bulk","conversion_ids":[],"entries":[],"created_at":"2015-05-04T20:29:16+00:00","updated_at":"2015-05-04T20:40:56+00:00","released_at":""}',
-            true
-        );
+    $unReleasedSettlement = $client->settlements()->unrelease(self::$settlementId);
 
-        $this->validateObjectStrictName($settlement, $dummy);
-    }
+    $this->assertEquals($unReleasedSettlement->getId(), self::$settlementId);
 
-    /**
-     * @vcr Settlements/can_unrelease.yaml
-     * @test
-     */
-    public function canUnrelease()
-    {
-        $client = $this->getAuthenticatedClient();
+    $this->assertEquals($unReleasedSettlement->getStatus(), 'open');
+  }
 
-        $settlement =
-            $client->settlements()
-                ->unRelease('51c619e0-0256-40ad-afba-ca4114b936f9');
+  /**
+   * @vcr Settlements/can_remove_conversion.yaml
+   * @test
+   */
+  public function canRemoveConversion()
+  {
+    $client = $this->getClient(self::$SDK_SETTLEMENTS_LOGIN_ID, self::$SDK_SETTLEMENTS_API_KEY);
 
-        $dummy = json_decode(
-            '{"id":"51c619e0-0256-40ad-afba-ca4114b936f9","status":"open","short_reference":"20150504-SHKTFD","type":"bulk","conversion_ids":["9bb4a49b-f959-402f-8bb8-4463b18d93c7"],"entries":[{"USD":{"receive_amount":"0.00","send_amount":"1512.00"}},{"GBP":{"receive_amount":"1000.00","send_amount":"0.00"}}],"created_at":"2015-05-04T21:14:48+00:00","updated_at":"2015-05-04T21:51:51+00:00","released_at":""}',
-            true
-        );
+    $settlementsWithOutConversion = $client->settlements()
+      ->removeConversion(self::$settlementId, self::$conversionId);
 
-        unset($dummy['entries']);
+    $this->assertEquals($settlementsWithOutConversion->getId(), self::$settlementId);
 
-        $this->validateObjectStrictName($settlement, $dummy);
-    }
+    $this->assertNull($settlementsWithOutConversion->getReleasedAt());
+
+    $this->assertEquals($settlementsWithOutConversion->getStatus(), 'open');
+
+    $this->assertEmpty($settlementsWithOutConversion->getConversionIds());
+  }
 }
