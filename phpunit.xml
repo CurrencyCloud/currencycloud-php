@@ -3,17 +3,17 @@
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
+    colors="true"
 >
-
     <testsuites>
         <testsuite name="VCR">
-            <directory>./tests/VCR</directory>>
+            <directory>./tests/VCR</directory>
         </testsuite>
         <testsuite name="EntryPoint">
-            <directory>./tests/EntryPoint</directory>>
+            <directory>./tests/EntryPoint</directory>
         </testsuite>
         <testsuite name="Core">
-            <directory>./tests/Core</directory>>
+            <directory>./tests/Core</directory>
         </testsuite>
     </testsuites>
 
@@ -26,5 +26,4 @@
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
-
 </phpunit>
