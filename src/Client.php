@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Client
 {
 
-
     /**
      * @var \GuzzleHttp\Client
      */
@@ -40,7 +39,7 @@ class Client
 
     /**
      * @param string $method
-     * @param string$uri
+     * @param string $uri
      * @param array $queryParams
      * @param array $requestParams
      * @param array $options
@@ -50,14 +49,9 @@ class Client
      * @throws GuzzleException
      * @throws Exception
      */
-    public function request(
-        $method,
-        $uri,
-        array $queryParams,
-        array $requestParams,
-        array $options,
-        $secured
-    ) {
+    public function request($method, $uri, array $queryParams, array $requestParams, array $options, $secured)
+    {
+
         $this->eventDispatcher->dispatch(BeforeClientRequestEvent::NAME, new BeforeClientRequestEvent(
             $method,
             $uri,
@@ -102,6 +96,7 @@ class Client
 
             $queryParams = array_filter($queryParams);
             $requestParams = array_filter($requestParams);
+
             if (count($requestParams) > 0) {
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];
@@ -118,8 +113,7 @@ class Client
             switch ($response->getStatusCode()) {
                 case 200:
                     $data = json_decode(
-                        $response->getBody()
-                            ->getContents()
+                        $response->getBody()->getContents()
                     );
                     return $data;
                 default:
@@ -144,22 +138,23 @@ class Client
             }
         }
         throw new Exception(
-            $response->getBody()
-                ->getContents()
+            $response->getBody()->getContents()
         );
     }
 
     /**
-     * @param string $path
+     * @param string $uri
      * @param array $queryParams
      *
      * @return string
      */
-    protected function applyApiBaseUrl($path, array $queryParams)
+    protected function applyApiBaseUrl($uri, array $queryParams)
     {
         if (count($queryParams) > 0) {
-            return sprintf('%s%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));
+            $params = http_build_query($queryParams);
+            return sprintf('%s%s?%s', $this->session->getApiUrl(), $uri, preg_replace('/%5B[0-9]+%5D/simU', '%5B%5D', $params));
         }
-        return sprintf('%s%s', $this->session->getApiUrl(), $path);
+        return sprintf('%s%s', $this->session->getApiUrl(), $uri);
     }
+
 }

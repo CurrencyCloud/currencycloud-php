@@ -90,7 +90,7 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
     protected function getAuthenticatedClient($authToken = 'e5070d4a16c5ffe4ed9fb268a2a716be')
     {
         $client = $this->getClient();
-        // $client->getSession()->setAuthToken($authToken);
+        $client->getSession()->setAuthToken($authToken);
         return $client;
     }
 }

@@ -99,6 +99,14 @@ class Payment implements EntityInterface
      * @var string|null
      */
     private $purposeCode;
+    /**
+     * @var string
+     */
+    private $paymentGroupId;
+    /**
+     * @var string
+     */
+    private $ultimateBeneficiaryName;
 
     /**
      * @param string $currency
@@ -543,5 +551,23 @@ class Payment implements EntityInterface
     {
         $this->purposeCode = $purposeCode;
         return $this;
+    }
+    /**
+   * @param string $paymentGroupId
+   *
+   * @return $this
+   */
+   public function getPaymentGroupId()
+   {
+       return $this->paymentGroupId;
+   }
+    /**
+    * @param string $ultimateBeneficiaryName
+    *
+    * @return $this
+    */
+    public function getUltimateBeneficiaryName()
+    {
+        return $this->ultimateBeneficiaryName;
     }
 }
