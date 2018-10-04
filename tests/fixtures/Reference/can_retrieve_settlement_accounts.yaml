@@ -1,14 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/reference/settlement_accounts?currency=GBP
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Wed, 29 Apr 2015 21:04:10 GMT
-      Content-Type: application/json
-      Content-Length: '438'
-      X-Request-Id: '2775201697959995218'
-    body: '{"settlement_accounts":[{"bank_account_holder_name":"The Currency Cloud GBP - Client Seg A/C","beneficiary_address":"","beneficiary_country":"","bank_name":"Barclays Bank plc","bank_address":[],"bank_country":"","currency":"GBP","bic_swift":"BARCGB22","iban":"GB06 BARC 2006 0513 0714 72","account_number":"13071472","routing_code_type_1":"sort_code","routing_code_value_1":"200605","routing_code_type_2":"","routing_code_value_2":""}]}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 04 Oct 2018 10:12:27 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dfe2b1b3891edf89f692a8eaad9ac94e31538647945; expires=Fri, 04-Oct-19 10:12:25 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=WBzFP2xG9XDAGNQklXputLeaQUREzweDPS9OUAsU5tlwT1Fcxde4W7wxe3uicLY3xjjOi3KYJOTFQg2qjgkT69OqdbnFZr8uHildqH3vPj7G9eQFcZ1Ntaoh+Pkw; Expires=Thu, 11 Oct 2018 10:12:25 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 891e33e3-f94d-4819-96ac-41ffe2865420
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4646debddd9cbbd8-LHR
+        body: '{"auth_token":"07b49e33960453d70e6f9da5bfbe0fc2"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/reference/settlement_accounts?currency=GBP'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 07b49e33960453d70e6f9da5bfbe0fc2
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 04 Oct 2018 10:12:27 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d5a5793da64279e48036af29ec0c838781538647947; expires=Fri, 04-Oct-19 10:12:27 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=CwfdlynZw0oeQIxbMMTqa/QEHxPiRlkuQDqzT909RSmgPEYmb0BNK10XNfpKQqKa7RPbE3gK05fxpSjP1dhhLrntsmZDe3xoYS0qd4wvyHcvBU7YcKAnWZJ+1Gnh; Expires=Thu, 11 Oct 2018 10:12:27 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 54d77373-4786-49b0-976e-824e0dea7310
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4646dec8797bbbe4-LHR
+        body: '{"settlement_accounts":[{"bank_account_holder_name":"The Currency Cloud GBP - Client Seg A/C","beneficiary_address":"","beneficiary_country":"","bank_name":"Barclays Bank plc","bank_address":[],"bank_country":"","currency":"GBP","bic_swift":"BARCGB22","iban":"GB06 BARC 2006 0513 0714 72","account_number":"13071472","routing_code_type_1":"sort_code","routing_code_value_1":"200605","routing_code_type_2":"","routing_code_value_2":""}]}'

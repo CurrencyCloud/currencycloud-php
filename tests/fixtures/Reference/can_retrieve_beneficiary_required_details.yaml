@@ -1,15 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/reference/beneficiary_required_details?currency=GBP&bank_account_country=GB&beneficiary_country=GB
-    body: ''
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Wed, 29 Apr 2015 21:04:08 GMT
-      Content-Type: application/json
-      Content-Length: '1390'
-      X-Request-Id: '2775201676418056015'
-    body: '{"details":[{"payment_type":"priority","beneficiary_entity_type":"individual","beneficiary_address":"^.{1,255}","beneficiary_city":"^.{1,255}","beneficiary_country":"^[A-z]{2}$","beneficiary_first_name":"^.{1,255}","beneficiary_last_name":"^.{1,255}","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$"},{"payment_type":"priority","beneficiary_entity_type":"company","beneficiary_address":"^.{1,255}","beneficiary_city":"^.{1,255}","beneficiary_country":"^[A-z]{2}$","beneficiary_company_name":"^.{1,255}","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$"},{"payment_type":"regular","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$","beneficiary_entity_type":"individual"},{"payment_type":"regular","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$","beneficiary_entity_type":"company"},{"payment_type":"priority","beneficiary_entity_type":"individual","beneficiary_address":"^.{1,255}","beneficiary_city":"^.{1,255}","beneficiary_country":"^[A-z]{2}$","beneficiary_first_name":"^.{1,255}","beneficiary_last_name":"^.{1,255}","iban":"^[0-9A-Z]{1,34}$","bic_swift":"^[0-9A-Z]{8}$|^[0-9A-Z]{11}$"},{"payment_type":"priority","beneficiary_entity_type":"company","beneficiary_address":"^.{1,255}","beneficiary_city":"^.{1,255}","beneficiary_country":"^[A-z]{2}$","beneficiary_company_name":"^.{1,255}","iban":"^[0-9A-Z]{1,34}$","bic_swift":"^[0-9A-Z]{8}$|^[0-9A-Z]{11}$"}]}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 04 Oct 2018 10:12:21 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d22b11692f49b103c8b11d53e51776c901538647939; expires=Fri, 04-Oct-19 10:12:19 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=8BEmM37+yw4TPEckMXMhYi2qr8rUsfNfhF6hOCHSN7Tm/4Mmoly6Cu33V8KuVGs4gzTzY3hdFOBifpG341l1Y65QELxahh9YDAqZ0CJ/YJUv7mZN+3VcnNrDI5vj; Expires=Thu, 11 Oct 2018 10:12:19 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 066cd65d-daf8-426c-99ea-d44bd497693b
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4646de97cda06a73-LHR
+        body: '{"auth_token":"57aa5cecb123331c6f7110cc9059f758"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/reference/beneficiary_required_details?currency=GBP&bank_account_country=GB&beneficiary_country=GB'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 57aa5cecb123331c6f7110cc9059f758
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 04 Oct 2018 10:12:21 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d7cc11a38d77c119410c0dc62d54897081538647941; expires=Fri, 04-Oct-19 10:12:21 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=NDiAYljyRAaJLOmmze5TkeZ6X8wobGXpY/zNmTzfbmMv7uWZNVk001yTQPlHoq8f4vLjTDAFIZjfS7Mpgk+GeybrSTpB3NKHzivmLePH9zveMr+gN4xF/5a9uisd; Expires=Thu, 11 Oct 2018 10:12:21 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: fa2eaf09-ea88-435a-b111-e945314ce1a5
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4646dea3ba0bbb8a-LHR
+        body: '{"details":[{"payment_type":"priority","beneficiary_entity_type":"individual","beneficiary_address":"^.{1,255}","beneficiary_city":"^.{1,255}","beneficiary_country":"^[A-z]{2}$","beneficiary_first_name":"^.{1,255}","beneficiary_last_name":"^.{1,255}","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$"},{"payment_type":"priority","beneficiary_entity_type":"company","beneficiary_address":"^.{1,255}","beneficiary_city":"^.{1,255}","beneficiary_country":"^[A-z]{2}$","beneficiary_company_name":"^.{1,255}","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$"},{"payment_type":"regular","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$","beneficiary_entity_type":"individual"},{"payment_type":"regular","acct_number":"^[0-9A-Z]{1,50}$","sort_code":"^\\d{6}$","beneficiary_entity_type":"company"}]}'

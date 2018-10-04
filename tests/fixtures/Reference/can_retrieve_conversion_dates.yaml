@@ -1,15 +1,65 @@
+
 -
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/reference/conversion_dates?conversion_pair=GBPUSD
-    body: ''
-    headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-  response:
-    status: 200
-    headers:
-      Date: Wed, 29 Apr 2015 21:04:08 GMT
-      Content-Type: application/json
-      Content-Length: '845'
-      X-Request-Id: '2775201681275056976'
-    body: '{"invalid_conversion_dates":{"2015-05-02":"No trading on Saturday","2015-05-03":"No trading on Sunday","2015-05-04":"Early May bank holiday","2015-05-09":"No trading on Saturday","2015-05-10":"No trading on Sunday","2015-05-16":"No trading on Saturday","2015-05-17":"No trading on Sunday","2015-05-23":"No trading on Saturday","2015-05-24":"No trading on Sunday","2015-05-25":"Spring bank holiday","2015-05-30":"No trading on Saturday","2015-05-31":"No trading on Sunday","2015-06-06":"No trading on Saturday","2015-06-07":"No trading on Sunday","2015-06-13":"No trading on Saturday","2015-06-14":"No trading on Sunday","2015-06-20":"No trading on Saturday","2015-06-21":"No trading on Sunday","2015-06-27":"No trading on Saturday","2015-06-28":"No trading on Sunday"},"first_conversion_date":"2015-04-30","default_conversion_date":"2015-04-30"}'
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: null
+            Accept-Encoding: null
+            Content-Type: application/x-www-form-urlencoded
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+        body: 'login_id=rjnienaber%40gmail.com&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 04 Oct 2018 10:12:23 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d7cc11a38d77c119410c0dc62d54897081538647941; expires=Fri, 04-Oct-19 10:12:21 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=2XW6Falxjj7yhHsZJej0EWqh12iBQCoHi4HQh79Xm68gCd7eECq/piGueyU4eqkbe9aF5nbfQCCiooDE0p/wctnonodIKxi+6v13UNnQ/JF6K34cqPLglrHxiya7; Expires=Thu, 11 Oct 2018 10:12:22 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: d4724e4f-94d3-419c-ac20-f05f44744736
+            Access-Control-Allow-Methods: POST
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4646dea56b46bb8a-LHR
+        body: '{"auth_token":"3802ec3413451104ced401151cae998d"}'
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/reference/conversion_dates?conversion_pair=GBPUSD'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 3802ec3413451104ced401151cae998d
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 04 Oct 2018 10:12:23 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=db7a8b7f65897dd19c750e7d85c11b0691538647943; expires=Fri, 04-Oct-19 10:12:23 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=exWwSUI3Cqa0Ei7fc729Ht66wnpaayuDB0K4RTAWdWa9iGFn6dP2D84iQzlipyWDPno5GZznQkKLZ+xQbvTIWLWh2vcu3tWjSy1Zky96ms4nqWuww5D4vaNEpXAl; Expires=Thu, 11 Oct 2018 10:12:23 GMT; Path=/'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: 60dd2d10-7b3f-432c-91b6-577332328ec5
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Server: cloudflare
+            CF-RAY: 4646deb01f51bbe4-LHR
+        body: '{"invalid_conversion_dates":{"2018-10-06":"No trading on Saturday","2018-10-07":"No trading on Sunday","2018-10-08":"Public Holiday","2018-10-13":"No trading on Saturday","2018-10-14":"No trading on Sunday","2018-10-20":"No trading on Saturday","2018-10-21":"No trading on Sunday","2018-10-27":"No trading on Saturday","2018-10-28":"No trading on Sunday","2018-11-03":"No trading on Saturday","2018-11-04":"No trading on Sunday","2018-11-10":"No trading on Saturday","2018-11-11":"No trading on Sunday","2018-11-12":"Public Holiday","2018-11-17":"No trading on Saturday","2018-11-18":"No trading on Sunday","2018-11-22":"Public Holiday","2018-11-24":"No trading on Saturday","2018-11-25":"No trading on Sunday","2018-12-01":"No trading on Saturday","2018-12-02":"No trading on Sunday","2018-12-08":"No trading on Saturday","2018-12-09":"No trading on Sunday","2018-12-15":"No trading on Saturday","2018-12-16":"No trading on Sunday","2018-12-22":"No trading on Saturday","2018-12-23":"No trading on Sunday","2018-12-25":"Public Holiday","2018-12-26":"Public Holiday","2018-12-29":"No trading on Saturday","2018-12-30":"No trading on Sunday","2019-01-05":"No trading on Saturday","2019-01-06":"No trading on Sunday","2019-01-12":"No trading on Saturday","2019-01-13":"No trading on Sunday","2019-01-19":"No trading on Saturday","2019-01-20":"No trading on Sunday","2019-01-26":"No trading on Saturday","2019-01-27":"No trading on Sunday","2019-02-02":"No trading on Saturday","2019-02-03":"No trading on Sunday","2019-02-09":"No trading on Saturday","2019-02-10":"No trading on Sunday","2019-02-16":"No trading on Saturday","2019-02-17":"No trading on Sunday","2019-02-23":"No trading on Saturday","2019-02-24":"No trading on Sunday","2019-03-02":"No trading on Saturday","2019-03-03":"No trading on Sunday","2019-03-09":"No trading on Saturday","2019-03-10":"No trading on Sunday","2019-03-16":"No trading on Saturday","2019-03-17":"No trading on Sunday","2019-03-23":"No trading on Saturday","2019-03-24":"No trading on Sunday","2019-03-30":"No trading on Saturday","2019-03-31":"No trading on Sunday","2019-04-06":"No trading on Saturday","2019-04-07":"No trading on Sunday","2019-04-13":"No trading on Saturday","2019-04-14":"No trading on Sunday","2019-04-20":"No trading on Saturday","2019-04-21":"No trading on Sunday","2019-04-27":"No trading on Saturday","2019-04-28":"No trading on Sunday","2019-05-04":"No trading on Saturday","2019-05-05":"No trading on Sunday","2019-05-11":"No trading on Saturday","2019-05-12":"No trading on Sunday","2019-05-18":"No trading on Saturday","2019-05-19":"No trading on Sunday","2019-05-25":"No trading on Saturday","2019-05-26":"No trading on Sunday","2019-06-01":"No trading on Saturday","2019-06-02":"No trading on Sunday","2019-06-08":"No trading on Saturday","2019-06-09":"No trading on Sunday","2019-06-15":"No trading on Saturday","2019-06-16":"No trading on Sunday","2019-06-22":"No trading on Saturday","2019-06-23":"No trading on Sunday","2019-06-29":"No trading on Saturday","2019-06-30":"No trading on Sunday","2019-07-06":"No trading on Saturday","2019-07-07":"No trading on Sunday","2019-07-13":"No trading on Saturday","2019-07-14":"No trading on Sunday","2019-07-20":"No trading on Saturday","2019-07-21":"No trading on Sunday","2019-07-27":"No trading on Saturday","2019-07-28":"No trading on Sunday","2019-08-03":"No trading on Saturday","2019-08-04":"No trading on Sunday","2019-08-10":"No trading on Saturday","2019-08-11":"No trading on Sunday","2019-08-17":"No trading on Saturday","2019-08-18":"No trading on Sunday","2019-08-24":"No trading on Saturday","2019-08-25":"No trading on Sunday","2019-08-31":"No trading on Saturday","2019-09-01":"No trading on Sunday","2019-09-07":"No trading on Saturday","2019-09-08":"No trading on Sunday","2019-09-14":"No trading on Saturday","2019-09-15":"No trading on Sunday","2019-09-21":"No trading on Saturday","2019-09-22":"No trading on Sunday","2019-09-28":"No trading on Saturday","2019-09-29":"No trading on Sunday","2019-10-05":"No trading on Saturday","2019-10-06":"No trading on Sunday","2019-10-12":"No trading on Saturday","2019-10-13":"No trading on Sunday","2019-10-19":"No trading on Saturday","2019-10-20":"No trading on Sunday","2019-10-26":"No trading on Saturday","2019-10-27":"No trading on Sunday","2019-11-02":"No trading on Saturday","2019-11-03":"No trading on Sunday","2019-11-09":"No trading on Saturday","2019-11-10":"No trading on Sunday","2019-11-16":"No trading on Saturday","2019-11-17":"No trading on Sunday","2019-11-23":"No trading on Saturday","2019-11-24":"No trading on Sunday","2019-11-30":"No trading on Saturday","2019-12-01":"No trading on Sunday","2019-12-07":"No trading on Saturday","2019-12-08":"No trading on Sunday","2019-12-14":"No trading on Saturday","2019-12-15":"No trading on Sunday","2019-12-21":"No trading on Saturday","2019-12-22":"No trading on Sunday","2019-12-28":"No trading on Saturday","2019-12-29":"No trading on Sunday","2020-01-04":"No trading on Saturday","2020-01-05":"No trading on Sunday","2020-01-11":"No trading on Saturday","2020-01-12":"No trading on Sunday","2020-01-18":"No trading on Saturday","2020-01-19":"No trading on Sunday","2020-01-25":"No trading on Saturday","2020-01-26":"No trading on Sunday","2020-02-01":"No trading on Saturday","2020-02-02":"No trading on Sunday","2020-02-08":"No trading on Saturday","2020-02-09":"No trading on Sunday","2020-02-15":"No trading on Saturday","2020-02-16":"No trading on Sunday","2020-02-22":"No trading on Saturday","2020-02-23":"No trading on Sunday","2020-02-29":"No trading on Saturday","2020-03-01":"No trading on Sunday","2020-03-07":"No trading on Saturday","2020-03-08":"No trading on Sunday","2020-03-14":"No trading on Saturday","2020-03-15":"No trading on Sunday","2020-03-21":"No trading on Saturday","2020-03-22":"No trading on Sunday","2020-03-28":"No trading on Saturday","2020-03-29":"No trading on Sunday","2020-04-04":"No trading on Saturday","2020-04-05":"No trading on Sunday","2020-04-11":"No trading on Saturday","2020-04-12":"No trading on Sunday","2020-04-18":"No trading on Saturday","2020-04-19":"No trading on Sunday","2020-04-25":"No trading on Saturday","2020-04-26":"No trading on Sunday","2020-05-02":"No trading on Saturday","2020-05-03":"No trading on Sunday","2020-05-09":"No trading on Saturday","2020-05-10":"No trading on Sunday","2020-05-16":"No trading on Saturday","2020-05-17":"No trading on Sunday","2020-05-23":"No trading on Saturday","2020-05-24":"No trading on Sunday","2020-05-30":"No trading on Saturday","2020-05-31":"No trading on Sunday","2020-06-06":"No trading on Saturday","2020-06-07":"No trading on Sunday","2020-06-13":"No trading on Saturday","2020-06-14":"No trading on Sunday","2020-06-20":"No trading on Saturday","2020-06-21":"No trading on Sunday","2020-06-27":"No trading on Saturday","2020-06-28":"No trading on Sunday","2020-07-04":"No trading on Saturday","2020-07-05":"No trading on Sunday","2020-07-11":"No trading on Saturday","2020-07-12":"No trading on Sunday","2020-07-18":"No trading on Saturday","2020-07-19":"No trading on Sunday","2020-07-25":"No trading on Saturday","2020-07-26":"No trading on Sunday","2020-08-01":"No trading on Saturday","2020-08-02":"No trading on Sunday","2020-08-08":"No trading on Saturday","2020-08-09":"No trading on Sunday","2020-08-15":"No trading on Saturday","2020-08-16":"No trading on Sunday","2020-08-22":"No trading on Saturday","2020-08-23":"No trading on Sunday","2020-08-29":"No trading on Saturday","2020-08-30":"No trading on Sunday","2020-09-05":"No trading on Saturday","2020-09-06":"No trading on Sunday","2020-09-12":"No trading on Saturday","2020-09-13":"No trading on Sunday","2020-09-19":"No trading on Saturday","2020-09-20":"No trading on Sunday","2020-09-26":"No trading on Saturday","2020-09-27":"No trading on Sunday","2020-10-03":"No trading on Saturday","2020-10-04":"No trading on Sunday"},"first_conversion_date":"2018-10-04","default_conversion_date":"2018-10-09"}'
