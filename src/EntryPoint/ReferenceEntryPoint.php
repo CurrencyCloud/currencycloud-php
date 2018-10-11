@@ -25,7 +25,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         $ret = [];
         foreach ($response->currencies as $currency) {
             $ret[] = new Currency(
-                $currency->code, $currency->decimal_places, $currency->name
+                $currency->code, $currency->decimal_places, $currency->name, $currency->online_trading, $currency->can_buy, $currency->can_sell
             );
         }
         return $ret;
@@ -152,25 +152,25 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     }
 
     public function paymentPurposeCodes($currency, $entity_type = null, $bank_account_country = null) {
-      $response = $this->request(
-          'GET',
-          'reference/payment_purpose_codes',
-          [
-              'currency' => $currency,
-              'entity_type' => $entity_type,
-              'currency' => $bank_account_country
-          ]
-      );
+        $response = $this->request(
+            'GET',
+            'reference/payment_purpose_codes',
+            [
+                'currency' => $currency,
+                'entity_type' => $entity_type,
+                'currency' => $bank_account_country
+            ]
+        );
 
-      $ret = [];
-      foreach ($response->purpose_codes as $purpose_code) {
-          $ret[] = new PurposeCode(
-              $purpose_code->currency,
-              $purpose_code->entity_type,
-              $purpose_code->purpose_code,
-              $purpose_code->purpose_description
-          );
-      }
-      return $ret;
+        $ret = [];
+        foreach ($response->purpose_codes as $purpose_code) {
+            $ret[] = new PurposeCode(
+                $purpose_code->currency,
+                $purpose_code->entity_type,
+                $purpose_code->purpose_code,
+                $purpose_code->purpose_description
+            );
+        }
+        return $ret;
     }
 }
