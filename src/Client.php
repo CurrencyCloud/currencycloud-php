@@ -154,6 +154,9 @@ class Client
 
     protected function formatFormData(array &$options){
         $newForm = [];
+        if(empty($options['form_params'])){
+            return $newForm;
+        }
         foreach ($options['form_params'] as $name => $param){
             if(is_array($param)){
                 foreach ($param as $key => $value){
