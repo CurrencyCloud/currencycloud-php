@@ -32,8 +32,9 @@ class FormDataExtractor {
     protected static function extractArrayKey($value){
         $dataArrayKey = "";
         // find name=""
-        preg_match('/(name=\\\"([A-z0-9_-])*\")/is', $value, $keys);
+        preg_match('/(name=\\"([A-z0-9_-])*\")/is', $value, $keys);
         // get the key name
+
         if(!empty($keys)) {
             preg_match('/\\"([A-z0-9-_]*)\\"/is', $keys[0], $keys);
             //clear the key name
