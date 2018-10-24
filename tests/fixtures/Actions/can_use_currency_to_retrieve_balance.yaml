@@ -5,7 +5,7 @@
     body: ''
     headers:
       Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:
@@ -14,98 +14,3 @@
       Content-Length: '217'
       X-Request-Id: '2778003612846482730'
     body: '{"id":"5a998e06-3eb7-46d6-ba58-f749864159ce","account_id":"e7483671-5dc6-0132-e126-002219414986","currency":"GBP","amount":"999866.78","created_at":"2014-12-04T09:50:35+00:00","updated_at":"2015-03-23T14:33:37+00:00"}'
--
-    request:
-        method: GET
-        url: 'https://devapi.currencycloud.com/v2/balances/GBP'
-        headers:
-            Host: devapi.currencycloud.com
-            Accept-Encoding: null
-            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
-            Accept: null
-    response:
-        status:
-            http_version: '1.1'
-            code: '401'
-            message: Unauthorized
-        headers:
-            Date: 'Tue, 23 Oct 2018 14:00:20 GMT'
-            Content-Type: application/json
-            Transfer-Encoding: chunked
-            Connection: keep-alive
-            Set-Cookie: '__cfduid=d08a8a5f7b9f636f1bfb38fe537a04c521540303220; expires=Wed, 23-Oct-19 14:00:20 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=tlSUHH9j8TQ+5h9SGzXhZGxjFXUGckwieij61aNMTYwzFW6mDzfwdwmImjzFh2F7QYIKZOL9XwwsB5rAWZFpvkXLWXVBMYQg4qC/SZtEm2gKuhQycYuI59wm0XGs; Expires=Tue, 30 Oct 2018 14:00:20 GMT; Path=/'
-            Access-Control-Allow-Origin: '*'
-            X-Request-Id: 84904cee-6d07-4a59-9621-ff9cd32efed1
-            Access-Control-Allow-Methods: GET
-            X-Content-Type-Options: nosniff
-            Vary: Origin
-            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
-            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
-            Server: cloudflare
-            CF-RAY: 46e4bab6fdd9b6da-KIV
-        body: '{"error_code":"auth_failed","error_messages":{"username":[{"code":"invalid_supplied_credentials","message":"Authentication failed with the supplied credentials","params":{}}]}}'
--
-    request:
-        method: POST
-        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
-        headers:
-            Host: devapi.currencycloud.com
-            Expect: null
-            Accept-Encoding: null
-            Content-Type: 'multipart/form-data; boundary=ac05d5e31a50cb3585af3db258c0556ce2baabca'
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
-            Accept: null
-        body: "--ac05d5e31a50cb3585af3db258c0556ce2baabca\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--ac05d5e31a50cb3585af3db258c0556ce2baabca\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--ac05d5e31a50cb3585af3db258c0556ce2baabca--\r\n"
-    response:
-        status:
-            http_version: '1.1'
-            code: '200'
-            message: OK
-        headers:
-            Date: 'Tue, 23 Oct 2018 14:00:22 GMT'
-            Content-Type: application/json;charset=utf-8
-            Transfer-Encoding: chunked
-            Connection: keep-alive
-            Set-Cookie: '__cfduid=dfe1cc806be15f9ece100cd13e6c12dda1540303220; expires=Wed, 23-Oct-19 14:00:20 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=J4ucSwHgPYiYktyPhPivpwjjwEqmBSRTIyw/ByNQGE/qMIzL0bQ0lr7w2QTYZbS0b37SjnHm4GtvV4LjLm/1Jde85xjuUMWB2J4Q1lZmHjoiE3A871YxZZ6IfJqG; Expires=Tue, 30 Oct 2018 14:00:21 GMT; Path=/'
-            Access-Control-Allow-Origin: '*'
-            X-Request-Id: 6e564493-6340-4338-ad5b-d31f61ff728c
-            Access-Control-Allow-Methods: POST
-            X-Content-Type-Options: nosniff
-            Vary: Origin
-            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
-            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
-            Server: cloudflare
-            CF-RAY: 46e4baba8d87b6e0-KIV
-        body: '{"auth_token":"e035954f08f8d24b86a978c376727ea8"}'
--
-    request:
-        method: GET
-        url: 'https://devapi.currencycloud.com/v2/balances/GBP'
-        headers:
-            Host: devapi.currencycloud.com
-            Accept-Encoding: null
-            X-Auth-Token: e035954f08f8d24b86a978c376727ea8
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/0.11.0'
-            Accept: null
-    response:
-        status:
-            http_version: '1.1'
-            code: '200'
-            message: OK
-        headers:
-            Date: 'Tue, 23 Oct 2018 14:00:23 GMT'
-            Content-Type: application/json;charset=utf-8
-            Transfer-Encoding: chunked
-            Connection: keep-alive
-            Set-Cookie: '__cfduid=d8244bf913262141c65305ebc74f6eda31540303223; expires=Wed, 23-Oct-19 14:00:23 GMT; path=/; domain=.currencycloud.com; HttpOnly, AWSALB=DJ//ZaXqlg0d9QOd3f+pOp3hLmqcWHl+U/FGiKbcGM9k3D45uA4hQ+wcSWGp/iWqDQQktNR0LQqaUsVx09eqK05BSMni22JdTo68RxPFJpxqrYCend7IJzTiqUXT; Expires=Tue, 30 Oct 2018 14:00:23 GMT; Path=/'
-            Access-Control-Allow-Origin: '*'
-            X-Request-Id: c5c672c4-fdac-4afd-9f20-47970bcd9ec8
-            Access-Control-Allow-Methods: GET
-            X-Content-Type-Options: nosniff
-            Vary: Origin
-            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
-            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
-            Server: cloudflare
-            CF-RAY: 46e4bac76d81b6d4-KIV
-        body: '{"id":"6e87663f-7d5d-486d-8cd2-d7c67ac9f840","account_id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","currency":"GBP","amount":"0.00","created_at":"2015-06-24T15:31:24+00:00","updated_at":"2015-06-24T15:31:24+00:00"}'
