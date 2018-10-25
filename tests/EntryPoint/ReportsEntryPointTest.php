@@ -41,7 +41,6 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
                 [
                     'buy_currency' => 'EUR',
                     'sell_currency' => 'GBP',
-                    'scope' => 'own',
                     'scope' => null,
                     'on_behalf_of' => null,
                     'description' => null,
