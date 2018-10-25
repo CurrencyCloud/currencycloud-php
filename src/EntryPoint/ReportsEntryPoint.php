@@ -75,7 +75,7 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         $report->setShortReference($response->short_reference)
             ->setDescription($response->description)
             ->setSearchParams($response->search_params)
-            ->setReportType($response->report_params)
+            ->setReportType($response->report_type)
             ->setStatus($response->status)
             ->setFailureReason($response->failure_reason)
             ->setExpirationDate($this->getDateTimeOrNullFromString($response->expiration_date))
