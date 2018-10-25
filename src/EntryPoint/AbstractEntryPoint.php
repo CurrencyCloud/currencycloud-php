@@ -8,6 +8,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use ReflectionClass;
 use stdClass;
+use DateTime;
 
 abstract class AbstractEntryPoint
 {
@@ -94,5 +95,14 @@ abstract class AbstractEntryPoint
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
         $property->setValue($object, $value);
+    }
+
+    /*
+     * @param string $value
+     * @return DateTime|null
+     */
+    protected function getDateTimeOrNullFromString($value){
+        return (null !== $value) ? new DateTime($value) :
+            null;
     }
 }
