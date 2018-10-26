@@ -2,6 +2,7 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\ConversionReportCriteria;
+use CurrencyCloud\Criteria\PaymentReportCriteria;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Report;
@@ -57,6 +58,54 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'updated_at_to' => $conversionReportCriteria->getUpdatedAtTo(),
             'unique_request_id' => $conversionReportCriteria->getUniqueRequestId(),
             'scope' => $conversionReportCriteria->getScope()
+        ];
+
+        return $common;
+    }
+
+    /**
+     * @param PaymentReportCriteria $paymentReportCriteria
+     * @param null|string $onBehalfOf
+     *
+     * @return Report
+     */
+    public function createPaymentReport(PaymentReportCriteria $paymentReportCriteria, $onBehalfOf = null)
+    {
+        return $this->doCreate('reports/payments/create', $paymentReportCriteria, function ($paymentReportCriteria) {
+            return $this->convertPaymentReportCriteriaToRequest($paymentReportCriteria);
+        }, function ($response) {
+            return $this->createReportFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
+     * @param PaymentReportCriteria $paymentReportCriteria
+     *
+     * @return array
+     */
+    protected function convertPaymentReportCriteriaToRequest(PaymentReportCriteria $paymentReportCriteria)
+    {
+        $common = [
+            'on_behalf_of' => $paymentReportCriteria->getOnBehalfOf(),
+            'description' => $paymentReportCriteria->getDescription(),
+            'currency' => $paymentReportCriteria->getCurrency(),
+            'amount_from' => $paymentReportCriteria->getAmountFrom(),
+            'amount_to' => $paymentReportCriteria->getAmountTo(),
+            'status' => $paymentReportCriteria->getStatus(),
+            'payment_date_from' => $paymentReportCriteria->getPaymentDateFrom(),
+            'payment_date_to' => $paymentReportCriteria->getPaymentDateTo(),
+            'transfered_at_from' => $paymentReportCriteria->getTransferedAtFrom(),
+            'transfered_at_to' => $paymentReportCriteria->getTransferedAtTo(),
+            'created_at_from' => $paymentReportCriteria->getCreatedAtFrom(),
+            'created_at_to' => $paymentReportCriteria->getCreatedAtTo(),
+            'updated_at_from' => $paymentReportCriteria->getUpdatedAtFrom(),
+            'updated_at_to' => $paymentReportCriteria->getUpdatedAtTo(),
+            'beneficiary_id' => $paymentReportCriteria->getBeneficiaryId(),
+            'conversion_id' => $paymentReportCriteria->getConversionId(),
+            'with_deleted' => $paymentReportCriteria->getWithDeleted(),
+            'payment_group_id' => $paymentReportCriteria->getPaymentGroupId(),
+            'unique_request_id' => $paymentReportCriteria->getUniqueRequestId(),
+            'scope' => $paymentReportCriteria->getScope()
         ];
 
         return $common;
