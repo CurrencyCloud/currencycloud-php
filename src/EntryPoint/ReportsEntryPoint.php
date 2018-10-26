@@ -16,7 +16,7 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
      *
      * @return Report
      */
-    public function create(ConversionReportCriteria $conversionReportCriteria, $onBehalfOf = null)
+    public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, $onBehalfOf = null)
     {
         return $this->doCreate('reports/conversions/create', $conversionReportCriteria, function ($conversionReportCriteria) {
             return $this->convertConversionReportCriteriaToRequest($conversionReportCriteria);

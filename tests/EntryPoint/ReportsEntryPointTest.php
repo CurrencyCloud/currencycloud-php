@@ -70,7 +70,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
         $conversionReportCriteria = new ConversionReportCriteria();
         $conversionReportCriteria->setBuyCurrency("EUR")
             ->setSellCurrency("GBP");
-        $report = $reportsEntryPoint->create($conversionReportCriteria);
+        $report = $reportsEntryPoint->createConversionReport($conversionReportCriteria);
 
         $this->assertSame("ea8da492-b03d-4330-b279-b5e4a25804a0", $report->getId());
         $this->assertSame("processing", $report->getStatus());
