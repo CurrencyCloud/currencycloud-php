@@ -164,6 +164,20 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
     }
 
     /**
+     * @param string $id
+     * @param null|string $onBehalfOf
+     *
+     * @return Report
+     */
+    public function retrieve($id, $onBehalfOf = null)
+    {
+        return $this->doRetrieve(sprintf('reports/report_requests/%s', $id),
+            function ($response) {
+                return $this->createReportFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
      * @param stdClass $response
      *
      * @return Report
