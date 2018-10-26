@@ -3,9 +3,11 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Criteria\PaymentReportCriteria;
+use CurrencyCloud\Criteria\FindReportsCriteria;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Report;
+use CurrencyCloud\Model\Reports;
 use DateTime;
 use stdClass;
 
@@ -112,11 +114,61 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
     }
 
     /**
+     * @param FindReportsCriteria $findReportsCriteria
+     * @param PAgination $pagination
+     * @param null|string $onBehalfOf
+     *
+     * @return Reports
+     */
+    public function findReports(
+        FindReportsCriteria $findReportsCriteria,
+        Pagination $pagination,
+        $onBehalfOf = null)
+    {
+        if (null === $findReportsCriteria) {
+            $report = new FindReportsCriteria();
+        }
+        if (null === $pagination) {
+            $pagination = new Pagination();
+        }
+        return $this->doFind('reports/report_requests/find', $findReportsCriteria, $pagination, function ($findReportsCriteria) {
+            return $this->convertFindReportsCriteriaToRequest($findReportsCriteria);
+        }, function ($response) {
+            return $this->createReportFromResponse($response);
+        }, function (array $entities, Pagination $pagination) {
+            return new Reports($entities, $pagination);
+        }, 'report_requests',$onBehalfOf);
+    }
+
+    /**
+     * @param FindReportsCriteria $findReportsCriteria
+     *
+     * @return array
+     */
+    protected function convertFindReportsCriteriaToRequest(FindReportsCriteria $findReportsCriteria)
+    {
+        $common = [
+            'short_reference' => $findReportsCriteria->getShortReference(),
+            'description' => $findReportsCriteria->getDescription(),
+            'account_id' => $findReportsCriteria->getAccountId(),
+            'contact_id' => $findReportsCriteria->getContactId(),
+            'created_at_from' => $findReportsCriteria->getCreatedAtFrom(),
+            'created_at_to' => $findReportsCriteria->getCreatedAtTo(),
+            'expiration_date_from' => $findReportsCriteria->getExpirationDateFrom(),
+            'expiration_date_to' => $findReportsCriteria->getExpirationDateTo(),
+            'status' => $findReportsCriteria->getStatus(),
+            'report_type' => $findReportsCriteria->getReportType()
+        ];
+
+        return $common;
+    }
+
+    /**
      * @param stdClass $response
      *
      * @return Report
      */
-    private function createReportFromResponse(stdClass $response)
+    protected function createReportFromResponse(stdClass $response)
     {
         $report = new Report();
 

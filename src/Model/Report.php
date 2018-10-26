@@ -188,7 +188,7 @@ class Report implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getExpirationDate()
     {
@@ -196,12 +196,12 @@ class Report implements EntityInterface
     }
 
     /**
-     * @param string $expirationDate
+     * @param DateTime $expirationDate
      * @return $this
      */
     public function setExpirationDate($expirationDate)
     {
-        $this->expirationDate = (string) $expirationDate;
+        $this->expirationDate = $expirationDate;
         return $this;
     }
 
