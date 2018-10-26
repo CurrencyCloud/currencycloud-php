@@ -246,9 +246,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
                 'order' => null,
                 'order_asc_desc' => null
             ],
-            [
-
-            ]
+            []
         )
         );
 
@@ -263,6 +261,48 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame("RP-3256961-MLEPRN", $reports->getReports()[1]->getShortReference());
         $this->assertSame("3301474c-a4bc-44d3-9cfb-96ab109db0a7", $reports->getReports()[2]->getId());
         $this->assertSame("RP-8740994-YLNMNX", $reports->getReports()[2]->getShortReference());
+
+    }
+
+    /**
+     * @test
+     */
+    public function canRetrieveReport(){
+        $data = '{
+            "id": "075ce584-b977-4538-a524-16b759277d66",
+            "short_reference": "RP-5279826-KZJHNX",
+            "description": null,
+            "search_params": {
+                "buy_currency": "EUR",
+                "sell_currency": "GBP",
+                "scope": "own"
+            },
+            "report_type": "conversion",
+            "status": "completed",
+            "failure_reason": null,
+            "expiration_date": "2018-10-18T00:00:00+00:00",
+            "report_url": "https://ccycloud-reports-prod-demo1-customer-reporting.s3.eu-west-1.amazonaws.com/customer_reporting/075ce584-b977-4538-a524-16b759277d66/conversion_report_1610201808101539677748.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=somecredential&X-Amz-Date=20181026T114629Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Security-Token=xyz&X-Amz-Signature=abcdef",
+            "account_id": "bf5b1007-b364-43cc-b3d6-9f2d1be75297",
+            "contact_id": "ba33d76a-4a7f-4cb3-afa8-5678d5bc712a",
+            "created_at": "2018-10-16T08:15:46+00:00",
+            "updated_at": "2018-10-16T08:15:48+00:00"
+        }';
+
+        $reportsEntryPoint = new ReportsEntryPoint(
+            new SimpleEntityManager(), $this->getMockedClient(
+            json_decode($data),
+            'GET',
+            'reports/report_requests/075ce584-b977-4538-a524-16b759277d66',
+            ['on_behalf_of' => null],
+            []
+        )
+        );
+
+        $report = $reportsEntryPoint->retrieve("075ce584-b977-4538-a524-16b759277d66");
+
+        $this->assertSame("075ce584-b977-4538-a524-16b759277d66", $report->getId());
+        $this->assertSame("RP-5279826-KZJHNX", $report->getShortReference());
+        $this->assertSame("completed", $report->getStatus());
 
     }
 }
