@@ -1,14 +1,14 @@
 -
     request:
         method: POST
-        url: 'https://devapi.currencycloud.com/v2/reports/conversions/create'
+        url: 'https://devapi.currencycloud.com/v2/reports/payments/create'
         headers:
             X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-        body: buy_currency=EUR
+        body: 'currency=EUR'
     response:
         status: 200
         headers:
-            Date: 'Fri, 26 Oct 2018 07:44:02 GMT'
+            Date: Fri, 26 Oct 2018 07:44:02 GMT
             Content-Type: application/json
             X-Request-Id: 'd6da7f65-d73b-4ad0-b86c-7603f316c44d'
         body: '{"id":"f2ec161b-5713-4d1a-953a-f6c783c622c0","short_reference":"RP-2683901-DQIJUJ","description":"Test Report for Payment","search_params":{"currency":"EUR","scope":"own"},"report_type":"payment","status":"processing","failure_reason":null,"expiration_date":null,"report_url":"","account_id":"bf5b1007-b364-43cc-b3d6-9f2d1be75297","contact_id":"ba33d76a-4a7f-4cb3-afa8-5678d5bc712a","created_at":"2018-10-26T07:29:53+00:00","updated_at":"2018-10-26T07:29:53+00:00"}'
