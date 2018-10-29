@@ -60,8 +60,8 @@ class IbansEntryPoint extends AbstractEntityEntryPoint {
         $iban->setBankInstitutionAddress($response->bank_institution_address);
         $iban->setBankInstitutionCountry($response->bank_institution_country);
         $iban->setBicSwift($response->bic_swift);
-        $iban->setCreatedAt($response->created_at);
-        $iban->setUpdatedAt($response->updated_at);
+        $iban->setCreatedAt(null !== $response->created_at ? new DateTime($response->created_at) : null);
+        $iban->setUpdatedAt(null !== $response->updated_at ? new DateTime($response->updated_at) : null);
 
         return $iban;
     }

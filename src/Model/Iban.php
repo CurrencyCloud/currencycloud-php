@@ -3,7 +3,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Iban {
+class Iban implements EntityInterface {
 
     /**
      * @var string
