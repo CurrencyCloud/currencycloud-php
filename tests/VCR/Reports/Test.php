@@ -80,6 +80,10 @@ class Test extends BaseCurrencyCloudVCRTestCase{
         $this->assertSame($dummy['report_requests'][2]['id'], $reports->getReports()[2]->getId());
         $this->assertSame($dummy['report_requests'][2]['short_reference'], $reports->getReports()[2]->getShortReference());
 
+        $this->assertSame($dummy['report_requests'][0]['search_params']['buy_currency'], $reports->getReports()[0]->getSearchParams()->getBuyCurrency());
+        $this->assertSame($dummy['report_requests'][0]['search_params']['sell_currency'], $reports->getReports()[0]->getSearchParams()->getSellCurrency());
+        $this->assertSame($dummy['report_requests'][0]['search_params']['scope'], $reports->getReports()[0]->getSearchParams()->getScope());
+
     }
 
     /**

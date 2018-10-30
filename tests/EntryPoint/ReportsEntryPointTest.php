@@ -260,8 +260,10 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame("ea8da492-b03d-4330-b279-b5e4a25804a0", $reports->getReports()[1]->getId());
         $this->assertSame("RP-3256961-MLEPRN", $reports->getReports()[1]->getShortReference());
         $this->assertSame("3301474c-a4bc-44d3-9cfb-96ab109db0a7", $reports->getReports()[2]->getId());
-        $this->assertSame("RP-8740994-YLNMNX", $reports->getReports()[2]->getShortReference());
 
+        $this->assertSame("EUR", $reports->getReports()[0]->getSearchParams()->getBuyCurrency());
+        $this->assertSame("GBP", $reports->getReports()[0]->getSearchParams()->getSellCurrency());
+        $this->assertSame("own", $reports->getReports()[0]->getSearchParams()->getScope());
     }
 
     /**

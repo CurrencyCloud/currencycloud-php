@@ -21,7 +21,7 @@ class Report implements EntityInterface
     private $description;
 
     /**
-     * @var \stdClass
+     * @var ReportSearchParams
      */
     private $searchParams;
 
@@ -114,7 +114,7 @@ class Report implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return ReportSearchParams
      */
     public function getSearchParams()
     {
@@ -122,11 +122,11 @@ class Report implements EntityInterface
     }
 
     /**
-     * @param \stdClass $searchParams
+     * @param ReportSearchParams $searchParams
      * @return $this
      *
      */
-    public function setSearchParams($searchParams)
+    public function setSearchParams(ReportSearchParams $searchParams)
     {
         $this->searchParams = $searchParams;
         return $this;
