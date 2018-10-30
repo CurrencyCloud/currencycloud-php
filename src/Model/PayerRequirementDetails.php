@@ -1,7 +1,11 @@
 <?php
 namespace CurrencyCloud\Model;
 
-class PayerRequirementDetails {
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+
+class PayerRequirementDetails implements Countable, IteratorAggregate {
 
     /**
      * @var PayerDetails[]
@@ -26,5 +30,19 @@ class PayerRequirementDetails {
         return $this->payerDetails;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->payerDetails);
+    }
 
+    /**
+     * @inheritdoc
+     */
+    public function count()
+    {
+        return count($this->payerDetails);
+    }
 }
