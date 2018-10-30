@@ -7,8 +7,11 @@ use CurrencyCloud\Model\ConversionDates;
 use CurrencyCloud\Model\Currency;
 use CurrencyCloud\Model\InvalidConversionDate;
 use CurrencyCloud\Model\InvalidPaymentDate;
+use CurrencyCloud\Model\PayerDetails;
+use CurrencyCloud\Model\PayerRequirementDetails;
 use CurrencyCloud\Model\PaymentDates;
 use CurrencyCloud\Model\PurposeCode;
+use CurrencyCloud\Model\RequiredFieldEntry;
 use CurrencyCloud\Model\SettlementAccount;
 use DateTime;
 
@@ -172,5 +175,56 @@ class ReferenceEntryPoint extends AbstractEntryPoint
           );
       }
       return $ret;
+    }
+
+    /**
+     * @param $payerCountry
+     * @param $payerEntityType
+     * @param $paymentType
+     */
+    public function payerRequiredDetails($payerCountry, $payerEntityType, $paymentType){
+        $response = $this->request('GET',
+            'reference/payer_required_details',
+            [
+                'payer_country' => $payerCountry,
+                'payer_entity_type' => $payerEntityType,
+                'payer_type' => $paymentType
+            ],
+            [],
+            []
+        );
+
+        return $this->convertResponseToPaymentRequiredDetails($response);
+    }
+
+    /**
+     * @param $response
+     * @return PayerRequirementDetails
+     */
+    protected function convertResponseToPaymentRequiredDetails($response){
+        $payerDetails = [];
+        foreach($response->details as $key => $value){
+            array_push($payerDetails,
+                new PayerDetails(
+                    $value->payer_entity_type,
+                    $value->payment_type,
+                     !empty($value->payer_identification_type) ? $value->payer_identification_type : null,
+                    $this->convertRequiredFieldsArrayToRequiredFieldEntry($value->required_fields)
+                ));
+        }
+
+        return new PayerRequirementDetails($payerDetails);
+    }
+
+    /**
+     * @param $requiredFields
+     * @return RequiredFieldEntry[]
+     */
+    protected function convertRequiredFieldsArrayToRequiredFieldEntry($requiredFields){
+        $result = [];
+        foreach($requiredFields as $key => $value){
+            array_push($result, new RequiredFieldEntry($value->name, $value->validation_rule));
+        }
+        return $result;
     }
 }
