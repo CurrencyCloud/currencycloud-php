@@ -194,8 +194,6 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             []
         );
 
-        var_dump($response);
-
         return $this->convertResponseToPaymentRequiredDetails($response);
     }
 
