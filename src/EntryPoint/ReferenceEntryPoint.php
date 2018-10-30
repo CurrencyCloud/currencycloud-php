@@ -188,7 +188,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             [
                 'payer_country' => $payerCountry,
                 'payer_entity_type' => $payerEntityType,
-                'payer_type' => $paymentType
+                'payment_type' => $paymentType
             ],
             [],
             []
