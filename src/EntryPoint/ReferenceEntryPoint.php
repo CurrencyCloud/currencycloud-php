@@ -182,7 +182,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
      * @param $payerEntityType
      * @param $paymentType
      */
-    public function payerRequiredDetails($payerCountry, $payerEntityType, $paymentType){
+    public function payerRequiredDetails($payerCountry, $payerEntityType = null, $paymentType = null){
         $response = $this->request('GET',
             'reference/payer_required_details',
             [
@@ -193,6 +193,8 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             [],
             []
         );
+
+        var_dump($response);
 
         return $this->convertResponseToPaymentRequiredDetails($response);
     }
