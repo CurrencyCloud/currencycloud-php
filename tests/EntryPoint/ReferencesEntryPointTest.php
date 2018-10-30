@@ -191,6 +191,11 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         foreach ($payerDetails as $key => $value) {
             $this->assertSame($dummy['details'][$key]['payer_entity_type'], $payerDetails[$key]->getPayerEntityType());
             $this->assertSame($dummy['details'][$key]['payment_type'], $payerDetails[$key]->getPaymentType());
+
+            foreach($dummy['details'][$key]['required_fields'] as $innerKey => $innerValue){
+                $this->assertSame($innerValue['name'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getName());
+                $this->assertSame($innerValue['validation_rule'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getValidationRule());
+            }
         }
     }
 }
