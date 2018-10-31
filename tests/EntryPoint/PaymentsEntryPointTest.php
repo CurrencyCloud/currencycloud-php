@@ -452,4 +452,33 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $this->validateObjectStrictName($list[0], json_decode($data, true)['payments'][0]);
     }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentSubmission(){
+        $data = '{
+            "status": null,
+            "mt103": null,
+            "submission_ref": null
+        }';
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            json_decode($data),
+                'GET',
+                'payments/48e707c9-43e3-4b07-a1d1-bee38f9c95a1/submission',
+                [
+                    'on_behalf_of' => null
+                ]
+            )
+        );
+
+        $paymentSubmission = $entryPoint->retrieveSubmission('48e707c9-43e3-4b07-a1d1-bee38f9c95a1');
+
+        $dummy = json_decode($data, true);
+
+        $this->assertSame($dummy['status'], $paymentSubmission->getStatus());
+        $this->assertSame($dummy['mt103'], $paymentSubmission->getMt103());
+        $this->assertSame($dummy['submission_ref'], $paymentSubmission->getSubmissionRef());
+    }
 }
