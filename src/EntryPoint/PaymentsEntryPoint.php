@@ -259,9 +259,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             $response->short_reference,
             $response->status,
             $response->confirmation_url,
-            $response->created_at,
-            $response->updated_at,
-            $response->expires_at
+            !empty($response->created_at) ? new DateTime($response->created_at) : null,
+            !empty($response->updatet_at) ? new DateTime($response->updated_at) : null,
+            !empty($response->expires_at) ? new DateTime($response->expires_at) : null
         );
         return $paymentConfirmation;
     }

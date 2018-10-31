@@ -3,7 +3,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class PaymentConfirmation {
+class PaymentConfirmation implements EntityInterface {
 
     /**
      * @var string
@@ -54,7 +54,7 @@ class PaymentConfirmation {
      * @param DateTime $updatedAt
      * @param DateTime $expiresAt
      */
-    public function __construct($id, $paymentId, $accountId, $shortReference, $status, $confirmationUrl, DateTime $createdAt, DateTime $updatedAt, DateTime $expiresAt)
+    public function __construct($id, $paymentId, $accountId, $shortReference, $status, $confirmationUrl, $createdAt, $updatedAt, $expiresAt)
     {
         $this->id = $id;
         $this->paymentId = $paymentId;
