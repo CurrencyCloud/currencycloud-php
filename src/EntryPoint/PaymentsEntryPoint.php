@@ -251,6 +251,10 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         }, $onBehalfOf);
     }
 
+    /**
+     * @param stdClass $response
+     * @return PaymentConfirmation
+     */
     protected function createPaymentConfirmationFromResponse($response){
         $paymentConfirmation = new PaymentConfirmation(
             $response->id,
