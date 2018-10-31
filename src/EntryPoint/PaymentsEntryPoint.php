@@ -247,11 +247,11 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
     public function retrieveConfirmation($id, $onBehalfOf = null)
     {
         return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function (stdClass $response) {
-            return $this->createPaymentConfirmaionFromResponse($response);
+            return $this->createPaymentConfirmationFromResponse($response);
         }, $onBehalfOf);
     }
 
-    protected function createPaymentConfirmaionFromResponse($response){
+    protected function createPaymentConfirmationFromResponse($response){
         $paymentConfirmation = new PaymentConfirmation(
             $response->id,
             $response->payment_id,
