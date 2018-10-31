@@ -243,13 +243,23 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
      * @param string|null $onBehalfOf
      * @return PaymentSubmission
      */
-    public function retrieveSubmission($id, $onBehalfOf){
-        return $this->doRetrieve(sprintf('payments/%s/submission', $id), function (stdClass $response) {
-            return $this->createPaymentSubmissionFromResponse($response);
-        }, $onBehalfOf);
+    public function retrieveSubmission($id, $onBehalfOf = null){
+        $response = $this->request('GET', sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
+
+        return $this->createPaymentSubmissionFromResponse($response);
     }
 
-    protected function createPaymentSubmissionFromResponse(){
-        
+    /**
+     * @param stdClass $response
+     * @return PaymentSubmission
+     */
+    protected function createPaymentSubmissionFromResponse($response){
+        $paymentSubmission = new PaymentSubmission(
+            $response->status,
+            $response->mt103,
+            $response->submission_ref
+        );
+
+        return $paymentSubmission;
     }
 }
