@@ -242,7 +242,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
      * @param string $id
      * @param null|string $onBehalfOf
      *
-     * @return Payment
+     * @return PaymentConfirmation
      */
     public function retrieveConfirmation($id, $onBehalfOf = null)
     {
