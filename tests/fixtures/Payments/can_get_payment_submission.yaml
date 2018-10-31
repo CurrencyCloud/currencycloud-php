@@ -1,0 +1,13 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/payments/48e707c9-43e3-4b07-a1d1-bee38f9c95a1/submission'
+        headers:
+            X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+    response:
+        status: 200
+        headers:
+            Date: 'Wed, 31 Oct 2018 11:57:56 GMT'
+            Content-Type: application/json
+            X-Request-Id: 7f0aa045-7175-4276-8d4d-4fd9d5e67a98
+        body: '{"status":null,"mt103":null,"submission_ref":null        }'
