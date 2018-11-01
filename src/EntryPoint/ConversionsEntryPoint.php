@@ -8,10 +8,12 @@ use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\ConversionDateChanged;
 use CurrencyCloud\Model\CancelledConversion;
 use CurrencyCloud\Model\ConversionDateChangeQuote;
+use CurrencyCloud\Model\ConversionPreview;
 use CurrencyCloud\Model\ConversionProfitLoss;
 use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\Conversions;
 use CurrencyCloud\Model\ConversionProfitLossCollection;
+use CurrencyCloud\Model\ConversionSplitPreview;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
@@ -427,5 +429,52 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             !empty($response->old_settlement_date) ? new DateTime($response->old_settlement_date) : null,
             !empty($response->event_date_time) ? new DateTime($response->event_date_time) : null
         );
+    }
+
+    /**
+     * @param string $id
+     * @param string $amount
+     * @return ConversionSplitPreview
+     */
+    public function retrieveSplitPreview($id, $amount)
+    {
+        $response = $this->request(
+            'GET',
+            sprintf('conversions/%s/split_preview', $id),
+            [
+                'amount' => $amount
+            ]
+        );
+
+        return $this->createConversionSplitPreviewFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return ConversionSplitPreview
+     */
+    protected function createConversionSplitPreviewFromResponse($response){
+        return new ConversionSplitPreview(
+            $this->createConversionPreviewFromResponseObject($response->parent_conversion),
+            $this->createConversionPreviewFromResponseObject($response->child_conversion)
+        );
+    }
+
+    /**
+     * @param stdClass $object
+     * @return ConversionPreview
+     */
+    protected function createConversionPreviewFromResponseObject($object){
+        return new ConversionPreview(
+            $object->id,
+            $object->short_reference,
+            $object->sell_amount,
+            $object->sell_currency,
+            $object->buy_amount,
+            $object->buy_currency,
+            !empty($object->settlement_date) ? new DateTime($object->settlement_date) : null,
+            !empty($object->conversion_date) ? new DateTime($object->conversion_date) : null,
+            $object->status
+            );
     }
 }
