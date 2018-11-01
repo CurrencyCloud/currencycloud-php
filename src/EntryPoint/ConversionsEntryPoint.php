@@ -434,7 +434,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     /**
      * @param string $id
      * @param string $amount
-     * @return ConversionSplitPreview
+     * @return ConversionSplit
      */
     public function retrieveSplitPreview($id, $amount)
     {
@@ -446,35 +446,6 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             ]
         );
 
-        return $this->createConversionSplitPreviewFromResponse($response);
-    }
-
-    /**
-     * @param stdClass $response
-     * @return ConversionSplitPreview
-     */
-    protected function createConversionSplitPreviewFromResponse($response){
-        return new ConversionSplitPreview(
-            $this->createConversionPreviewFromResponseObject($response->parent_conversion),
-            $this->createConversionPreviewFromResponseObject($response->child_conversion)
-        );
-    }
-
-    /**
-     * @param stdClass $object
-     * @return ConversionPreview
-     */
-    protected function createConversionPreviewFromResponseObject($object){
-        return new ConversionPreview(
-            $object->id,
-            $object->short_reference,
-            $object->sell_amount,
-            $object->sell_currency,
-            $object->buy_amount,
-            $object->buy_currency,
-            !empty($object->settlement_date) ? new DateTime($object->settlement_date) : null,
-            !empty($object->conversion_date) ? new DateTime($object->conversion_date) : null,
-            $object->status
-            );
+        return $this->createConversionSplitFromResponse($response);
     }
 }
