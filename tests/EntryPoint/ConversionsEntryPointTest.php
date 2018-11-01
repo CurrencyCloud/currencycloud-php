@@ -353,4 +353,64 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['new_settlement_date'],
             $conversionConversionDateChangeQuote->getNewSettlementDate()->format(DateTime::RFC3339));
     }
+
+    /**
+     * @test
+     */
+    public function canRetrieveConversionSplitPreview()
+    {
+        $data = '{
+            "parent_conversion": {
+                "id": "b401a1bc-ba02-4bd6-920e-8bf6fd97282b",
+                "short_reference": "20180622-XCRNWB",
+                "sell_amount": "70.93",
+                "sell_currency": "GBP",
+                "buy_amount": "100.00",
+                "buy_currency": "USD",
+                "settlement_date": "2018-07-02T15:30:00+00:00",
+                "conversion_date": "2018-07-02T00:00:00+00:00",
+                "status": "awaiting_funds"
+            },
+            "child_conversion": {
+                "id": "13575890-f1a3-466d-81ce-f9444d2816a7",
+                "short_reference": "20180622-GXWQPV",
+                "sell_amount": "35.46",
+                "sell_currency": "GBP",
+                "buy_amount": "50.00",
+                "buy_currency": "USD",
+                "settlement_date": "2018-07-02T15:30:00+00:00",
+                "conversion_date": "2018-07-02T00:00:00+00:00",
+                "status": "awaiting_funds"
+            }
+        }';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'GET',
+            'conversions/cef197c6-2192-4970-a2cf-d45ee046ae8c/split_preview',
+            [
+                'amount' => '35.46'
+            ]
+        ));
+
+        $conversionConversionSplitPreview = $entryPoint->retrieveSplitPreview('cef197c6-2192-4970-a2cf-d45ee046ae8c', '35.46');
+
+        $dummy = json_decode($data, true);
+
+        $this->assertSame($dummy['parent_conversion']['id'], $conversionConversionSplitPreview->getParentConversion()->getId());
+        $this->assertSame($dummy['parent_conversion']['short_reference'], $conversionConversionSplitPreview->getParentConversion()->getShortReference());
+        $this->assertSame($dummy['parent_conversion']['sell_amount'], $conversionConversionSplitPreview->getParentConversion()->getClientSellAmount());
+        $this->assertSame($dummy['parent_conversion']['sell_currency'], $conversionConversionSplitPreview->getParentConversion()->getSellCurrency());
+        $this->assertSame($dummy['parent_conversion']['buy_amount'], $conversionConversionSplitPreview->getParentConversion()->getClientBuyAmount());
+        $this->assertSame($dummy['parent_conversion']['buy_currency'], $conversionConversionSplitPreview->getParentConversion()->getBuyCurrency());
+        $this->assertSame($dummy['parent_conversion']['status'], $conversionConversionSplitPreview->getParentConversion()->getStatus());
+
+        $this->assertSame($dummy['child_conversion']['id'], $conversionConversionSplitPreview->getChildConversion()->getId());
+        $this->assertSame($dummy['child_conversion']['short_reference'], $conversionConversionSplitPreview->getChildConversion()->getShortReference());
+        $this->assertSame($dummy['child_conversion']['sell_amount'], $conversionConversionSplitPreview->getChildConversion()->getClientSellAmount());
+        $this->assertSame($dummy['child_conversion']['sell_currency'], $conversionConversionSplitPreview->getChildConversion()->getSellCurrency());
+        $this->assertSame($dummy['child_conversion']['buy_amount'], $conversionConversionSplitPreview->getChildConversion()->getClientBuyAmount());
+        $this->assertSame($dummy['child_conversion']['buy_currency'], $conversionConversionSplitPreview->getChildConversion()->getBuyCurrency());
+        $this->assertSame($dummy['child_conversion']['status'], $conversionConversionSplitPreview->getChildConversion()->getStatus());
+    }
 }
