@@ -394,6 +394,11 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         );
     }
 
+    /**
+     * @param string $id
+     * @param string $newSettlementDate
+     * @return ConversionDateChangeQuote
+     */
     public function retrieveDateChangeQuote($id, $newSettlementDate)
     {
         $response = $this->request(
@@ -407,6 +412,10 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $this->createConversionDateChangeQuoteFromResponse($response);
     }
 
+    /**
+     * @param stdClass $response
+     * @return ConversionDateChangeQuote
+     */
     protected function createConversionDateChangeQuoteFromResponse($response){
         return new ConversionDateChangeQuote(
             $response->conversion_id,
