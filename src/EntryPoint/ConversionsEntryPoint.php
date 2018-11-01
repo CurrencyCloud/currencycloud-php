@@ -7,6 +7,7 @@ use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\ConversionDateChanged;
 use CurrencyCloud\Model\CancelledConversion;
+use CurrencyCloud\Model\ConversionDateChangeQuote;
 use CurrencyCloud\Model\ConversionProfitLoss;
 use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\Conversions;
@@ -390,6 +391,32 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             $object->currency,
             $object->notes,
             !empty($object->event_date_time) ? new DateTime($object->event_date_time) : null
+        );
+    }
+
+    public function retrieveDateChangeQuote($id, $newSettlementDate)
+    {
+        $response = $this->request(
+            'GET',
+            sprintf('conversions/%s/date_change_quote', $id),
+            [
+                'new_settlement_date' => $newSettlementDate
+            ]
+        );
+
+        return $this->createConversionDateChangeQuoteFromResponse($response);
+    }
+
+    protected function createConversionDateChangeQuoteFromResponse($response){
+        return new ConversionDateChangeQuote(
+            $response->conversion_id,
+            $response->amount,
+            $response->currency,
+            !empty($response->new_conversion_date) ? new DateTime($response->new_conversion_date) : null,
+            !empty($response->new_settlement_date) ? new DateTime($response->new_settlement_date) : null,
+            !empty($response->old_conversion_date) ? new DateTime($response->old_conversion_date) : null,
+            !empty($response->old_settlement_date) ? new DateTime($response->old_settlement_date) : null,
+            !empty($response->event_date_time) ? new DateTime($response->event_date_time) : null
         );
     }
 }
