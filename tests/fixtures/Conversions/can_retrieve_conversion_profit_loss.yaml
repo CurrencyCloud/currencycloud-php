@@ -1,0 +1,13 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/conversions/profit_and_loss'
+        headers:
+            X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+    response:
+        status: 200
+        headers:
+            Date: Thu, 01 Nov 2018 08:29:23 GMT
+            Content-Type: application/json
+            X-Request-Id: 91f2fa36-6d17-4436-9f09-6c6d46af7d25
+        body: '{"conversion_profit_and_losses":[{"account_id":"72970a7c-7921-431c-b95f-3438724ba16f","contact_id":"a66ca63f-e668-47af-8bb9-74363240d781","event_account_id":null,"event_contact_id":null,"conversion_id":"515eaa18-0756-42b9-9899-49bfea5d3e8a","event_type":"self_service_cancellation","amount":"-0.01","currency":"GBP","notes":"","event_date_time":"2018-06-19T15:55:15+00:00"},{"account_id":"72970a7c-7921-431c-b95f-3438724ba16f","contact_id":"a66ca63f-e668-47af-8bb9-74363240d781","event_account_id":null,"event_contact_id":null,"conversion_id":"10c79aba-a9ee-41c2-b0ce-89a0941a8599","event_type":"self_service_cancellation","amount":"-0.01","currency":"GBP","notes":"","event_date_time":"2018-06-19T16:20:45+00:00"},{"account_id":"72970a7c-7921-431c-b95f-3438724ba16f","contact_id":"a66ca63f-e668-47af-8bb9-74363240d781","event_account_id":null,"event_contact_id":null,"conversion_id":"bb95fa2e-52f7-4219-8710-110e60e1ed91","event_type":"self_service_cancellation","amount":"-0.01","currency":"GBP","notes":"","event_date_time":"2018-06-19T16:29:32+00:00"}],"pagination":{"total_entries":3,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":-1,"order":"event_date_time","order_asc_desc":"asc"}}'
