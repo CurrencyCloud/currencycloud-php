@@ -13,6 +13,7 @@ use CurrencyCloud\Model\ConversionProfitLoss;
 use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\Conversions;
 use CurrencyCloud\Model\ConversionProfitLossCollection;
+use CurrencyCloud\Model\ConversionSplitHistory;
 use CurrencyCloud\Model\ConversionSplitPreview;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
@@ -447,5 +448,66 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         );
 
         return $this->createConversionSplitFromResponse($response);
+    }
+
+    /**
+     * @param string $id
+     * @return ConversionSplitHistory
+     */
+    public function retrieveSplitHistory($id)
+    {
+        $response = $this->request(
+            'GET',
+            sprintf('conversions/%s/split_history', $id),
+            []
+        );
+
+        return $this->convertConversionSplitHistoryFromResponse($response);
+    }
+
+    protected function convertConversionSplitHistoryFromResponse($response){
+        return new ConversionSplitHistory(
+            $this->createConversionObjectFromResponse($response->parent_conversion),
+            $this->createConversionObjectFromResponse($response->origin_conversion),
+            $this->convertChildConversionsFromResponseArray($response->child_conversions)
+        );
+    }
+
+    /**
+     * @param stdClass $dummyObject
+     * @return Conversion
+     */
+    protected function createConversionObjectFromResponse($dummyObject){
+
+        $conversion = new Conversion();
+        if(!empty($dummyObject)) {
+            $conversion->setShortReference($dummyObject->short_reference)
+                ->setClientSellAmount($dummyObject->sell_amount)
+                ->setSellCurrency($dummyObject->sell_currency)
+                ->setClientBuyAmount($dummyObject->buy_amount)
+                ->setBuyCurrency($dummyObject->buy_currency)
+                ->setSettlementDate($dummyObject->settlement_date)
+                ->setConversionDate($dummyObject->conversion_date)
+                ->setStatus($dummyObject->status)
+                ->setId($dummyObject->id);
+        }
+
+        return $conversion;
+    }
+
+    /**
+     * @param $response
+     * @return Conversion[]
+     */
+    protected function convertChildConversionsFromResponseArray($dummyArray) {
+        $childConversions = [];
+
+        foreach ($dummyArray as $key => $value){
+            array_push(
+                $childConversions,
+                $this->createConversionObjectFromResponse($value));
+        }
+
+        return $childConversions;
     }
 }
