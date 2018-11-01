@@ -293,7 +293,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $conversionProfitLossCriteria = new ConversionProfitLossCriteria();
         $pagination = new Pagination();
-        $conversionProfitLossCollection = $entryPoint->retrievePofitLoss($conversionProfitLossCriteria, $pagination);
+        $conversionProfitLossCollection = $entryPoint->retrieveProfitLoss($conversionProfitLossCriteria, $pagination);
 
         $dummy = json_decode($data, true);
 

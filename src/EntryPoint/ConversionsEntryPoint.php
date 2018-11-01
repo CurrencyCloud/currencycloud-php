@@ -335,7 +335,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
      *
      * @return ConversionProfitLossCollection
      */
-    public function retrievePofitLoss(ConversionProfitLossCriteria $conversionProfitLossCriteria, Pagination $pagination)
+    public function retrieveProfitLoss(ConversionProfitLossCriteria $conversionProfitLossCriteria, Pagination $pagination)
     {
         if(empty($conversionProfitLossCriteria)){
             $conversionProfitLossCriteria = new ConversionProfitLossCriteria();
