@@ -4,6 +4,7 @@ namespace CurrencyCloud\tests\VCR\Conversions;
 use CurrencyCloud\Criteria\ConversionProfitLossCriteria;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use DateTime;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
@@ -35,5 +36,29 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         }
 
         $this->assertSame($dummy['pagination']['total_entries'], $conversionProfitLossCollection->getPagination()->getTotalEntries());
+    }
+
+    /**
+     * @vcr Conversions/can_retrieve_conversion_date_change_quote.yaml
+     * @test
+     */
+    public function canRetrieveConversionDateChangeQuote(){
+
+        $conversionDateChangeQuote = $this->getAuthenticatedClient()->conversions()->retrieveDateChangeQuote('cef197c6-2192-4970-a2cf-d45ee046ae8c','2018-11-06');
+
+        $dummy = json_decode(
+            '{"conversion_id":"cef197c6-2192-4970-a2cf-d45ee046ae8c","amount":"0.14","currency":"GBP","new_conversion_date":"2018-11-06T00:00:00+00:00","new_settlement_date":"2018-11-06T16:30:00+00:00","old_conversion_date":"2018-11-01T00:00:00+00:00","old_settlement_date":"2018-11-01T16:30:00+00:00","event_date_time":"2018-10-30T16:19:55+00:00"}',
+            true);
+
+        $this->assertSame($dummy['conversion_id'],
+            $conversionDateChangeQuote->getConversionId());
+        $this->assertSame($dummy['amount'],
+            $conversionDateChangeQuote->getAmount());
+        $this->assertSame($dummy['currency'],
+            $conversionDateChangeQuote->getCurrency());
+        $this->assertSame($dummy['new_conversion_date'],
+            $conversionDateChangeQuote->getNewConversionDate()->format(DateTime::RFC3339));
+        $this->assertSame($dummy['new_settlement_date'],
+            $conversionDateChangeQuote->getNewSettlementDate()->format(DateTime::RFC3339));
     }
 }
