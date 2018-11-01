@@ -2,12 +2,16 @@
 
 namespace CurrencyCloud\EntryPoint;
 
+use CurrencyCloud\Criteria\ConversionProfitLossCriteria;
 use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\ConversionDateChanged;
 use CurrencyCloud\Model\CancelledConversion;
+use CurrencyCloud\Model\ConversionProfitLoss;
 use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\Conversions;
+use CurrencyCloud\Model\ConversionProfitLossCollection;
+use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
@@ -323,5 +327,69 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         );
 
         return $this->createConversionSplitFromResponse($response);
+    }
+
+    /**
+     * @param ConversionProfitLossCriteria $conversionProfitLossCriteria
+     * @param Pagination $pagination
+     *
+     * @return ConversionProfitLossCollection
+     */
+    public function retrievePofitLoss(ConversionProfitLossCriteria $conversionProfitLossCriteria, Pagination $pagination)
+    {
+        if(empty($conversionProfitLossCriteria)){
+            $conversionProfitLossCriteria = new ConversionProfitLossCriteria();
+        }
+        if(empty($pagination)){
+            $pagination = new Pagination();
+        }
+
+        $response = $this->request(
+            'GET',
+            sprintf('conversions/profit_and_loss'),
+            array_merge($this->createRequestFromConversionProfitLossCriteria($conversionProfitLossCriteria), $this->convertPaginationToRequest($pagination))
+        );
+
+        return $this->createConversionsProfitLossFromResponse($response);
+    }
+
+    protected function createRequestFromConversionProfitLossCriteria(ConversionProfitLossCriteria $conversionProfitLossCriteria){
+        return [
+            'account_id' => $conversionProfitLossCriteria->getAccountId(),
+            'contact_id' => $conversionProfitLossCriteria->getContactId(),
+            'conversion_id' => $conversionProfitLossCriteria->getConversionId(),
+            'event_type' => $conversionProfitLossCriteria->getEventType(),
+            'event_date_time_from' => $conversionProfitLossCriteria->getEventDateTimeFrom(),
+            'event_date_time_to' => $conversionProfitLossCriteria->getEventDateTimeTo(),
+            'amount_from' => $conversionProfitLossCriteria->getAmountFrom(),
+            'amount_to' => $conversionProfitLossCriteria->getAmountTo(),
+            'currency' => $conversionProfitLossCriteria->getCurrency(),
+            'scope' => $conversionProfitLossCriteria->getScope()
+        ];
+    }
+
+    protected function createConversionsProfitLossFromResponse($response){
+        $conversions = [];
+
+        foreach($response->conversion_profit_and_losses as $key => $value){
+            array_push($conversions, $this->createConversionProfitLossFromResponse($value));
+        }
+
+        return new ConversionProfitLossCollection($conversions, $this->createPaginationFromResponse($response));
+    }
+
+    protected function createConversionProfitLossFromResponse($object){
+        return new ConversionProfitLoss(
+            $object->account_id,
+            $object->contact_id,
+            $object->event_account_id,
+            $object->event_contact_id,
+            $object->conversion_id,
+            $object->event_type,
+            $object->amount,
+            $object->currency,
+            $object->notes,
+            !empty($object->event_date_time) ? new DateTime($object->event_date_time) : null
+        );
     }
 }
