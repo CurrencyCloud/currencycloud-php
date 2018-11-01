@@ -312,4 +312,45 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $this->assertSame($dummy['pagination']['total_entries'], $conversionProfitLossCollection->getPagination()->getTotalEntries());
     }
+
+    /**
+     * @test
+     */
+    public function canRetrieveConversionDateChangeQuote()
+    {
+        $data = '{
+            "conversion_id": "cef197c6-2192-4970-a2cf-d45ee046ae8c",
+            "amount": "0.14",
+            "currency": "GBP",
+            "new_conversion_date": "2018-11-06T00:00:00+00:00",
+            "new_settlement_date": "2018-11-06T16:30:00+00:00",
+            "old_conversion_date": "2018-11-01T00:00:00+00:00",
+            "old_settlement_date": "2018-11-01T16:30:00+00:00",
+            "event_date_time": "2018-10-30T16:19:55+00:00"
+        }';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'GET',
+            'conversions/cef197c6-2192-4970-a2cf-d45ee046ae8c/date_change_quote',
+            [
+                'new_settlement_date' => '2018-11-06'
+            ]
+        ));
+
+        $conversionConversionDateChangeQuote = $entryPoint->retrieveDateChangeQuote('cef197c6-2192-4970-a2cf-d45ee046ae8c', '2018-11-06');
+
+        $dummy = json_decode($data, true);
+
+        $this->assertSame($dummy['conversion_id'],
+            $conversionConversionDateChangeQuote->getConversionId());
+        $this->assertSame($dummy['amount'],
+            $conversionConversionDateChangeQuote->getAmount());
+        $this->assertSame($dummy['currency'],
+            $conversionConversionDateChangeQuote->getCurrency());
+        $this->assertSame($dummy['new_conversion_date'],
+            $conversionConversionDateChangeQuote->getNewConversionDate()->format(DateTime::RFC3339));
+        $this->assertSame($dummy['new_settlement_date'],
+            $conversionConversionDateChangeQuote->getNewSettlementDate()->format(DateTime::RFC3339));
+    }
 }
