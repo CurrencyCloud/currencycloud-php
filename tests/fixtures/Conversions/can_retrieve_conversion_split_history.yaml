@@ -1,0 +1,13 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/conversions/24d2ee7f-c7a3-4181-979e-9c58dbace992/split_history'
+        headers:
+            X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+    response:
+        status: 200
+        headers:
+            Date: 'Fri, 02 Nov 2018 07:16:51 GMT'
+            Content-Type: application/json
+            X-Request-Id: c7834e87-7e14-411a-97a6-fcc526631958
+        body: '{"parent_conversion":{"id":"24d2ee7f-c7a3-4181-979e-9c58dbace992","short_reference":"20180716-XMXMMS","sell_amount":"2417.10","sell_currency":"GBP","buy_amount":"3000.00","buy_currency":"EUR","settlement_date":"2018-06-28T13:00:00+00:00","conversion_date":"2018-06-28T00:00:00+00:00","status":"awaiting_funds"},"origin_conversion":{"id":"9d7919b5-c72d-41e1-9745-d2d5dc35e338","short_reference":"20180626-YVRVTT","sell_amount":"3222.80","sell_currency":"GBP","buy_amount":"4000.00","buy_currency":"EUR","settlement_date":"2018-06-28T13:00:00+00:00","conversion_date":"2018-06-28T00:00:00+00:00","status":"awaiting_funds"},"child_conversions":[{"id":"c8a323d8-7366-4bf3-b7c5-a6590e07eda3","short_reference":"20180716-KWQYDK","sell_amount":"1208.55","sell_currency":"GBP","buy_amount":"1500.00","buy_currency":"EUR","settlement_date":"2018-06-28T13:00:00+00:00","conversion_date":"2018-06-28T00:00:00+00:00","status":"awaiting_funds"},{"id":"615227c4-a955-4a6c-a415-68accc3ae47f","short_reference":"20180716-EARWAY","sell_amount":"1208.55","sell_currency":"GBP","buy_amount":"1500.00","buy_currency":"EUR","settlement_date":"2018-06-28T13:00:00+00:00","conversion_date":"2018-06-28T00:00:00+00:00","status":"awaiting_funds"}]}'
