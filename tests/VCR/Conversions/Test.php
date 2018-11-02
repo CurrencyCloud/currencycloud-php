@@ -129,4 +129,20 @@ class Test extends BaseCurrencyCloudVCRTestCase {
             $this->assertSame($value['status'], $conversionConversionSplitHistory->getChildConversions()[$key]->getStatus());
         }
     }
+
+    /**
+     * @vcr Conversions/can_retrieve_conversion_cancellation_quote.yaml
+     * @test
+     */
+    public function canRetrieveConversionCancellationQuote(){
+
+        $conversionCancellationQuote = $this->getAuthenticatedClient()->conversions()->retrieveCancellationQuote('9b29e56d-6a67-4470-a291-ee72b6371c32');
+
+        $dummy = json_decode(
+            '{"amount":"-0.06","currency":"GBP","event_date_time":"2018-11-02T07:32:54+00:00"}',
+            true);
+
+        $this->assertSame($dummy['amount'], $conversionCancellationQuote->getAmount());
+        $this->assertSame($dummy['currency'], $conversionCancellationQuote->getCurrency());
+    }
 }
