@@ -505,4 +505,28 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             $this->assertSame($value['status'], $conversionConversionSplitHistory->getChildConversions()[$key]->getStatus());
         }
     }
+
+    /**
+     * @test
+     */
+    public function canRetrieveConversionCancellationQuote(){
+        $data = '{
+            "amount": "-0.06",
+            "currency": "GBP",
+            "event_date_time": "2018-11-02T07:32:54+00:00"
+        }';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'GET',
+            'conversions/9b29e56d-6a67-4470-a291-ee72b6371c32/cancellation_quote',
+            []
+        ));
+
+        $conversionConversionCancellationQuote = $entryPoint->retrieveCancellationQuote('9b29e56d-6a67-4470-a291-ee72b6371c32');
+        $dummy = json_decode($data, true);
+
+        $this->assertSame($dummy['amount'], $conversionConversionCancellationQuote->getAmount());
+        $this->assertSame($dummy['currency'], $conversionConversionCancellationQuote->getCurrency());
+    }
 }
