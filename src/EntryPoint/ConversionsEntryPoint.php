@@ -112,8 +112,6 @@ class ConversionsEntryPoint extends AbstractEntryPoint
      */
     private function createConversionCancellationFromResponse(stdClass $response)
     {
-
-        //var_dump($response);
         $conversionCancellation = new CancelledConversion();
         $conversionCancellation->setAccountId($response->account_id)
             ->setContactId($response->contact_id)
@@ -183,8 +181,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
 
         $conversionSplit->setParentConversion($parent_conversion)
             ->setChildConversion($child_conversion);
-
-        #var_dump($conversionSplit);
+        
         return $conversionSplit;
     }
 
