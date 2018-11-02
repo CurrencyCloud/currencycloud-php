@@ -5,6 +5,7 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Criteria\ConversionProfitLossCriteria;
 use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\Model\Conversion;
+use CurrencyCloud\Model\ConversionCancellationQuote;
 use CurrencyCloud\Model\ConversionDateChanged;
 use CurrencyCloud\Model\CancelledConversion;
 use CurrencyCloud\Model\ConversionDateChangeQuote;
@@ -509,5 +510,32 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         }
 
         return $childConversions;
+    }
+
+    /**
+     * @param string $id
+     * @return ConversionCancellationQuote
+     */
+    public function retrieveCancellationQuote($id)
+    {
+        $response = $this->request(
+            'GET',
+            sprintf('conversions/%s/cancellation_quote', $id),
+            []
+        );
+
+        return $this->createCancellationQuotefromResponse($response);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return ConversionCancellationQuote
+     */
+    protected function createCancellationQuotefromResponse($response){
+        return new ConversionCancellationQuote(
+            $response->amount,
+            $response->currency,
+            !empty($response->event_date_time) ? new DateTime($response->event_date_time) : null
+        );
     }
 }
