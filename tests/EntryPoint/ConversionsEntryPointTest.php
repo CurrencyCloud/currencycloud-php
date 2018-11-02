@@ -413,4 +413,96 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['child_conversion']['buy_currency'], $conversionConversionSplitPreview->getChildConversion()->getBuyCurrency());
         $this->assertSame($dummy['child_conversion']['status'], $conversionConversionSplitPreview->getChildConversion()->getStatus());
     }
+
+    /**
+     * @test
+     */
+    public function canRetrieveConversionSplitHistory()
+    {
+        $data = '{
+            "parent_conversion": {
+                "id": "24d2ee7f-c7a3-4181-979e-9c58dbace992",
+                "short_reference": "20180716-XMXMMS",
+                "sell_amount": "2417.10",
+                "sell_currency": "GBP",
+                "buy_amount": "3000.00",
+                "buy_currency": "EUR",
+                "settlement_date": "2018-06-28T13:00:00+00:00",
+                "conversion_date": "2018-06-28T00:00:00+00:00",
+                "status": "awaiting_funds"
+            },
+            "origin_conversion": {
+                "id": "9d7919b5-c72d-41e1-9745-d2d5dc35e338",
+                "short_reference": "20180626-YVRVTT",
+                "sell_amount": "3222.80",
+                "sell_currency": "GBP",
+                "buy_amount": "4000.00",
+                "buy_currency": "EUR",
+                "settlement_date": "2018-06-28T13:00:00+00:00",
+                "conversion_date": "2018-06-28T00:00:00+00:00",
+                "status": "awaiting_funds"
+            },
+            "child_conversions": [
+                {
+                    "id": "c8a323d8-7366-4bf3-b7c5-a6590e07eda3",
+                    "short_reference": "20180716-KWQYDK",
+                    "sell_amount": "1208.55",
+                    "sell_currency": "GBP",
+                    "buy_amount": "1500.00",
+                    "buy_currency": "EUR",
+                    "settlement_date": "2018-06-28T13:00:00+00:00",
+                    "conversion_date": "2018-06-28T00:00:00+00:00",
+                    "status": "awaiting_funds"
+                },
+                {
+                    "id": "615227c4-a955-4a6c-a415-68accc3ae47f",
+                    "short_reference": "20180716-EARWAY",
+                    "sell_amount": "1208.55",
+                    "sell_currency": "GBP",
+                    "buy_amount": "1500.00",
+                    "buy_currency": "EUR",
+                    "settlement_date": "2018-06-28T13:00:00+00:00",
+                    "conversion_date": "2018-06-28T00:00:00+00:00",
+                    "status": "awaiting_funds"
+                }
+            ]
+        }';
+
+        $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
+            json_decode($data),
+            'GET',
+            'conversions/24d2ee7f-c7a3-4181-979e-9c58dbace992/split_history',
+            []
+        ));
+
+        $conversionConversionSplitHistory = $entryPoint->retrieveSplitHistory('24d2ee7f-c7a3-4181-979e-9c58dbace992');
+
+        $dummy = json_decode($data, true);
+
+        $this->assertSame($dummy['parent_conversion']['id'], $conversionConversionSplitHistory->getParentConversion()->getId());
+        $this->assertSame($dummy['parent_conversion']['short_reference'], $conversionConversionSplitHistory->getParentConversion()->getShortReference());
+        $this->assertSame($dummy['parent_conversion']['sell_amount'], $conversionConversionSplitHistory->getParentConversion()->getClientSellAmount());
+        $this->assertSame($dummy['parent_conversion']['sell_currency'], $conversionConversionSplitHistory->getParentConversion()->getSellCurrency());
+        $this->assertSame($dummy['parent_conversion']['buy_amount'], $conversionConversionSplitHistory->getParentConversion()->getClientBuyAmount());
+        $this->assertSame($dummy['parent_conversion']['buy_currency'], $conversionConversionSplitHistory->getParentConversion()->getBuyCurrency());
+        $this->assertSame($dummy['parent_conversion']['status'], $conversionConversionSplitHistory->getParentConversion()->getStatus());
+
+        $this->assertSame($dummy['origin_conversion']['id'], $conversionConversionSplitHistory->getOriginConversion()->getId());
+        $this->assertSame($dummy['origin_conversion']['short_reference'], $conversionConversionSplitHistory->getOriginConversion()->getShortReference());
+        $this->assertSame($dummy['origin_conversion']['sell_amount'], $conversionConversionSplitHistory->getOriginConversion()->getClientSellAmount());
+        $this->assertSame($dummy['origin_conversion']['sell_currency'], $conversionConversionSplitHistory->getOriginConversion()->getSellCurrency());
+        $this->assertSame($dummy['origin_conversion']['buy_amount'], $conversionConversionSplitHistory->getOriginConversion()->getClientBuyAmount());
+        $this->assertSame($dummy['origin_conversion']['buy_currency'], $conversionConversionSplitHistory->getOriginConversion()->getBuyCurrency());
+        $this->assertSame($dummy['origin_conversion']['status'], $conversionConversionSplitHistory->getOriginConversion()->getStatus());
+
+        foreach($dummy['child_conversions'] as $key => $value){
+            $this->assertSame($value['id'], $conversionConversionSplitHistory->getChildConversions()[$key]->getId());
+            $this->assertSame($value['short_reference'], $conversionConversionSplitHistory->getChildConversions()[$key]->getShortReference());
+            $this->assertSame($value['sell_amount'], $conversionConversionSplitHistory->getChildConversions()[$key]->getClientSellAmount());
+            $this->assertSame($value['sell_currency'], $conversionConversionSplitHistory->getChildConversions()[$key]->getSellCurrency());
+            $this->assertSame($value['buy_amount'], $conversionConversionSplitHistory->getChildConversions()[$key]->getClientBuyAmount());
+            $this->assertSame($value['buy_currency'], $conversionConversionSplitHistory->getChildConversions()[$key]->getBuyCurrency());
+            $this->assertSame($value['status'], $conversionConversionSplitHistory->getChildConversions()[$key]->getStatus());
+        }
+    }
 }

@@ -46,7 +46,7 @@ class ConversionSplitHistory {
     }
 
     /**
-     * @return Conversion
+     * @return Conversion[]
      */
     public function getChildConversions()
     {
