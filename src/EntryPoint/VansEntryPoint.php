@@ -11,7 +11,7 @@ use stdClass;
 class VansEntryPoint extends AbstractEntityEntryPoint {
 
     /**
-     * @param $pagination
+     * @param Pagination $pagination
      * @return VanCollection
      */
     public function retrieveVans($pagination){
