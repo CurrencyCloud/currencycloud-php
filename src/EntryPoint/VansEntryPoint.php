@@ -35,6 +35,10 @@ class VansEntryPoint extends AbstractEntityEntryPoint {
         );
     }
 
+    /**
+     * @param stdClass $response
+     * @return array
+     */
     protected function createVanObjectArrayFromResponse($response){
         $vans = [];
         if(empty($response->virtual_accounts)){
@@ -56,5 +60,29 @@ class VansEntryPoint extends AbstractEntityEntryPoint {
         }
 
         return $vans;
+    }
+
+    /**
+     * @param Pagination $pagination
+     * @param string $scope
+     * @param string $accountId
+     */
+    public function find($pagination, $scope = null, $accountId = null){
+        if(empty($pagination)){
+            $pagination = new Pagination();
+        }
+        $response = $this->request(
+            'GET',
+            'virtual_accounts/find',
+            array_merge(
+                [
+                    'scope' => $scope,
+                    'account_id' => $accountId
+                ],
+                $this->convertPaginationToRequest($pagination)
+            )
+        );
+
+        return $this->createVanCollectionFromResponse($response);
     }
 }
