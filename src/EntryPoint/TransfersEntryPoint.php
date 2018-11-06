@@ -118,4 +118,29 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
             $response->creator_contact_id
         );
     }
+
+    /**
+     * @param string $sourceAccountId
+     * @param string $destinationAccountId
+     * @param string $currency
+     * @param string $amount
+     * @param string $reason
+     * @return Transfer
+     */
+    public function create($sourceAccountId, $destinationAccountId, $currency, $amount, $reason = null){
+        $response = $this->request(
+            'POST',
+            'transfers/create',
+            [],
+            [
+                'source_account_id' => $sourceAccountId,
+                'destination_account_id' => $destinationAccountId,
+                'currency' => $currency,
+                'amount' => $amount,
+                'reason' => $reason
+            ]
+        );
+
+        return $this->createTransferFromResponse($response);
+    }
 }
