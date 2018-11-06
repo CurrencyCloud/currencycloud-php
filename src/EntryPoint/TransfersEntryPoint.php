@@ -10,7 +10,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
     /**
      * @param string $id
      * @param string|null $onBehalfOf
-     * @return \CurrencyCloud\Model\EntityInterface
+     * @return Transfer
      */
     public function retrieve($id, $onBehalfOf = null){
         return $this->doRetrieve(
