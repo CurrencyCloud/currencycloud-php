@@ -23,7 +23,7 @@ class Transfers extends PaginatedData {
     /**
      * @return Transfer[]
      */
-    public function getBeneficiaries()
+    public function getTransfers()
     {
         return $this->transfers;
     }
