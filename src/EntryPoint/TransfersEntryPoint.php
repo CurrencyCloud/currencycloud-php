@@ -60,7 +60,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
                 return $this->convertFindCriteriaToRequest(
                     $findTransferCriteria) +
                     $this->convertPaginationToRequest($pagination) +
-                    [ $onBehalfOf ];
+                    [ 'on_behalf_of' => $onBehalfOf ];
             },
             function ($response){
                 return $this->createTransferFromResponse($response);
