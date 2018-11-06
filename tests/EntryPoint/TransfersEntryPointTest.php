@@ -170,4 +170,60 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
             $this->assertSame($value['reason'], $transfers->getTransfers()[$key]->getReason());
         }
     }
+
+    /**
+     * @test
+     */
+    public function canCreateTransfer(){
+        $data = '{
+            "id": "d7b775da-ab7c-4584-82f8-e036dbc2dafb",
+            "short_reference": "BT-20181030-KVMTTT",
+            "source_account_id": "cf28b2d8-5afa-4d7f-9a26-7b45bf616a11",
+            "destination_account_id": "22ed17b5-b90c-424e-aa78-d24928b1778e",
+            "currency": "GBP",
+            "amount": "100.00",
+            "status": "pending",
+            "reason": null,
+            "created_at": "2018-10-30T16:20:18+00:00",
+            "updated_at": "2018-10-30T16:20:18+00:00",
+            "completed_at": null,
+            "creator_account_id": "72970a7c-7921-431c-b95f-3438724ba16f",
+            "creator_contact_id": "a66ca63f-e668-47af-8bb9-74363240d781"
+        }';
+
+        $entrypoint = new TransfersEntryPoint(
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode($data),
+                'POST',
+                'transfers/create',
+                [],
+                [
+                    'source_account_id' => 'cf28b2d8-5afa-4d7f-9a26-7b45bf616a11',
+                    'destination_account_id' => '22ed17b5-b90c-424e-aa78-d24928b1778e',
+                    'currency' => 'GBP',
+                    'amount' => '100',
+                    'reason' => null
+                ]
+            )
+        );
+
+        $transfer = $entrypoint->create(
+            'cf28b2d8-5afa-4d7f-9a26-7b45bf616a11',
+            '22ed17b5-b90c-424e-aa78-d24928b1778e',
+            'GBP',
+            '100'
+        );
+
+        $dummy = json_decode($data,true);
+
+        $this->assertSame($dummy['id'], $transfer->getId());
+        $this->assertSame($dummy['short_reference'], $transfer->getShortReference());
+        $this->assertSame($dummy['source_account_id'], $transfer->getSourceAccountId());
+        $this->assertSame($dummy['destination_account_id'], $transfer->getDestinationAccountId());
+        $this->assertSame($dummy['currency'], $transfer->getCurrency());
+        $this->assertSame($dummy['amount'], $transfer->getAmount());
+        $this->assertSame($dummy['status'], $transfer->getStatus());
+        $this->assertSame($dummy['reason'], $transfer->getReason());
+    }
 }
