@@ -102,6 +102,7 @@ class Client
 
             $queryParams = array_filter($queryParams);
             $requestParams = array_filter($requestParams);
+
             if (count($requestParams) > 0) {
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];

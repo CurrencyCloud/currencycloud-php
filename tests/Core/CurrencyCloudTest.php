@@ -69,8 +69,8 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
                     'X-Auth-Token' => null,
                     'User-Agent' => 'CurrencyCloudSDK/2.0 PHP/0.11.0'
                 ],
-                'form_params' => [
-                    'on_behalf_of' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+                'multipart' => [
+                    ['name' =>'on_behalf_of', 'contents' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']
                 ],
                 'http_errors' => false
             ])]
