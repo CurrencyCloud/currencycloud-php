@@ -23,6 +23,13 @@ class Authorisations implements IteratorAggregate, Countable {
     }
 
     /**
+     * @return Authorisation[]
+     */
+    public function getAuthorisations(){
+        return $this->authorisations;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getIterator()
