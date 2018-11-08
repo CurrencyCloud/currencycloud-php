@@ -241,7 +241,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
 
     /**
      * @param string[] $paymentIds
-     * @return
+     * @return Authorisations
      */
     public function authorise($paymentIds){
         $response = $this->request(
