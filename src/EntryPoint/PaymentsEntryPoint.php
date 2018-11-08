@@ -247,8 +247,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         $response = $this->request(
             'POST',
             'payments/authorise',
+            [],
             [
-                'payment_ids[]' => $paymentIds
+                'payment_ids' => $paymentIds
             ]
         );
 
