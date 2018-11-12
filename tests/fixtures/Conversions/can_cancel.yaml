@@ -5,7 +5,7 @@
     body: id=0ff0ea60-d976-4c7f-ad7f-3eb94da68452
     headers:
       Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:
