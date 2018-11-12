@@ -3,7 +3,7 @@
         method: GET
         url: 'https://devapi.currencycloud.com/v2/reports/report_requests/075ce584-b977-4538-a524-16b759277d66'
         headers:
-            X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
     response:
         status: 200
         headers:

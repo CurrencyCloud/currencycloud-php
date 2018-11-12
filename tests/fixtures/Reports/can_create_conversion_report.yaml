@@ -3,8 +3,8 @@
         method: POST
         url: 'https://devapi.currencycloud.com/v2/reports/conversions/create'
         headers:
-            X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
-        body: 'buy_currency=EUR&sell_currency=GBP'
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: '--bfc69637ff3fbcbb42a68d71a24041d8b0464a78\r\nContent-Disposition: form-data; name=\"buy_currency\"\r\nContent-Length: 3\r\n\r\nEUR\r\n--bfc69637ff3fbcbb42a68d71a24041d8b0464a78\r\nContent-Disposition: form-data; name=\"sell_currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--bfc69637ff3fbcbb42a68d71a24041d8b0464a78--\r\n'
     response:
         status: 200
         headers:
