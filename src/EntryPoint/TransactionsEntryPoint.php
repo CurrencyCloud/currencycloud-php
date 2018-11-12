@@ -5,6 +5,7 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Transaction;
 use CurrencyCloud\Model\Transactions;
+use CurrencyCloud\Model\TransactionSender;
 use DateTime;
 use stdClass;
 
@@ -138,5 +139,41 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         $this->setIdProperty($transaction, $response->id);
 
         return $transaction;
+    }
+
+    /**
+     * @param string $id
+     * @param string $onBehalfOf
+     * @return TransactionSender
+     */
+    public function retrieveSender($id, $onBehalfOf = null){
+        $response = $this->request(
+            'GET',
+            sprintf('transactions/sender/%s', $id),
+            [
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
+
+        return $this->createTransactionSenderFromResponse($response);
+    }
+
+    /**
+     * @param stdClass
+     * @return TransactionSender
+     */
+    protected function createTransactionSenderFromResponse($response){
+        return new TransactionSender(
+            $response->id,
+            $response->amount,
+            $response->currency,
+            $response->additional_information,
+            !empty($response->value_date) ? new DateTime($response->value_date) : null,
+            $response->sender,
+            $response->receiving_account_number,
+            $response->receiving_account_iban,
+            !empty($response->created_at) ? new DateTime($response->created_at) : null,
+            !empty($response->updated_at) ? new DateTime($response->updated_at) : null
+        );
     }
 }
