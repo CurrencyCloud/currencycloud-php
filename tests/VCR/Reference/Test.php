@@ -60,7 +60,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $currencies = $this->getAuthenticatedClient()->reference()->availableCurrencies();
 
         $dummy = json_decode(
-            '{"currencies":[{"code":"AED","decimal_places":2,"name":"United Arab Emirates Dirham"},{"code":"AUD","decimal_places":2,"name":"Australian Dollar"},{"code":"CAD","decimal_places":2,"name":"Canadian Dollar"},{"code":"CHF","decimal_places":2,"name":"Swiss Franc"},{"code":"CZK","decimal_places":2,"name":"Czech Koruna"},{"code":"DKK","decimal_places":2,"name":"Danish Krone"},{"code":"EUR","decimal_places":2,"name":"Euro"},{"code":"GBP","decimal_places":2,"name":"Pound Sterling"},{"code":"HKD","decimal_places":2,"name":"Hong Kong Dollar"},{"code":"HUF","decimal_places":2,"name":"Hungarian Forint"},{"code":"ILS","decimal_places":2,"name":"Israeli New Sheqel"},{"code":"JPY","decimal_places":0,"name":"Japanese Yen"},{"code":"MXN","decimal_places":2,"name":"Mexican Peso"},{"code":"NOK","decimal_places":2,"name":"Norwegian Krone"},{"code":"NZD","decimal_places":2,"name":"New Zealand Dollar"},{"code":"PLN","decimal_places":2,"name":"Polish Zloty"},{"code":"RON","decimal_places":2,"name":"Romanian New Leu"},{"code":"SEK","decimal_places":2,"name":"Swedish Krona"},{"code":"SGD","decimal_places":2,"name":"Singapore Dollar"},{"code":"THB","decimal_places":2,"name":"Thai Baht"},{"code":"TRY","decimal_places":2,"name":"Turkish Lira"},{"code":"USD","decimal_places":2,"name":"United States Dollar"},{"code":"ZAR","decimal_places":2,"name":"South African Rand"}]}',
+            '{"currencies":[{"code":"AED","decimal_places":2,"name":"United Arab Emirates Dirham","online_trading":true,"can_buy":true,"can_sell":true},{"code":"AUD","decimal_places":2,"name":"Australian Dollar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"BGN","decimal_places":2,"name":"Bulgarian Lev","online_trading":true,"can_buy":true,"can_sell":true},{"code":"BHD","decimal_places":2,"name":"Bahraini Dinar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"CAD","decimal_places":2,"name":"Canadian Dollar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"CHF","decimal_places":2,"name":"Swiss Franc","online_trading":true,"can_buy":true,"can_sell":true},{"code":"CNY","decimal_places":2,"name":"Chinese Yuan","online_trading":true,"can_buy":true,"can_sell":true},{"code":"CZK","decimal_places":2,"name":"Czech Koruna","online_trading":true,"can_buy":true,"can_sell":true},{"code":"DKK","decimal_places":2,"name":"Danish Krone","online_trading":true,"can_buy":true,"can_sell":true},{"code":"EUR","decimal_places":2,"name":"Euro","online_trading":true,"can_buy":true,"can_sell":true},{"code":"GBP","decimal_places":2,"name":"British Pound","online_trading":true,"can_buy":true,"can_sell":true},{"code":"HKD","decimal_places":2,"name":"Hong Kong Dollar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"HRK","decimal_places":2,"name":"Croatian Kuna","online_trading":true,"can_buy":true,"can_sell":true},{"code":"HUF","decimal_places":2,"name":"Hungarian Forint","online_trading":true,"can_buy":true,"can_sell":true},{"code":"ILS","decimal_places":2,"name":"Israeli New Sheqel","online_trading":true,"can_buy":true,"can_sell":true},{"code":"INR","decimal_places":2,"name":"Indian Rupee","online_trading":true,"can_buy":true,"can_sell":false},{"code":"JPY","decimal_places":0,"name":"Japanese Yen","online_trading":true,"can_buy":true,"can_sell":true},{"code":"KES","decimal_places":2,"name":"Kenyan Shilling","online_trading":true,"can_buy":true,"can_sell":true},{"code":"KWD","decimal_places":2,"name":"Kuwaiti Dinar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"MXN","decimal_places":2,"name":"Mexican Peso","online_trading":true,"can_buy":true,"can_sell":false},{"code":"NOK","decimal_places":2,"name":"Norwegian Krone","online_trading":true,"can_buy":true,"can_sell":true},{"code":"NZD","decimal_places":2,"name":"New Zealand Dollar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"OMR","decimal_places":2,"name":"Omani Rial","online_trading":true,"can_buy":true,"can_sell":true},{"code":"PLN","decimal_places":2,"name":"Polish Zloty","online_trading":true,"can_buy":true,"can_sell":true},{"code":"QAR","decimal_places":2,"name":"Qatari Rial","online_trading":true,"can_buy":true,"can_sell":true},{"code":"RON","decimal_places":2,"name":"Romanian New Leu","online_trading":true,"can_buy":true,"can_sell":true},{"code":"SAR","decimal_places":2,"name":"Saudi Riyal","online_trading":true,"can_buy":true,"can_sell":true},{"code":"SEK","decimal_places":2,"name":"Swedish Krona","online_trading":true,"can_buy":true,"can_sell":true},{"code":"SGD","decimal_places":2,"name":"Singapore Dollar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"THB","decimal_places":2,"name":"Thai Baht","online_trading":true,"can_buy":true,"can_sell":true},{"code":"TRY","decimal_places":2,"name":"Turkish Lira","online_trading":true,"can_buy":true,"can_sell":true},{"code":"UGX","decimal_places":0,"name":"Ugandan Shilling","online_trading":true,"can_buy":true,"can_sell":true},{"code":"USD","decimal_places":2,"name":"United States Dollar","online_trading":true,"can_buy":true,"can_sell":true},{"code":"ZAR","decimal_places":2,"name":"South African Rand","online_trading":true,"can_buy":true,"can_sell":true}]}',
             true
         );
 
@@ -70,6 +70,9 @@ class Test extends BaseCurrencyCloudVCRTestCase
             $this->assertEquals($currency['code'], $currencies[$k]->getCode());
             $this->assertEquals($currency['decimal_places'], $currencies[$k]->getDecimalPlaces());
             $this->assertEquals($currency['name'], $currencies[$k]->getName());
+            $this->assertEquals($currency['online_trading'], $currencies[$k]->getOnlineTrading());
+            $this->assertEquals($currency['can_buy'], $currencies[$k]->getCanBuy());
+            $this->assertEquals($currency['can_sell'], $currencies[$k]->getCanSell());
         }
     }
 
@@ -91,6 +94,31 @@ class Test extends BaseCurrencyCloudVCRTestCase
         foreach ($dummy['settlement_accounts'] as $k => $settlementAccount) {
             $this->assertArrayHasKey($k, $settlementAccounts);
             $this->validateObjectStrictName($settlementAccounts[$k], $settlementAccount);
+        }
+    }
+
+    /**
+     * @vcr Reference/can_get_payer_required_details.yaml
+     * @test
+     */
+    public function canGetPayerRequiredDetails()
+    {
+        $dummy = json_decode(
+            '{"details":[{"payer_entity_type":"company","payment_type":"priority","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_company_name","validation_rule":"^.{1,255}"},{"name":"payer_identification_value","validation_rule":"^.{1,255}"}],"payer_identification_type":"incorporation_number"},{"payer_entity_type":"individual","payment_type":"priority","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_first_name","validation_rule":"^.{1,255}"},{"name":"payer_last_name","validation_rule":"^.{1,255}"},{"name":"payer_date_of_birth","validation_rule":"/A([+-]?d{4}(?!d{2}\b))((-?)((0[1-9]|1[0-2])(\u0003([12]d|0[1-9]|3[01]))?|W([0-4]d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]d|[12]d{2}|3([0-5]d|6[1-6])))([T ]((([01]d|2[0-3])((:?)[0-5]d)?|24:?00)([.,]d+(?!:))?)?(\u000f[0-5]d([.,]d+)?)?([zZ]|([+-])([01]d|2[0-3]):?([0-5]d)?)?)?)?Z/"}]},{"payer_entity_type":"company","payment_type":"regular","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_company_name","validation_rule":"^.{1,255}"}]},{"payer_entity_type":"individual","payment_type":"regular","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_first_name","validation_rule":"^.{1,255}"},{"name":"payer_last_name","validation_rule":"^.{1,255}"},{"name":"payer_date_of_birth","validation_rule":"/A([+-]?d{4}(?!d{2}\b))((-?)((0[1-9]|1[0-2])(\u0003([12]d|0[1-9]|3[01]))?|W([0-4]d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]d|[12]d{2}|3([0-5]d|6[1-6])))([T ]((([01]d|2[0-3])((:?)[0-5]d)?|24:?00)([.,]d+(?!:))?)?(\u000f[0-5]d([.,]d+)?)?([zZ]|([+-])([01]d|2[0-3]):?([0-5]d)?)?)?)?Z/"}]}]        }',
+            true
+        );
+
+        $payerRequiredDetails = $this->getAuthenticatedClient()->reference()->payerRequiredDetails('GB');
+        $payerDetails = $payerRequiredDetails->getPayerDetails();
+
+        foreach ($payerDetails as $key => $value) {
+            $this->assertSame($dummy['details'][$key]['payer_entity_type'], $payerDetails[$key]->getPayerEntityType());
+            $this->assertSame($dummy['details'][$key]['payment_type'], $payerDetails[$key]->getPaymentType());
+
+            foreach($dummy['details'][$key]['required_fields'] as $innerKey => $innerValue){
+                $this->assertSame($innerValue['name'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getName());
+                $this->assertSame($innerValue['validation_rule'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getValidationRule());
+            }
         }
     }
 }

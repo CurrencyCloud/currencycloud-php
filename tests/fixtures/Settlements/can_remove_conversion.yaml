@@ -2,9 +2,9 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/remove_conversion
-    body: conversion_id=24d2ee7f-c7a3-4181-979e-9c58dbace992
+    body: --6275fd9edc9b662ab7ae55c2cdb3fcd4ae8281c9\r\nContent-Disposition: form-data; name=\"conversion_id\"\r\nContent-Length: 36\r\n\r\n24d2ee7f-c7a3-4181-979e-9c58dbace992\r\n--6275fd9edc9b662ab7ae55c2cdb3fcd4ae8281c9--\r\n
     headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:

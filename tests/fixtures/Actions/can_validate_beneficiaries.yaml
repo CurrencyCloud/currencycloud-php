@@ -2,10 +2,10 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/beneficiaries/validate
-    body: bank_country=GB&currency=GBP&account_number=12345678&routing_code_type_1=sort_code&routing_code_value_1=123456&payment_types[]=regular&beneficiary_country=GB
+    body: --687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"bank_country\"\r\nContent-Length: 2\r\n\r\nGB\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"beneficiary_country\"\r\nContent-Length: 2\r\n\r\nGB\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"account_number\"\r\nContent-Length: 8\r\n\r\n12345678\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"routing_code_type_1\"\r\nContent-Length: 9\r\n\r\nsort_code\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"routing_code_value_1\"\r\nContent-Length: 6\r\n\r\n123456\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"payment_types[]\"\r\nContent-Length: 7\r\n\r\nregular\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9--\r\n
     headers:
       Host: devapi.currencycloud.com
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:
