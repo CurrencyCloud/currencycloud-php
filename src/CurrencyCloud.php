@@ -20,6 +20,7 @@ use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
 use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
+use CurrencyCloud\EntryPoint\VansEntryPoint;
 use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -86,6 +87,10 @@ class CurrencyCloud
      * @var SettlementsEntryPoint
      */
     private $settlementsEntryPoint;
+    /**
+     * @var VansEntryPoint
+     */
+    private $vansEntryPoint;
 
     /**
      * @param Session $session
@@ -102,6 +107,7 @@ class CurrencyCloud
      * @param RatesEntryPoint $ratesEntryPoint
      * @param SettlementsEntryPoint $settlementsEntryPoint
      * @param TransactionsEntryPoint $transactionsEntryPoint
+     * @param VansEntryPoint $vanEntryPoint
      */
     public function __construct(
         Session $session,
@@ -117,7 +123,8 @@ class CurrencyCloud
         ReferenceEntryPoint $referenceEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
         SettlementsEntryPoint $settlementsEntryPoint,
-        TransactionsEntryPoint $transactionsEntryPoint
+        TransactionsEntryPoint $transactionsEntryPoint,
+        VansEntryPoint $vanEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
         $this->session = $session;
@@ -133,6 +140,7 @@ class CurrencyCloud
         $this->contactsEntryPoint = $contactsEntryPoint;
         $this->paymentsEntryPoint = $paymentsEntryPoint;
         $this->settlementsEntryPoint = $settlementsEntryPoint;
+        $this->vansEntryPoint = $vanEntryPoint;
     }
 
     /**
@@ -182,7 +190,8 @@ class CurrencyCloud
             new ReferenceEntryPoint($client),
             new RatesEntryPoint($client),
             new SettlementsEntryPoint($entityManager, $client),
-            new TransactionsEntryPoint($client)
+            new TransactionsEntryPoint($client),
+            new VansEntryPoint($entityManager, $client)
         );
     }
 
@@ -288,6 +297,14 @@ class CurrencyCloud
     public function transactions()
     {
         return $this->transactionsEntryPoint;
+    }
+
+    /**
+     * @return VansEntryPoint
+     */
+    public function vans()
+    {
+        return $this->vansEntryPoint;
     }
 
     /**
