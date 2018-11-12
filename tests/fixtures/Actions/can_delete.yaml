@@ -1,10 +1,23 @@
 -
   request:
+    method: POST
+    url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+    body: "--a5c4ceae56a67ee6b12fc7137d7cf289f4563697\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--a5c4ceae56a67ee6b12fc7137d7cf289f4563697\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--a5c4ceae56a67ee6b12fc7137d7cf289f4563697--\r\n"
+  response:
+    status:
+      code: 200
+    headers:
+      Date: Sat, 25 Apr 2015 11:06:27 GMT
+      Content-Type: application/json
+      X-Request-Id: 2772001754621411030
+    body: '{"auth_token":"038022bcd2f372cac7bab448db7b5c3b"}'
+-
+  request:
     method: GET
     url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
     body: ''
     headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:
@@ -19,7 +32,7 @@
     url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c/delete
     body: ''
     headers:
-      X-Auth-Token: e5070d4a16c5ffe4ed9fb268a2a716be
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:

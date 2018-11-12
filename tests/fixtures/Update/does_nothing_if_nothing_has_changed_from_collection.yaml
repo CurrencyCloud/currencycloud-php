@@ -6,7 +6,7 @@ interactions:
     body: ''
     headers:
       X-Auth-Token:
-      - e5070d4a16c5ffe4ed9fb268a2a716be
+      - 038022bcd2f372cac7bab448db7b5c3b
   response:
     status: 200
     headers:
