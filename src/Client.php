@@ -102,12 +102,15 @@ class Client
 
             $queryParams = array_filter($queryParams);
             $requestParams = array_filter($requestParams);
+
             if (count($requestParams) > 0) {
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];
                 }
                 $options['form_params'] = array_merge($options['form_params'], $requestParams);
             }
+
+            $this->formatFormData($options);
 
             //Force no-exceptions in order to provide descriptive error messages
             $options['http_errors'] = false;
@@ -147,6 +150,24 @@ class Client
             $response->getBody()
                 ->getContents()
         );
+    }
+
+    protected function formatFormData(array &$options){
+        $newForm = [];
+        if(empty($options['form_params'])){
+            return $newForm;
+        }
+        foreach ($options['form_params'] as $name => $param){
+            if(is_array($param)){
+                foreach ($param as $key => $value){
+                    $newForm[] = ['name' => $name."[]", 'contents' => $value];
+                }
+            } else {
+                $newForm[] = ['name' => $name, 'contents' => $param];
+            }
+        }
+        unset($options['form_params']);
+        $options['multipart'] = $newForm;
     }
 
     /**
