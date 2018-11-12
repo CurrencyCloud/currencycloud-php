@@ -98,7 +98,7 @@ class Client
                 $options['headers']['X-Auth-Token'] = $this->session->getAuthToken();
             }
 
-            $options['headers']['User-Agent'] = "CurrencyCloudSDK/2.0 PHP/0.11.0";
+            $options['headers']['User-Agent'] = "CurrencyCloudSDK/2.0 PHP/".CurrencyCloud::$SDK_VERSION;
 
             $queryParams = array_filter($queryParams);
             $requestParams = array_filter($requestParams);

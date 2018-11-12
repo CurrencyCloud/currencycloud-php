@@ -67,7 +67,7 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
             [$this->equalTo('POST'), 'https://devapi.currencycloud.com/v2/payments/me/delete', $this->equalTo([
                 'headers' => [
                     'X-Auth-Token' => null,
-                    'User-Agent' => 'CurrencyCloudSDK/2.0 PHP/0.11.0'
+                    'User-Agent' => 'CurrencyCloudSDK/2.0 PHP/'.CurrencyCloud::$SDK_VERSION
                 ],
                 'form_params' => [
                     'on_behalf_of' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'

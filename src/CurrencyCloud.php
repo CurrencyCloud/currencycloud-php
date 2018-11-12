@@ -82,6 +82,8 @@ class CurrencyCloud
      */
     private $settlementsEntryPoint;
 
+    public static $SDK_VERSION = "0.17.3";
+
     /**
      * @param Session $session
      * @param AuthenticateEntryPoint $authenticateEntryPoint
