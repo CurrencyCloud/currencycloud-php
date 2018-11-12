@@ -51,7 +51,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
     public function happensLazily()
     {
         $client = $this->getClient();
-        $client->getSession()->setAuthToken(null);
+        $client->getSession()->setAuthToken("038022bcd2f372cac7bab448db7b5c3b");
 
         $beneficiaries = $client->beneficiaries()->find();
 
@@ -63,7 +63,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
             true
         );
         $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
-        $this->assertEquals('038022bcd2f372cac7bab448db7b5c3b', $client->getSession()->getAuthToken());
+        $this->assertEquals("038022bcd2f372cac7bab448db7b5c3b", $client->getSession()->getAuthToken());
     }
 
     /**
