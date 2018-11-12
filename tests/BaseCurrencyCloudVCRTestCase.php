@@ -10,12 +10,14 @@ use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
+use CurrencyCloud\EntryPoint\IbansEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
+use CurrencyCloud\EntryPoint\VansEntryPoint;
 use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
@@ -75,10 +77,13 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
             new ContactsEntryPoint($entityManager, $client),
             new ConversionsEntryPoint($client),
             new PayersEntryPoint($client),
+            new IbansEntryPoint($entityManager, $client),
             new PaymentsEntryPoint($entityManager, $client),
             new ReferenceEntryPoint($client),
             new RatesEntryPoint($client),
             new SettlementsEntryPoint($entityManager, $client),
+            new TransactionsEntryPoint($client),
+            new VansEntryPoint($entityManager, $client)
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client)
         );
@@ -89,7 +94,7 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
      *
      * @return CurrencyCloud
      */
-    protected function getAuthenticatedClient($authToken = 'e5070d4a16c5ffe4ed9fb268a2a716be')
+    protected function getAuthenticatedClient($authToken = '038022bcd2f372cac7bab448db7b5c3b')
     {
         $client = $this->getClient();
         $client->getSession()->setAuthToken($authToken);

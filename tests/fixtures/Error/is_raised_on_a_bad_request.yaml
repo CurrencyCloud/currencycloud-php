@@ -2,7 +2,7 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/authenticate/api
-    body: login_id=non-existent-login-id&api_key=ef0fd50fca1fb14c1fab3a8436b9ecb57528f0
+    body: --14ab14febb54c41d77a8de377748fe815768a609\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 21\r\n\r\nnon-existent-login-id\r\n--14ab14febb54c41d77a8de377748fe815768a609\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 38\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb57528f0\r\n--14ab14febb54c41d77a8de377748fe815768a609--\r\n
   response:
     status: 400
     headers:
