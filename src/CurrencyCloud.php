@@ -8,6 +8,7 @@ use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
+use CurrencyCloud\EntryPoint\IbansEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
@@ -66,6 +67,10 @@ class CurrencyCloud
      */
     private $payersEntryPoint;
     /**
+     * @var IbansEntryPoint
+     */
+    private $ibansEntryPoint;
+    /**
      * @var ConversionsEntryPoint
      */
     private $conversionsEntryPoint;
@@ -91,6 +96,7 @@ class CurrencyCloud
      * @param ContactsEntryPoint $contactsEntryPoint
      * @param ConversionsEntryPoint $conversionsEntryPoint
      * @param PayersEntryPoint $payersEntryPoint
+     * @param IbansEntryPoint $ibansEntryPoint
      * @param PaymentsEntryPoint $paymentsEntryPoint
      * @param ReferenceEntryPoint $referenceEntryPoint
      * @param RatesEntryPoint $ratesEntryPoint
@@ -106,6 +112,7 @@ class CurrencyCloud
         ContactsEntryPoint $contactsEntryPoint,
         ConversionsEntryPoint $conversionsEntryPoint,
         PayersEntryPoint $payersEntryPoint,
+        IbansEntryPoint $ibansEntryPoint,
         PaymentsEntryPoint $paymentsEntryPoint,
         ReferenceEntryPoint $referenceEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
@@ -121,6 +128,7 @@ class CurrencyCloud
         $this->transactionsEntryPoint = $transactionsEntryPoint;
         $this->ratesEntryPoint = $ratesEntryPoint;
         $this->payersEntryPoint = $payersEntryPoint;
+        $this->ibansEntryPoint = $ibansEntryPoint;
         $this->conversionsEntryPoint = $conversionsEntryPoint;
         $this->contactsEntryPoint = $contactsEntryPoint;
         $this->paymentsEntryPoint = $paymentsEntryPoint;
@@ -169,6 +177,7 @@ class CurrencyCloud
             new ContactsEntryPoint($entityManager, $client),
             new ConversionsEntryPoint($client),
             new PayersEntryPoint($client),
+            new IbansEntryPoint($entityManager, $client),
             new PaymentsEntryPoint($entityManager, $client),
             new ReferenceEntryPoint($client),
             new RatesEntryPoint($client),
@@ -231,6 +240,14 @@ class CurrencyCloud
     public function payers()
     {
         return $this->payersEntryPoint;
+    }
+
+    /**
+     * @return IbansEntryPoint
+     */
+    public function ibans()
+    {
+        return $this->ibansEntryPoint;
     }
 
     /**

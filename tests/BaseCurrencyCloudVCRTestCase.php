@@ -10,6 +10,7 @@ use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
+use CurrencyCloud\EntryPoint\IbansEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
@@ -74,6 +75,7 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
             new ContactsEntryPoint($entityManager, $client),
             new ConversionsEntryPoint($client),
             new PayersEntryPoint($client),
+            new IbansEntryPoint($entityManager, $client),
             new PaymentsEntryPoint($entityManager, $client),
             new ReferenceEntryPoint($client),
             new RatesEntryPoint($client),
