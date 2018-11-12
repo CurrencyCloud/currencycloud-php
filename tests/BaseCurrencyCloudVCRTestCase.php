@@ -83,9 +83,8 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
             new RatesEntryPoint($client),
             new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client),
+            new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client)
-            new TransactionsEntryPoint($client),
-            new TransfersEntryPoint($entityManager, $client)
         );
     }
 

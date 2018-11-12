@@ -133,8 +133,7 @@ class CurrencyCloud
         RatesEntryPoint $ratesEntryPoint,
         SettlementsEntryPoint $settlementsEntryPoint,
         TransactionsEntryPoint $transactionsEntryPoint,
-        TransfersEntryPoint $transfersEntryPoint
-        TransactionsEntryPoint $transactionsEntryPoint,
+        TransfersEntryPoint $transfersEntryPoint,
         VansEntryPoint $vanEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
@@ -203,8 +202,7 @@ class CurrencyCloud
             new RatesEntryPoint($client),
             new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client),
-            new TransfersEntryPoint($entityManager, $client)
-            new TransactionsEntryPoint($client),
+            new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client)
         );
     }
