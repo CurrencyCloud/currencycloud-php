@@ -149,7 +149,7 @@ request:
     url: 'https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=EUR&sell_currency=GBP&fixed_side=buy&amount=10000.00'
 response:
     status_code: 400
-    date: 'Sun, 06 Nov 2015 18:22:47 GMT'
+    date: 'Tue, 13 Nov 2018 13:40:00 GMT'
     request_id: '2915002181730358306'
 errors:
     -
