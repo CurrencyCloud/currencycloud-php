@@ -20,7 +20,7 @@ it will be far easier to simply make use of Composer to do the dependency manage
 
 ### Supported PHP version
 
-This library aims to support and is tested against PHP 5.5 and greater.
+This library aims to support and is tested against PHP 7.1 and greater.
 
 ## Installation
 
@@ -45,7 +45,7 @@ require 'vendor/autoload.php';
 
 You can register for demo API key at [developer.currencycloud.com](https://developer.currencycloud.com/api-register/). 
 
-An example in PHP 5.5:
+An example in PHP 7:
 
 ```php
 use CurrencyCloud\CurrencyCloud;
@@ -142,7 +142,7 @@ When the exception converted to string, it will provide information such as the 
 ```yaml
 BadRequestException
 ---
-platform: 'PHP 5.6.14-1+deb.sury.org~trusty+1'
+platform: 'PHP 7.1.11-1+deb.sury.org~trusty+1'
 request:
     parameters: {  }
     verb: get
