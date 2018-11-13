@@ -17,7 +17,7 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
-    body: --c82470d0836f435a0062110181f90819baabea96\r\nContent-Disposition: form-data; name=\"bank_account_holder_name\"\r\nContent-Length: 11\r\n\r\nTest User 2\r\n--c82470d0836f435a0062110181f90819baabea96--\r\n
+    body: '--c82470d0836f435a0062110181f90819baabea96\r\nContent-Disposition: form-data; name=\"bank_account_holder_name\"\r\nContent-Length: 11\r\n\r\nTest User 2\r\n--c82470d0836f435a0062110181f90819baabea96--\r\n'
     headers:
       X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:

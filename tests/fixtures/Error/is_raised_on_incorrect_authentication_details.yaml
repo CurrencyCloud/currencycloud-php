@@ -2,7 +2,7 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/authenticate/api
-    body: --5620c6964353f6f715d917089f99e52e65030820\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 21\r\n\r\nnon-existent-login-id\r\n--5620c6964353f6f715d917089f99e52e65030820\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nefb5ae2af84978b7a37f18dd61c8bbe139b403009faea83484405a3dcb64c4d8\r\n--5620c6964353f6f715d917089f99e52e65030820--\r\n
+    body: '--5620c6964353f6f715d917089f99e52e65030820\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 21\r\n\r\nnon-existent-login-id\r\n--5620c6964353f6f715d917089f99e52e65030820\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nefb5ae2af84978b7a37f18dd61c8bbe139b403009faea83484405a3dcb64c4d8\r\n--5620c6964353f6f715d917089f99e52e65030820--\r\n'
   response:
     status: 401
     headers:

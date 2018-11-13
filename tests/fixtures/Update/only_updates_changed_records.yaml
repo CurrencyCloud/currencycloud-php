@@ -17,7 +17,7 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
-    body: --5603f6a8ef4892b87e60c5c9552c37ba765a4805\r\nContent-Disposition: form-data; name=\"bank_account_holder_name\"\r\nContent-Length: 11\r\n\r\nTest User 2\r\n--5603f6a8ef4892b87e60c5c9552c37ba765a4805\r\nContent-Disposition: form-data; name=\"email\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--5603f6a8ef4892b87e60c5c9552c37ba765a4805--\r\n
+    body: '--5603f6a8ef4892b87e60c5c9552c37ba765a4805\r\nContent-Disposition: form-data; name=\"bank_account_holder_name\"\r\nContent-Length: 11\r\n\r\nTest User 2\r\n--5603f6a8ef4892b87e60c5c9552c37ba765a4805\r\nContent-Disposition: form-data; name=\"email\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--5603f6a8ef4892b87e60c5c9552c37ba765a4805--\r\n'
     headers:
       X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
