@@ -7,7 +7,7 @@
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
 
-If you have any queries or you require support, please contact our sales team at sales@currencycloud.com.  Please quote your login id in any correspondence as this makes
+If you have any queries or you require support, please contact our development team at development@currencycloud.com.  Please quote your login id in any correspondence as this makes
 it simpler for us to locate your account and give you the support you need.
 
 ## Prerequisites
@@ -70,7 +70,7 @@ $currencies =
     $client->reference()
         ->availableCurrencies();
 
-echo "Supproted currencies:\n";
+echo "Supported currencies:\n";
 
 foreach ($currencies as $currency) {
     printf(
@@ -107,7 +107,7 @@ For a slightly longer example, see [cook-book.php](/examples/cook-book.php), whi
 
 ### Reusing client for multiple requests
 
-Authentication tokens are long-livedand are meant to be reused for multiple requests. This will improve performance of calls through the api. 
+Authentication tokens are long-lived and are meant to be reused for multiple requests. This will improve performance of calls through the api. 
 
 ## On Behalf Of
 
