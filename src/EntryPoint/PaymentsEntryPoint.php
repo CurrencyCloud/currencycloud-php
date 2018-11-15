@@ -8,6 +8,7 @@ use CurrencyCloud\Model\Authorisations;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Model\Payment;
+use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\Payments;
 use CurrencyCloud\Model\PaymentSubmission;
 use DateTime;
@@ -309,5 +310,37 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
 
         return $paymentSubmission;
+    }
+
+    /**
+     * @param string $id
+     * @param null|string $onBehalfOf
+     *
+     * @return PaymentConfirmation
+     */
+    public function retrieveConfirmation($id, $onBehalfOf = null)
+    {
+        return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function (stdClass $response) {
+            return $this->createPaymentConfirmationFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return PaymentConfirmation
+     */
+    protected function createPaymentConfirmationFromResponse($response){
+        $paymentConfirmation = new PaymentConfirmation(
+            $response->id,
+            $response->payment_id,
+            $response->account_id,
+            $response->short_reference,
+            $response->status,
+            $response->confirmation_url,
+            !empty($response->created_at) ? new DateTime($response->created_at) : null,
+            !empty($response->updatet_at) ? new DateTime($response->updated_at) : null,
+            !empty($response->expires_at) ? new DateTime($response->expires_at) : null
+        );
+        return $paymentConfirmation;
     }
 }
