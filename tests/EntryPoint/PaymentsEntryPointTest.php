@@ -456,6 +456,68 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
+    public function canAuthorisePayment()
+    {
+        $data = '{
+            "authorisations": [
+                {
+                    "payment_id": "2416c8fe-0486-4fc3-82d9-4dc9a44eba9a",
+                    "payment_status": "authorised",
+                    "updated": true,
+                    "error": null,
+                    "auth_steps_taken": 1,
+                    "auth_steps_required": 1,
+                    "short_reference": "181108-WRMWLR001"
+                },
+                {
+                    "payment_id": "abf2ebe7-cdc9-460b-b64e-3652297b629e",
+                    "payment_status": "authorised",
+                    "updated": true,
+                    "error": null,
+                    "auth_steps_taken": 1,
+                    "auth_steps_required": 1,
+                    "short_reference": "181108-BHJNQM001"
+                }
+            ]
+        }';
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'payments/authorise',
+            [],
+            [
+                'payment_ids' => [
+                    '2416c8fe-0486-4fc3-82d9-4dc9a44eba9a',
+                    'abf2ebe7-cdc9-460b-b64e-3652297b629e'
+
+                ]
+            ]
+        )
+        );
+
+        $dummy = json_decode($data, true);
+
+        $authorisations = $entryPoint->authorise([
+            '2416c8fe-0486-4fc3-82d9-4dc9a44eba9a',
+            'abf2ebe7-cdc9-460b-b64e-3652297b629e'
+            ]);
+
+        $this->assertSame(count($dummy['authorisations']), $authorisations->count());
+
+        foreach ($dummy['authorisations'] as $key => $value) {
+            $this->assertSame($value['payment_id'], $authorisations->getAuthorisations()[$key]->getPaymentId());
+            $this->assertSame($value['payment_status'], $authorisations->getAuthorisations()[$key]->getPaymentStatus());
+            $this->assertSame($value['updated'], $authorisations->getAuthorisations()[$key]->getUpdated());
+            $this->assertSame($value['auth_steps_taken'], $authorisations->getAuthorisations()[$key]->getAuthSteptsTaken());
+            $this->assertSame($value['auth_steps_required'], $authorisations->getAuthorisations()[$key]->getAuthSteptsRequired());
+            $this->assertSame($value['short_reference'], $authorisations->getAuthorisations()[$key]->getShortReference());
+        }
+    }
+
+    /**
+     * @test
+     */
     public function canGetPaymentConfirmation(){
         $data = '{
             "id": "d7d5c073-7aac-415a-b2cd-f3f4942ca164",

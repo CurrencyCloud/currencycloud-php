@@ -3,6 +3,8 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\FindPaymentsCriteria;
+use CurrencyCloud\Model\Authorisation;
+use CurrencyCloud\Model\Authorisations;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Model\Payment;
@@ -236,6 +238,52 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'amount_from' => $criteria->getAmountFrom(),
             'amount_to' => $criteria->getAmountTo()
         ];
+    }
+
+    /**
+     * @param string[] $paymentIds
+     * @return Authorisations
+     */
+    public function authorise($paymentIds){
+        $response = $this->request(
+            'POST',
+            'payments/authorise',
+            [],
+            [
+                'payment_ids' => $paymentIds
+            ]
+        );
+
+        return $this->createAuthorisationsFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $object
+     * @return Authorisation
+     */
+    protected function createAuthorisationFromObject($object){
+        return new Authorisation(
+            $object->payment_id,
+            $object->payment_status,
+            $object->updated,
+            $object->error,
+            $object->auth_steps_taken,
+            $object->auth_steps_required,
+            $object->short_reference
+        );
+    }
+
+    /**
+     * @param stdClass $response
+     * @return Authorisations
+     */
+    protected function createAuthorisationsFromResponse($response){
+        $authorisations = [];
+        foreach($response->authorisations as $key => $value){
+            array_push($authorisations, $this->createAuthorisationFromObject($value));
+        }
+
+        return new Authorisations($authorisations);
     }
 
     /**

@@ -1,0 +1,15 @@
+-
+    request:
+        method: POST
+        url: https://devapi.currencycloud.com/v2/payments/authorise
+        headers:
+            Content-Type: 'multipart/form-data; boundary=1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0'
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: --1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; name=\"payment_ids[]\"\r\nContent-Length: 36\r\n\r\n2416c8fe-0486-4fc3-82d9-4dc9a44eba9a\r\n--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; name=\"payment_ids[]\"\r\nContent-Length: 36\r\n\r\nabf2ebe7-cdc9-460b-b64e-3652297b629e\r\n--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0--\r\n
+    response:
+        status: 200
+        headers:
+            Date: Thu, 08 Nov 2018 14:14:45 GMT
+            Content-Type: application/json
+            X-Request-Id: 'b63b7349-a5b1-40d3-a624-c57ecc79ef9f'
+        body: '{"authorisations":[{"payment_id":"2416c8fe-0486-4fc3-82d9-4dc9a44eba9a","payment_status":"authorised","updated":true,"error":null,"auth_steps_taken":1,"auth_steps_required":1,"short_reference":"181108-WRMWLR001"},{"payment_id":"abf2ebe7-cdc9-460b-b64e-3652297b629e","payment_status":"authorised","updated":true,"error":null,"auth_steps_taken":1,"auth_steps_required":1,"short_reference":"181108-BHJNQM001"}]}'
