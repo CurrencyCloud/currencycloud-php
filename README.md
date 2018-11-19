@@ -7,7 +7,7 @@
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
 
-If you have any queries or you require support, please contact our sales team at sales@currencycloud.com.  Please quote your login id in any correspondence as this makes
+If you have any queries or you require support, please contact our development team at development@currencycloud.com.  Please quote your login id in any correspondence as this makes
 it simpler for us to locate your account and give you the support you need.
 
 ## Prerequisites
@@ -20,7 +20,7 @@ it will be far easier to simply make use of Composer to do the dependency manage
 
 ### Supported PHP version
 
-This library aims to support and is tested against PHP 5.5 and greater.
+This library aims to support and is tested against PHP 7.1 and greater.
 
 ## Installation
 
@@ -45,7 +45,7 @@ require 'vendor/autoload.php';
 
 You can register for demo API key at [developer.currencycloud.com](https://developer.currencycloud.com/api-register/). 
 
-An example in PHP 5.5:
+An example in PHP 7:
 
 ```php
 use CurrencyCloud\CurrencyCloud;
@@ -70,7 +70,7 @@ $currencies =
     $client->reference()
         ->availableCurrencies();
 
-echo "Supproted currencies:\n";
+echo "Supported currencies:\n";
 
 foreach ($currencies as $currency) {
     printf(
@@ -107,7 +107,7 @@ For a slightly longer example, see [cook-book.php](/examples/cook-book.php), whi
 
 ### Reusing client for multiple requests
 
-Authentication tokens are long-livedand are meant to be reused for multiple requests. This will improve performance of calls through the api. 
+Authentication tokens are long-lived and are meant to be reused for multiple requests. This will improve performance of calls through the api. 
 
 ## On Behalf Of
 
@@ -142,14 +142,14 @@ When the exception converted to string, it will provide information such as the 
 ```yaml
 BadRequestException
 ---
-platform: 'PHP 5.6.14-1+deb.sury.org~trusty+1'
+platform: 'PHP 7.1.11-1+deb.sury.org~trusty+1'
 request:
     parameters: {  }
     verb: get
     url: 'https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=EUR&sell_currency=GBP&fixed_side=buy&amount=10000.00'
 response:
     status_code: 400
-    date: 'Sun, 06 Nov 2015 18:22:47 GMT'
+    date: 'Tue, 13 Nov 2018 13:40:00 GMT'
     request_id: '2915002181730358306'
 errors:
     -
