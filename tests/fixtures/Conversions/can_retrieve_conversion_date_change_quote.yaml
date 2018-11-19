@@ -1,0 +1,13 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/conversions/cef197c6-2192-4970-a2cf-d45ee046ae8c/date_change_quote?new_settlement_date=2018-11-06'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 200
+        headers:
+            Date: Thu, 01 Nov 2018 11:06:46 GMT
+            Content-Type: application/json
+            X-Request-Id: bc065f07-e57c-444a-b2c7-46c02af0ecb7
+        body: '{"conversion_id":"cef197c6-2192-4970-a2cf-d45ee046ae8c","amount":"0.14","currency":"GBP","new_conversion_date":"2018-11-06T00:00:00+00:00","new_settlement_date":"2018-11-06T16:30:00+00:00","old_conversion_date":"2018-11-01T00:00:00+00:00","old_settlement_date":"2018-11-01T16:30:00+00:00","event_date_time":"2018-10-30T16:19:55+00:00"}'

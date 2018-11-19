@@ -1,0 +1,13 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/conversions/9b29e56d-6a67-4470-a291-ee72b6371c32/cancellation_quote'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 200
+        headers:
+            Date: 'Fri, 02 Nov 2018 08:02:15 GMT'
+            Content-Type: application/json
+            X-Request-Id: 10ecc4e3-d8d0-4afb-89c2-534931271520
+        body: '{"amount":"-0.06","currency":"GBP","event_date_time":"2018-11-02T07:32:54+00:00"}'
