@@ -19,6 +19,7 @@ use CurrencyCloud\EntryPoint\ReportsEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\EntryPoint\VansEntryPoint;
+use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
@@ -84,6 +85,7 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
             new RatesEntryPoint($client),
             new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client),
+            new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client)
         );
     }
