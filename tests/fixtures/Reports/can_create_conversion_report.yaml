@@ -1,0 +1,14 @@
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/reports/conversions/create'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: '--bfc69637ff3fbcbb42a68d71a24041d8b0464a78\r\nContent-Disposition: form-data; name=\"buy_currency\"\r\nContent-Length: 3\r\n\r\nEUR\r\n--bfc69637ff3fbcbb42a68d71a24041d8b0464a78\r\nContent-Disposition: form-data; name=\"sell_currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--bfc69637ff3fbcbb42a68d71a24041d8b0464a78--\r\n'
+    response:
+        status: 200
+        headers:
+            Date: Thu, 25 Oct 2018 14:01:46 GMT
+            Content-Type: application/json
+            X-Request-Id: '448cef0e-28e9-4b23-9d08-8f28b813acda'
+        body: '{"id":"ea8da492-b03d-4330-b279-b5e4a25804a0","short_reference":"RP-3256961-MLEPRN","description":"Test report for Conversion","search_params":{"buy_currency":"EUR","sell_currency":"GBP","scope":"own"},"report_type":"conversion","status":"processing","failure_reason":null,"expiration_date":null,"report_url":"","account_id":"bf5b1007-b364-43cc-b3d6-9f2d1be75297","contact_id":"ba33d76a-4a7f-4cb3-afa8-5678d5bc712a","created_at":"2018-10-25T10:16:32+00:00","updated_at":"2018-10-25T10:16:32+00:00"}'
