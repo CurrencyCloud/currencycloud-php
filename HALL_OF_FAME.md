@@ -8,7 +8,9 @@ Many people have helped us along the way and we are sincerely grateful to all of
 
 |Name|Link/e-mail|
 |--|--|
-|||
+|Donovan Schönknecht (tpyo)|https://github.com/tpyo|
+|Steve Rhodes (elasticsteve)|https://github.com/elasticsteve|
+|Valdas Barakauskas (bilikaz)|https://github.com/bilikaz|
 
  In our book, they have reached [**honorificabilitudinitatibus**][sesqui] :-)
 
