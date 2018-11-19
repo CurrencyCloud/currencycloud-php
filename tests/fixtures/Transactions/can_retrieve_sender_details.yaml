@@ -1,0 +1,13 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/transactions/sender/'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 200
+        headers:
+            Date: 'Mon, 12 Nov 2018 07:24:49 GMT'
+            Content-Type: application/json
+            X-Request-Id: 5447b2eb-5d6d-4ab3-a0a4-2f181ec0153a
+        body: '{"id":"e68301d3-5b04-4c1d-8f8b-13a9b8437040","amount":"1701.51","currency":"EUR","additional_information":"USTRD-0001","value_date":"2018-07-04T00:00:00+00:00","sender":"FR7615589290001234567890113, CMBRFR2BARK, Debtor, FR, Centre ville","receiving_account_number":null,"receiving_account_iban":"GB99OXPH94665099600083","created_at":"2018-07-04T14:57:38+00:00","updated_at":"2018-07-04T14:57:39+00:00"  }'
