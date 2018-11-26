@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
-# Currencycloud API v2 PHP client
+# Currencycloud API v2 PHP client
 ## Version: 1.0.1
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
