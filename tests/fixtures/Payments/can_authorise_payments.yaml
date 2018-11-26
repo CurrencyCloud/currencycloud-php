@@ -5,7 +5,7 @@
         headers:
             Content-Type: 'multipart/form-data; boundary=1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0'
             X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
-        body: "--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; name=\"payment_ids[]\"\r\nContent-Length: 36\r\n\r\n2416c8fe-0486-4fc3-82d9-4dc9a44eba9a\r\n--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; name=\"payment_ids[]\"\r\nContent-Length: 36\r\n\r\nabf2ebe7-cdc9-460b-b64e-3652297b629e\r\n--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0--\r\n"
+        body: '--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; name=\"payment_ids[]\"\r\nContent-Length: 36\r\n\r\n2416c8fe-0486-4fc3-82d9-4dc9a44eba9a\r\n--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; name=\"payment_ids[]\"\r\nContent-Length: 36\r\n\r\nabf2ebe7-cdc9-460b-b64e-3652297b629e\r\n--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0--\r\n'
     response:
         status: 200
         headers:
