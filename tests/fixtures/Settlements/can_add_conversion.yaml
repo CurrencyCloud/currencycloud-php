@@ -2,7 +2,7 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/conversions/create
-    body: --344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"buy_currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"sell_currency\"\r\nContent-Length: 3\r\n\r\nUSD\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"fixed_side\"\r\nContent-Length: 3\r\n\r\nbuy\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"amount\"\r\nContent-Length: 4\r\n\r\n1000\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"reason\"\r\nContent-Length: 16\r\n\r\nmortgage payment\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"term_agreement\"\r\nContent-Length: 4\r\n\r\ntrue\r\n--344d63389cda9c70138d63f29e026f5095de8c9c--\r\n
+    body: '--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"buy_currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"sell_currency\"\r\nContent-Length: 3\r\n\r\nUSD\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"fixed_side\"\r\nContent-Length: 3\r\n\r\nbuy\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"amount\"\r\nContent-Length: 4\r\n\r\n1000\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"reason\"\r\nContent-Length: 16\r\n\r\nmortgage payment\r\n--344d63389cda9c70138d63f29e026f5095de8c9c\r\nContent-Disposition: form-data; name=\"term_agreement\"\r\nContent-Length: 4\r\n\r\ntrue\r\n--344d63389cda9c70138d63f29e026f5095de8c9c--\r\n'
     headers:
       X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:
@@ -32,7 +32,7 @@
   request:
     method: POST
     url: https://devapi.currencycloud.com/v2/settlements/63eeef54-3531-4e65-827a-7d0f37503fcc/add_conversion
-    body: --8df55f87275fa3173936441fdf70c25c1d8b3737\r\nContent-Disposition: form-data; name=\"conversion_id\"\r\nContent-Length: 36\r\n\r\n24d2ee7f-c7a3-4181-979e-9c58dbace992\r\n--8df55f87275fa3173936441fdf70c25c1d8b3737--\r\n
+    body: '--8df55f87275fa3173936441fdf70c25c1d8b3737\r\nContent-Disposition: form-data; name=\"conversion_id\"\r\nContent-Length: 36\r\n\r\n24d2ee7f-c7a3-4181-979e-9c58dbace992\r\n--8df55f87275fa3173936441fdf70c25c1d8b3737--\r\n'
     headers:
       X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
   response:

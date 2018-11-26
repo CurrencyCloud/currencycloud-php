@@ -2,7 +2,7 @@
     request:
         method: POST
         url: https://devapi.currencycloud.com/v2/authenticate/api
-        body: --426d6a83a4a331f4aea449cbe106cc2f749b1c79\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--426d6a83a4a331f4aea449cbe106cc2f749b1c79\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--426d6a83a4a331f4aea449cbe106cc2f749b1c79--\r\n
+        body: '--426d6a83a4a331f4aea449cbe106cc2f749b1c79\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--426d6a83a4a331f4aea449cbe106cc2f749b1c79\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--426d6a83a4a331f4aea449cbe106cc2f749b1c79--\r\n'
     response:
         status: 200
         headers:
@@ -15,7 +15,7 @@
     request:
         method: POST
         url: https://devapi.currencycloud.com/v2/beneficiaries/create
-        body: --a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"bank_country\"\r\nContent-Length: 2\r\n\r\nGB\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"account_number\"\r\nContent-Length: 8\r\n\r\n12345678\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"routing_code_type_1\"\r\nContent-Length: 9\r\n\r\nsort_code\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"routing_code_value_1\"\r\nContent-Length: 6\r\n\r\n123456\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"payment_types[]\"\r\nContent-Length: 7\r\n\r\nregular\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"bank_account_holder_name\"\r\nContent-Length: 9\r\n\r\nTest User\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"name\"\r\nContent-Length: 9\r\n\r\nTest User\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1--\r\n
+        body: '--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"bank_country\"\r\nContent-Length: 2\r\n\r\nGB\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"account_number\"\r\nContent-Length: 8\r\n\r\n12345678\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"routing_code_type_1\"\r\nContent-Length: 9\r\n\r\nsort_code\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"routing_code_value_1\"\r\nContent-Length: 6\r\n\r\n123456\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"payment_types[]\"\r\nContent-Length: 7\r\n\r\nregular\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"bank_account_holder_name\"\r\nContent-Length: 9\r\n\r\nTest User\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1\r\nContent-Disposition: form-data; name=\"name\"\r\nContent-Length: 9\r\n\r\nTest User\r\n--a63113de741a2b1a2b361e20231e3c01868edbd1--\r\n'
         headers:
             X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
     response:

@@ -2,7 +2,7 @@
     request:
         method: POST
         url: https://devapi.currencycloud.com/v2/authenticate/api
-        body: --9d3338bf6fb9195b3cc78a39a9a8d2e6f9734a48\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--9d3338bf6fb9195b3cc78a39a9a8d2e6f9734a48\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--9d3338bf6fb9195b3cc78a39a9a8d2e6f9734a48--\r\n
+        body: '--9d3338bf6fb9195b3cc78a39a9a8d2e6f9734a48\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--9d3338bf6fb9195b3cc78a39a9a8d2e6f9734a48\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--9d3338bf6fb9195b3cc78a39a9a8d2e6f9734a48--\r\n'
     response:
         status: 200
         headers:
