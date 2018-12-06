@@ -184,15 +184,19 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
             json_decode($data),
             'GET',
-            'payments/hi',
-            ['on_behalf_of' => null]
+            'payments/543477161-91de-012f-e284-1e0030c7f3123',
+            [
+                'on_behalf_of' => null,
+                'with_deleted' => null,
+                'purpose_code' => null
+                ]
         )
         );
 
         $payment = new Payment();
-        $this->setIdProperty($payment, 'hi');
+        $this->setIdProperty($payment, '543477161-91de-012f-e284-1e0030c7f3123');
 
-        $payment = $entryPoint->retrieve('hi');
+        $payment = $entryPoint->retrieve('543477161-91de-012f-e284-1e0030c7f3123');
 
         $this->validateObjectStrictName($payment, json_decode($data, true));
     }
@@ -208,7 +212,11 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
             json_decode($data),
             'GET',
             'payments/hi',
-            ['on_behalf_of' => 'yes']
+            [
+                'on_behalf_of' => 'yes',
+                'with_deleted' => null,
+                'purpose_code' => null
+            ]
         )
         );
 
