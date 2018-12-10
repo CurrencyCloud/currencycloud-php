@@ -317,14 +317,13 @@ class ConversionsEntryPoint extends AbstractEntryPoint
      *
      * @return ConversionSplit
      */
-    public function split($id, $amount, $onBehalfOf = null)
+    public function split($id, $amount)
     {
         $response = $this->request(
             'POST',
             sprintf('conversions/%s/split', $id),
             [
-                'amount' => $amount,
-                'on_behalf_of' => $onBehalfOf
+                'amount' => $amount
             ]
         );
 

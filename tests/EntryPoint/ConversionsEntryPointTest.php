@@ -214,8 +214,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             'POST',
             'conversions/13909849-1dbd-45c1-83c7-25930132f02c/split',
             [
-                'amount' => '100',
-                'on_behalf_of' => null
+                'amount' => '100'
             ]
         ));
 
