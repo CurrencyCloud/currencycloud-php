@@ -297,14 +297,13 @@ class ConversionsEntryPoint extends AbstractEntryPoint
      *
      * @return CancelledConversion
      */
-    public function date_change($id, $new_settlement_date, $onBehalfOf = null)
+    public function date_change($id, $new_settlement_date)
     {
         $response = $this->request(
             'POST',
             sprintf('conversions/%s/date_change', $id),
             [
-                'new_settlement_date' => $new_settlement_date,
-                'on_behalf_of' => $onBehalfOf
+                'new_settlement_date' => $new_settlement_date
             ]
         );
 

@@ -192,8 +192,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             'POST',
             'conversions/13909849-1dbd-45c1-83c7-25930132f02c/date_change',
             [
-                'new_settlement_date' => '2028-05-12',
-                'on_behalf_of' => null
+                'new_settlement_date' => '2028-05-12'
             ]
         ));
 
