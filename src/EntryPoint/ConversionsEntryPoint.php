@@ -271,17 +271,18 @@ class ConversionsEntryPoint extends AbstractEntryPoint
 
     /**
      * @param string $id
-     * @param string|null $onBehalfOf
+     * @param string|null $notes
      *
      * @return CancelledConversion
      */
-    public function cancel($id, $onBehalfOf = null)
+    public function cancel($id, $notes = null)
     {
         $response = $this->request(
             'POST',
             sprintf('conversions/%s/cancel', $id),
+            [],
             [
-                'on_behalf_of' => $onBehalfOf
+                'notes' => $notes
             ]
         );
 
