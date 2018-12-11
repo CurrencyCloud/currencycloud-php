@@ -146,14 +146,23 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
     /**
      * @param string $id
      * @param null|string $onBehalfOf
+     * @param null|string $withDeleted
+     * @param null|string $purposeCode
      *
      * @return Payment
      */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve($id, $onBehalfOf = null, $withDeleted = null, $purposeCode = null)
     {
-        return $this->doRetrieve(sprintf('payments/%s', $id), function (stdClass $response) {
-            return $this->createPaymentFromResponse($response);
-        }, $onBehalfOf);
+        $response = $this->request(
+            'GET',
+            sprintf('payments/%s', $id),
+            [
+                'on_behalf_of' => $onBehalfOf,
+                'with_deleted' => $withDeleted,
+                'purpose_code' => $purposeCode
+            ]);
+
+        return $this->createPaymentFromResponse($response);
     }
 
     /**
