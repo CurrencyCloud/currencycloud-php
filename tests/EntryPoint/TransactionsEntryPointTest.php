@@ -103,6 +103,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'per_page' => null,
                 'order' => null,
                 'order_asc_desc' => null,
+                'scope' => null
             ]
         )
         );
@@ -167,6 +168,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'per_page' => null,
                 'order' => null,
                 'order_asc_desc' => null,
+                'scope' => null
             ]
         )
         );

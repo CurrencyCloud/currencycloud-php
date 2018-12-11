@@ -44,6 +44,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
      * @param Pagination|null $pagination
      * @param DateTime|null $completedAtFrom
      * @param DateTime|null $completedAtTo
+     * @param String|null $scope
      *
      * @return Transactions
      */
@@ -60,7 +61,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         $onBehalfOf = null,
         Pagination $pagination = null,
         DateTime $completedAtFrom = null,
-        DateTime $completedAtTo = null
+        DateTime $completedAtTo = null,
+        $scope = null
     ) {
         if (null === $transaction) {
             $transaction = new Transaction();
@@ -82,7 +84,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
                 'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
                 'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(DateTime::ISO8601),
                 'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(DateTime::ISO8601),
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
+                'scope' => $scope
             ]
         );
         $accounts = [];
