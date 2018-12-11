@@ -157,14 +157,26 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             json_decode($data),
             'POST',
             'conversions/0ff0ea60-d976-4c7f-ad7f-3eb94da68452/cancel',
+            [],
             [
-                'on_behalf_of' => null
+                'notes' => 'Cancelduetoveryimportantreason'
             ]
         ));
+        $dummyData = json_decode($data, true);
 
-        $conversionCancellation = $entryPoint->cancel('0ff0ea60-d976-4c7f-ad7f-3eb94da68452');
+        $conversionCancellation = $entryPoint->cancel('0ff0ea60-d976-4c7f-ad7f-3eb94da68452', 'Cancelduetoveryimportantreason');
 
         $this->assertInstanceOf(CancelledConversion::class, $conversionCancellation);
+        $this->assertSame($dummyData['account_id'], $conversionCancellation->getAccountId());
+        $this->assertSame($dummyData['contact_id'], $conversionCancellation->getContactId());
+        $this->assertSame($dummyData['event_account_id'], $conversionCancellation->getEventAccountId());
+        $this->assertSame($dummyData['event_contact_id'], $conversionCancellation->getEventContactId());
+        $this->assertSame($dummyData['conversion_id'], $conversionCancellation->getConversionId());
+        $this->assertSame($dummyData['event_type'], $conversionCancellation->getEventType());
+        $this->assertSame($dummyData['amount'], $conversionCancellation->getAmount());
+        $this->assertSame($dummyData['currency'], $conversionCancellation->getCurrency());
+        $this->assertSame($dummyData['notes'], $conversionCancellation->getNotes());
+        $this->assertSame($dummyData['event_date_time'], $conversionCancellation->getEventDateTime()->format(DATE_RFC3339));
     }
 
 
@@ -180,8 +192,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             'POST',
             'conversions/13909849-1dbd-45c1-83c7-25930132f02c/date_change',
             [
-                'new_settlement_date' => '2028-05-12',
-                'on_behalf_of' => null
+                'new_settlement_date' => '2028-05-12'
             ]
         ));
 
@@ -203,8 +214,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             'POST',
             'conversions/13909849-1dbd-45c1-83c7-25930132f02c/split',
             [
-                'amount' => '100',
-                'on_behalf_of' => null
+                'amount' => '100'
             ]
         ));
 
