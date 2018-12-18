@@ -76,14 +76,14 @@ class TransactionsEntryPoint extends AbstractEntryPoint
             $this->convertTransactionToRequest($transaction) + $this->convertPaginationToRequest($pagination) + [
                 'amount_from' => $amountFrom,
                 'amount_to' => $amountTo,
-                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::ISO8601),
-                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::ISO8601),
-                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
-                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(DateTime::ISO8601),
-                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(DateTime::ISO8601),
+                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format('Y-m-d'),
+                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format('Y-m-d'),
+                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format('Y-m-d'),
+                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format('Y-m-d'),
+                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format('Y-m-d'),
+                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format('Y-m-d'),
+                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format('Y-m-d'),
+                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format('Y-m-d'),
                 'on_behalf_of' => $onBehalfOf,
                 'scope' => $scope
             ]
