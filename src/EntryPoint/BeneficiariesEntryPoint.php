@@ -169,7 +169,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         $common += [
             'bank_account_holder_name' => $beneficiary->getBankAccountHolderName(),
             'name' => $beneficiary->getName(),
-            'email' => $beneficiary->getEmail()
+            'email' => $beneficiary->getEmail(),
+            'beneficiary_external_reference' => $beneficiary->getBeneficiaryExternalReference()
         ];
 
         if ($convertForUpdate) {
@@ -227,7 +228,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
                 ->setIsDefaultBeneficiary('true' === $response->default_beneficiary)
                 ->setBankAccountHolderName($response->bank_account_holder_name)
                 ->setCreatedAt(new DateTime($response->created_at))
-                ->setUpdatedAt(new DateTime($response->updated_at));
+                ->setUpdatedAt(new DateTime($response->updated_at))
+                ->setBeneficiaryExternalReference($response->beneficiary_external_reference);
             $this->setIdProperty($beneficiary, $response->id);
         }
 

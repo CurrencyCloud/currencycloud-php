@@ -96,6 +96,10 @@ class Beneficiary implements EntityInterface
      */
     private $beneficiaryIdentificationValue;
     /**
+     * @var string
+     */
+    private $beneficiaryExternalReference;
+    /**
      * @var boolean
      */
     private $isDefaultBeneficiary;
@@ -549,6 +553,25 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryIdentificationValue($beneficiaryIdentificationValue)
     {
         $this->beneficiaryIdentificationValue = (string) $beneficiaryIdentificationValue;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBeneficiaryExternalReference()
+    {
+        return $this->beneficiaryExternalReference;
+    }
+
+    /**
+     * @param string $beneficiaryExternalReference
+     *
+     * @return $this
+     */
+    public function setBeneficiaryExternalReference($beneficiaryExternalReference)
+    {
+        $this->beneficiaryExternalReference = (string) $beneficiaryExternalReference;
         return $this;
     }
 
