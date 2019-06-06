@@ -2,6 +2,7 @@
 
 namespace CurrencyCloud\EntryPoint;
 
+use CurrencyCloud\Model\BankDetails;
 use CurrencyCloud\Model\BeneficiaryRequiredDetail;
 use CurrencyCloud\Model\ConversionDates;
 use CurrencyCloud\Model\Currency;
@@ -195,6 +196,31 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         );
 
         return $this->convertResponseToPaymentRequiredDetails($response);
+    }
+
+    /**
+     * @param string $identifierType
+     * @param string $identifierValue
+     *
+     * @return BankDetails
+     */
+    public function bankDetails(
+        $identifierType,
+        $identifierValue
+    ) {
+        $response = $this->request(
+            'GET',
+            'reference/bank_details',
+            [
+                'identifier_type' => $identifierType,
+                'identifier_value' => $identifierValue
+            ]
+        );
+
+        return new BankDetails($response->identifier_value, $response->identifier_type, $response->account_number,
+            $response->bic_swift, $response->bank_name, $response->bank_branch,$response->bank_address,
+            $response->bank_city, $response->bank_state, $response->bank_post_code, $response->bank_country,
+            $response->bank_country_ISO, $response->currency);
     }
 
     /**

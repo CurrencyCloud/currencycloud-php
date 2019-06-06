@@ -198,4 +198,45 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
             }
         }
     }
+
+
+    /**
+     * @test
+     */
+    public function canGetBankDetails()
+    {
+        $data = '{"identifier_value":"GB19TCCL00997901654515","identifier_type":"iban","account_number":"GB19TCCL00997901654515","bic_swift":"TCCLGB22XXX","bank_name":"THE CURRENCY CLOUD LIMITED","bank_branch":"","bank_address":"12 STEWARD STREET  THE STEWARD BUILDING FLOOR 0","bank_city":"LONDON","bank_state":"LONDON","bank_post_code":"E1 6FQ","bank_country":"UNITED KINGDOM","bank_country_ISO":"GB","currency":null}';
+
+
+        $entryPoint = new ReferenceEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'reference/bank_details',
+                [
+                    'identifier_type' => 'iban',
+                    'identifier_value' => 'GB19TCCL00997901654515',
+                ]
+            )
+        );
+
+        $details = $entryPoint->bankDetails('iban', 'GB19TCCL00997901654515');
+
+
+        $this->assertSame('GB19TCCL00997901654515', $details->getIdentifierValue());
+        $this->assertSame('iban', $details->getIdentifierType());
+        $this->assertSame('GB19TCCL00997901654515', $details->getAccountNumber());
+        $this->assertSame('TCCLGB22XXX', $details->getBicSwift());
+        $this->assertSame('THE CURRENCY CLOUD LIMITED', $details->getBankName());
+        $this->assertSame('', $details->getBankBranch());
+        $this->assertSame('12 STEWARD STREET  THE STEWARD BUILDING FLOOR 0', $details->getBankAddress());
+        $this->assertSame('LONDON', $details->getBankCity());
+        $this->assertSame('LONDON', $details->getBankState());
+        $this->assertSame('E1 6FQ', $details->getBankPostCode());
+        $this->assertSame('UNITED KINGDOM', $details->getBankCountry());
+        $this->assertSame('GB', $details->getBankCountryISO());
+        $this->assertSame('', $details->getCurrency());
+
+
+    }
 }
