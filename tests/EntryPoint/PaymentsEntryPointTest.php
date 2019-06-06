@@ -587,4 +587,32 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['short_reference'], $paymentConfirmation->getShortReference());
         $this->assertSame($dummy['status'], $paymentConfirmation->getStatus());
     }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentDeliveryDate()
+    {
+        $data = '{"payment_date":"2019-06-07","payment_delivery_date":"2019-06-07T00:00:00+00:00","payment_cutoff_time":"2019-06-07T14:30:00+00:00","payment_type":"regular","currency":"GBP","bank_country":"GB"}';
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'payments/payment_delivery_date',
+                [
+                    "payment_date" => "2019-06-07",
+                    "payment_type" => "regular",
+                    "currency" => "GBP",
+                    "bank_country" => "GB"
+                ]
+            )
+        );
+        $deliveryDate = $entryPoint->paymentDeliveryDate(new DateTime("2019-06-07"), 'regular', 'GBP', 'GB');
+        $this->assertSame('2019-06-07', $deliveryDate->getPaymentDate()->format('Y-m-d'));
+        $this->assertSame('2019-06-07T00:00:00+00:00', $deliveryDate->getPaymentDeliveryDate()->format(DateTime::RFC3339));
+        $this->assertSame('2019-06-07T14:30:00+00:00', $deliveryDate->getPaymentCutoffTime()->format(DateTime::RFC3339));
+        $this->assertSame('regular', $deliveryDate->getPaymentType());
+        $this->assertSame('GBP', $deliveryDate->getCurrency());
+        $this->assertSame('GB', $deliveryDate->getBankCountry());
+    }
 }
