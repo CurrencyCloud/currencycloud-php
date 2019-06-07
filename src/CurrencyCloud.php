@@ -103,7 +103,7 @@ class CurrencyCloud
      */
     private $vansEntryPoint;
 
-    public static $SDK_VERSION = "1.3.1";
+    public static $SDK_VERSION = "1.4.3";
 
     /**
      * @param Session $session
