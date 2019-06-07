@@ -9,6 +9,7 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Model\Payment;
 use CurrencyCloud\Model\PaymentConfirmation;
+use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
 use CurrencyCloud\Model\PaymentSubmission;
 use DateTime;
@@ -351,5 +352,26 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             !empty($response->expires_at) ? new DateTime($response->expires_at) : null
         );
         return $paymentConfirmation;
+    }
+
+
+    /**
+     * @param DateTime $paymentDate
+     * @param string $paymentType
+     * @param string $currency
+     * @param string $bankCountry
+     *
+     * @return PaymentDeliveryDate
+     */
+    public function paymentDeliveryDate($paymentDate, $paymentType, $currency, $bankCountry){
+        $response = $this->request('GET',
+            'payments/payment_delivery_date',
+            ['payment_date' => $paymentDate->format('Y-m-d'),
+                'payment_type' => $paymentType,
+                'currency' => $currency,
+                'bank_country' => $bankCountry]);
+
+        return new PaymentDeliveryDate(new DateTime($response->payment_date),new DateTime($response->payment_delivery_date),
+            new DateTime($response->payment_cutoff_time),$response->payment_type,$response->currency,$response->bank_country);
     }
 }
