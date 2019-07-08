@@ -326,7 +326,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('090baf7e-5chh-4bfd-9b7l-ad3f8a310123', $updated->getChargeSettingsId());
         $this->assertSame('3e12053j-ae22-40b1-cc4e-cc0230c009a5', $updated->getAccountId());
         $this->assertSame('ours', $updated->getChargeType());
-//        $this->assertTrue($updated->isEnabled());
-//        $this->assertFalse($updated->isDefault());
+        $this->assertTrue($updated->isEnabled());
+        $this->assertFalse($updated->isDefault());
     }
 }
