@@ -5,6 +5,7 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Account;
 use CurrencyCloud\Model\Accounts;
 use CurrencyCloud\Model\Pagination;
+use CurrencyCloud\Model\AccountPaymentChargesSetting;
 use DateTime;
 use stdClass;
 
@@ -146,5 +147,43 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
 
         $this->setIdProperty($account, $response->id);
         return $account;
+    }
+
+
+    /**
+     * @param string $accountId
+     *
+     * @return array
+     */
+    public function getPaymentChargesSettings($accountId)
+    {
+        $response = $this->request('GET',
+            sprintf('accounts/%s/payment_charges_settings', $accountId));
+
+        $paymentSettings = [];
+        foreach ($response->payment_charges_settings as $setting) {
+            $paymentSettings[] = new AccountPaymentChargesSetting($setting->charge_settings_id, $setting->account_id,
+                $setting->charge_type, $setting->enabled, $setting->default);
+        }
+        return $paymentSettings;
+    }
+
+    /**
+     * @param AccountPaymentChargesSetting $paymentSettings
+     *
+     * @return AccountPaymentChargesSetting
+     */
+    public function updatePaymentChargesSettings(AccountPaymentChargesSetting $paymentSettings)
+    {
+        $response = $this->request('POST',
+            sprintf('accounts/%s/payment_charges_settings/%s', $paymentSettings->getAccountId(), $paymentSettings->getChargeSettingsId()),
+            [],
+            [
+                'enabled' => $paymentSettings->isEnabled() ? 'true' : 'false',
+                'default' => $paymentSettings->isDefault() ? 'true' : 'false'
+            ]);
+
+        return new AccountPaymentChargesSetting($response->charge_settings_id, $response->account_id,
+            $response->charge_type, $response->enabled, $response->default);
     }
 }
