@@ -4,6 +4,7 @@ namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\Model\Account;
+use CurrencyCloud\Model\AccountPaymentChargesSetting;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
@@ -235,5 +236,97 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $account = $entryPoint->update($account);
 
         $this->validateObjectStrictName($account, $this->out);
+    }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentChargesSettings()
+    {
+
+        $data = '{
+        "payment_charges_settings": [
+        {
+            "charge_settings_id": "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
+            "account_id": "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
+            "charge_type": "ours",
+            "enabled": false,
+            "default": false
+        },
+        {
+            "charge_settings_id": "12345678-24b5-4af3-b88f-3aa27de4c6ba",
+            "account_id": "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
+            "charge_type": "shared",
+            "enabled": true,
+            "default": true
+        }
+        ]
+        }';
+
+        $entryPoint = new AccountsEntryPoint(
+            new SimpleEntityManager(), $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings'
+            )
+        );
+
+        $settings = $entryPoint->getPaymentChargesSettings('3e12053j-ae22-40b1-cc4e-cc0230c009a5');
+
+        $this->assertSame(2, sizeof($settings));
+
+        $setting1 = $settings[0];
+        $this->assertSame('090baf7e-5chh-4bfd-9b7l-ad3f8a310123', $setting1->getChargeSettingsId());
+        $this->assertSame('3e12053j-ae22-40b1-cc4e-cc0230c009a5', $setting1->getAccountId());
+        $this->assertSame('ours', $setting1->getChargeType());
+        $this->assertFalse($setting1->isEnabled());
+        $this->assertFalse($setting1->isDefault());
+
+        $setting2 = $settings[1];
+        $this->assertSame('12345678-24b5-4af3-b88f-3aa27de4c6ba', $setting2->getChargeSettingsId());
+        $this->assertSame('3e12053j-ae22-40b1-cc4e-cc0230c009a5', $setting2->getAccountId());
+        $this->assertSame('shared', $setting2->getChargeType());
+        $this->assertTrue($setting2->isEnabled());
+        $this->assertTrue($setting2->isDefault());
+
+
+
+
+    }
+
+    /**
+     * @test
+     */
+    public function canUpdatePaymentChargesSettings()
+    {
+
+        $data = '{        
+            "charge_settings_id": "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
+            "account_id": "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
+            "charge_type": "ours",
+            "enabled": true,
+            "default": false
+        }';
+
+        $entryPoint = new AccountsEntryPoint(
+            new SimpleEntityManager(), $this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings/090baf7e-5chh-4bfd-9b7l-ad3f8a310123',
+            [],
+            [ 'enabled' => 'true', 'default' => 'false']
+        )
+        );
+
+
+        $setting = new AccountPaymentChargesSetting("090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
+            "3e12053j-ae22-40b1-cc4e-cc0230c009a5", "ours", true, false);
+
+        $updated = $entryPoint->updatePaymentChargesSettings($setting);
+        $this->assertSame('090baf7e-5chh-4bfd-9b7l-ad3f8a310123', $updated->getChargeSettingsId());
+        $this->assertSame('3e12053j-ae22-40b1-cc4e-cc0230c009a5', $updated->getAccountId());
+        $this->assertSame('ours', $updated->getChargeType());
+        $this->assertTrue($updated->isEnabled());
+        $this->assertFalse($updated->isDefault());
     }
 }

@@ -54,7 +54,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_id' => $payment->getBeneficiaryId(),
             'conversion_id' => $payment->getConversionId(),
             'unique_request_id' => $payment->getUniqueRequestId(),
-            'purpose_code' => $payment->getPurposeCode()
+            'purpose_code' => $payment->getPurposeCode(),
+            'charge_type' => $payment->getChargeType()
         ];
         if ($convertForFind) {
             return $common + [
@@ -125,7 +126,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setUpdatedAt(new DateTime($response->updated_at))
             ->setUniqueRequestId($response->unique_request_id)
             ->setFailureReturnedAmount($response->failure_returned_amount)
-            ->setPurposeCode($response->purpose_code);
+            ->setPurposeCode($response->purpose_code)
+            ->setChargeType($response->charge_type);
 
         $this->setIdProperty($payment, $response->id);
         return $payment;
@@ -374,4 +376,5 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return new PaymentDeliveryDate(new DateTime($response->payment_date),new DateTime($response->payment_delivery_date),
             new DateTime($response->payment_cutoff_time),$response->payment_type,$response->currency,$response->bank_country);
     }
+
 }

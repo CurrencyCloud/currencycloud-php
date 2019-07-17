@@ -99,6 +99,10 @@ class Payment implements EntityInterface
      * @var string|null
      */
     private $purposeCode;
+    /**
+     * @var string|null
+     */
+    private $chargeType;
 
     /**
      * @param string $currency
@@ -542,6 +546,25 @@ class Payment implements EntityInterface
     public function setPurposeCode($purposeCode)
     {
         $this->purposeCode = $purposeCode;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getChargeType()
+    {
+        return $this->chargeType;
+    }
+
+    /**
+     * @param null|string chargeType
+     *
+     * @return $this
+     */
+    public function setChargeType($chargeType)
+    {
+        $this->chargeType = $chargeType;
         return $this;
     }
 }
