@@ -11,6 +11,7 @@ use stdClass;
 
 class TransactionsEntryPoint extends AbstractEntryPoint
 {
+    const DATE_FORMAT = 'Y-m-d';
 
     /**
      * @param string $id
@@ -70,20 +71,21 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
+
         $response = $this->request(
             'GET',
             'transactions/find',
             $this->convertTransactionToRequest($transaction) + $this->convertPaginationToRequest($pagination) + [
                 'amount_from' => $amountFrom,
                 'amount_to' => $amountTo,
-                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::ISO8601),
-                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::ISO8601),
-                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
-                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(DateTime::ISO8601),
-                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(DateTime::ISO8601),
+                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(self::DATE_FORMAT),
+                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(self::DATE_FORMAT),
+                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(self::DATE_FORMAT),
+                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(self::DATE_FORMAT),
+                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(self::DATE_FORMAT),
+                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(self::DATE_FORMAT),
+                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(self::DATE_FORMAT),
+                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(self::DATE_FORMAT),
                 'on_behalf_of' => $onBehalfOf,
                 'scope' => $scope
             ]
