@@ -10,7 +10,7 @@ class QuotePaymentFee
      */
     private $paymentType;
     /**
-     * @var string
+     * @var null|string
      */
     private $chargeType;
     /**
@@ -40,7 +40,7 @@ class QuotePaymentFee
      * @param string $paymentCurrency
      * @param string $paymentDestinationCountry
      * @param string $paymentType
-     * @param string $chargeType
+     * @param null|string $chargeType
      * @param string $feeAmount
      * @param string $feeCurrency
      */
@@ -50,7 +50,7 @@ class QuotePaymentFee
         $this->paymentCurrency = (string)$paymentCurrency;
         $this->paymentDestinationCountry = (string)$paymentDestinationCountry;
         $this->paymentType = (string)$paymentType;
-        $this->chargeType = (string)$chargeType;
+        $this->chargeType = $chargeType;
         $this->feeAmount = (string)$feeAmount;
         $this->feeCurrency = (string)$feeCurrency;
     }
@@ -88,7 +88,7 @@ class QuotePaymentFee
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getChargeType()
     {

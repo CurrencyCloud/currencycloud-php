@@ -674,6 +674,6 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('regular', $quotePaymentFee->getPaymentType());
         $this->assertSame('10.00', $quotePaymentFee->getFeeAmount());
         $this->assertSame('EUR', $quotePaymentFee->getFeeCurrency());
-        $this->assertSame('', $quotePaymentFee->getChargeType());
+        $this->assertNull($quotePaymentFee->getChargeType());
     }
 }
