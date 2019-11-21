@@ -11,6 +11,7 @@ use CurrencyCloud\Model\InvalidPaymentDate;
 use CurrencyCloud\Model\PayerDetails;
 use CurrencyCloud\Model\PayerRequirementDetails;
 use CurrencyCloud\Model\PaymentDates;
+use CurrencyCloud\Model\PaymentFeeRule;
 use CurrencyCloud\Model\PurposeCode;
 use CurrencyCloud\Model\RequiredFieldEntry;
 use CurrencyCloud\Model\SettlementAccount;
@@ -221,6 +222,40 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             $response->bic_swift, $response->bank_name, $response->bank_branch,$response->bank_address,
             $response->bank_city, $response->bank_state, $response->bank_post_code, $response->bank_country,
             $response->bank_country_ISO, $response->currency);
+    }
+
+    /**
+     * @param string $accountId
+     * @param string $paymentType
+     * @param string $chargeType
+     *
+     * @return PaymentFeeRule[]
+     */
+    public function paymentFeeRules(
+        $accountId = null,
+        $paymentType = null,
+        $chargeType = null
+    ) {
+        $response = $this->request(
+            'GET',
+            'reference/payment_fee_rules',
+            [
+                'account_id' => $accountId,
+                'payment_type' => $paymentType,
+                'charge_type' => $chargeType
+            ]
+        );
+
+        $ret = [];
+        foreach ($response->payment_fee_rules as $payment_fee_rule) {
+            $ret[] = new PaymentFeeRule(
+                $payment_fee_rule->payment_type,
+                $payment_fee_rule->charge_type,
+                $payment_fee_rule->fee_amount,
+                $payment_fee_rule->fee_currency
+            );
+        }
+        return $ret;
     }
 
     /**

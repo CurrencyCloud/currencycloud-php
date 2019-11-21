@@ -239,4 +239,142 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
 
     }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentFeeRules_noParamters()
+    {
+        $data = '{
+               "payment_fee_rules": [
+                  {
+                    "payment_type": "priority",
+                    "charge_type": "shared",
+                    "fee_amount": "2.00",
+                    "fee_currency": "AED"
+                  },
+                  {
+                    "payment_type": "regular",
+                    "charge_type": "shared",
+                    "fee_amount": "12.00",
+                    "fee_currency": "USD"
+                  },
+                  {
+                    "payment_type": "priority",
+                    "charge_type": "ours",
+                    "fee_amount": "5.25",
+                    "fee_currency": "GBP"
+                   }
+                ]
+             }';
+
+        $entryPoint = new ReferenceEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'reference/payment_fee_rules',
+                [
+                    'account_id' => null,
+                    'payment_type' => null,
+                    'charge_type' => null
+                ]
+            )
+        );
+
+        $rules = $entryPoint->paymentFeeRules();
+
+        $this->assertSame(3, count($rules));
+        $this->assertSame("priority", $rules[0]->getPaymentType());
+        $this->assertSame("shared", $rules[0]->getChargeType());
+        $this->assertSame("2.00", $rules[0]->getFeeAmount());
+        $this->assertSame("AED", $rules[0]->getFeeCurrency());
+
+        $this->assertSame("regular", $rules[1]->getPaymentType());
+        $this->assertSame("shared", $rules[1]->getChargeType());
+        $this->assertSame("12.00", $rules[1]->getFeeAmount());
+        $this->assertSame("USD", $rules[1]->getFeeCurrency());
+
+        $this->assertSame("priority", $rules[2]->getPaymentType());
+        $this->assertSame("ours", $rules[2]->getChargeType());
+        $this->assertSame("5.25", $rules[2]->getFeeAmount());
+        $this->assertSame("GBP", $rules[2]->getFeeCurrency());
+    }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentFeeRules_paymentTypeFilter()
+    {
+        $data = '{
+               "payment_fee_rules": [
+                  {
+                    "payment_type": "regular",
+                    "charge_type": "shared",
+                    "fee_amount": "12.00",
+                    "fee_currency": "USD"
+                  }
+                ]
+             }';
+
+        $entryPoint = new ReferenceEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'reference/payment_fee_rules',
+                [
+                    'account_id' => null,
+                    'payment_type' => "regular",
+                    'charge_type' => null
+                ]
+            )
+        );
+
+        $rules = $entryPoint->paymentFeeRules(null,"regular");
+
+        $this->assertSame(1, count($rules));
+
+        $this->assertSame("regular", $rules[0]->getPaymentType());
+        $this->assertSame("shared", $rules[0]->getChargeType());
+        $this->assertSame("12.00", $rules[0]->getFeeAmount());
+        $this->assertSame("USD", $rules[0]->getFeeCurrency());
+    }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentFeeRules_chargeTypeFilter()
+    {
+        $data = '{
+               "payment_fee_rules": [
+                  {
+                   "payment_type": "priority",
+                   "charge_type": "ours",
+                   "fee_amount": "5.25",
+                   "fee_currency": "GBP"
+                  }
+                ]
+             }';
+
+        $entryPoint = new ReferenceEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'reference/payment_fee_rules',
+                [
+                    'account_id' => null,
+                    'payment_type' => null,
+                    'charge_type' => "ours"
+                ]
+            )
+        );
+
+        $rules = $entryPoint->paymentFeeRules(null,null, "ours");
+
+        $this->assertSame(1, count($rules));
+
+        $this->assertSame("priority", $rules[0]->getPaymentType());
+        $this->assertSame("ours", $rules[0]->getChargeType());
+        $this->assertSame("5.25", $rules[0]->getFeeAmount());
+        $this->assertSame("GBP", $rules[0]->getFeeCurrency());
+    }
 }
