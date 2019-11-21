@@ -12,6 +12,7 @@ use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
 use CurrencyCloud\Model\PaymentSubmission;
+use CurrencyCloud\Model\QuotePaymentFee;
 use DateTime;
 use stdClass;
 
@@ -375,6 +376,29 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
 
         return new PaymentDeliveryDate(new DateTime($response->payment_date),new DateTime($response->payment_delivery_date),
             new DateTime($response->payment_cutoff_time),$response->payment_type,$response->currency,$response->bank_country);
+    }
+
+    /**
+     * @param string $paymentCurrency
+     * @param string $paymentDestinationCountry
+     * @param string $paymentType
+     * @param string $chargeType
+     * @param string $accountId
+     *
+     * @return QuotePaymentFee
+     */
+    public function getQuotePaymentFee($paymentCurrency, $paymentDestinationCountry, $paymentType, $chargeType=null,
+                                       $accountId=null){
+        $response = $this->request('GET',
+            'payments/quote_payment_fee',
+            ['payment_currency' => $paymentCurrency,
+                'payment_destination_country' => $paymentDestinationCountry,
+                'payment_type' => $paymentType,
+                'charge_type' => $chargeType,
+                'account_id' => $accountId]);
+
+        return new QuotePaymentFee($response->account_id, $response->payment_currency, $response->payment_destination_country,
+            $response->payment_type, $response->charge_type, $response->fee_amount, $response->fee_currency);
     }
 
 }

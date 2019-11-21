@@ -621,4 +621,43 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('GBP', $deliveryDate->getCurrency());
         $this->assertSame('GB', $deliveryDate->getBankCountry());
     }
+
+    /**
+     * @test
+     */
+    public function canGetQuotePaymentFee()
+    {
+        $data = '{
+               "account_id": "0534aaf2-2egg-0134-2f36-10b11cd33cfb",
+               "payment_currency": "USD",
+               "payment_destination_country": "US",
+               "payment_type": "regular",
+               "charge_type": null,
+               "fee_amount": "10.00",
+               "fee_currency": "EUR"
+             }';
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'payments/quote_payment_fee',
+                [
+                    "payment_currency"=>"USD",
+                    "payment_destination_country"=>"US",
+                    "payment_type"=>"regular",
+                    "charge_type"=>null,
+                    "account_id"=>null
+                ]
+            )
+        );
+        $quotePaymentFee = $entryPoint->getQuotePaymentFee("USD","US","regular");
+        $this->assertSame('0534aaf2-2egg-0134-2f36-10b11cd33cfb', $quotePaymentFee->getAccountId());
+        $this->assertSame('USD', $quotePaymentFee->getPaymentCurrency());
+        $this->assertSame('US', $quotePaymentFee->getPaymentDestinationCurrency());
+        $this->assertSame('regular', $quotePaymentFee->getPaymentType());
+        $this->assertSame('10.00', $quotePaymentFee->getFeeAmount());
+        $this->assertSame('EUR', $quotePaymentFee->getFeeCurrency());
+        $this->assertSame('', $quotePaymentFee->getChargeType());
+    }
 }
