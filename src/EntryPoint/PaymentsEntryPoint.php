@@ -56,7 +56,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'conversion_id' => $payment->getConversionId(),
             'unique_request_id' => $payment->getUniqueRequestId(),
             'purpose_code' => $payment->getPurposeCode(),
-            'charge_type' => $payment->getChargeType()
+            'charge_type' => $payment->getChargeType(),
+            'fee_currency' => $payment->getFeeCurrency(),
+            'fee_amount' => $payment->getFeeAmount()
         ];
         if ($convertForFind) {
             return $common + [
@@ -128,7 +130,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setUniqueRequestId($response->unique_request_id)
             ->setFailureReturnedAmount($response->failure_returned_amount)
             ->setPurposeCode($response->purpose_code)
-            ->setChargeType($response->charge_type);
+            ->setChargeType($response->charge_type)
+            ->setFeeAmount($response->fee_amount)
+            ->setFeeCurrency($response->fee_currency);
 
         $this->setIdProperty($payment, $response->id);
         return $payment;

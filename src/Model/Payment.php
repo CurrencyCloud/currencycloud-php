@@ -103,6 +103,14 @@ class Payment implements EntityInterface
      * @var string|null
      */
     private $chargeType;
+    /**
+     * @var string|null
+     */
+    private $feeAmount;
+    /**
+     * @var string|null
+     */
+    private $feeCurrency;
 
     /**
      * @param string $currency
@@ -567,4 +575,44 @@ class Payment implements EntityInterface
         $this->chargeType = $chargeType;
         return $this;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getFeeCurrency()
+    {
+        return $this->feeCurrency;
+    }
+
+    /**
+     * @param null|string feeCurrency
+     *
+     * @return $this
+     */
+    public function setFeeCurrency($feeCurrency)
+    {
+        $this->feeCurrency = $feeCurrency;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFeeAmount()
+    {
+        return $this->feeAmount;
+    }
+
+    /**
+     * @param null|string feeCurrency
+     *
+     * @return $this
+     */
+    public function setFeeAmount($feeAmount)
+    {
+        $this->feeAmount = $feeAmount;
+        return $this;
+    }
+
+
 }
