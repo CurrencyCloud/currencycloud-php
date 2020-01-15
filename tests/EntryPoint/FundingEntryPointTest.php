@@ -64,7 +64,7 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
                 ]
             )
         );
-        $accounts = $entryPoint->findFundingAccounts((new Pagination())->setPerPage(5),GBP);
+        $accounts = $entryPoint->findFundingAccounts((new Pagination())->setPerPage(5),"GBP");
         $pagination = $accounts->getPagination();
 
         $this->assertSame(1, count($accounts->getFundingAccounts()));
