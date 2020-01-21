@@ -28,10 +28,8 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
                 "bank_country": "UK",
                 "currency": "GBP",
                 "payment_type": "regular",
-                "regular_routing_code": "010203",
-                "regular_routing_code_type": "sort_code",
-                "priority_routing_code": "",
-                "priority_routing_code_type": "",
+                "routing_code": "010203",
+                "routing_code_type": "sort_code",
                 "created_at": "2018-05-14T14:18:30+00:00",
                 "updated_at": "2018-05-14T14:19:30+00:00"
               }
@@ -80,10 +78,8 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame("UK", $account->getBankCountry());
         $this->assertSame("GBP", $account->getCurrency());
         $this->assertSame("regular", $account->getPaymentType());
-        $this->assertSame("010203",  $account->getRegularRoutingCode());
-        $this->assertSame("sort_code", $account->getRegularRoutingCodeType());
-        $this->assertSame("", $account->getPriorityRoutingCode());
-        $this->assertSame("", $account->getPriorityRoutingCodeType());
+        $this->assertSame("010203",  $account->getRoutingCode());
+        $this->assertSame("sort_code", $account->getRoutingCodeType());
         $this->assertSame("2018-05-14T14:18:30+00:00", $account->getCreatedAt()->format(DateTime::RFC3339));
         $this->assertSame("2018-05-14T14:19:30+00:00", $account->getUpdatedAt()->format(DateTime::RFC3339));
         $this->assertSame(1, $pagination->getTotalEntries());

@@ -49,19 +49,11 @@ class FundingAccount implements EntityInterface
     /**
      * @var string`
      */
-    private $regularRoutingCode;
+    private $routingCode;
     /**
      * @var string
      */
-    private $regularRoutingCodeType;
-    /**
-     * @var string`
-     */
-    private $priorityRoutingCode;
-    /**
-     * @var string
-     */
-    private $priorityRoutingCodeType;
+    private $routingCodeType;
     /**
      * @var DateTime
      */
@@ -83,17 +75,14 @@ class FundingAccount implements EntityInterface
      * @param string $bankCountry
      * @param string $currency
      * @param string $paymentType
-     * @param string $regularRoutingCode
-     * @param string $regularRoutingCodeType
-     * @param string $priorityRoutingCode
-     * @param string $priorityRoutingCodeType
+     * @param string $routingCode
+     * @param string $routingCodeType
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
     public function __construct($id, $accountId, $accountNumber, $accountNumberType, $accountHolderName, $bankName,
-                                $bankAddress, $bankCountry, $currency, $paymentType, $regularRoutingCode,
-                                $regularRoutingCodeType, $priorityRoutingCode, $priorityRoutingCodeType, $createdAt,
-                                $updatedAt)
+                                $bankAddress, $bankCountry, $currency, $paymentType, $routingCode,
+                                $routingCodeType, $createdAt,$updatedAt)
     {
         $this->id = $id;
         $this->accountId = $accountId;
@@ -105,10 +94,8 @@ class FundingAccount implements EntityInterface
         $this->bankCountry = $bankCountry;
         $this->currency = $currency;
         $this->paymentType = $paymentType;
-        $this->regularRoutingCode = $regularRoutingCode;
-        $this->regularRoutingCodeType = $regularRoutingCodeType;
-        $this->priorityRoutingCode = $priorityRoutingCode;
-        $this->priorityRoutingCodeType = $priorityRoutingCodeType;
+        $this->routingCode = $routingCode;
+        $this->routingCodeType = $routingCodeType;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
@@ -197,33 +184,17 @@ class FundingAccount implements EntityInterface
     /**
      * @return string
      */
-    public function getRegularRoutingCode()
+    public function getRoutingCode()
     {
-        return $this->regularRoutingCode;
+        return $this->routingCode;
     }
 
     /**
      * @return string
      */
-    public function getRegularRoutingCodeType()
+    public function getRoutingCodeType()
     {
-        return $this->regularRoutingCodeType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriorityRoutingCode()
-    {
-        return $this->priorityRoutingCode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriorityRoutingCodeType()
-    {
-        return $this->priorityRoutingCodeType;
+        return $this->routingCodeType;
     }
 
     /**

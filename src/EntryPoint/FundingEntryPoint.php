@@ -71,10 +71,8 @@ class FundingEntryPoint extends AbstractEntryPoint
                 $value->bank_country,
                 $value->currency,
                 $value->payment_type,
-                $value->regular_routing_code,
-                $value->regular_routing_code_type,
-                $value->priority_routing_code,
-                $value->priority_routing_code_type,
+                $value->routing_code,
+                $value->routing_code_type,
                 !empty($value->created_at) ? new DateTime($value->created_at) : null,
                 !empty($value->updated_at) ? new DateTime($value->updated_at) : null
             ));
