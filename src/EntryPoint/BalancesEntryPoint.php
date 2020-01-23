@@ -5,6 +5,7 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Balance;
 use CurrencyCloud\Model\Balances;
 use CurrencyCloud\Model\Pagination;
+use CurrencyCloud\Model\MarginBalanceTopUp;
 use DateTime;
 use stdClass;
 
@@ -71,6 +72,31 @@ class BalancesEntryPoint extends AbstractEntryPoint
     }
 
     /**
+     * @param string $currency
+     * @param string $amount
+     * @param null|string $onBehalfOf
+     *
+     * @return MarginBalanceTopUp
+     */
+    public function topUpMargin($currency, $amount, $onBehalfOf = null)
+    {
+        $response = $this->request(
+            'POST',
+            'balances/top_up_margin',
+            [],
+            [
+                'on_behalf_of' => $onBehalfOf,
+                'currency' => $currency,
+                'amount' => $amount
+            ]
+        );
+        return new MarginBalanceTopUp($response->account_id,
+            $response->currency,
+            $response->transferred_amount,
+            new DateTime($response->transfer_completed_at));
+    }
+
+    /**
      * @param stdClass $response
      *
      * @return Balance
@@ -87,4 +113,5 @@ class BalancesEntryPoint extends AbstractEntryPoint
         $this->setIdProperty($balance, $response->id);
         return $balance;
     }
+
 }

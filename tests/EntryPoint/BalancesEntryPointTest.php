@@ -76,4 +76,40 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $this->validateObjectStrictName($ret->getBalances()[0], $this->out['balances'][0]);
     }
+
+    /**
+     * @test
+     */
+    public function canTopUpMargin()
+    {
+        $data = '{
+            "account_id": "6c046c51-2387-4004-8e87-4bf97102e36d",
+            "currency": "GBP",
+            "transferred_amount": "450.0",
+            "transfer_completed_at": "2007-11-19T08:37:48-06:00"
+          }';
+
+        $entryPoint = new BalancesEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'POST',
+                'balances/top_up_margin',
+                [],
+                [
+                    'currency' => 'GBP',
+                    'amount' => '450',
+                    'on_behalf_of' => null
+                ]
+            )
+        );
+
+        $topUp = $entryPoint->topUpMargin('GBP','450');
+
+
+        $this->assertSame("6c046c51-2387-4004-8e87-4bf97102e36d", $topUp->getAccountId());
+        $this->assertSame("GBP", $topUp->getCurrency());
+        $this->assertSame("450.0", $topUp->getTransferredAmount());
+        $transferCompletedAt = new DateTime('2007-11-19T08:37:48-06:00');
+        $this->assertEquals($transferCompletedAt, $topUp->getTransferCompletedAt());
+    }
 }
