@@ -3,7 +3,7 @@
 namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\EntryPoint\FundingEntryPoint;
-use CurrencyCloud\MOdel\Pagination;
+use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 
