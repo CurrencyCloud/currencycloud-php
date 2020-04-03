@@ -1,5 +1,5 @@
 {
-  "name": "currency-cloud/client",
+  "name": "aleksanderlebedenko/currency-cloud-client",
   "type": "library",
   "authors": [
     {
@@ -17,7 +17,7 @@
     "php": ">=7.1",
     "guzzlehttp/guzzle": "~6.1",
     "symfony/yaml": "^2.7|^3.0|^4.0",
-    "symfony/event-dispatcher": "^2.7|^3.0|^4.0"
+    "symfony/event-dispatcher": "^2.7|^3.0|^4.0|^5.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.7",
