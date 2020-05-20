@@ -56,7 +56,8 @@ class ConversionsEntryPoint extends AbstractEntryPoint
                 'client_buy_amount' => $conversion->getClientBuyAmount(),
                 'client_sell_amount' => $conversion->getClientSellAmount(),
                 'unique_request_id' => $conversion->getUniqueRequestId(),
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
+                'conversion_date_preference' => $conversion->getConversionDatePreference()
             ]
         );
 
