@@ -49,4 +49,24 @@ class Test extends BaseCurrencyCloudVCRTestCase
         );
         $this->validateObjectStrictName($detailedRate, $dummy);
     }
+
+    /**
+     * @vcr Rates/can_provided_detailed_rate_with_conversion_date_preference.yaml
+     * @test
+     */
+    public function canProvidedDetailedRateWithConversionDatePreference()
+    {
+
+        $detailedRate = $this->getAuthenticatedClient()->rates()->detailed('GBP', 'USD',
+            'buy', 10000, null, null, "conversion_date_preference");
+
+        $this->assertTrue($detailedRate instanceof DetailedRate);
+
+        $dummy = json_decode(
+            '{"settlement_cut_off_time": "2020-05-21T14:00:00Z","currency_pair": "GBPUSD","client_buy_currency": "GBP","client_sell_currency": "USD","client_buy_amount": "10000.00","client_sell_amount": "14081.00","fixed_side": "buy","client_rate": "1.4081","partner_rate": null,"core_rate": "1.4081","deposit_required": false,"deposit_amount": "0.0","deposit_currency": "USD","mid_market_rate": "1.4080"}',
+            true
+        );
+        $this->validateObjectStrictName($detailedRate, $dummy);
+    }
+
 }

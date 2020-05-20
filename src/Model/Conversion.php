@@ -125,6 +125,10 @@ class Conversion
      * @var String
      */
     private $uniqueRequestId;
+    /**
+     * @var String
+     */
+    private $conversionDatePreference;
 
     /**
      * @param string $buyCurrency
@@ -686,6 +690,25 @@ class Conversion
     public function setUniqueRequestId($uniqueRequestId)
     {
         $this->uniqueRequestId = $uniqueRequestId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConversionDatePreference()
+    {
+        return $this->conversionDatePreference;
+    }
+
+    /**
+     * @param string $conversionDatePreference
+     *
+     * @return $this
+     */
+    public function setConversionDatePreference($conversionDatePreference)
+    {
+        $this->conversionDatePreference = $conversionDatePreference;
         return $this;
     }
 }

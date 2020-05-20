@@ -2,6 +2,7 @@
 namespace CurrencyCloud\tests\VCR\Conversions;
 
 use CurrencyCloud\Criteria\ConversionProfitLossCriteria;
+use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use DateTime;
@@ -145,4 +146,5 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($dummy['amount'], $conversionCancellationQuote->getAmount());
         $this->assertSame($dummy['currency'], $conversionCancellationQuote->getCurrency());
     }
+
 }
