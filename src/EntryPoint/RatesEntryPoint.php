@@ -46,6 +46,7 @@ class RatesEntryPoint extends AbstractEntryPoint
      * @param string $amount
      * @param DateTime|null $conversionDate
      * @param null|string $onBehalfOf
+     * @param null|string $conversionDatePreference
      *
      * @return DetailedRate
      */
@@ -55,7 +56,8 @@ class RatesEntryPoint extends AbstractEntryPoint
         $fixedSide,
         $amount,
         DateTime $conversionDate = null,
-        $onBehalfOf = null
+        $onBehalfOf = null,
+        $conversionDatePreference = null
     ) {
         $response = $this->request(
             'GET',
@@ -66,7 +68,8 @@ class RatesEntryPoint extends AbstractEntryPoint
                 'fixed_side' => $fixedSide,
                 'amount' => $amount,
                 'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format('Y-m-d'),
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
+                'conversion_date_preference' => $conversionDatePreference
             ]
         );
         return $this->createDetailedRateFromResponse($response);
