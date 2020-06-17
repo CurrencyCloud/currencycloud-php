@@ -34,7 +34,7 @@ class PayersEntryPoint extends AbstractEntryPoint
             $response->company_name,
             $response->first_name,
             $response->last_name,
-            $response->address,
+            $this->formatAddress($response->address),
             $response->city,
             $response->state_or_province,
             $response->country,
@@ -50,4 +50,11 @@ class PayersEntryPoint extends AbstractEntryPoint
         return $payer;
     }
 
+    private function formatAddress($address) {
+        if(is_null($address)) {
+            return null;
+        } else {
+            return [$address];
+        }
+    }
 }

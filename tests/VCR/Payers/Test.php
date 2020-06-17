@@ -17,7 +17,7 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame(null,$payer->getCompanyName());
         $this->assertSame("John",$payer->getFirstName());
         $this->assertSame("Test-Payer",$payer->getLastName());
-        $this->assertSame("123 Big Street",$payer->getAddress());
+        $this->assertSame(["123 Big Street"],$payer->getAddress());
         $this->assertSame("London",$payer->getCity());
         $this->assertSame(null,$payer->getStateOrProvince());
         $this->assertSame("GB",$payer->getCountry());
