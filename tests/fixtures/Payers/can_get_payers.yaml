@@ -1,0 +1,34 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/payers/fa0b6125-6f81-4fc1-8861-544d7d5c9cdf'
+        headers:
+            Host: devapi.currencycloud.com
+            Accept-Encoding: null
+            X-Auth-Token: 0d0ea48304ebafe27ea9d57d712128a8
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/1.9.2'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '404'
+            message: 'Not Found'
+        headers:
+            Date: 'Wed, 17 Jun 2020 10:15:18 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dcf8bec371ddeb1fb9dddd6bcab6f07561592388918; expires=Fri, 17-Jul-20 10:15:18 GMT; path=/; domain=.currencycloud.com; HttpOnly; SameSite=Lax, AWSALB=TDEUku820Yhkync7gjZMZHA6f3wb1dCvDeqDgEH5rMufC26N33mHoNFichFoaIyd+G9O09MD39P5+AZUVeeEbYmtO2qqERjzxGibGsIC3/buT6GOPAKrN639vqsV; Expires=Wed, 24 Jun 2020 10:15:18 GMT; Path=/, AWSALBCORS=TDEUku820Yhkync7gjZMZHA6f3wb1dCvDeqDgEH5rMufC26N33mHoNFichFoaIyd+G9O09MD39P5+AZUVeeEbYmtO2qqERjzxGibGsIC3/buT6GOPAKrN639vqsV; Expires=Wed, 24 Jun 2020 10:15:18 GMT; Path=/; SameSite=None; Secure'
+            Access-Control-Allow-Origin: '*'
+            X-Request-Id: eb2a6fdc-215b-413a-b13e-2ff9a039b8bc
+            Access-Control-Allow-Methods: GET
+            X-Content-Type-Options: nosniff
+            Vary: Origin
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,X-Auth-Token,Origin,Authority'
+            CF-Cache-Status: DYNAMIC
+            cf-request-id: 03635fb5ef0000bc48ce320200000001
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=2592000; includeSubDomains'
+            Server: cloudflare
+            CF-RAY: 5a4c02364de4bc48-LHR
+        body: '{"error_code":"payer_not_found","error_messages":{"id":[{"code":"payer_not_found","message":"Payer was not found for this id","params":{}}]}}'
