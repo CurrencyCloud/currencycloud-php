@@ -49,4 +49,5 @@ class PayersEntryPoint extends AbstractEntryPoint
         $this->setIdProperty($payer, $response->id);
         return $payer;
     }
+
 }

@@ -28,7 +28,7 @@ class Payer
      */
     private $lastName;
     /**
-     * @var array|null
+     * @var null|string
      */
     private $address;
     /**
@@ -73,7 +73,7 @@ class Payer
      * @param string|null $companyName
      * @param string|null $firstName
      * @param string|null $lastName
-     * @param array|null $address
+     * @param string|null $address
      * @param string|null $city
      * @param string|null $stateOrProvince
      * @param string|null $country
@@ -89,7 +89,7 @@ class Payer
         $companyName = null,
         $firstName = null,
         $lastName = null,
-        array $address = null,
+        $address = null,
         $city = null,
         $stateOrProvince = null,
         $country = null,
@@ -104,7 +104,7 @@ class Payer
         $this->companyName = (null === $companyName) ? null : (string) $companyName;
         $this->firstName = (null === $firstName) ? null : (string) $firstName;
         $this->lastName = (null === $lastName) ? null : (string) $lastName;
-        $this->address = $address;
+        $this->address = (null === $address) ? null : (string) $address;
         $this->city = (null === $city) ? null : (string) $city;
         $this->stateOrProvince = (null === $stateOrProvince) ? null : (string) $stateOrProvince;
         $this->country = (null === $country) ? null : (string) $country;
@@ -281,7 +281,7 @@ class Payer
     }
 
     /**
-     * @param array|null $address
+     * @param null|string $address
      *
      * @return $this
      */
