@@ -1,0 +1,29 @@
+-
+    request:
+        method: GET
+        url: 'https://devapi.currencycloud.com/v2/payers/fa0b6125-6f81-4fc1-8861-544d7d5c9cdf'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 200
+        headers:
+            Date: 'Mon, 05 Nov 2018 09:27:54 GMT'
+            Content-Type: application/json
+            X-Request-Id: 0ba3a275-9ac2-47f6-ae6b-5e507946cbd9
+        body: '{
+                   "id": "fa0b6125-6f81-4fc1-8861-544d7d5c9cdf",
+                   "legal_entity_type": "individual",
+                   "company_name": null,
+                   "first_name": "John",
+                   "last_name": "Test-Payer",
+                   "address": "123 Big Street",
+                   "city": "London",
+                   "state_or_province": null,
+                   "country": "GB",
+                   "postcode": "W12",
+                   "date_of_birth": "1969-12-31",
+                   "identification_type": null,
+                   "identification_value": null,
+                   "created_at": "2020-06-16T16:57:14+00:00",
+                   "updated_at": "2020-06-16T16:57:14+00:00"
+               }'
