@@ -166,4 +166,46 @@ class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame("created_at", $accounts->getPagination()->getOrder());
         $this->assertSame("asc", $accounts->getPagination()->getOrderAscDesc());
     }
+
+    /**
+     * @test
+     */
+    public function testCanPullFunds()
+    {
+        $data = '{
+               "id": "e2e6b7aa-c9e8-4625-96a6-b97d4baab758",
+                "withdrawal_account_id": "0886ac00-6ab6-41a6-b0e1-8d3faf2e0de2",
+                "reference": "PullFunds1",
+                "amount": "100.00",
+                "created_at": "2020-06-29T08:02:31+00:00"
+             }';
+
+        $entryPoint = new WithdrawalAccountsEntryPoint(new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode($data),
+                'POST',
+                'withdrawal_accounts/0886ac00-6ab6-41a6-b0e1-8d3faf2e0de2/pull_funds',
+                [],
+                [
+                    'reference' => "PullFunds1",
+                    'amount' => "100.00",
+                ]
+            )
+        );
+
+
+        $funds = $entryPoint->pullFunds("0886ac00-6ab6-41a6-b0e1-8d3faf2e0de2", "PullFunds1","100.00");
+
+
+        $this->assertSame("e2e6b7aa-c9e8-4625-96a6-b97d4baab758", $funds->getId());
+        $this->assertSame("0886ac00-6ab6-41a6-b0e1-8d3faf2e0de2", $funds->getWithdrawalAccountId());
+        $this->assertSame("PullFunds1", $funds->getReference());
+        $this->assertSame("100.00", $funds->getAmount());
+        $this->assertSame("2020-06-29T08:02:31+00:00", $funds->getCreatedAt()->format(DateTime::RFC3339));
+
+
+    }
+
+
+
 }

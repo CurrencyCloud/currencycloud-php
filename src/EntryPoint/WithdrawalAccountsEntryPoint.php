@@ -2,6 +2,7 @@
 
 namespace CurrencyCloud\EntryPoint;
 
+use CurrencyCloud\Model\WithdrawalAccountFunds;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\WithdrawalAccount;
 use CurrencyCloud\Model\WithdrawalAccounts;
@@ -34,6 +35,30 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
          */
     }
 
+    /**
+     * @param string $withdrawalAccountId
+     * @param string $reference
+     * @param string $amount
+     *
+     * @return WithdrawalAccountFunds
+     */
+    public function pullFunds(
+         $withdrawalAccountId,
+         $reference,
+        $amount
+    ) {
+        $response = $this->request('POST',
+            sprintf('withdrawal_accounts/%s/pull_funds', $withdrawalAccountId),
+            [],
+            [
+                'reference' => $reference,
+                'amount' => $amount
+            ]);
+
+        return $this->convertResponseToWithdrawalAccountFunds($response);
+    }
+
+
     protected function convertFindWithdrawalAccountsCriteriaToRequest(FindWithdrawalAccountsCriteria $findWithdrawalAccountsCriteria){
         $common = [
             'account_id' => $findWithdrawalAccountsCriteria->getAccountId()
@@ -55,4 +80,17 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
 
         return $withdrawalAccount;
     }
+
+    protected function convertResponseToWithdrawalAccountFunds($response) {
+        $withdrawalAccountFunds = new WithdrawalAccountFunds();
+
+        $this->setIdProperty($withdrawalAccountFunds, $response->id, 'id');
+        $withdrawalAccountFunds->setWithdrawalAccountId($response->withdrawal_account_id);
+        $withdrawalAccountFunds->setReference($response->reference);
+        $withdrawalAccountFunds->setAmount($response->amount);
+        $withdrawalAccountFunds->setCreatedAt(null !== $response->created_at ? new DateTime($response->created_at) : null);
+
+        return $withdrawalAccountFunds;
+    }
+
 }
