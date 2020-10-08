@@ -16,23 +16,18 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
         Pagination $pagination)
     {
         if (null === $findWithdrawalAccountsCriteria) {
-            $report = new FindWithdrawalAccountsCriteria();
+            $findWithdrawalAccountsCriteria = new FindWithdrawalAccountsCriteria();
         }
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('withdrawal_accounts/find', $findWithdrawalAccountsCriteria, $pagination, function ($findReportsCriteria) {
-            return $this->convertFindWithdrawalAccountsCriteriaToRequest($findReportsCriteria);
+        return $this->doFind('withdrawal_accounts/find', $findWithdrawalAccountsCriteria, $pagination, function ($findWithdrawalAccountsCriteria) {
+            return $this->convertFindWithdrawalAccountsCriteriaToRequest($findWithdrawalAccountsCriteria);
         }, function ($response) {
             return $this->convertResponseToWithdrawalAccount($response);
         }, function (array $entities, Pagination $pagination) {
             return new WithdrawalAccounts($entities, $pagination);
         }, 'withdrawal_accounts');
-
-        /**
-         * @param FindIbansCriteria $findIbansCriteria
-         * @return array
-         */
     }
 
     /**
