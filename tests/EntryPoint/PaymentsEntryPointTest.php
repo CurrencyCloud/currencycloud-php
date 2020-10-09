@@ -107,7 +107,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'reference' => 'E',
                 'conversion_id' => 'F',
                 'payment_type' => 'G',
-                'payment_date' => $paymentDate->format(DateTime::RFC3339),
+                'payment_date' => $paymentDate->format('Y-m-d'),
                 'payer_entity_type' => 'I',
                 'payer_company_name' => 'J',
                 'payer_first_name' => 'K',
