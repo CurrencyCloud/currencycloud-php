@@ -58,7 +58,7 @@ class Client
         array $options,
         $secured
     ) {
-        $this->eventDispatcher->dispatch(BeforeClientRequestEvent::NAME, new BeforeClientRequestEvent(
+        $this->eventDispatcher->dispatch( new BeforeClientRequestEvent(
             $method,
             $uri,
             $queryParams,
@@ -134,7 +134,7 @@ class Client
                         $url,
                         $originalRequest
                     );
-                    $this->eventDispatcher->dispatch(ClientHttpErrorEvent::NAME, $event);
+                    $this->eventDispatcher->dispatch($event);
                     $interceptedResponse = $event->getInterceptedResponse();
                     if (null !== $interceptedResponse) {
                         return $interceptedResponse;
