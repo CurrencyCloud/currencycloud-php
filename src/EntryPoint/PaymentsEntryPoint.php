@@ -12,7 +12,9 @@ use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
 use CurrencyCloud\Model\PaymentSubmission;
+use CurrencyCloud\Model\PurposeCode;
 use CurrencyCloud\Model\QuotePaymentFee;
+use CurrencyCloud\Model\PaymentTrackingInfo;
 use DateTime;
 use stdClass;
 
@@ -405,4 +407,91 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             $response->payment_type, $response->charge_type, $response->fee_amount, $response->fee_currency);
     }
 
+    /**
+     * @param string $id
+     *
+     * @return PaymentTrackingInfo
+     */
+    public function getTrackingInfo($id)
+    {
+        $response = $this->request('GET',
+            sprintf('payments/%s/tracking_info', $id));
+
+        return $this->createTrackingInfoFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $response
+     *
+     * @return PaymentTrackingInfo
+     */
+    private function createTrackingInfoFromResponse(stdClass $response)
+    {
+        $trackingInfo = new PaymentTrackingInfo();
+        $trackingInfo->setUetr($response->uetr);
+        $trackingInfo->setTransactionStatus(
+            new PaymentTrackingInfo\TransactionStatus($response->transaction_status->status,
+                $response->transaction_status->reason));
+        $trackingInfo->setCompletionTime(null !== $response->completion_time ?
+            new DateTime($response->completion_time) : null);
+        $trackingInfo->setInitiationTime(null !== $response->initiation_time ?
+            new DateTime($response->initiation_time) : null);
+        $trackingInfo->setLastUpdateTime(null !== $response->last_update_time ?
+            new DateTime($response->last_update_time) : null);
+
+        $paymentEvents = [];
+        foreach ($response->payment_events as $paymentEvent) {
+            $paymentEvents[] = $this->createTrackingInfoPaymentEventFromResponse($paymentEvent);
+        }
+        $trackingInfo->setPaymentEvents($paymentEvents);
+        return $trackingInfo;
+    }
+
+    /**
+     * @param stdClass $paymentEventResponse
+     *
+     * @return PaymentTrackingInfo\PaymentEvent
+     */
+    private function createTrackingInfoPaymentEventFromResponse(stdClass $paymentEventResponse)
+    {
+        $paymentEvent = new PaymentTrackingInfo\PaymentEvent();
+        $paymentEvent->setForwardedToAgent($paymentEventResponse->forwarded_to_agent);
+        $paymentEvent->setFrom($paymentEventResponse->from);
+        $paymentEvent->setFundsAvailable($paymentEventResponse->funds_available);
+        $paymentEvent->setOriginator($paymentEventResponse->originator);
+        $paymentEvent->setTo($paymentEventResponse->to);
+        $paymentEvent->setTrackerEventType($paymentEventResponse->tracker_event_type);
+        $paymentEvent->setTransactionStatus(null !== $paymentEventResponse->transaction_status ?
+            new PaymentTrackingInfo\TransactionStatus($paymentEventResponse->transaction_status->status,
+                $paymentEventResponse->transaction_status->reason) : null);
+        $paymentEvent->setValid($paymentEventResponse->valid);
+        $paymentEvent->setSerialParties(null !== $paymentEventResponse->serial_parties ?
+            new PaymentTrackingInfo\SerialParties($paymentEventResponse->serial_parties->debtor,
+                $paymentEventResponse->serial_parties->debtor_agent,
+                $paymentEventResponse->serial_parties->intermediary_agent1,
+                $paymentEventResponse->serial_parties->instructing_reimbursement_agent,
+                $paymentEventResponse->serial_parties->creditor_agent,
+                $paymentEventResponse->serial_parties->creditor) : null);
+        $paymentEvent->setSenderAcknowledgementReceipt(null !== $paymentEventResponse->sender_acknowledgement_receipt ?
+            new DateTime($paymentEventResponse->sender_acknowledgement_receipt) : null);
+        $paymentEvent->setInstructedAmount(null !== $paymentEventResponse->instructed_amount ?
+            new PaymentTrackingInfo\Amount($paymentEventResponse->instructed_amount->currency, $paymentEventResponse->instructed_amount->amount) : null);
+        $paymentEvent->setConfirmedAmount(null !== $paymentEventResponse->confirmed_amount ?
+            new PaymentTrackingInfo\Amount($paymentEventResponse->confirmed_amount->currency, $paymentEventResponse->confirmed_amount->amount) : null);
+        $paymentEvent->setInterbankSettlementAmount(null !== $paymentEventResponse->interbank_settlement_amount ?
+            new PaymentTrackingInfo\Amount($paymentEventResponse->interbank_settlement_amount->currency, $paymentEventResponse->interbank_settlement_amount->amount) : null);
+        $paymentEvent->setInterbankSettlementDate(null !== $paymentEventResponse->interbank_settlement_date ?
+            new DateTime($paymentEventResponse->interbank_settlement_date) : null);
+        $paymentEvent->setChargeAmount(null !== $paymentEventResponse->charge_amount ?
+            new PaymentTrackingInfo\Amount($paymentEventResponse->charge_amount->currency, $paymentEventResponse->charge_amount->amount) : null);
+        $paymentEvent->setChargeType($paymentEventResponse->charge_type);
+        $paymentEvent->setForeignExchangeDetails(null !== $paymentEventResponse->foreign_exchange_details ?
+            new PaymentTrackingInfo\ForeignExchangeDetails($paymentEventResponse->foreign_exchange_details->source_currency,
+                $paymentEventResponse->foreign_exchange_details->target_currency,
+                $paymentEventResponse->foreign_exchange_details->rate) : null);
+        $paymentEvent->setLastUpdateTime(null !== $paymentEventResponse->last_update_time ?
+            new DateTime($paymentEventResponse->last_update_time) : null);
+
+        return $paymentEvent;
+    }
 }

@@ -676,4 +676,383 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('EUR', $quotePaymentFee->getFeeCurrency());
         $this->assertNull($quotePaymentFee->getChargeType());
     }
+
+    /**
+     * @test
+     */
+    public function canGetPaymentTrackingInfo()
+    {
+        $data = '{
+                 "uetr": "46ed4827-7b6f-4491-a06f-b548d5a7512d",
+                 "transaction_status": {
+                     "status": "processing",
+                     "reason": "transferred_and_tracked"
+                 },
+                 "initiation_time": "2019-07-09T13:20:30+00:00",
+                 "completion_time": null,
+                 "last_update_time": "2019-07-10T15:39:08+00:00",
+                 "payment_events": [
+                     {
+                         "tracker_event_type": "customer_credit_transfer_payment_cancellation_request",
+                         "valid": true,
+                         "transaction_status": null,
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": null,
+                         "serial_parties": null,
+                         "sender_acknowledgement_receipt": "2019-07-10T15:39:08+00:00",
+                         "instructed_amount": null,
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": null,
+                         "interbank_settlement_date": null,
+                         "charge_amount": null,
+                         "charge_type": null,
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-10T15:39:08+00:00"
+                     },
+                     {
+                         "tracker_event_type": "customer_credit_transfer_payment_cancellation_request",
+                         "valid": true,
+                         "transaction_status": null,
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": null,
+                         "serial_parties": null,
+                         "sender_acknowledgement_receipt": "2019-07-10T14:22:41+00:00",
+                         "instructed_amount": null,
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": null,
+                         "interbank_settlement_date": null,
+                         "charge_amount": null,
+                         "charge_type": null,
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-10T14:22:41+00:00"
+                     },
+                     {
+                         "tracker_event_type": "credit_transfer_payment_cancellation_request",
+                         "valid": true,
+                         "transaction_status": null,
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": "BANABEBBXXX",
+                         "serial_parties": null,
+                         "sender_acknowledgement_receipt": "2019-07-10T14:22:41+00:00",
+                         "instructed_amount": null,
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": {
+                             "currency": "USD",
+                             "amount": "745437.57"
+                         },
+                         "interbank_settlement_date": "2019-07-09T00:00:00+00:00",
+                         "charge_amount": null,
+                         "charge_type": null,
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-10T14:22:41+00:00"
+                     },
+                     {
+                         "tracker_event_type": "customer_credit_transfer_payment_cancellation_request",
+                         "valid": true,
+                         "transaction_status": null,
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": null,
+                         "serial_parties": null,
+                         "sender_acknowledgement_receipt": "2019-07-10T14:22:41+00:00",
+                         "instructed_amount": null,
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": null,
+                         "interbank_settlement_date": null,
+                         "charge_amount": null,
+                         "charge_type": null,
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-10T14:22:41+00:00"
+                     },
+                     {
+                         "tracker_event_type": "customer_credit_transfer_payment_cancellation_request",
+                         "valid": true,
+                         "transaction_status": null,
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": null,
+                         "serial_parties": null,
+                         "sender_acknowledgement_receipt": "2019-07-10T14:22:41+00:00",
+                         "instructed_amount": null,
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": null,
+                         "interbank_settlement_date": null,
+                         "charge_amount": null,
+                         "charge_type": null,
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-10T14:22:41+00:00"
+                     },
+                     {
+                         "tracker_event_type": "credit_transfer_payment_cancellation_request",
+                         "valid": true,
+                         "transaction_status": null,
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": null,
+                         "serial_parties": null,
+                         "sender_acknowledgement_receipt": "2019-07-10T14:17:39+00:00",
+                         "instructed_amount": null,
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": null,
+                         "interbank_settlement_date": null,
+                         "charge_amount": null,
+                         "charge_type": null,
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-10T14:22:41+00:00"
+                     },
+                     {
+                         "tracker_event_type": "customer_credit_transfer_payment",
+                         "valid": true,
+                         "transaction_status": {
+                             "status": "processing",
+                             "reason": "transferred_and_tracked"
+                         },
+                         "funds_available": null,
+                         "forwarded_to_agent": null,
+                         "from": "BANABEBBXXX",
+                         "to": "BANAUS33XXX",
+                         "originator": "BANABEBBXXX",
+                         "serial_parties": {
+                             "debtor": null,
+                             "debtor_agent": "GPMRCH30",
+                             "intermediary_agent1": null,
+                             "instructing_reimbursement_agent": null,
+                             "creditor_agent": "GPMRQAJ0",
+                             "creditor": null
+                         },
+                         "sender_acknowledgement_receipt": "2019-07-09T13:20:30+00:00",
+                         "instructed_amount": {
+                             "currency": "USD",
+                             "amount": "745437.57"
+                         },
+                         "confirmed_amount": null,
+                         "interbank_settlement_amount": {
+                             "currency": "USD",
+                             "amount": "745437.57"
+                         },
+                         "interbank_settlement_date": "2019-07-09T00:00:00+00:00",
+                         "charge_amount": null,
+                         "charge_type": "shared",
+                         "foreign_exchange_details": null,
+                         "last_update_time": "2019-07-09T13:20:50+00:00"
+                     }
+                 ]
+             }';
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'payments/46ed4827-7b6f-4491-a06f-b548d5a7512d/tracking_info'
+            )
+        );
+        $trackingInfo = $entryPoint->getTrackingInfo("46ed4827-7b6f-4491-a06f-b548d5a7512d");
+        $this->assertSame('46ed4827-7b6f-4491-a06f-b548d5a7512d', $trackingInfo->getUetr());
+        $this->assertSame('processing', $trackingInfo->getTransactionStatus()->getStatus());
+        $this->assertSame('transferred_and_tracked', $trackingInfo->getTransactionStatus()->getReason());
+        $this->assertSame('2019-07-09T13:20:30+00:00', $trackingInfo->getInitiationTime()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getCompletionTime());
+        $this->assertSame('2019-07-10T15:39:08+00:00', $trackingInfo->getLastUpdateTime()->format(DateTime::RFC3339));
+        $this->assertSame(7, count($trackingInfo->getPaymentEvents()));
+
+        $this->assertSame("customer_credit_transfer_payment_cancellation_request",
+            $trackingInfo->getPaymentEvents()[0]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[0]->isValid());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getTransactionStatus());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[0]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[0]->getTo());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getSerialParties());
+        $this->assertSame("2019-07-10T15:39:08+00:00",
+            $trackingInfo->getPaymentEvents()[0]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getInstructedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getConfirmedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getInterbankSettlementAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getInterbankSettlementDate());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-10T15:39:08+00:00",
+            $trackingInfo->getPaymentEvents()[0]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+        $this->assertSame("customer_credit_transfer_payment_cancellation_request",
+            $trackingInfo->getPaymentEvents()[1]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[1]->isValid());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getTransactionStatus());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[1]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[1]->getTo());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getSerialParties());
+        $this->assertSame("2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[1]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getInstructedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getConfirmedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getInterbankSettlementAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getInterbankSettlementDate());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[1]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[1]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+        $this->assertSame("credit_transfer_payment_cancellation_request",
+            $trackingInfo->getPaymentEvents()[2]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[2]->isValid());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getTransactionStatus());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[2]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[2]->getTo());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[2]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getSerialParties());
+        $this->assertSame("2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[2]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getInstructedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getConfirmedAmount());
+        $this->assertSame("USD",$trackingInfo->getPaymentEvents()[2]->getInterbankSettlementAmount()->getCurrency());
+        $this->assertSame("745437.57",$trackingInfo->getPaymentEvents()[2]->getInterbankSettlementAmount()->getAmount());
+        $this->assertSame("2019-07-09T00:00:00+00:00", $trackingInfo->getPaymentEvents()[2]->getInterbankSettlementDate()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[2]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[2]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+        $this->assertSame("customer_credit_transfer_payment_cancellation_request",
+            $trackingInfo->getPaymentEvents()[3]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[3]->isValid());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getTransactionStatus());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[3]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[3]->getTo());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getSerialParties());
+        $this->assertSame("2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[3]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getInstructedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getConfirmedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getInterbankSettlementAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getInterbankSettlementDate());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[3]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[3]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+        $this->assertSame("customer_credit_transfer_payment_cancellation_request",
+            $trackingInfo->getPaymentEvents()[4]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[4]->isValid());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getTransactionStatus());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[4]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[4]->getTo());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getSerialParties());
+        $this->assertSame("2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[4]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getInstructedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getConfirmedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getInterbankSettlementAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getInterbankSettlementDate());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[4]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[4]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+        $this->assertSame("credit_transfer_payment_cancellation_request",
+            $trackingInfo->getPaymentEvents()[5]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[5]->isValid());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getTransactionStatus());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[5]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[5]->getTo());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getSerialParties());
+        $this->assertSame("2019-07-10T14:17:39+00:00",
+            $trackingInfo->getPaymentEvents()[5]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getInstructedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getConfirmedAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getInterbankSettlementAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getInterbankSettlementDate());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[5]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-10T14:22:41+00:00",
+            $trackingInfo->getPaymentEvents()[5]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+        $this->assertSame("customer_credit_transfer_payment",
+            $trackingInfo->getPaymentEvents()[6]->getTrackerEventType());
+        $this->assertTrue($trackingInfo->getPaymentEvents()[6]->isValid());
+        $this->assertSame("processing",
+            $trackingInfo->getPaymentEvents()[6]->getTransactionStatus()->getStatus());
+        $this->assertSame("transferred_and_tracked",
+            $trackingInfo->getPaymentEvents()[6]->getTransactionStatus()->getReason());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getFundsAvailable());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getForwardedToAgent());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[6]->getFrom());
+        $this->assertSame("BANAUS33XXX",
+            $trackingInfo->getPaymentEvents()[6]->getTo());
+        $this->assertSame("BANABEBBXXX",
+            $trackingInfo->getPaymentEvents()[6]->getOriginator());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getSerialParties()->getDebtor());
+        $this->assertSame("GPMRCH30",
+            $trackingInfo->getPaymentEvents()[6]->getSerialParties()->getDebtorAgent());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getSerialParties()->getIntermediaryAgent1());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getSerialParties()->getInstructingReimbursementAgent());
+        $this->assertSame("GPMRQAJ0",
+            $trackingInfo->getPaymentEvents()[6]->getSerialParties()->getCreditorAgent());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getSerialParties()->getCreditor());
+        $this->assertSame( "2019-07-09T13:20:30+00:00",
+            $trackingInfo->getPaymentEvents()[6]->getSenderAcknowledgementReceipt()->format(DateTime::RFC3339));
+        $this->assertSame( "USD", $trackingInfo->getPaymentEvents()[6]->getInstructedAmount()->getCurrency());
+        $this->assertSame( "745437.57", $trackingInfo->getPaymentEvents()[6]->getInstructedAmount()->getAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getConfirmedAmount());
+        $this->assertSame( "USD", $trackingInfo->getPaymentEvents()[6]->getInterbankSettlementAmount()->getCurrency());
+        $this->assertSame( "745437.57", $trackingInfo->getPaymentEvents()[6]->getInterbankSettlementAmount()->getAmount());
+        $this->assertSame("2019-07-09T00:00:00+00:00", $trackingInfo->getPaymentEvents()[6]->getInterbankSettlementDate()->format(DateTime::RFC3339));
+        $this->assertSame("shared", $trackingInfo->getPaymentEvents()[6]->getChargeType());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getChargeAmount());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getForeignExchangeDetails());
+        $this->assertSame( "2019-07-09T13:20:50+00:00",
+            $trackingInfo->getPaymentEvents()[6]->getLastUpdateTime()->format(DateTime::RFC3339));
+
+    }
+
 }
