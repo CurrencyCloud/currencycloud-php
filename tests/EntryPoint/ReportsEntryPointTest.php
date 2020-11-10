@@ -233,8 +233,6 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
             [
                 'short_reference' => null,
                 'description' => null,
-                'account_id' => null,
-                'contact_id' => null,
                 'created_at_from' => null,
                 'created_at_to' => null,
                 'expiration_date_from' => null,
