@@ -89,7 +89,9 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return new ConversionDates(
             $invalidDates,
             new DateTime($response->first_conversion_date),
-            new DateTime($response->default_conversion_date)
+            new DateTime($response->default_conversion_date),
+            new DateTime($response->first_conversion_cutoff_datetime),
+            new DateTime($response->optimize_liquidity_conversion_date)
         );
     }
 
