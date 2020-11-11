@@ -151,8 +151,6 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         $common = [
             'short_reference' => $findReportsCriteria->getShortReference(),
             'description' => $findReportsCriteria->getDescription(),
-            'account_id' => $findReportsCriteria->getAccountId(),
-            'contact_id' => $findReportsCriteria->getContactId(),
             'created_at_from' => $findReportsCriteria->getCreatedAtFrom(),
             'created_at_to' => $findReportsCriteria->getCreatedAtTo(),
             'expiration_date_from' => $findReportsCriteria->getExpirationDateFrom(),
