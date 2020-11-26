@@ -375,7 +375,6 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'order' => null,
                 'order_asc_desc' => null,
                 'unique_request_id' => null,
-                'purpose_code' => null,
                 'charge_type' => null,
                 'fee_amount' => null,
                 'fee_currency' => null
@@ -462,9 +461,6 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'order' => null,
                 'order_asc_desc' => null,
                 'unique_request_id' => null,
-                'purpose_code' => null,
-                'charge_type' => null,
-                'purpose_code' => null,
                 'charge_type' => null,
                 'fee_amount' => null,
                 'fee_currency' => null
