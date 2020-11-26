@@ -14,7 +14,6 @@ use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\ReportsEntryPoint;
-use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
@@ -91,10 +90,6 @@ class CurrencyCloud
      */
     private $reportsEntryPoint;
     /**
-     * @var SettlementsEntryPoint
-     */
-    private $settlementsEntryPoint;
-    /**
      * @var TransfersEntryPoint
      */
     private $transfersEntryPoint;
@@ -119,7 +114,6 @@ class CurrencyCloud
      * @param ReferenceEntryPoint $referenceEntryPoint
      * @param ReportsEntryPoint $reportsEntryPoint
      * @param RatesEntryPoint $ratesEntryPoint
-     * @param SettlementsEntryPoint $settlementsEntryPoint
      * @param TransactionsEntryPoint $transactionsEntryPoint
      * @param TransfersEntryPoint $transfersEntryPoint
      * @param VansEntryPoint $vanEntryPoint
@@ -138,7 +132,6 @@ class CurrencyCloud
         ReferenceEntryPoint $referenceEntryPoint,
         ReportsEntryPoint $reportsEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
-        SettlementsEntryPoint $settlementsEntryPoint,
         TransactionsEntryPoint $transactionsEntryPoint,
         TransfersEntryPoint $transfersEntryPoint,
         VansEntryPoint $vanEntryPoint
@@ -157,7 +150,6 @@ class CurrencyCloud
         $this->contactsEntryPoint = $contactsEntryPoint;
         $this->paymentsEntryPoint = $paymentsEntryPoint;
         $this->reportsEntryPoint = $reportsEntryPoint;
-        $this->settlementsEntryPoint = $settlementsEntryPoint;
         $this->transfersEntryPoint = $transfersEntryPoint;
         $this->vansEntryPoint = $vanEntryPoint;
     }
@@ -209,7 +201,6 @@ class CurrencyCloud
             new ReferenceEntryPoint($client),
             new ReportsEntryPoint($entityManager, $client),
             new RatesEntryPoint($client),
-            new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client)
@@ -310,14 +301,6 @@ class CurrencyCloud
     public function rates()
     {
         return $this->ratesEntryPoint;
-    }
-
-    /**
-     * @return SettlementsEntryPoint
-     */
-    public function settlements()
-    {
-        return $this->settlementsEntryPoint;
     }
 
     /**
