@@ -14,7 +14,6 @@ use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
-use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\Model\Account;
 use CurrencyCloud\Model\Payment;
@@ -47,7 +46,6 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $this->assertInstanceOf(PaymentsEntryPoint::class, $client->payments());
         $this->assertInstanceOf(ReferenceEntryPoint::class, $client->reference());
         $this->assertInstanceOf(RatesEntryPoint::class, $client->rates());
-        $this->assertInstanceOf(SettlementsEntryPoint::class, $client->settlements());
         $this->assertInstanceOf(TransactionsEntryPoint::class, $client->transactions());
     }
 

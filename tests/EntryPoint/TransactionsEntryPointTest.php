@@ -3,10 +3,7 @@
 namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\Criteria\FindSettlementsCriteria;
-use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
-use CurrencyCloud\Model\Settlement;
-use CurrencyCloud\Model\Settlements;
 use CurrencyCloud\Model\Transaction;
 use CurrencyCloud\Model\Transactions;
 use CurrencyCloud\SimpleEntityManager;
