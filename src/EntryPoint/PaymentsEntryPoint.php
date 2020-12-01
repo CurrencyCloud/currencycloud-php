@@ -57,7 +57,6 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_id' => $payment->getBeneficiaryId(),
             'conversion_id' => $payment->getConversionId(),
             'unique_request_id' => $payment->getUniqueRequestId(),
-            'purpose_code' => $payment->getPurposeCode(),
             'charge_type' => $payment->getChargeType(),
             'fee_currency' => $payment->getFeeCurrency(),
             'fee_amount' => $payment->getFeeAmount()
@@ -72,8 +71,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $common + [
             'reference' => $payment->getReference(),
             'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format('Y-m-d'),
-            'payment_type' => $payment->getPaymentType()
-        ];
+            'payment_type' => $payment->getPaymentType(),
+            'purpose_code' => $payment->getPurposeCode()
+            ];
     }
 
     /**
