@@ -560,8 +560,8 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
             "purpose_code": "royalties",
             "purpose_description": "Royalty, trademark, patent and copyright fees"
         }
-    ]
-}';
+        ]
+        }';
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
@@ -576,12 +576,11 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
             )
         );
 
-        $purposeCodes = $entryPoint->paymentPurposeCodes("INR","individual", "IN");
+        $purposeCodes = $entryPoint->paymentPurposeCodes("INR", "individual", "IN");
 
-        $this->assertSame(24, count($purposeCodes));
+        $this->assertSame(25, count($purposeCodes));
 
-        $this->assertSame("IN", $purposeCodes[0]->getBankAccountCountry());
-        $this->assertSame("INR", $purposeCodes[0]->getCurrency()());
+        $this->assertSame("INR", $purposeCodes[0]->getCurrency());
         $this->assertSame("individual", $purposeCodes[0]->getEntityType());
         $this->assertSame("travel", $purposeCodes[0]->getPurposeCode());
         $this->assertSame("Travel", $purposeCodes[0]->getPurposeDescription());
