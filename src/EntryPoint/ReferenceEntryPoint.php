@@ -165,7 +165,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             [
                 'currency' => $currency,
                 'entity_type' => $entity_type,
-                'currency' => $bank_account_country
+                'bank_account_country' => $bank_account_country
             ]
         );
 
