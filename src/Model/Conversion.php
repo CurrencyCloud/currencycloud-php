@@ -40,10 +40,6 @@ class Conversion
     /**
      * @var string
      */
-    private $partnerStatus;
-    /**
-     * @var string
-     */
     private $currencyPair;
     /**
      * @var string
@@ -272,25 +268,6 @@ class Conversion
     public function setStatus($status)
     {
         $this->status = $status;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPartnerStatus()
-    {
-        return $this->partnerStatus;
-    }
-
-    /**
-     * @param string $partnerStatus
-     *
-     * @return $this
-     */
-    public function setPartnerStatus($partnerStatus)
-    {
-        $this->partnerStatus = $partnerStatus;
         return $this;
     }
 

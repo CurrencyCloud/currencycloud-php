@@ -50,7 +50,6 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'partner_sell_amount_from' => $conversionReportCriteria->getPartnerSellAmountFrom(),
             'partner_sell_amount_to' => $conversionReportCriteria->getPartnerSellAmountTo(),
             'client_status' => $conversionReportCriteria->getClientStatus(),
-            'partner_status' => $conversionReportCriteria->getPartnerStatus(),
             'conversion_date_from' => $conversionReportCriteria->getConversionDateFrom(),
             'conversion_date_to' => $conversionReportCriteria->getConversionDateTo(),
             'settlement_date_from' => $conversionReportCriteria->getSettlementDateFrom(),

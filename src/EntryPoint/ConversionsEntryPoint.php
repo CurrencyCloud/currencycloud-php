@@ -78,7 +78,6 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             ->setSettlementDate(new DateTime($response->settlement_date))
             ->setConversionDate(new DateTime($response->conversion_date))
             ->setStatus($response->status)
-            ->setPartnerStatus($response->partner_status)
             ->setCurrencyPair($response->currency_pair)
             ->setBuyCurrency($response->buy_currency)
             ->setSellCurrency($response->sell_currency)
@@ -248,7 +247,6 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return [
             'short_reference' => $criteria->getShortReference(),
             'status' => $criteria->getStatus(),
-            'partner_status' => $criteria->getParentStatus(),
             'buy_currency' => $criteria->getBuyCurrency(),
             'sell_currency' => $criteria->getSellCurrency(),
             'conversion_ids' => (null === $conversionIds) ? null : implode(',', $conversionIds),

@@ -58,10 +58,6 @@ class ConversionReportCriteria
      */
     private $clientStatus;
     /*
-     * @var string|null
-     */
-    private $partnerStatus;
-    /*
      * @var DateTime
      */
     private $conversionDateFrom;
@@ -334,24 +330,6 @@ class ConversionReportCriteria
     public function setClientStatus($clientStatus)
     {
         $this->clientStatus = $clientStatus;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPartnerStatus()
-    {
-        return $this->partnerStatus;
-    }
-
-    /**
-     * @param string $partnerStatus
-     * @return $this
-     */
-    public function setPartnerStatus($partnerStatus)
-    {
-        $this->partnerStatus = $partnerStatus;
         return $this;
     }
 
