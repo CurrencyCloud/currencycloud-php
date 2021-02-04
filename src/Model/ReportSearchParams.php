@@ -94,10 +94,6 @@ class ReportSearchParams {
      */
     private $clientStatus;
     /*
-     * @var string|null
-     */
-    private $partnerStatus;
-    /*
      * @var DateTime
      */
     private $conversionDateFrom;
@@ -202,7 +198,6 @@ class ReportSearchParams {
         $this->partnerSellAmountFrom = $this->getValue($data, 'partner_sell_amount_from');
         $this->partnerSellAmountTo = $this->getValue($data, 'partner_sell_amount_to');
         $this->clientStatus = $this->getValue($data, 'client_status');
-        $this->partnerStatus = $this->getValue($data, 'partner_status');
         $this->conversionDateFrom = $this->getValue($data, 'conversion_date_from');
         $this->conversionDateTo = $this->getValue($data, 'conversion_date_to');
         $this->settlementDateFrom = $this->getValue($data, 'settlement_date_from');
@@ -407,14 +402,6 @@ class ReportSearchParams {
     public function getClientStatus()
     {
         return $this->clientStatus;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPartnerStatus()
-    {
-        return $this->partnerStatus;
     }
 
     /**

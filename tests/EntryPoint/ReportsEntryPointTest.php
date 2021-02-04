@@ -56,7 +56,6 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
                     'partner_sell_amount_from' => null,
                     'partner_sell_amount_to' => null,
                     'client_status' => null,
-                    'partner_status' => null,
                     'conversion_date_from' => null,
                     'conversion_date_to' => null,
                     'settlement_date_from' => null,
