@@ -34,101 +34,13 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 
     /**
      * @param Beneficiary $beneficiary
-     * @param null|string $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function create(Beneficiary $beneficiary, $onBehalfOf = null)
-    {
-        return $this->doCreate('beneficiaries/create', $beneficiary, function ($beneficiary) {
-            return $this->convertBeneficiaryToRequest($beneficiary);
-        }, function ($response) {
-            return $this->createBeneficiaryFromResponse($response);
-        }, $onBehalfOf);
-    }
-
-    /**
-     * @param string $id
-     * @param null $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function retrieve($id, $onBehalfOf = null)
-    {
-        return $this->doRetrieve(sprintf('beneficiaries/%s', $id), function ($response) {
-            return $this->createBeneficiaryFromResponse($response);
-        }, $onBehalfOf);
-    }
-
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function update(Beneficiary $beneficiary, $onBehalfOf = null)
-    {
-        return $this->doUpdate(sprintf(
-            'beneficiaries/%s',
-            $beneficiary->getId()
-        ), $beneficiary, function ($entity, $onBehalfOf) {
-            return $this->convertBeneficiaryToRequest($entity, $onBehalfOf, false, true);
-        }, function ($response) {
-            return $this->createBeneficiaryFromResponse($response);
-        });
-    }
-
-    /**
-     * @param Beneficiary|null $beneficiary
-     * @param Pagination|null $pagination
-     * @param null $onBehalfOf
-     *
-     * @return Beneficiaries
-     */
-    public function find(Beneficiary $beneficiary = null, Pagination $pagination = null, $onBehalfOf = null)
-    {
-        if (null === $beneficiary) {
-            $beneficiary = new Beneficiary();
-        }
-        if (null === $pagination) {
-            $pagination = new Pagination();
-        }
-        return $this->doFind('beneficiaries/find', $beneficiary, $pagination, function ($entity, $onBehalfOf) {
-            return $this->convertBeneficiaryToRequest($entity, $onBehalfOf);
-        }, function ($response) {
-            return $this->createBeneficiaryFromResponse($response);
-        }, function (array $entities, Pagination $pagination) {
-            return new Beneficiaries($entities, $pagination);
-        }, 'beneficiaries', $onBehalfOf);
-    }
-
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function delete(Beneficiary $beneficiary, $onBehalfOf = null)
-    {
-        return $this->doDelete(
-            sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
-            $beneficiary,
-            function ($response) {
-                return $this->createBeneficiaryFromResponse($response);
-            },
-            $onBehalfOf
-        );
-    }
-
-    /**
-     * @param Beneficiary $beneficiary
      * @param bool $convertForValidate
      * @param bool $convertForUpdate
      *
      * @return array
      */
     protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, $convertForValidate = false, $convertForUpdate = false)
-	{
+    {
         $isDefaultBeneficiary = $beneficiary->isDefaultBeneficiary();
         $common = [
             'bank_country' => $beneficiary->getBankCountry(),
@@ -178,8 +90,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         }
 
         return $common + [
-            'creator_contact_id' => $beneficiary->getCreatorContactId()
-        ];
+                'creator_contact_id' => $beneficiary->getCreatorContactId()
+            ];
     }
 
     /**
@@ -234,5 +146,95 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         }
 
         return $beneficiary;
+    }
+
+    /**
+     * @param Beneficiary $beneficiary
+     * @param null|string $onBehalfOf
+     *
+     * @return Beneficiary
+     */
+    public function create(Beneficiary $beneficiary, $onBehalfOf = null)
+    {
+        return $this->doCreate('beneficiaries/create', $beneficiary, function ($beneficiary) {
+            return $this->convertBeneficiaryToRequest($beneficiary);
+        }, function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
+     * @param string $id
+     * @param Beneficiary|null $onBehalfOf
+     *
+     * @return Beneficiary
+     */
+    public function retrieve($id, $onBehalfOf = null)
+    {
+        return $this->doRetrieve(sprintf('beneficiaries/%s', $id), function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
+     * @param Beneficiary $beneficiary
+     * @param null $onBehalfOf
+     *
+     * @return Beneficiary
+     */
+    public function update(Beneficiary $beneficiary, $onBehalfOf = null)
+    {
+        return $this->doUpdate(sprintf(
+            'beneficiaries/%s',
+            $beneficiary->getId()
+        ), $beneficiary, function ($entity, $onBehalfOf) {
+            return $this->convertBeneficiaryToRequest($entity, false, true) + ["on_behalf_of"=>$onBehalfOf];
+        }, function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
+     * @param Beneficiary|null $beneficiary
+     * @param Pagination|null $pagination
+     * @param null $onBehalfOf
+     *
+     * @return Beneficiaries
+     */
+    public function find(Beneficiary $beneficiary = null, Pagination $pagination = null, $onBehalfOf = null)
+    {
+        if (null === $beneficiary) {
+            $beneficiary = new Beneficiary();
+        }
+        if (null === $pagination) {
+            $pagination = new Pagination();
+        }
+        return $this->doFind('beneficiaries/find', $beneficiary, $pagination, function ($entity, $onBehalfOf) {
+            return $this->convertBeneficiaryToRequest($entity) + [
+                    'on_behalf_of' => $onBehalfOf
+                ];
+        }, function ($response) {
+            return $this->createBeneficiaryFromResponse($response);
+        }, function (array $entities, Pagination $pagination) {
+            return new Beneficiaries($entities, $pagination);
+        }, 'beneficiaries', $onBehalfOf);
+    }
+
+    /**
+     * @param Beneficiary $beneficiary
+     * @param null $onBehalfOf
+     *
+     * @return Beneficiary
+     */
+    public function delete(Beneficiary $beneficiary, $onBehalfOf = null)
+    {
+        return $this->doDelete(
+            sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
+            $beneficiary,
+            function ($response) {
+                return $this->createBeneficiaryFromResponse($response);
+            },
+            $onBehalfOf
+        );
     }
 }
