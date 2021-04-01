@@ -15,6 +15,7 @@
                   "first_conversion_cutoff_datetime": "2020-11-10T15:30:00+00:00",
                   "first_conversion_date": "2020-11-10",
                   "default_conversion_date": "2020-11-12",
+                  "next_day_conversion_date": "2020-11-11",
                   "optimize_liquidity_conversion_date": "2020-11-12",
                   "invalid_conversion_dates": {
                     "2020-11-11": "Veterans'' Day",

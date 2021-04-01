@@ -27,6 +27,10 @@ class ConversionDates
      * @var DateTime
      */
     private $optimizeLiquidityConversionDate;
+    /**
+     * @var DateTime
+     */
+    private $nextDayConversionDate;
 
     /**
      * @param InvalidConversionDate[] $invalidConversionDates
@@ -34,19 +38,22 @@ class ConversionDates
      * @param DateTime $defaultConversionDay
      * @param DateTime $firstConversionCutoffDatetime
      * @param DateTime $optimizeLiquidityConversionDate
+     * @param DateTime $nextDayConversionDate
      */
     public function __construct(
         array $invalidConversionDates,
         DateTime $firstConversionDay,
         DateTime $defaultConversionDay,
         DateTime $firstConversionCutoffDatetime,
-        DateTime $optimizeLiquidityConversionDate
+        DateTime $optimizeLiquidityConversionDate,
+        DateTime $nextDayConversionDate
     ) {
         $this->invalidConversionDates = $invalidConversionDates;
         $this->firstConversionDay = $firstConversionDay;
         $this->defaultConversionDay = $defaultConversionDay;
         $this->firstConversionCutoffDatetime = $firstConversionCutoffDatetime;
         $this->optimizeLiquidityConversionDate = $optimizeLiquidityConversionDate;
+        $this->nextDayConversionDate = $nextDayConversionDate;
     }
 
     /**
@@ -87,6 +94,14 @@ class ConversionDates
     public function getOptimizeLiquidityConversionDate()
     {
         return $this->optimizeLiquidityConversionDate;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getNextDayConversionDate()
+    {
+        return $this->nextDayConversionDate;
     }
 
 
