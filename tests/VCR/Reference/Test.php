@@ -39,6 +39,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
             "{
                   \"first_conversion_cutoff_datetime\": \"2020-11-10T15:30:00+00:00\",
                   \"first_conversion_date\": \"2020-11-10\",
+                  \"next_day_conversion_date\": \"2020-11-11\",
                   \"default_conversion_date\": \"2020-11-12\",
                   \"optimize_liquidity_conversion_date\": \"2020-11-12\",
                   \"invalid_conversion_dates\": {
@@ -292,6 +293,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->assertEquals($dummy['default_conversion_date'], $conversionDates->getDefaultConversionDate()->format('Y-m-d'));
         $this->assertEquals($dummy['first_conversion_cutoff_datetime'], $conversionDates->getFirstConversionCutoffDatetime()->format(DateTime::RFC3339));
         $this->assertEquals($dummy['optimize_liquidity_conversion_date'], $conversionDates->getOptimizeLiquidityConversionDate()->format('Y-m-d'));
+        $this->assertEquals($dummy['next_day_conversion_date'], $conversionDates->getNextDayConversionDate()->format('Y-m-d'));
         $invalidConversionDates = $conversionDates->getInvalidConversionDates();
         $this->assertEquals(count($dummy['invalid_conversion_dates']), count($invalidConversionDates));
         $i = 0;
