@@ -207,13 +207,18 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     /**
      * @param FindConversionsCriteria|null $criteria
      * @param null $onBehalfOf
+     * @param Pagination $pagination
      *
      * @return Conversions
      */
-    public function find(FindConversionsCriteria $criteria = null, $onBehalfOf = null)
+    public function find(FindConversionsCriteria $criteria = null, $onBehalfOf = null,
+                         Pagination $pagination = null)
     {
         if (null === $criteria) {
             $criteria = new FindConversionsCriteria();
+        }
+        if (null === $pagination) {
+            $pagination = new Pagination();
         }
 
         $response = $this->request(
@@ -221,7 +226,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'conversions/find',
             $this->convertFindConversionCriteriaToRequest($criteria) + [
                 'on_behalf_of' => $onBehalfOf
-            ]
+            ] + $this->convertPaginationToRequest( $pagination )
         );
 
 
