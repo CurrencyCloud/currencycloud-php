@@ -48,7 +48,11 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'sell_amount_from' =>  null,
                 'sell_amount_to' =>  null,
                 'on_behalf_of' => null,
-                'unique_request_id' => null
+                'unique_request_id' => null,
+                'page' => null,
+                'per_page' => null,
+                'order' => null,
+                'order_asc_desc' => null
             ]
         ));
 
@@ -91,6 +95,12 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setSellAmountFrom('N')
             ->setSellAmountTo('O');
 
+        $pagination = (new Pagination())
+            ->setCurrentPage(1)
+            ->setPerPage(25)
+            ->setOrderAscDesc('asc')
+            ->setOrder('buy_currency');
+
         $entryPoint = new ConversionsEntryPoint($this->getMockedClient(
             json_decode($data),
             'GET',
@@ -115,10 +125,14 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'sell_amount_from' =>  'N',
                 'sell_amount_to' =>  'O',
                 'on_behalf_of' => null,
-                'unique_request_id' => null
+                'unique_request_id' => null,
+                'page' => 1,
+                'per_page' => 25,
+                'order' => 'buy_currency',
+                'order_asc_desc' => 'asc'
             ]
         ));
-        $entryPoint->find($criteria);
+        $entryPoint->find($criteria, null, $pagination);
     }
 
     /**
