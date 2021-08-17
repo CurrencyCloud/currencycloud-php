@@ -5,9 +5,10 @@ namespace CurrencyCloud\Tests\Core;
 use CurrencyCloud\Session;
 use InvalidArgumentException;
 use LogicException;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SessionTest extends PHPUnit_Framework_TestCase
+
+class SessionTest extends TestCase
 {
 
     /**
@@ -15,8 +16,9 @@ class SessionTest extends PHPUnit_Framework_TestCase
      */
     private $session;
 
-    public function setUp()
+    public function setUp():void
     {
+        parent::setUp();
         $this->session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
     }
 
@@ -37,7 +39,10 @@ class SessionTest extends PHPUnit_Framework_TestCase
      */
     public function invalidLoginIdThrowsException()
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Login ID can not be nul');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Login ID can not be null');
+
         new Session(Session::ENVIRONMENT_DEMONSTRATION, null, 'test');
     }
 
@@ -89,5 +94,11 @@ class SessionTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->session->getOnBehalfOf());
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
         $this->assertEquals('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab', $this->session->getOnBehalfOf());
+    }
+
+    private function setExpectedException(string $class, string $string)
+    {
+        $this->expectException($class);
+        $this->expectExceptionMessage($string);
     }
 }

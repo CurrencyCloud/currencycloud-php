@@ -5,10 +5,11 @@ namespace CurrencyCloud\Tests;
 use CurrencyCloud\Client;
 use CurrencyCloud\SimpleEntityManager;
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+
 use ReflectionClass;
 
-class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
+class BaseCurrencyCloudTestCase extends TestCase
 {
 
     /**
@@ -55,7 +56,7 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
 
     protected function validateObjectStrictName($object, $dummy)
     {
-        $this->assertInternalType('object', $object);
+        $this->assertIsObject( $object);
         foreach ($dummy as $key => $original) {
             $parts = explode('_', $key);
             $uCased = implode('', array_map('ucfirst', $parts));
@@ -124,5 +125,18 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
         $property->setValue($object, $value);
+    }
+
+
+    protected function getMock($className){
+        return $this->createMock($className);
+    }
+
+    protected function setExpectedException(string $class, string $string=null)
+    {
+        $this->expectException($class);
+        if($string){
+            $this->expectExceptionMessage($string);
+        }
     }
 }

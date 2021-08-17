@@ -67,7 +67,7 @@ EOT;
             $this->assertSame('auth_invalid_user_login_details', $e->getApiCode());
 
             $errors = $e->getErrors();
-            $this->assertInternalType('array', $errors);
+            $this->assertIsArray( $errors);
             $this->assertArrayHasKey(0, $errors);
             $this->assertCount(1, $errors);
             $sub = $errors[0];
@@ -83,14 +83,14 @@ EOT;
 
             $params = $sub['params'];
 
-            $this->assertInternalType('array', $params);
+            $this->assertIsArray( $params);
             $this->assertCount(1, $params);
             $this->assertArrayHasKey('length', $params);
             $this->assertSame(64, $params['length']);
 
             $params = $e->getParameters();
 
-            $this->assertInternalType('array', $params);
+            $this->assertIsArray($params);
             $this->assertCount(2, $params);
             $this->assertArrayHasKey('login_id', $params);
             $this->assertArrayHasKey('api_key', $params);
