@@ -12,7 +12,7 @@ Many people have helped us along the way and we are sincerely grateful to all of
 |Steve Rhodes (elasticsteve)|https://github.com/elasticsteve|
 |Valdas Barakauskas (bilikaz)|https://github.com/bilikaz|
 |mo6709|https://github.com/mo6709|
-|markunsworth|https://github.com/markunsworth|
+|Mark Unsworth (markunsworth)|https://github.com/markunsworth|
 
  In our book, they have reached [**honorificabilitudinitatibus**][sesqui] :-)
 
