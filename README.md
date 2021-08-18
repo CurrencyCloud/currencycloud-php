@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
 # Currencycloud API v2 PHP client
-## Version: 2.2.1
+## Version: 3.0.0
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
@@ -205,7 +205,7 @@ Once a feature has been marked as deprecated, we no longer develop the code or i
 We actively support the latest version of the SDK. We support the immediate previous version on best-efforts basis. All other versions are no longer supported nor maintained.
 
 # Copyright
-Copyright (c) 2015-2019 Currencycloud. See [LICENSE][license] for details.
+Copyright (c) 2015-2021 Currencycloud. See [LICENSE][license] for details.
 
 [license]:   LICENSE.md
 [contr]:     CONTRIBUTING.md
