@@ -3,7 +3,8 @@
 namespace CurrencyCloud\EventDispatcher\Event;
 
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
+
 
 final class ClientHttpErrorEvent extends Event
 {

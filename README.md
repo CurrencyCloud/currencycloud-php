@@ -17,7 +17,7 @@ it will be far easier to simply make use of Composer to do the dependency manage
 
 
 ### Supported PHP version
-This library aims to support and is tested against PHP 7.1 and greater.
+This library aims to support and is tested against PHP 7.4.
 
 ## Installation
 The recommended way to install Currencycloud SDK is through

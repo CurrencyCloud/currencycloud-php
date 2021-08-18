@@ -2,7 +2,7 @@
 
 namespace CurrencyCloud\EventDispatcher\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 final class BeforeClientRequestEvent extends Event
 {
