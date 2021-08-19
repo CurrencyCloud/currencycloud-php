@@ -16,6 +16,7 @@ use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\ReportsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\EntryPoint\TransfersEntryPoint;
+use CurrencyCloud\EntryPoint\FundingEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
@@ -211,7 +212,7 @@ class CurrencyCloud
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client),
-            new FundingEntryPoint($entityManager, $client)
+            new FundingEntryPoint($client)
         );
     }
 
