@@ -97,6 +97,10 @@ class CurrencyCloud
      * @var VansEntryPoint
      */
     private $vansEntryPoint;
+    /**
+     * @var FundingEntryPoint
+     */
+    private $fundingEntryPoint;
 
     public static $SDK_VERSION = "3.0.0";
 
@@ -117,6 +121,7 @@ class CurrencyCloud
      * @param TransactionsEntryPoint $transactionsEntryPoint
      * @param TransfersEntryPoint $transfersEntryPoint
      * @param VansEntryPoint $vanEntryPoint
+     * @param FundingEntryPoint $fundingEntryPoint
      */
     public function __construct(
         Session $session,
@@ -134,7 +139,8 @@ class CurrencyCloud
         RatesEntryPoint $ratesEntryPoint,
         TransactionsEntryPoint $transactionsEntryPoint,
         TransfersEntryPoint $transfersEntryPoint,
-        VansEntryPoint $vanEntryPoint
+        VansEntryPoint $vanEntryPoint,
+        FundingEntryPoint $fundingEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
         $this->session = $session;
@@ -152,6 +158,7 @@ class CurrencyCloud
         $this->reportsEntryPoint = $reportsEntryPoint;
         $this->transfersEntryPoint = $transfersEntryPoint;
         $this->vansEntryPoint = $vanEntryPoint;
+        $this->fundingEntryPoint = $fundingEntryPoint;
     }
 
     /**
@@ -203,7 +210,8 @@ class CurrencyCloud
             new RatesEntryPoint($client),
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
-            new VansEntryPoint($entityManager, $client)
+            new VansEntryPoint($entityManager, $client),
+            new FundingEntryPoint($entityManager, $client)
         );
     }
 
@@ -325,6 +333,14 @@ class CurrencyCloud
     public function vans()
     {
         return $this->vansEntryPoint;
+    }
+
+    /**
+     * @return FundingEntryPoint
+     */
+    public function funding()
+    {
+        return $this->fundingEntryPoint;
     }
 
     /**
