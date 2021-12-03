@@ -55,6 +55,7 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
                     'account_id' => null,
                     'payment_type' => null,
                     'currency' => "GBP",
+                    'on_behalf_of' => null,
                     'per_page' => 5,
                     'page' => null,
                     'order' => null,
@@ -90,6 +91,61 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame(-1, $pagination->getNextPage());
         $this->assertSame("created_at", $pagination->getOrder());
         $this->assertSame("desc", $pagination->getOrderAscDesc());
+
+
+    }
+
+    /**
+     * @test
+     */
+    public function canFindFundingAccountsOnBehalfOf()
+    {
+        $data = '{
+            "funding_accounts": [],
+            "pagination": {
+                "total_entries": 0,
+                "total_pages": 1,
+                "current_page": 1,
+                "per_page": 10,
+                "previous_page": -1,
+                "next_page": -1,
+                "order": "created_at",
+                "order_asc_desc": "asc"
+            }
+        }';
+
+        $entryPoint = new FundingEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'funding_accounts/find',
+                [
+                    'account_id' => null,
+                    'payment_type' => null,
+                    'currency' => "AUD",
+                    'on_behalf_of' => "ef257ee1-91de-012f-e2a5-1e0030c7f352",
+                    'per_page' => 10,
+                    'page' => null,
+                    'order' => null,
+                    'order_asc_desc' => null
+                ]
+            )
+        );
+        $accounts = $entryPoint->findFundingAccounts((new Pagination())->setPerPage(10),"AUD",
+            null, null, "ef257ee1-91de-012f-e2a5-1e0030c7f352");
+        $pagination = $accounts->getPagination();
+
+        $this->assertSame(0, count($accounts->getFundingAccounts()));
+
+
+        $this->assertSame(0, $pagination->getTotalEntries());
+        $this->assertSame(1, $pagination->getTotalPages());
+        $this->assertSame(1, $pagination->getCurrentPage());
+        $this->assertSame(10, $pagination->getPerPage());
+        $this->assertSame(-1, $pagination->getPreviousPage());
+        $this->assertSame(-1, $pagination->getNextPage());
+        $this->assertSame("created_at", $pagination->getOrder());
+        $this->assertSame("asc", $pagination->getOrderAscDesc());
 
 
     }
