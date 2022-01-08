@@ -136,6 +136,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             )
         );
         $beneficiaries = [];
+
         foreach ($response->$property as $searchModel) {
             $entity = call_user_func($converterFromResponse, $searchModel);
             $this->entityManager->add($entity);

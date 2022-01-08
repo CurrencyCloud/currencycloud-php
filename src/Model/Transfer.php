@@ -72,6 +72,11 @@ class Transfer implements EntityInterface {
     private $creatorContactId;
 
     /**
+     * @var string
+     */
+    private $uniqueRequestId;
+
+    /**
      * Transfer constructor.
      * @param string $id
      * @param string $shortReference
@@ -87,7 +92,7 @@ class Transfer implements EntityInterface {
      * @param string $creatorAccountId
      * @param string $creatorContactId
      */
-    public function __construct($id, $shortReference, $sourceAccountId, $destinationAccountId, $currency, $amount, $status, $reason, $createdAt, $updatedAt, $completedAt, $creatorAccountId, $creatorContactId)
+    public function __construct($id, $shortReference, $sourceAccountId, $destinationAccountId, $currency, $amount, $status, $reason, $createdAt, $updatedAt, $completedAt, $creatorAccountId, $creatorContactId, $uniqueRequestId)
     {
         $this->id = $id;
         $this->shortReference = $shortReference;
@@ -102,6 +107,7 @@ class Transfer implements EntityInterface {
         $this->completedAt = $completedAt;
         $this->creatorAccountId = $creatorAccountId;
         $this->creatorContactId = $creatorContactId;
+        $this->uniqueRequestId = $uniqueRequestId;
     }
 
     /**
@@ -207,5 +213,16 @@ class Transfer implements EntityInterface {
     {
         return $this->creatorContactId;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
+    }
+
+
 
 }

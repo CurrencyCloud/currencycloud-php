@@ -82,6 +82,11 @@ class FindTransferCriteria {
     private $creatorAccountId;
 
     /**
+     * @var string
+     */
+    private $uniqueRequestId;
+
+    /**
      * @return string
      */
     public function getOnBehalfOf()
@@ -366,6 +371,24 @@ class FindTransferCriteria {
     public function setCreatorAccountId($creatorAccountId)
     {
         $this->creatorAccountId = $creatorAccountId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUniqueRequestId()
+    {
+        return $this->uniqueRequestId;
+    }
+
+    /**
+     * @param string $uniqueRequestId
+     * @return $this
+     */
+    public function setUniqueRequestId($uniqueRequestId)
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
         return $this;
     }
 
