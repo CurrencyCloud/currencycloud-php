@@ -28,7 +28,7 @@ class Authorisation {
      */
     private $authSteptsRequired;
     /**
-     * @var String
+     * @var string
      */
     private $shortReference;
 

@@ -88,7 +88,7 @@ class Payment implements EntityInterface
      */
     private $updatedAt;
     /**
-     * @var String
+     * @var string
      */
     private $uniqueRequestId;
     /**

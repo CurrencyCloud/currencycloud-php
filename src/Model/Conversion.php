@@ -118,11 +118,11 @@ class Conversion
      */
     private $updatedAt;
     /**
-     * @var String
+     * @var string
      */
     private $uniqueRequestId;
     /**
-     * @var String
+     * @var string
      */
     private $conversionDatePreference;
 
