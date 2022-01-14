@@ -75,6 +75,10 @@ class Account implements EntityInterface
      * @var string
      */
     private $shortReference;
+    /**
+     * @var bool
+     */
+    private $termsAndConditionsAccepted;
 
     /**
      * @param string $accountName
@@ -399,4 +403,25 @@ class Account implements EntityInterface
         $this->shortReference = (null === $shortReference) ? null : (string) $shortReference;
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isTermsAndConditionsAccepted()
+    {
+        return $this->termsAndConditionsAccepted;
+    }
+
+    /**
+     * @param bool $termsAndConditionsAccepted
+     *
+     * @return $this
+     */
+    public function setTermsAndConditionsAccepted($termsAndConditionsAccepted)
+    {
+        $this->termsAndConditionsAccepted = $termsAndConditionsAccepted;
+        return $this;
+    }
+
+
 }

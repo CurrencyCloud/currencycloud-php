@@ -29,7 +29,8 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'updated_at' => '2014-01-12T00:00:00+00:00',
         'identification_type' => 'green_card',
         'identification_value' => '123',
-        'short_reference' => '110104-00004'
+        'short_reference' => '110104-00004',
+        'terms_and_conditions_accepted' => null
     ];
 
     protected $in = [
@@ -46,7 +47,8 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'spread_table' => null,
         'identification_type' => null,
         'identification_value' => null,
-        'on_behalf_of' => null
+        'on_behalf_of' => null,
+        'terms_and_conditions_accepted' => null
     ];
 
     /**
@@ -89,7 +91,8 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'spread_table' => 'K',
             'identification_type' => 'L',
             'identification_value' => 'M',
-            'on_behalf_of' => null
+            'on_behalf_of' => null,
+            'terms_and_conditions_accepted' => false
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -163,6 +166,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         unset($in['identification_type']);
         unset($in['identification_value']);
         unset($in['on_behalf_of']);
+        unset($in['terms_and_conditions_accepted']);
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
             json_decode(
