@@ -116,7 +116,8 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),
-            'identification_value' => $account->getIdentificationValue()
+            'identification_value' => $account->getIdentificationValue(),
+            'terms_and_conditions_accepted' => $account->isTermsAndConditionsAccepted()
         ];
     }
 
@@ -143,7 +144,8 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
                 ->setUpdatedAt(new DateTime($response->updated_at))
                 ->setIdentificationType($response->identification_type)
                 ->setIdentificationValue($response->identification_value)
-                ->setShortReference($response->short_reference);
+                ->setShortReference($response->short_reference)
+                ->setTermsAndConditionsAccepted($response->terms_and_conditions_accepted);
 
         $this->setIdProperty($account, $response->id);
         return $account;
