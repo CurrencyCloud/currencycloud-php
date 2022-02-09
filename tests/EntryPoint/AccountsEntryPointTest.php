@@ -338,26 +338,26 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function termAndConditionsExpectedTrue()
+    public function termAndConditionsAcceptedTrue()
     {
-        $this->testTermsAndConditions(true);
+        $this->testTermsAndConditionsAccepted(true);
     }
     /**
      * @test
      */
-    public function termAndConditionsExpectedFalse()
+    public function termAndConditionsAcceptedFalse()
     {
-        $this->testTermsAndConditions(false);
+        $this->testTermsAndConditionsAccepted(false);
     }
     /**
      * @test
      */
-    public function termAndConditionsExpectedNull()
+    public function termAndConditionsAcceptedNull()
     {
-        $this->testTermsAndConditions(null);
+        $this->testTermsAndConditionsAccepted(null);
     }
 
-    private function testTermsAndConditions($isTermsAndConditionsAccepted) {
+    private function testTermsAndConditionsAccepted($isTermsAndConditionsAccepted) {
         $in = [
             'legal_entity_type' => 'A',
             'account_name' => 'B',
