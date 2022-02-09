@@ -92,7 +92,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'identification_type' => 'L',
             'identification_value' => 'M',
             'on_behalf_of' => null,
-            'terms_and_conditions_accepted' => false
+            'terms_and_conditions_accepted' => 'false'
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -118,7 +118,8 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 ->setSpreadTable('K')
                 ->setIdentificationType('L')
                 ->setIdentificationValue('M')
-                ->setShortReference('N');
+                ->setShortReference('N')
+                ->setTermsAndConditionsAccepted(false);
 
         $account = $entryPoint->create($account);
 
@@ -332,5 +333,78 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('ours', $updated->getChargeType());
         $this->assertTrue($updated->isEnabled());
         $this->assertFalse($updated->isDefault());
+    }
+
+    /**
+     * @test
+     */
+    public function termAndConditionsExxeptedTrue()
+    {
+        $this->testTermsAndConditions(true);
+    }
+    /**
+     * @test
+     */
+    public function termAndConditionsExxeptedFalse()
+    {
+        $this->testTermsAndConditions(false);
+    }
+    /**
+     * @test
+     */
+    public function termAndConditionsExxeptedNull()
+    {
+        $this->testTermsAndConditions(null);
+    }
+
+    private function testTermsAndConditions($isTermsAndConditionsAccepted) {
+        $in = [
+            'legal_entity_type' => 'A',
+            'account_name' => 'B',
+            'brand' => 'C',
+            'your_reference' => 'D',
+            'status' => 'E',
+            'street' => 'F',
+            'city' => 'G',
+            'state_or_province' => 'H',
+            'country' => 'I',
+            'postal_code' => 'J',
+            'spread_table' => 'K',
+            'identification_type' => 'L',
+            'identification_value' => 'M',
+            'on_behalf_of' => null,
+            'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
+            ($isTermsAndConditionsAccepted ? 'true' : 'false')
+        ];
+
+        $entryPoint = new AccountsEntryPoint(
+            new SimpleEntityManager(), $this->getMockedClient(
+            json_decode(json_encode($this->out)),
+            'POST',
+            'accounts/create',
+            [],
+            $in
+        )
+        );
+
+        $account =
+            Account::create('B', 'A')
+                ->setBrand('C')
+                ->setYourReference('D')
+                ->setStatus('E')
+                ->setStreet('F')
+                ->setCity('G')
+                ->setStateOrProvince('H')
+                ->setCountry('I')
+                ->setPostalCode('J')
+                ->setSpreadTable('K')
+                ->setIdentificationType('L')
+                ->setIdentificationValue('M')
+                ->setShortReference('N')
+                ->setTermsAndConditionsAccepted($isTermsAndConditionsAccepted);
+
+        $account = $entryPoint->create($account);
+
+        $this->validateObjectStrictName($account, $this->out);
     }
 }

@@ -419,7 +419,7 @@ class Account implements EntityInterface
      */
     public function setTermsAndConditionsAccepted($termsAndConditionsAccepted)
     {
-        $this->termsAndConditionsAccepted = $termsAndConditionsAccepted;
+        $this->termsAndConditionsAccepted = (null === $termsAndConditionsAccepted) ? null : (bool)$termsAndConditionsAccepted;
         return $this;
     }
 

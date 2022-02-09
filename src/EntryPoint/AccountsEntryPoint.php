@@ -112,12 +112,13 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         if ($convertForSearch) {
             return $common;
         }
-
+        $isTermsAndConditionsAccepted = $account->isTermsAndConditionsAccepted();
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),
             'identification_value' => $account->getIdentificationValue(),
-            'terms_and_conditions_accepted' => $account->isTermsAndConditionsAccepted()
+            'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
+                ($isTermsAndConditionsAccepted ? 'true' : 'false')
         ];
     }
 
