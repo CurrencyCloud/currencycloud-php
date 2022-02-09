@@ -338,21 +338,21 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function termAndConditionsExxeptedTrue()
+    public function termAndConditionsExpectedTrue()
     {
         $this->testTermsAndConditions(true);
     }
     /**
      * @test
      */
-    public function termAndConditionsExxeptedFalse()
+    public function termAndConditionsExpectedFalse()
     {
         $this->testTermsAndConditions(false);
     }
     /**
      * @test
      */
-    public function termAndConditionsExxeptedNull()
+    public function termAndConditionsExpectedNull()
     {
         $this->testTermsAndConditions(null);
     }
