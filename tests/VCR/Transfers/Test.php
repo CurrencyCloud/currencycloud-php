@@ -4,14 +4,15 @@ namespace CurrencyCloud\Tests\VCR\Transfers;
 use CurrencyCloud\Criteria\FindTransferCriteria;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
-    /**
-     * @vcr Transfers/can_get_transfer.yaml
-     * @test
-     */
-    public function canGetTransfer(){
+    /** @test */
+    public function canGetTransfer()
+    {
+        VCR::insertCassette('Transfers/can_get_transfer.yaml');
+
         $transfer = $this->getAuthenticatedClient()->transfers()->retrieve('dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a');
 
         $dummy = json_decode(
@@ -29,11 +30,11 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($dummy['unique_request_id'], $transfer->getUniqueRequestId());
     }
 
-    /**
-     * @vcr Transfers/can_find_transfers.yaml
-     * @test
-     */
-    public function canFindTransfers(){
+    /** @test */
+    public function canFindTransfers()
+    {
+        VCR::insertCassette('Transfers/can_find_transfers.yaml');
+
         $findTransfersCriteria = new FindTransferCriteria();
         $pagination = new Pagination();
 
@@ -58,11 +59,10 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         }
     }
 
-    /**
-     * @vcr Transfers/can_create_transfer.yaml
-     * @test
-     */
-    public function canCreateTransfer(){
+    /** @test */
+    public function canCreateTransfer()
+    {
+        VCR::insertCassette('Transfers/can_create_transfer.yaml');
 
         $transfers = $this->getAuthenticatedClient()->transfers()->create(
             'cf28b2d8-5afa-4d7f-9a26-7b45bf616a11',

@@ -3,14 +3,15 @@ namespace CurrencyCloud\Tests\VCR\Payers;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use DateTime;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
-    /**
-     * @vcr Payers/can_get_payers.yaml
-     * @test
-     */
-    public function canGetPayer(){
+    /** @test */
+    public function canGetPayer()
+    {
+        VCR::insertCassette('Payers/can_get_payers.yaml');
+
         $payer = $this->getAuthenticatedClient()->payers()->retrieve("fa0b6125-6f81-4fc1-8861-544d7d5c9cdf");
         $this->assertSame("fa0b6125-6f81-4fc1-8861-544d7d5c9cdf",$payer->getId());
         $this->assertSame("individual",$payer->getLegalEntityType());

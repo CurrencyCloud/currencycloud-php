@@ -3,14 +3,14 @@ namespace CurrencyCloud\Tests\VCR\Vans;
 
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
-    /**
-     * @vcr Vans/can_get_vans.yaml
-     * @test
-     */
-    public function canGetVans(){
+    /** @test */
+    public function canGetVans()
+    {
+        VCR::insertCassette('Vans/can_get_vans.yaml');
 
         $pagination = new Pagination();
         $vansCollection = $this->getAuthenticatedClient()->vans()->retrieveVans($pagination);
@@ -31,11 +31,10 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($dummy['virtual_accounts'][0]['routing_code'], $vansCollection->getVans()[0]->getRoutingCode());
     }
 
-    /**
-     * @vcr Vans/can_find_vans.yaml
-     * @test
-     */
-    public function canFindVans(){
+    /** @test */
+    public function canFindVans()
+    {
+        VCR::insertCassette('Vans/can_find_vans.yaml');
 
         $pagination = new Pagination();
         $vansCollection = $this->getAuthenticatedClient()->vans()->find($pagination);

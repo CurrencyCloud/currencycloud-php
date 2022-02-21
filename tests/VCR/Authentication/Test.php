@@ -4,16 +4,15 @@ namespace CurrencyCloud\Tests\VCR\Authentication;
 
 use CurrencyCloud\Model\Beneficiaries;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
 
-    /**
-     * @vcr Authentication/can_be_closed.yaml
-     * @test
-     */
+    /** @test */
     public function canBeClosed()
     {
+        VCR::insertCassette('Authentication/can_be_closed.yaml');
 
         $client = $this->getClient();
         $client->getSession()->setAuthToken('2ec8a86c8cf6e0378a20ca6793f3260c');
@@ -22,12 +21,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->assertNull($client->getSession()->getAuthToken());
     }
 
-    /**
-     * @vcr Authentication/can_use_just_a_token.yaml
-     * @test
-     */
+    /** @test */
     public function canUseJustToken()
     {
+        VCR::insertCassette('Authentication/can_use_just_a_token.yaml');
 
         $client = $this->getAuthenticatedClient('2ec8a86c8cf6e0378a20ca6793f3260c');
 
@@ -44,12 +41,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
     }
 
-    /**
-     * @vcr Authentication/happens_lazily.yaml
-     * @test
-     */
+    /** @test */
     public function happensLazily()
     {
+        VCR::insertCassette('Authentication/happens_lazily.yaml');
+
         $client = $this->getClient();
         $client->getSession()->setAuthToken("038022bcd2f372cac7bab448db7b5c3b");
 
@@ -66,12 +62,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->assertEquals("038022bcd2f372cac7bab448db7b5c3b", $client->getSession()->getAuthToken());
     }
 
-    /**
-     * @vcr Authentication/handles_session_timeout_error.yaml
-     * @test
-     */
+    /** @test */
     public function handlesSessionTimeoutError()
     {
+        VCR::insertCassette('Authentication/handles_session_timeout_error.yaml');
+
         $client = $this->getAuthenticatedClient();
 
         $beneficiaries = $client->beneficiaries()->find();

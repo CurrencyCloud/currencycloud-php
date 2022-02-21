@@ -5,15 +5,14 @@ namespace CurrencyCloud\Tests\VCR\Rates;
 use CurrencyCloud\Model\DetailedRate;
 use CurrencyCloud\Model\Rates;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
-    /**
-     * @vcr Rates/can_find.yaml
-     * @test
-     */
+    /** @test */
     public function canFind()
     {
+        VCR::insertCassette('Rates/can_find.yaml');
 
         $rates = $this->getAuthenticatedClient()->rates()->multiple(['GBPUSD', 'EURGBP']);
 
@@ -32,12 +31,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->assertEquals(count($dummy['unavailable']), count($rates->getUnavailable()));
     }
 
-    /**
-     * @vcr Rates/can_provided_detailed_rate.yaml
-     * @test
-     */
+    /** @test */
     public function canProvidedDetailedRate()
     {
+        VCR::insertCassette('Rates/can_provided_detailed_rate.yaml');
 
         $detailedRate = $this->getAuthenticatedClient()->rates()->detailed('GBP', 'USD', 'buy', 10000);
 
@@ -50,12 +47,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($detailedRate, $dummy);
     }
 
-    /**
-     * @vcr Rates/can_provided_detailed_rate_with_conversion_date_preference.yaml
-     * @test
-     */
+    /** @test */
     public function canProvidedDetailedRateWithConversionDatePreference()
     {
+        VCR::insertCassette('Rates/can_provided_detailed_rate_with_conversion_date_preference.yaml');
 
         $detailedRate = $this->getAuthenticatedClient()->rates()->detailed('GBP', 'USD',
             'buy', 10000, null, null, "conversion_date_preference");

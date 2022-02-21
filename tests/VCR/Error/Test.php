@@ -11,16 +11,16 @@ use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Exception\ToManyRequestsException;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use Exception;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
 
-    /**
-     * @vcr Error/contains_full_details_for_api_error.yaml
-     * @test
-     */
+    /** @test */
     public function containsFullDetailForApiError()
     {
+        VCR::insertCassette('Error/contains_full_details_for_api_error.yaml');
+
         try {
             $this->getInvalidClient()
                 ->authenticate()
@@ -117,12 +117,10 @@ EOT;
         return parent::getClient($loginId, $apiKey);
     }
 
-    /**
-     * @vcr Error/is_raised_on_a_bad_request.yaml
-     * @test
-     */
+    /** @test */
     public function isRaisedOnABadRequest()
     {
+        VCR::insertCassette('Error/is_raised_on_a_bad_request.yaml');
 
         $this->setExpectedException(BadRequestException::class);
 
@@ -131,12 +129,10 @@ EOT;
             ->login();
     }
 
-    /**
-     * @vcr Error/is_raised_on_a_forbidden_request.yaml
-     * @test
-     */
+    /** @test */
     public function isRaisedOnAForbiddenRequest()
     {
+        VCR::insertCassette('Error/is_raised_on_a_forbidden_request.yaml');
 
         $this->setExpectedException(ForbiddenException::class);
 
@@ -145,12 +141,10 @@ EOT;
             ->login();
     }
 
-    /**
-     * @vcr Error/is_raised_on_an_internal_server_error.yaml
-     * @test
-     */
+    /** @test */
     public function isRaisedOnAnInternalServerError()
     {
+        VCR::insertCassette('Error/is_raised_on_an_internal_server_error.yaml');
 
         $this->setExpectedException(InternalApplicationException::class);
 
@@ -159,12 +153,10 @@ EOT;
             ->login();
     }
 
-    /**
-     * @vcr Error/is_raised_on_incorrect_authentication_details.yaml
-     * @test
-     */
+    /** @test */
     public function isRaisedOnIncorrectAuthenticationDetails()
     {
+        VCR::insertCassette('Error/is_raised_on_incorrect_authentication_details.yaml');
 
         $this->setExpectedException(AuthenticationException::class);
 
@@ -173,12 +165,10 @@ EOT;
             ->login();
     }
 
-    /**
-     * @vcr Error/is_raised_when_a_resource_is_not_found.yaml
-     * @test
-     */
+    /** @test */
     public function isRaisedWhenAResourceIsNotFound()
     {
+        VCR::insertCassette('Error/is_raised_when_a_resource_is_not_found.yaml');
 
         $this->setExpectedException(NotFoundException::class);
 
@@ -187,12 +177,10 @@ EOT;
             ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
     }
 
-    /**
-     * @vcr Error/is_raised_when_too_many_requests_have_been_issued.yaml
-     * @test
-     */
+    /** @test */
     public function isRaisedWhenToManyRequestsHaveBeenIssued()
     {
+        VCR::insertCassette('Error/is_raised_when_too_many_requests_have_been_issued.yaml');
 
         $this->setExpectedException(ToManyRequestsException::class);
 
