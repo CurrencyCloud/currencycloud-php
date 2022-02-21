@@ -2,13 +2,15 @@
 namespace CurrencyCloud\Model;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
-class Test extends BaseCurrencyCloudVCRTestCase {
-    /**
-     * @vcr Transactions/can_retrieve_sender_details.yaml
-     * @test
-     */
-    public function canRetrieveSenderDetails(){
+class Test extends BaseCurrencyCloudVCRTestCase
+{
+    /** @test */
+    public function canRetrieveSenderDetails()
+    {
+        VCR::insertCassette('Transactions/can_retrieve_sender_details.yaml');
+
         $senderDetails = $this->getAuthenticatedClient()->transactions()->retrieveSender('');
 
         $dummy = json_decode(

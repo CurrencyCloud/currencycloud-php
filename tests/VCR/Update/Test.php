@@ -3,15 +3,15 @@
 namespace CurrencyCloud\Tests\VCR\Update;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
-    /**
-     * @vcr Update/does_nothing_if_nothing_has_changed.yaml
-     * @test
-     */
+    /** @test */
     public function doesNothingIfNothingHasChanged()
     {
+        VCR::insertCassette('Update/does_nothing_if_nothing_has_changed.yaml');
+
         $client = $this->getAuthenticatedClient();
 
         $beneficiary =
@@ -29,12 +29,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
-    /**
-     * @vcr Update/only_updates_changed_records.yaml
-     * @test
-     */
+    /** @test */
     public function onlyUpdatesChangedRecords()
     {
+        VCR::insertCassette('Update/only_updates_changed_records.yaml');
+
         $client = $this->getAuthenticatedClient();
 
         $beneficiary =

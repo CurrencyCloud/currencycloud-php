@@ -4,15 +4,14 @@ namespace CurrencyCloud\Tests\VCR\Reference;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use DateTime;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
-    /**
-     * @vcr Reference/can_retrieve_beneficiary_required_details.yaml
-     * @test
-     */
+    /** @test */
     public function canRetrieveBeneficiaryRequiredDetails()
     {
+        VCR::insertCassette('Reference/can_retrieve_beneficiary_required_details.yaml');
 
         $requiredDetails = $this->getAuthenticatedClient()->reference()->beneficiaryRequiredDetails('GBP', 'GB', 'GB');
 
@@ -26,12 +25,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
         }
     }
 
-    /**
-     * @vcr Reference/can_retrieve_conversion_dates.yaml
-     * @test
-     */
+    /** @test */
     public function canRetrieveConversionDates()
     {
+        VCR::insertCassette('Reference/can_retrieve_conversion_dates.yaml');
 
         $conversionDates = $this->getAuthenticatedClient()->reference()->conversionDates('GBPUSD');
 
@@ -304,12 +301,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
         }
     }
 
-    /**
-     * @vcr Reference/can_retrieve_currencies.yaml
-     * @test
-     */
+    /** @test */
     public function canRetrieveCurrencies()
     {
+        VCR::insertCassette('Reference/can_retrieve_currencies.yaml');
 
         $currencies = $this->getAuthenticatedClient()->reference()->availableCurrencies();
 
@@ -330,12 +325,10 @@ class Test extends BaseCurrencyCloudVCRTestCase
         }
     }
 
-    /**
-     * @vcr Reference/can_retrieve_settlement_accounts.yaml
-     * @test
-     */
+    /** @test */
     public function canRetrieveSettlementAccounts()
     {
+        VCR::insertCassette('Reference/can_retrieve_settlement_accounts.yaml');
 
         $settlementAccounts = $this->getAuthenticatedClient()->reference()->settlementAccounts('GBP');
 
@@ -351,12 +344,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         }
     }
 
-    /**
-     * @vcr Reference/can_get_payer_required_details.yaml
-     * @test
-     */
+    /** @test */
     public function canGetPayerRequiredDetails()
     {
+        VCR::insertCassette('Reference/can_get_payer_required_details.yaml');
+
         $dummy = json_decode(
             '{"details":[{"payer_entity_type":"company","payment_type":"priority","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_company_name","validation_rule":"^.{1,255}"},{"name":"payer_identification_value","validation_rule":"^.{1,255}"}],"payer_identification_type":"incorporation_number"},{"payer_entity_type":"individual","payment_type":"priority","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_first_name","validation_rule":"^.{1,255}"},{"name":"payer_last_name","validation_rule":"^.{1,255}"},{"name":"payer_date_of_birth","validation_rule":"/A([+-]?d{4}(?!d{2}\b))((-?)((0[1-9]|1[0-2])(\u0003([12]d|0[1-9]|3[01]))?|W([0-4]d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]d|[12]d{2}|3([0-5]d|6[1-6])))([T ]((([01]d|2[0-3])((:?)[0-5]d)?|24:?00)([.,]d+(?!:))?)?(\u000f[0-5]d([.,]d+)?)?([zZ]|([+-])([01]d|2[0-3]):?([0-5]d)?)?)?)?Z/"}]},{"payer_entity_type":"company","payment_type":"regular","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_company_name","validation_rule":"^.{1,255}"}]},{"payer_entity_type":"individual","payment_type":"regular","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_first_name","validation_rule":"^.{1,255}"},{"name":"payer_last_name","validation_rule":"^.{1,255}"},{"name":"payer_date_of_birth","validation_rule":"/A([+-]?d{4}(?!d{2}\b))((-?)((0[1-9]|1[0-2])(\u0003([12]d|0[1-9]|3[01]))?|W([0-4]d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]d|[12]d{2}|3([0-5]d|6[1-6])))([T ]((([01]d|2[0-3])((:?)[0-5]d)?|24:?00)([.,]d+(?!:))?)?(\u000f[0-5]d([.,]d+)?)?([zZ]|([+-])([01]d|2[0-3]):?([0-5]d)?)?)?)?Z/"}]}]        }',
             true
