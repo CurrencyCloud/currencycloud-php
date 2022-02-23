@@ -31,9 +31,23 @@ use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use VCR\VCR;
 
 class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        VCR::turnOn();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        VCR::turnOff();
+    }
 
     /**
      * @param string $loginId

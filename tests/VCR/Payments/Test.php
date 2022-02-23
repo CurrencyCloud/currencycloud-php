@@ -2,14 +2,15 @@
 namespace CurrencyCloud\Tests\VCR\Payments;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
-    /**
-     * @vcr Payments/can_authorise_payments.yaml
-     * @test
-     */
-    public function canAuthorisePayments(){
+    /** @test */
+    public function canAuthorisePayments()
+    {
+        VCR::insertCassette('Payments/can_authorise_payments.yaml');
+
         $authorisations = $this->getAuthenticatedClient()->payments()->authorise(
             [
                 '2416c8fe-0486-4fc3-82d9-4dc9a44eba9a',
@@ -34,11 +35,11 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         }
     }
 
-    /**
-     * @vcr Payments/can_get_payment_submission.yaml
-     * @test
-     */
-    public function canGetPaymentSubmission(){
+    /** @test */
+    public function canGetPaymentSubmission()
+    {
+        VCR::insertCassette('Payments/can_get_payment_submission.yaml');
+
         $paymentSubmission = $this->getAuthenticatedClient()->payments()->retrieveSubmission('48e707c9-43e3-4b07-a1d1-bee38f9c95a1');
 
         $data = json_decode(
@@ -50,11 +51,11 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($data['submission_ref'], $paymentSubmission->getSubmissionRef());
     }
 
-    /**
-     * @vcr Payments/can_get_payment_confirmation.yaml
-     * @test
-     */
-    public function canGetPaymentConfirmation(){
+    /** @test */
+    public function canGetPaymentConfirmation()
+    {
+        VCR::insertCassette('Payments/can_get_payment_confirmation.yaml');
+
         $paymentConfirmation = $this->getAuthenticatedClient()->payments()->retrieveConfirmation('796e0d7d-bae6-4d8a-b217-3cf9ee80a350');
 
         $dummy = json_decode(

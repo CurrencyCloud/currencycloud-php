@@ -6,14 +6,15 @@ use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use DateTime;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
-    /**
-     * @vcr Conversions/can_retrieve_conversion_profit_loss.yaml
-     * @test
-     */
-    public function canRetrieveConversionProfitLoss(){
+    /** @test */
+    public function canRetrieveConversionProfitLoss()
+    {
+        VCR::insertCassette('Conversions/can_retrieve_conversion_profit_loss.yaml');
+
         $conversionProfitLossCriteria = new ConversionProfitLossCriteria();
         $pagination = new Pagination();
 
@@ -39,11 +40,10 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($dummy['pagination']['total_entries'], $conversionProfitLossCollection->getPagination()->getTotalEntries());
     }
 
-    /**
-     * @vcr Conversions/can_retrieve_conversion_date_change_quote.yaml
-     * @test
-     */
-    public function canRetrieveConversionDateChangeQuote(){
+    /** @test */
+    public function canRetrieveConversionDateChangeQuote()
+    {
+        VCR::insertCassette('Conversions/can_retrieve_conversion_date_change_quote.yaml');
 
         $conversionDateChangeQuote = $this->getAuthenticatedClient()->conversions()->retrieveDateChangeQuote('cef197c6-2192-4970-a2cf-d45ee046ae8c','2018-11-06');
 
@@ -63,11 +63,10 @@ class Test extends BaseCurrencyCloudVCRTestCase {
             $conversionDateChangeQuote->getNewSettlementDate()->format(DateTime::RFC3339));
     }
 
-    /**
-     * @vcr Conversions/can_retrieve_conversion_split_preview.yaml
-     * @test
-     */
-    public function canRetrieveConversionSplitPreview(){
+    /** @test */
+    public function canRetrieveConversionSplitPreview()
+    {
+        VCR::insertCassette('Conversions/can_retrieve_conversion_split_preview.yaml');
 
         $conversionConversionSplitPreview = $this->getAuthenticatedClient()->conversions()->retrieveSplitPreview('cef197c6-2192-4970-a2cf-d45ee046ae8c','35.46');
 
@@ -92,11 +91,10 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($dummy['child_conversion']['status'], $conversionConversionSplitPreview->getChildConversion()->getStatus());
     }
 
-    /**
-     * @vcr Conversions/can_retrieve_conversion_split_history.yaml
-     * @test
-     */
-    public function canRetrieveConversionSplitHistory(){
+    /** @test */
+    public function canRetrieveConversionSplitHistory()
+    {
+        VCR::insertCassette('Conversions/can_retrieve_conversion_split_history.yaml');
 
         $conversionConversionSplitHistory = $this->getAuthenticatedClient()->conversions()->retrieveSplitHistory('24d2ee7f-c7a3-4181-979e-9c58dbace992');
 
@@ -131,11 +129,10 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         }
     }
 
-    /**
-     * @vcr Conversions/can_retrieve_conversion_cancellation_quote.yaml
-     * @test
-     */
-    public function canRetrieveConversionCancellationQuote(){
+    /** @test */
+    public function canRetrieveConversionCancellationQuote()
+    {
+        VCR::insertCassette('Conversions/can_retrieve_conversion_cancellation_quote.yaml');
 
         $conversionCancellationQuote = $this->getAuthenticatedClient()->conversions()->retrieveCancellationQuote('9b29e56d-6a67-4470-a291-ee72b6371c32');
 
