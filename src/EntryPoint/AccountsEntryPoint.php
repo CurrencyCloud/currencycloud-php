@@ -113,12 +113,21 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
             return $common;
         }
         $isTermsAndConditionsAccepted = $account->isTermsAndConditionsAccepted();
+        $isApiTrading = $account->isApiTrading();
+        $isOnlineTrading = $account->isOnlineTrading();
+        $isPhoneTrading = $account->isPhoneTrading();
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),
             'identification_value' => $account->getIdentificationValue(),
             'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
-                ($isTermsAndConditionsAccepted ? 'true' : 'false')
+                ($isTermsAndConditionsAccepted ? 'true' : 'false'),
+            'api_trading' => (null === $isApiTrading) ? null :
+                ($isApiTrading ? 'true' : 'false'),
+            'online_trading' => (null === $isOnlineTrading) ? null :
+                ($isOnlineTrading ? 'true' : 'false'),
+            'phone_trading' => (null === $isPhoneTrading) ? null :
+                ($isPhoneTrading ? 'true' : 'false')
         ];
     }
 
@@ -146,7 +155,10 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
                 ->setIdentificationType($response->identification_type)
                 ->setIdentificationValue($response->identification_value)
                 ->setShortReference($response->short_reference)
-                ->setTermsAndConditionsAccepted($response->terms_and_conditions_accepted);
+                ->setTermsAndConditionsAccepted($response->terms_and_conditions_accepted)
+                ->setApiTrading($response->api_trading)
+                ->setOnlineTrading($response->online_trading)
+                ->setPhoneTrading($response->phone_trading);
 
         $this->setIdProperty($account, $response->id);
         return $account;
