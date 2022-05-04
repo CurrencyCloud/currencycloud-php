@@ -30,7 +30,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'identification_type' => 'green_card',
         'identification_value' => '123',
         'short_reference' => '110104-00004',
-        'terms_and_conditions_accepted' => null
+        'terms_and_conditions_accepted' => null,
+        'api_trading' => 'true',
+        'online_trading' => 'true',
+        'phone_trading' => 'true'
     ];
 
     protected $in = [
@@ -48,7 +51,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'identification_type' => null,
         'identification_value' => null,
         'on_behalf_of' => null,
-        'terms_and_conditions_accepted' => null
+        'terms_and_conditions_accepted' => null,
+        'api_trading' => null,
+        'online_trading' => null,
+        'phone_trading' => null
     ];
 
     /**
@@ -92,7 +98,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'identification_type' => 'L',
             'identification_value' => 'M',
             'on_behalf_of' => null,
-            'terms_and_conditions_accepted' => 'false'
+            'terms_and_conditions_accepted' => 'false',
+            'api_trading' => 'true',
+            'online_trading' => 'true',
+            'phone_trading' => 'false'
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -119,7 +128,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 ->setIdentificationType('L')
                 ->setIdentificationValue('M')
                 ->setShortReference('N')
-                ->setTermsAndConditionsAccepted(false);
+                ->setTermsAndConditionsAccepted(false)
+                ->setApiTrading(true)
+                ->setOnlineTrading(true)
+                ->setPhoneTrading(false);
 
         $account = $entryPoint->create($account);
 
@@ -168,6 +180,9 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         unset($in['identification_value']);
         unset($in['on_behalf_of']);
         unset($in['terms_and_conditions_accepted']);
+        unset($in['api_trading']);
+        unset($in['online_trading']);
+        unset($in['phone_trading']);
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
             json_decode(
@@ -374,7 +389,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'identification_value' => 'M',
             'on_behalf_of' => null,
             'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
-            ($isTermsAndConditionsAccepted ? 'true' : 'false')
+            ($isTermsAndConditionsAccepted ? 'true' : 'false'),
+            'api_trading' => 'true',
+            'online_trading' => 'true',
+            'phone_trading' => 'true'
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -401,7 +419,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 ->setIdentificationType('L')
                 ->setIdentificationValue('M')
                 ->setShortReference('N')
-                ->setTermsAndConditionsAccepted($isTermsAndConditionsAccepted);
+                ->setTermsAndConditionsAccepted($isTermsAndConditionsAccepted)
+                ->setApiTrading(true)
+                ->setOnlineTrading(true)
+                ->setPhoneTrading(true);
 
         $account = $entryPoint->create($account);
 
