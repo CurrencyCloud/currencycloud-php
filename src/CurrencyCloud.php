@@ -103,7 +103,7 @@ class CurrencyCloud
      */
     private $fundingEntryPoint;
 
-    public static $SDK_VERSION = "3.5.0";
+    public static $SDK_VERSION = "3.6.0";
 
     /**
      * @param Session $session
