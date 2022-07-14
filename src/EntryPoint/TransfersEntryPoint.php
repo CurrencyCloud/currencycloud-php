@@ -147,4 +147,19 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
 
         return $this->createTransferFromResponse($response);
     }
+
+    /**
+     * @param string $id
+     * @return Transfer
+     */
+    public function cancel($id){
+        $response = $this->request(
+            'POST',
+            sprintf('transfers/%s/cancel', $id),
+            [],
+            []
+        );
+        return $this->createTransferFromResponse($response);
+    }
+
 }
