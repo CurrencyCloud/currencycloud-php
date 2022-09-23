@@ -7,6 +7,8 @@ use CurrencyCloud\Model\Report;
 use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use VCR\VCR;
+use CurrencyCloud\Exception\AuthenticationException;
+use CurrencyCloud\Exception\ForbiddenException;
 
 
 class Test extends BaseCurrencyCloudVCRTestCase{
@@ -95,4 +97,31 @@ class Test extends BaseCurrencyCloudVCRTestCase{
         $this->assertSame($dummy['id'], $report->getId());
         $this->assertSame($dummy['short_reference'], $report->getShortReference());
     }
+
+    /** @test */
+    public function canHandleCreatePaymentReportError1()
+    {
+        $this->setExpectedException(AuthenticationException::class, 'Authentication failed with the supplied credentials');
+
+        VCR::insertCassette('Reports/can_handle_create_payment_report_error1.yaml');
+
+        $paymentReportCriteria = new PaymentReportCriteria();
+        $paymentReportCriteria->setCurrency("EUR");
+
+        $report = $this->getAuthenticatedClient()->reports()->createPaymentReport($paymentReportCriteria);
+    }
+
+    /** @test */
+    public function canHandleCreatePaymentReportError2()
+    {
+        $this->setExpectedException(ForbiddenException::class, 'User does not have permission report_write to perform this operation');
+
+        VCR::insertCassette('Reports/can_handle_create_payment_report_error2.yaml');
+
+        $paymentReportCriteria = new PaymentReportCriteria();
+        $paymentReportCriteria->setCurrency("EUR");
+
+        $report = $this->getAuthenticatedClient()->reports()->createPaymentReport($paymentReportCriteria);
+    }
+
 }
