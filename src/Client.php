@@ -8,6 +8,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
 class Client
 {
@@ -35,7 +36,7 @@ class Client
     {
         $this->client = $client;
         $this->session = $session;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
     }
 
     /**
