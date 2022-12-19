@@ -62,7 +62,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 
     /**
      * @param Beneficiary $beneficiary
-     * @param null $onBehalfOf
+     * @param null|string $onBehalfOf
      *
      * @return Beneficiary
      */
@@ -81,7 +81,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
     /**
      * @param Beneficiary|null $beneficiary
      * @param Pagination|null $pagination
-     * @param null $onBehalfOf
+     * @param null|string $onBehalfOf
      *
      * @return Beneficiaries
      */
