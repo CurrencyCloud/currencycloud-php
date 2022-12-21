@@ -57,13 +57,11 @@ class ClientHttpErrorListener
             $messages = [];
             foreach ($decoded['error_messages'] as $field => $messageContexts) {
                 foreach ($messageContexts as $messageContext) {
-                    $errors[] = [
-                        'field' => $field,
-                        'code' => $messageContext['code'],
-                        'message' => $messageContext['message'],
-                        'params' => $messageContext['params']
-                    ];
-                    $messages['message'] = $messageContext['message'];
+                    if (!is_array($messageContext)) {
+                        $this->addError($field, $messageContexts, $errors, $messages);
+                        break;
+                    }
+                    $this->addError($field, $messageContext, $errors, $messages);
                 }
             }
             $message = implode('; ', $messages);
@@ -74,5 +72,15 @@ class ClientHttpErrorListener
             $code = 0;
         }
         throw new $class($statusCode, $date, $requestId, $errors, $requestParams, $method, $url, $message, $code);
+    }
+
+    private function addError(string $field, array $messageContext, array &$errors, array &$messages) {
+        $errors[] = [
+            'field' => $field,
+            'code' => $messageContext['code'],
+            'message' => $messageContext['message'],
+            'params' => $messageContext['params']
+        ];
+        $messages['message'] = $messageContext['message'];
     }
 }
