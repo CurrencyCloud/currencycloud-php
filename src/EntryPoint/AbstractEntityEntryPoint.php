@@ -160,7 +160,10 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         callable $converterFromResponse,
         $onBehalfOf = null
     ) {
-        $changeSet = $this->entityManager->computeChangeSet($entity);
+        $changeSet = $this->entityManager->contains($entity)
+            ? $this->entityManager->computeChangeSet($entity)
+            : $entity;
+
         if (null === $changeSet) {
             return $entity;
         }

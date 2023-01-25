@@ -28,6 +28,16 @@ class SimpleEntityManager
     /**
      * @param EntityInterface $object
      *
+     * @return bool
+     */
+    public function contains(EntityInterface $object)
+    {
+        return $this->storage->contains($object);
+    }
+
+    /**
+     * @param EntityInterface $object
+     *
      * @return $this
      */
     public function add(EntityInterface $object)
