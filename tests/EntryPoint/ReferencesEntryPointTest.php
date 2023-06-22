@@ -211,8 +211,9 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
                 json_decode($data),
-                'GET',
+                'POST',
                 'reference/bank_details',
+                [],
                 [
                     'identifier_type' => 'iban',
                     'identifier_value' => 'GB19TCCL00997901654515',
