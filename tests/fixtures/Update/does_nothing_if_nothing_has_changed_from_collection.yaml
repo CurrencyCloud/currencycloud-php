@@ -1,7 +1,7 @@
 name: can_find
 interactions:
 - request:
-    method: GET
+    method: POST
     uri: http://vcr:3232/v2/beneficiaries/find
     body: ''
     headers:
