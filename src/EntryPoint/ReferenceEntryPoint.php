@@ -214,7 +214,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     ) {
         $response = $this->request(
             'POST',
-            'reference/bank_details',
+            'reference/bank_details/find',
             [],
             [
                 'identifier_type' => $identifierType,

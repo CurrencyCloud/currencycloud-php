@@ -1728,3 +1728,81 @@
             starttransfer_time_us: 128156
             total_time_us: 128241
     index: 0
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: ''
+            Accept-Encoding: ''
+            Content-Type: 'multipart/form-data; boundary=17854c1c265fe977b0ff295540bdbad2ca1d37d8'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/3.6.1'
+            Accept: ''
+        body: "--17854c1c265fe977b0ff295540bdbad2ca1d37d8\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--17854c1c265fe977b0ff295540bdbad2ca1d37d8\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--17854c1c265fe977b0ff295540bdbad2ca1d37d8--\r\n"
+    response:
+        status:
+            code: 401
+            message: Unauthorized
+        headers:
+            Date: 'Tue, 27 Jun 2023 08:29:07 GMT'
+            Content-Type: application/json;charset=utf-8
+            Content-Length: '176'
+            Connection: keep-alive
+            Access-Control-Allow-Headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,apikey,testKey,X-Auth-Token,Origin,Authority,User-Agent,x-google-recaptcha-v3-token,Authorization'
+            Access-Control-Allow-Methods: POST
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Expose-Headers: ''
+            Cache-Control: 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0, private'
+            Expires: '0'
+            Pragma: no-cache
+            Set-Cookie: ['AWSALB=qDY25recVhnOW0Dg2TXCtRq1kdlEH83Ej3XyK80l5N8SY2al+iN65S/TZGvHG/baKM4NVYTHjk2QPcnGD0KDxc1LvOYnI13YnjnGj36J1mUH7iganDvALxSJmuMB; Expires=Tue, 04 Jul 2023 08:29:06 GMT; Path=/', 'AWSALBCORS=qDY25recVhnOW0Dg2TXCtRq1kdlEH83Ej3XyK80l5N8SY2al+iN65S/TZGvHG/baKM4NVYTHjk2QPcnGD0KDxc1LvOYnI13YnjnGj36J1mUH7iganDvALxSJmuMB; Expires=Tue, 04 Jul 2023 08:29:06 GMT; Path=/; SameSite=None; Secure']
+            Vary: Origin
+            X-Content-Type-Options: nosniff
+            X-Envoy-Decorator-Operation: 'api-v2.demo.svc.cluster.local:8080/*'
+            X-Envoy-Upstream-Service-Time: '40'
+            X-Request-Id: f0e8e052-0d23-4c65-8692-e81aca6efb97
+            CF-Cache-Status: DYNAMIC
+            Strict-Transport-Security: 'max-age=2592000; includeSubDomains'
+            Server: cloudflare
+            CF-RAY: 7ddc52065a3a7786-LHR
+        body: '{"error_code":"auth_failed","error_messages":{"username":[{"code":"invalid_supplied_credentials","message":"Authentication failed with the supplied credentials","params":{}}]}}'
+        curl_info:
+            url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+            content_type: application/json;charset=utf-8
+            http_code: 401
+            header_size: 1318
+            request_size: 584
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 0.224441
+            namelookup_time: 0.071948
+            connect_time: 0.077331
+            pretransfer_time: 0.093999
+            size_upload: 363.0
+            size_download: 176.0
+            speed_download: 784.0
+            speed_upload: 1617.0
+            download_content_length: 176.0
+            upload_content_length: 363.0
+            starttransfer_time: 0.224353
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: 104.18.9.148
+            certinfo: {  }
+            primary_port: 443
+            local_ip: 192.168.4.27
+            local_port: 49535
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: HTTPS
+            appconnect_time_us: 93927
+            connect_time_us: 77331
+            namelookup_time_us: 71948
+            pretransfer_time_us: 93999
+            redirect_time_us: 0
+            starttransfer_time_us: 224353
+            total_time_us: 224441
+    index: 0
