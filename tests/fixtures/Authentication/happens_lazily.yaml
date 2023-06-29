@@ -13,7 +13,7 @@
         body: '{"auth_token":"038022bcd2f372cac7bab448db7b5c3b"}'
 -
     request:
-        method: GET
+        method: POST
         url: https://devapi.currencycloud.com/v2/beneficiaries/find
         headers:
             X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b

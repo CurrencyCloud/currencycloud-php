@@ -113,7 +113,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('contacts/find', $contact, $pagination, function ($contact) {
+        return $this->doFindWithPost('contacts/find', $contact, $pagination, function ($contact) {
             return $this->convertContactToRequest($contact, true);
         }, function (stdClass $response) {
             return $this->createContactFromResponse($response);

@@ -69,7 +69,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('accounts/find', $account, $pagination, function ($account) {
+        return $this->doFindWithPost('accounts/find', $account, $pagination, function ($account) {
             return $this->convertAccountToRequest($account, true);
         }, function (stdClass $response) {
             return $this->createAccountFromResponse($response);

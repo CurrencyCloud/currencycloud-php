@@ -93,7 +93,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('beneficiaries/find', $beneficiary, $pagination, function ($entity, $onBehalfOf) {
+        return $this->doFindWithPost('beneficiaries/find', $beneficiary, $pagination, function ($entity, $onBehalfOf) {
             return $this->convertBeneficiaryToRequest($entity, $onBehalfOf);
         }, function ($response) {
             return $this->createBeneficiaryFromResponse($response);

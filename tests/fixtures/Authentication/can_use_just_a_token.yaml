@@ -1,6 +1,6 @@
 -
   request:
-    method: GET
+    method: POST
     url: https://devapi.currencycloud.com/v2/beneficiaries/find
     body: ''
     headers:

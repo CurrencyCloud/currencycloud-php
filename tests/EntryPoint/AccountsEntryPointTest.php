@@ -193,8 +193,9 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                     ]
                 )
             ),
-            'GET',
+            'POST',
             'accounts/find',
+            [],
             $in
         )
         );
@@ -308,10 +309,6 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('shared', $setting2->getChargeType());
         $this->assertTrue($setting2->isEnabled());
         $this->assertTrue($setting2->isDefault());
-
-
-
-
     }
 
     /**
@@ -320,7 +317,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     public function canUpdatePaymentChargesSettings()
     {
 
-        $data = '{        
+        $data = '{
             "charge_settings_id": "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
             "account_id": "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
             "charge_type": "ours",
