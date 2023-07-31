@@ -111,6 +111,14 @@ class Payment implements EntityInterface
      * @var string|null
      */
     private $feeCurrency;
+    /**
+     * @var string|null
+     */
+    private $invoiceNumber;
+    /**
+     * @var string|null
+     */
+    private $invoiceDate;
 
     /**
      * @param string $currency
@@ -614,5 +622,41 @@ class Payment implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
+    public function getInvoiceNumber()
+    {
+        return $this->invoiceNumber;
+    }
 
+    /**
+     * @param null|string invoiceNumber
+     *
+     * @return $this
+     */
+    public function setInvoiceNumber($invoiceNumber)
+    {
+        $this->invoiceNumber = $invoiceNumber;
+        return $this;
+    }    
+
+    /**
+     * @return null|string
+     */
+    public function getInvoiceDate()
+    {
+        return $this->invoiceDate;
+    }
+
+    /**
+     * @param null|string invoiceDate
+     *
+     * @return $this
+     */
+    public function setInvoiceDate($invoiceDate)
+    {
+        $this->invoiceDate = $invoiceDate;
+        return $this;
+    }
 }
