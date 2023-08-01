@@ -145,6 +145,16 @@ class Beneficiary implements EntityInterface
     private $updatedAt;
 
     /**
+     * @var string
+     */
+    private $companyWebsite;
+
+    /**
+     * @var string
+     */
+    private $businessNature;
+
+    /**
      * Since PHP can not have two distinct constructors, this is easy to implement variant using static method
      *
      * @param string $bankCountry
@@ -174,6 +184,44 @@ class Beneficiary implements EntityInterface
             ->setBankCountry($bankCountry)
             ->setCurrency($currency)
             ->setName($name);
+    }
+
+    /**
+     * @return String
+     */
+    public function getCompanyWebsite()
+    {
+        return $this->companyWebsite;
+    }
+
+    /**
+     * @param String companyWebsite
+     *
+     * @return $this
+     */
+    public function setCompanyWebsite(String $companyWebsite)
+    {
+        $this->companyWebsite = $companyWebsite;
+        return $this;
+    }
+
+    /**
+     * @return String
+     */
+    public function getBusinessNature()
+    {
+        return $this->businessNature;
+    }
+
+    /**
+     * @param String businessNature
+     *
+     * @return $this
+     */
+    public function setBusinessNature(String $businessNature)
+    {
+        $this->businessNature = $businessNature;
+        return $this;
     }
 
     /**
