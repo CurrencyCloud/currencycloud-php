@@ -42,7 +42,8 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
             !empty($response->updated_at) ? new DateTime($response->updated_at) : null,
             !empty($response->completed_at) ? new DateTime($response->completed_at) : null,
             $response->creator_account_id,
-            $response->creator_contact_id
+            $response->creator_contact_id,
+            $response->unique_request_id
         );
     }
 
@@ -93,7 +94,8 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
             "completed_at_from" => $criteria->getCompletedAtFrom(),
             "completed_at_to" => $criteria->getCompletedAtFrom(),
             "creator_account_id" => $criteria->getCreatorAccountId(),
-            "creator_contact_id" => $criteria->getCreatorContactId()
+            "creator_contact_id" => $criteria->getCreatorContactId(),
+            "unique_request_id" => $criteria->getUniqueRequestId()
         ];
     }
 
@@ -115,7 +117,8 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
             $response->updated_at,
             $response->completed_at,
             $response->creator_account_id,
-            $response->creator_contact_id
+            $response->creator_contact_id,
+            $response->unique_request_id
         );
     }
 
@@ -127,7 +130,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
      * @param string $reason
      * @return Transfer
      */
-    public function create($sourceAccountId, $destinationAccountId, $currency, $amount, $reason = null){
+    public function create($sourceAccountId, $destinationAccountId, $currency, $amount, $reason = null, $uniqueRequestId=null){
         $response = $this->request(
             'POST',
             'transfers/create',
@@ -137,10 +140,26 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
                 'destination_account_id' => $destinationAccountId,
                 'currency' => $currency,
                 'amount' => $amount,
-                'reason' => $reason
+                'reason' => $reason,
+                "unique_request_id" => $uniqueRequestId
             ]
         );
 
         return $this->createTransferFromResponse($response);
     }
+
+    /**
+     * @param string $id
+     * @return Transfer
+     */
+    public function cancel($id){
+        $response = $this->request(
+            'POST',
+            sprintf('transfers/%s/cancel', $id),
+            [],
+            []
+        );
+        return $this->createTransferFromResponse($response);
+    }
+
 }

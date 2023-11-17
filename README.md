@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
 # Currencycloud API v2 PHP client
-## Version: 3.1.0
+## Version: 3.8.0
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
@@ -17,7 +17,7 @@ it will be far easier to simply make use of Composer to do the dependency manage
 
 
 ### Supported PHP version
-This library aims to support and is tested against PHP 7.4.
+This library aims to support and is tested against PHP 7.4 and PHP 8.0.
 
 ## Installation
 The recommended way to install Currencycloud SDK is through

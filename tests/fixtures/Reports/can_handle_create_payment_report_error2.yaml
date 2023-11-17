@@ -1,0 +1,14 @@
+-
+  request:
+    method: POST
+    url: 'https://devapi.currencycloud.com/v2/reports/payments/create'
+    headers:
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    body: '--8dc5b05b1e195f38b10285bcad4816b8b793096c\r\nContent-Disposition: form-data; name=\"currency\"\r\nContent-Length: 3\r\n\r\nEUR\r\n--8dc5b05b1e195f38b10285bcad4816b8b793096c--\r\n'
+  response:
+    status: 403
+    headers:
+      Date: Fri, 26 Oct 2018 07:44:02 GMT
+      Content-Type: application/json
+      X-Request-Id: 'd6da7f65-d73b-4ad0-b86c-7603f316c44d'
+    body: '{"error_code":"report_write_permission_missing","error_messages":{"base":{"code":"report_write_permission_missing","message":"User does not have permission report_write to perform this operation","params":[]}}}'

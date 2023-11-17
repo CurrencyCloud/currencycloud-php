@@ -69,7 +69,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('accounts/find', $account, $pagination, function ($account) {
+        return $this->doFindWithPost('accounts/find', $account, $pagination, function ($account) {
             return $this->convertAccountToRequest($account, true);
         }, function (stdClass $response) {
             return $this->createAccountFromResponse($response);
@@ -112,11 +112,22 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         if ($convertForSearch) {
             return $common;
         }
-
+        $isTermsAndConditionsAccepted = $account->isTermsAndConditionsAccepted();
+        $isApiTrading = $account->isApiTrading();
+        $isOnlineTrading = $account->isOnlineTrading();
+        $isPhoneTrading = $account->isPhoneTrading();
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),
-            'identification_value' => $account->getIdentificationValue()
+            'identification_value' => $account->getIdentificationValue(),
+            'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
+                ($isTermsAndConditionsAccepted ? 'true' : 'false'),
+            'api_trading' => (null === $isApiTrading) ? null :
+                ($isApiTrading ? 'true' : 'false'),
+            'online_trading' => (null === $isOnlineTrading) ? null :
+                ($isOnlineTrading ? 'true' : 'false'),
+            'phone_trading' => (null === $isPhoneTrading) ? null :
+                ($isPhoneTrading ? 'true' : 'false')
         ];
     }
 
@@ -143,7 +154,11 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
                 ->setUpdatedAt(new DateTime($response->updated_at))
                 ->setIdentificationType($response->identification_type)
                 ->setIdentificationValue($response->identification_value)
-                ->setShortReference($response->short_reference);
+                ->setShortReference($response->short_reference)
+                ->setTermsAndConditionsAccepted($response->terms_and_conditions_accepted)
+                ->setApiTrading($response->api_trading)
+                ->setOnlineTrading($response->online_trading)
+                ->setPhoneTrading($response->phone_trading);
 
         $this->setIdProperty($account, $response->id);
         return $account;

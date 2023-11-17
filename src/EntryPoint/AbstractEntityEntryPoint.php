@@ -136,6 +136,49 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             )
         );
         $beneficiaries = [];
+
+        foreach ($response->$property as $searchModel) {
+            $entity = call_user_func($converterFromResponse, $searchModel);
+            $this->entityManager->add($entity);
+            $beneficiaries[] = $entity;
+        }
+        return call_user_func($collectionConverter, $beneficiaries, $this->createPaginationFromResponse($response));
+    }
+
+
+    /**
+     * @param string $entryPoint
+     * @param mixed $searchModel
+     * @param Pagination $pagination
+     * @param callable $converterToRequest
+     * @param callable $converterFromResponse
+     * @param callable $collectionConverter
+     * @param string $property
+     * @param null|string $onBehalfOf
+     *
+     * @return PaginatedData
+     */
+    protected function doFindWithPost(
+        $entryPoint,
+        $searchModel,
+        Pagination $pagination,
+        callable $converterToRequest,
+        callable $converterFromResponse,
+        callable $collectionConverter,
+        $property,
+        $onBehalfOf = null
+    ) {
+
+        $response = $this->request(
+            'POST',
+            $entryPoint,
+            [],
+            call_user_func($converterToRequest, $searchModel, $onBehalfOf) + $this->convertPaginationToRequest(
+                $pagination
+            )
+        );
+        $beneficiaries = [];
+
         foreach ($response->$property as $searchModel) {
             $entity = call_user_func($converterFromResponse, $searchModel);
             $this->entityManager->add($entity);

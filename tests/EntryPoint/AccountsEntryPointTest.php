@@ -29,7 +29,11 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'updated_at' => '2014-01-12T00:00:00+00:00',
         'identification_type' => 'green_card',
         'identification_value' => '123',
-        'short_reference' => '110104-00004'
+        'short_reference' => '110104-00004',
+        'terms_and_conditions_accepted' => null,
+        'api_trading' => 'true',
+        'online_trading' => 'true',
+        'phone_trading' => 'true'
     ];
 
     protected $in = [
@@ -46,7 +50,11 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'spread_table' => null,
         'identification_type' => null,
         'identification_value' => null,
-        'on_behalf_of' => null
+        'on_behalf_of' => null,
+        'terms_and_conditions_accepted' => null,
+        'api_trading' => null,
+        'online_trading' => null,
+        'phone_trading' => null
     ];
 
     /**
@@ -89,7 +97,11 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'spread_table' => 'K',
             'identification_type' => 'L',
             'identification_value' => 'M',
-            'on_behalf_of' => null
+            'on_behalf_of' => null,
+            'terms_and_conditions_accepted' => 'false',
+            'api_trading' => 'true',
+            'online_trading' => 'true',
+            'phone_trading' => 'false'
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -115,7 +127,11 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 ->setSpreadTable('K')
                 ->setIdentificationType('L')
                 ->setIdentificationValue('M')
-                ->setShortReference('N');
+                ->setShortReference('N')
+                ->setTermsAndConditionsAccepted(false)
+                ->setApiTrading(true)
+                ->setOnlineTrading(true)
+                ->setPhoneTrading(false);
 
         $account = $entryPoint->create($account);
 
@@ -163,6 +179,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         unset($in['identification_type']);
         unset($in['identification_value']);
         unset($in['on_behalf_of']);
+        unset($in['terms_and_conditions_accepted']);
+        unset($in['api_trading']);
+        unset($in['online_trading']);
+        unset($in['phone_trading']);
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
             json_decode(
@@ -173,8 +193,9 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                     ]
                 )
             ),
-            'GET',
+            'POST',
             'accounts/find',
+            [],
             $in
         )
         );
@@ -288,10 +309,6 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('shared', $setting2->getChargeType());
         $this->assertTrue($setting2->isEnabled());
         $this->assertTrue($setting2->isDefault());
-
-
-
-
     }
 
     /**
@@ -300,7 +317,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     public function canUpdatePaymentChargesSettings()
     {
 
-        $data = '{        
+        $data = '{
             "charge_settings_id": "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
             "account_id": "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
             "charge_type": "ours",
@@ -328,5 +345,84 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('ours', $updated->getChargeType());
         $this->assertTrue($updated->isEnabled());
         $this->assertFalse($updated->isDefault());
+    }
+
+    /**
+     * @test
+     */
+    public function termAndConditionsAcceptedTrue()
+    {
+        $this->testTermsAndConditionsAccepted(true);
+    }
+    /**
+     * @test
+     */
+    public function termAndConditionsAcceptedFalse()
+    {
+        $this->testTermsAndConditionsAccepted(false);
+    }
+    /**
+     * @test
+     */
+    public function termAndConditionsAcceptedNull()
+    {
+        $this->testTermsAndConditionsAccepted(null);
+    }
+
+    private function testTermsAndConditionsAccepted($isTermsAndConditionsAccepted) {
+        $in = [
+            'legal_entity_type' => 'A',
+            'account_name' => 'B',
+            'brand' => 'C',
+            'your_reference' => 'D',
+            'status' => 'E',
+            'street' => 'F',
+            'city' => 'G',
+            'state_or_province' => 'H',
+            'country' => 'I',
+            'postal_code' => 'J',
+            'spread_table' => 'K',
+            'identification_type' => 'L',
+            'identification_value' => 'M',
+            'on_behalf_of' => null,
+            'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
+            ($isTermsAndConditionsAccepted ? 'true' : 'false'),
+            'api_trading' => 'true',
+            'online_trading' => 'true',
+            'phone_trading' => 'true'
+        ];
+
+        $entryPoint = new AccountsEntryPoint(
+            new SimpleEntityManager(), $this->getMockedClient(
+            json_decode(json_encode($this->out)),
+            'POST',
+            'accounts/create',
+            [],
+            $in
+        )
+        );
+
+        $account =
+            Account::create('B', 'A')
+                ->setBrand('C')
+                ->setYourReference('D')
+                ->setStatus('E')
+                ->setStreet('F')
+                ->setCity('G')
+                ->setStateOrProvince('H')
+                ->setCountry('I')
+                ->setPostalCode('J')
+                ->setSpreadTable('K')
+                ->setIdentificationType('L')
+                ->setIdentificationValue('M')
+                ->setShortReference('N')
+                ->setTermsAndConditionsAccepted($isTermsAndConditionsAccepted)
+                ->setApiTrading(true)
+                ->setOnlineTrading(true)
+                ->setPhoneTrading(true);
+
+        $account = $entryPoint->create($account);
+
+        $this->validateObjectStrictName($account, $this->out);
     }
 }

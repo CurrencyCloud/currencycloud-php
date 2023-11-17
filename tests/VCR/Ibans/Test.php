@@ -4,14 +4,15 @@ namespace CurrencyCloud\Tests\VCR\Ibans;
 use CurrencyCloud\Criteria\FindIbansCriteria;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase {
 
-    /**
-     * @vcr Ibans/can_find_ibans.yaml
-     * @test
-     */
-    public function canFindIbans(){
+    /** @test */
+    public function canFindIbans()
+    {
+        VCR::insertCassette('Ibans/can_find_ibans.yaml');
+
         $findIbansCriteria = new FindIbansCriteria();
         $pagination = new Pagination();
         $ibans = $this->getAuthenticatedClient()->ibans()->find($findIbansCriteria, $pagination);

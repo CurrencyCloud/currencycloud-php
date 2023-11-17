@@ -5,16 +5,15 @@ namespace CurrencyCloud\Tests\VCR\Actions;
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
 
 class Test extends BaseCurrencyCloudVCRTestCase
 {
-
-    /**
-     * @vcr Actions/can_first.yaml
-     * @test
-     */
+    /** @test */
     public function canFirst()
     {
+        VCR::insertCassette('Actions/can_first.yaml');
+
         $beneficiaries =
             $this->getAuthenticatedClient()
                 ->beneficiaries()
@@ -34,12 +33,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
     }
 
-    /**
-     * @vcr Actions/can_find.yaml
-     * @test
-     */
+    /** @test */
     public function canFind()
     {
+        VCR::insertCassette('Actions/can_find.yaml');
+
         $beneficiaries = $this->getAuthenticatedClient()
             ->beneficiaries()
             ->find();
@@ -55,12 +53,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiaries->getPagination(), $dummy['pagination']);
     }
 
-    /**
-     * @vcr Actions/can_retrieve.yaml
-     * @test
-     */
+    /** @test */
     public function canRetrieve()
     {
+        VCR::insertCassette('Actions/can_retrieve.yaml');
+
         $beneficiary = $this->getAuthenticatedClient()
             ->beneficiaries()
             ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
@@ -73,12 +70,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
-    /**
-     * @vcr Actions/can_delete.yaml
-     * @test
-     */
+    /** @test */
     public function canDelete()
     {
+        VCR::insertCassette('Actions/can_delete.yaml');
+
         $beneficiary = $this->getAuthenticatedClient()
             ->beneficiaries()
             ->retrieve('081596c9-02de-483e-9f2a-4cf55dcdf98c');
@@ -97,12 +93,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
 
     }
 
-    /**
-     * @vcr Actions/can_create.yaml
-     * @test
-     */
+    /** @test */
     public function canCreate()
     {
+        VCR::insertCassette('Actions/can_create.yaml');
+
         $beneficiary =
             Beneficiary::create('Test User', 'GB', 'GBP', 'Test User')
                 ->setAccountNumber('12345678')
@@ -122,12 +117,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
-    /**
-     * @vcr Actions/can_validate_beneficiaries.yaml
-     * @test
-     */
+    /** @test */
     public function canValidateBeneficiaries()
     {
+        VCR::insertCassette('Actions/can_validate_beneficiaries.yaml');
+
         $beneficiary =
             Beneficiary::createForValidate('GB', 'GBP', 'GB')
                 ->setAccountNumber('12345678')
@@ -147,12 +141,11 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
-    /**
-     * @vcr Actions/can_update.yaml
-     * @test
-     */
+    /** @test */
     public function canUpdate()
     {
+        VCR::insertCassette('Actions/can_update.yaml');
+
         $client = $this->getAuthenticatedClient();
 
         $beneficiary =
@@ -180,29 +173,27 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->validateObjectStrictName($beneficiary, $dummy);
     }
 
-    /**
-     * @vcr Actions/can_current.yaml
-     * @test
-     */
+    /** @test */
     public function canCurrent()
     {
+        VCR::insertCassette('Actions/can_current.yaml');
+
         $account = $this->getAuthenticatedClient()
             ->accounts()->current();
 
         $dummy =
             json_decode(
-                '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"currencycloud","your_reference":null,"status":"enabled","street":null,"city":null,"state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2015-04-24T15:57:55+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002"}', true
+                '{"id":"8ec3a69b-02d1-4f09-9a6b-6bd54a61b3a8","account_name":"Currency Cloud","brand":"currencycloud","your_reference":null,"status":"enabled","street":null,"city":null,"state_or_province":null,"country":null,"postal_code":null,"spread_table":"fxcg_rfx_default","legal_entity_type":null,"created_at":"2015-04-24T15:57:55+00:00","updated_at":"2015-04-24T15:57:55+00:00","identification_type":null,"identification_value":null,"short_reference":"150424-00002","terms_and_conditions_accepted":null}', true
             );
 
         $this->validateObjectStrictName($account, $dummy);
     }
 
-    /**
-     * @vcr Actions/can_use_currency_to_retrieve_balance.yaml
-     * @test
-     */
+    /** @test */
     public function canUseCurrencyToRetrieveBalance()
     {
+        VCR::insertCassette('Actions/can_use_currency_to_retrieve_balance.yaml');
+
         $balance = $this->getAuthenticatedClient()
             ->balances()->retrieve('GBP');
 

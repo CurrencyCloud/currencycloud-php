@@ -11,6 +11,20 @@ use CurrencyCloud\Exception\InternalApplicationException;
 use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Exception\ToManyRequestsException;
 
+if (!function_exists("array_is_list")) {
+    function array_is_list(array $array): bool
+    {
+        $i = -1;
+        foreach ($array as $k => $v) {
+            ++$i;
+            if ($k !== $i) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
 class ClientHttpErrorListener
 {
 
@@ -56,12 +70,24 @@ class ClientHttpErrorListener
             $errors = [];
             $messages = [];
             foreach ($decoded['error_messages'] as $field => $messageContexts) {
-                foreach ($messageContexts as $messageContext) {
-                    if (!is_array($messageContext)) {
-                        $this->addError($field, $messageContexts, $errors, $messages);
-                        break;
+                if(array_is_list($messageContexts)) {
+                    foreach ($messageContexts as $messageContext) {
+                        $errors[] = [
+                            'field' => $field,
+                            'code' => $messageContext['code'],
+                            'message' => $messageContext['message'],
+                            'params' => $messageContext['params']
+                        ];
+                        $messages['message'] = $messageContext['message'];
                     }
-                    $this->addError($field, $messageContext, $errors, $messages);
+                } else {
+                    $errors[] = [
+                        'field' => $field,
+                        'code' => $messageContexts['code'],
+                        'message' => $messageContexts['message'],
+                        'params' => $messageContexts['params']
+                    ];
+                    $messages['message'] = $messageContexts['message'];
                 }
             }
             $message = implode('; ', $messages);
@@ -72,15 +98,5 @@ class ClientHttpErrorListener
             $code = 0;
         }
         throw new $class($statusCode, $date, $requestId, $errors, $requestParams, $method, $url, $message, $code);
-    }
-
-    private function addError(string $field, array $messageContext, array &$errors, array &$messages) {
-        $errors[] = [
-            'field' => $field,
-            'code' => $messageContext['code'],
-            'message' => $messageContext['message'],
-            'params' => $messageContext['params']
-        ];
-        $messages['message'] = $messageContext['message'];
     }
 }

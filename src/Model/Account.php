@@ -75,6 +75,23 @@ class Account implements EntityInterface
      * @var string
      */
     private $shortReference;
+    /**
+     * @var bool
+     */
+    private $termsAndConditionsAccepted;
+    /**
+     * @var bool
+     */
+    private $apiTrading;
+    /**
+     * @var bool
+     */
+    private $onlineTrading;
+    /**
+     * @var bool
+     */
+    private $phoneTrading;
+
 
     /**
      * @param string $accountName
@@ -399,4 +416,82 @@ class Account implements EntityInterface
         $this->shortReference = (null === $shortReference) ? null : (string) $shortReference;
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isTermsAndConditionsAccepted()
+    {
+        return $this->termsAndConditionsAccepted;
+    }
+
+    /**
+     * @param bool $termsAndConditionsAccepted
+     *
+     * @return $this
+     */
+    public function setTermsAndConditionsAccepted($termsAndConditionsAccepted)
+    {
+        $this->termsAndConditionsAccepted = (null === $termsAndConditionsAccepted) ? null : (bool)$termsAndConditionsAccepted;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApiTRading()
+    {
+        return $this->apiTrading;
+    }
+
+    /**
+     * @param bool $apiTrading
+     *
+     * @return $this
+     */
+    public function setApiTrading($apiTrading)
+    {
+        $this->apiTrading = (null === $apiTrading) ? null : (bool)$apiTrading;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnlineTRading()
+    {
+        return $this->onlineTrading;
+    }
+
+    /**
+     * @param bool $apiTrading
+     *
+     * @return $onlineTrading
+     */
+    public function setOnlineTrading($onlineTrading)
+    {
+        $this->onlineTrading = (null === $onlineTrading) ? null : (bool)$onlineTrading;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPhoneTrading()
+    {
+        return $this->phoneTrading;
+    }
+
+    /**
+     * @param bool $phoneTrading
+     *
+     * @return $this
+     */
+    public function setPhoneTrading($phoneTrading)
+    {
+        $this->phoneTrading = (null === $phoneTrading) ? null : (bool)$phoneTrading;
+        return $this;
+    }
+
+
 }

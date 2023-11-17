@@ -6,16 +6,17 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Report;
 use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
+use VCR\VCR;
+use CurrencyCloud\Exception\AuthenticationException;
+use CurrencyCloud\Exception\ForbiddenException;
 
 
 class Test extends BaseCurrencyCloudVCRTestCase{
 
-    /**
-     * @vcr Reports/can_create_conversion_report.yaml
-     * @test
-     */
+    /** @test */
     public function canCreateConversionReport()
     {
+        VCR::insertCassette('Reports/can_create_conversion_report.yaml');
 
         $conversionReportCriteria = new ConversionReportCriteria();
         $conversionReportCriteria->setBuyCurrency("EUR")
@@ -33,12 +34,10 @@ class Test extends BaseCurrencyCloudVCRTestCase{
         $this->assertSame($dummy['short_reference'], $report->getShortReference());
     }
 
-    /**
-     * @vcr Reports/can_create_payment_report.yaml
-     * @test
-     */
+    /** @test */
     public function canCreatePaymentReport()
     {
+        VCR::insertCassette('Reports/can_create_payment_report.yaml');
 
         $paymentReportCriteria = new PaymentReportCriteria();
         $paymentReportCriteria->setCurrency("EUR");
@@ -55,12 +54,10 @@ class Test extends BaseCurrencyCloudVCRTestCase{
         $this->assertSame($dummy['short_reference'], $report->getShortReference());
     }
 
-    /**
-     * @vcr Reports/can_find_reports_requests.yaml
-     * @test
-     */
+    /** @test */
     public function canFindReportsRequests()
     {
+        VCR::insertCassette('Reports/can_find_reports_requests.yaml');
 
         $findReportsCriteria = new FindReportsCriteria();
         $pagination = new Pagination();
@@ -83,15 +80,13 @@ class Test extends BaseCurrencyCloudVCRTestCase{
         $this->assertSame($dummy['report_requests'][0]['search_params']['buy_currency'], $reports->getReports()[0]->getSearchParams()->getBuyCurrency());
         $this->assertSame($dummy['report_requests'][0]['search_params']['sell_currency'], $reports->getReports()[0]->getSearchParams()->getSellCurrency());
         $this->assertSame($dummy['report_requests'][0]['search_params']['scope'], $reports->getReports()[0]->getSearchParams()->getScope());
-
     }
 
-    /**
-     * @vcr Reports/can_retrieve_report.yaml
-     * @test
-     */
+    /** @test */
     public function canRetrieveReport()
     {
+        VCR::insertCassette('Reports/can_retrieve_report.yaml');
+
         $report = $this->getAuthenticatedClient()->reports()->retrieve("075ce584-b977-4538-a524-16b759277d66");
 
         $dummy = json_decode(
@@ -101,6 +96,32 @@ class Test extends BaseCurrencyCloudVCRTestCase{
 
         $this->assertSame($dummy['id'], $report->getId());
         $this->assertSame($dummy['short_reference'], $report->getShortReference());
-
     }
+
+    /** @test */
+    public function canHandleCreatePaymentReportError1()
+    {
+        $this->setExpectedException(AuthenticationException::class, 'Authentication failed with the supplied credentials');
+
+        VCR::insertCassette('Reports/can_handle_create_payment_report_error1.yaml');
+
+        $paymentReportCriteria = new PaymentReportCriteria();
+        $paymentReportCriteria->setCurrency("EUR");
+
+        $report = $this->getAuthenticatedClient()->reports()->createPaymentReport($paymentReportCriteria);
+    }
+
+    /** @test */
+    public function canHandleCreatePaymentReportError2()
+    {
+        $this->setExpectedException(ForbiddenException::class, 'User does not have permission report_write to perform this operation');
+
+        VCR::insertCassette('Reports/can_handle_create_payment_report_error2.yaml');
+
+        $paymentReportCriteria = new PaymentReportCriteria();
+        $paymentReportCriteria->setCurrency("EUR");
+
+        $report = $this->getAuthenticatedClient()->reports()->createPaymentReport($paymentReportCriteria);
+    }
+
 }

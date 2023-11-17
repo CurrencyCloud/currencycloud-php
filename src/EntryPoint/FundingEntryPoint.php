@@ -16,9 +16,14 @@ class FundingEntryPoint extends AbstractEntryPoint
      * @param string $currency
      * @param string $accountId
      * @param string $paymentType
+     * @param null|string $onBehalfOf
      * @return FundingAccounts
      */
-    public function findFundingAccounts($pagination, $currency, $accountId = null, $paymentType = null)
+    public function findFundingAccounts($pagination,
+                                        $currency,
+                                        $accountId = null,
+                                        $paymentType = null,
+                                        $onBehalfOf = null)
     {
         if (empty($pagination)) {
             $pagination = new Pagination();
@@ -30,7 +35,8 @@ class FundingEntryPoint extends AbstractEntryPoint
                 [
                     'currency' => $currency,
                     'account_id' => $accountId,
-                    'payment_type' => $paymentType
+                    'payment_type' => $paymentType,
+                    'on_behalf_of' => $onBehalfOf
                 ],
                 $this->convertPaginationToRequest($pagination)
             )
