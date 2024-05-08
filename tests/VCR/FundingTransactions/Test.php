@@ -1,5 +1,5 @@
 <?php
-namespace CurrencyCloud\Model;
+namespace CurrencyCloud\Tests\VCR\FundingTransactions;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use VCR\VCR;
