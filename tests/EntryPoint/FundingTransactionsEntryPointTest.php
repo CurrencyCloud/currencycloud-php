@@ -5,7 +5,7 @@ namespace CurrencyCloud\Tests\EntryPoint;
 use CurrencyCloud\EntryPoint\FundingTransactionsEntryPoint;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
-class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
+class FundingTransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 {
     /**
      * @test
