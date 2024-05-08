@@ -55,6 +55,6 @@ class FundingTransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['currency'], $fundingTransaction->getCurrency());
         $this->assertSame($dummy['rail'], $fundingTransaction->getRail());
         $this->assertSame($dummy['additional_information'], $fundingTransaction->getAdditionalInformation());
-        $this->assertSame($dummy['sender.sender_id'], $fundingTransaction->getSender()->getSenderId());
+        $this->assertSame($dummy['sender']['sender_id'], $fundingTransaction->getSender()->getSenderId());
     }
 }
