@@ -23,7 +23,7 @@ class FundingTransactionsEntryPointTest extends BaseCurrencyCloudTestCase
             "receiving_account_iban":null,
             "created_at":"2023-10-16T13:31:18+00:00",
             "updated_at":"2023-10-16T13:31:18+00:00",
-            "completed_at":null,
+            "completed_at":"2023-10-16T13:31:18+00:00",
             "sender":
                 {
                     "sender_id":"5c675fa4-fdf0-4ee6-b5bb-156b36765433",
