@@ -1,0 +1,16 @@
+-
+  request:
+    method: POST
+    url: https://devapi.currencycloud.com/v2/beneficiaries/account_validation
+    body: '--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"payment_type\"\r\nContent-Length: 7\r\n\r\nregular\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"bank_country\"\r\nContent-Length: 2\r\n\r\nGB\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"currency\"\r\nContent-Length: 3\r\n\r\nGBP\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"account_number\"\r\nContent-Length: 8\r\n\r\n73515966\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"beneficiary_entity_type\"\r\nContent-Length: 10\r\n\r\nIndividual\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"beneficiary_first_name\"\r\nContent-Length: 6\r\n\r\nRicard\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"beneficiary_last_name\"\r\nContent-Length: 5\r\n\r\nSousa\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"routing_code_type_1\"\r\nContent-Length: 9\r\n\r\nsort_code\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9\r\nContent-Disposition: form-data; name=\"routing_code_value_1\"\r\nContent-Length: 6\r\n\r\n015561\r\n--687f3262516aaf3516ff427665ede7ca1e9fcbb9--\r\n'
+    headers:
+      Host: devapi.currencycloud.com
+      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+  response:
+    status: 200
+    headers:
+      Date: Sun, 03 May 2015 16:55:03 GMT
+      Content-Type: application/json
+      Content-Length: '732'
+      X-Request-Id: '2777975414238700878'
+    body: '{"answer":"okay","actual_name":null,"reason_code":"AV100","reason":null,"reason_type":null}'

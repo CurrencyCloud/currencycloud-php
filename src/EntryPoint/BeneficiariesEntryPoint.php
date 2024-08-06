@@ -34,10 +34,9 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
     }
 
     /**
-     * @param Beneficiary $beneficiary
-     * @param null|string $onBehalfOf
+     * @param AccountVerificationRequest $accountVerificationRequest
      *
-     * @return Beneficiary
+     * @return AccountVerificationResponse
      */
     public function verifyAccount(AccountVerificationRequest $accountVerificationRequest)
     {
@@ -45,9 +44,9 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'POST',
             'beneficiaries/account_verification',
             [],
-            $this->convertAccountVerificationToRequest($accountVerificationRequest)
+            $this->convertAccountVerificationRequestToRequest($accountVerificationRequest)
         );
-        return $this->createBeneficiaryFromResponse($response, true);
+        return $response;
     }
 
     /**
