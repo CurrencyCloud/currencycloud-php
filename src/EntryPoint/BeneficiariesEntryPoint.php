@@ -25,8 +25,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             [],
             $this->convertBeneficiaryToRequest(
                 $beneficiary,
+                $onBehalfOf,
                 true,
-                $onBehalfOf
             )
         );
         return $this->createBeneficiaryFromResponse($response, true);
@@ -127,8 +127,12 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      *
      * @return array
      */
-    protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, $convertForValidate = false, $convertForUpdate = false)
-	{
+    protected function convertBeneficiaryToRequest(
+        Beneficiary $beneficiary,
+        $onBehalfOf = null,
+        $convertForValidate = false,
+        $convertForUpdate = false
+    ) {
         $isDefaultBeneficiary = $beneficiary->isDefaultBeneficiary();
         $common = [
             'bank_country' => $beneficiary->getBankCountry(),
@@ -161,6 +165,9 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_identification_value' => $beneficiary->getBeneficiaryIdentificationValue(),
             'payment_types' => $beneficiary->getPaymentTypes()
         ];
+        if ($onBehalfOf) {
+            $common['on_behalf_of'] = $onBehalfOf;
+        }
 
         if ($convertForValidate) {
             return $common;
