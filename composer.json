@@ -15,7 +15,6 @@
   "license": "MIT",
   "require": {
     "php": ">=7.2",
-    "ext-json": "*",
     "guzzlehttp/guzzle": "~6.1||~7.0",
     "symfony/yaml": "^2.7||^3.0||^4.0||^5.0||^6.0",
     "symfony/event-dispatcher": "^5.0||^6.0"
