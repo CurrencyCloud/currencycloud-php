@@ -4,6 +4,7 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Beneficiaries;
 use CurrencyCloud\Model\AccountVerificationRequest;
+use CurrencyCloud\Model\AccountVerificationResponse;
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
@@ -46,7 +47,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             [],
             $this->convertAccountVerificationRequestToRequest($accountVerificationRequest)
         );
-        return $response;
+        return new AccountVerificationResponse($response->answer, $response->actual_name, $response->reason_code,
+        $response->reason, $response->reason_type);
     }
 
     /**
