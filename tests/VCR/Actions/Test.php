@@ -149,12 +149,12 @@ class Test extends BaseCurrencyCloudVCRTestCase
 
         $accountVerificationRequest = new AccountVerificationRequest();
         $accountVerificationRequest
-                ->setCountry('GB')
+                ->setBankCountry('GB')
                 ->setCurrency("GBP")
                 ->setAccountNumber('73515966')
                 ->setRoutingCodeType1('sort_code')
                 ->setRoutingCodeValue1('015561')
-                ->setPaymentTypes(['regular'])
+                ->setPaymentType(['regular'])
                 ->setBeneficiaryEntityType('Individual')
                 ->setBeneficiaryFirstName('Ricard')
                 ->setBeneficiaryLastName('Sousa');
