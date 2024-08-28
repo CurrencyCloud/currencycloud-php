@@ -3,6 +3,7 @@
 namespace CurrencyCloud\Tests\VCR\Actions;
 
 use CurrencyCloud\Model\Beneficiary;
+use CurrencyCloud\Model\AccountVerificationRequest;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use VCR\VCR;
@@ -139,6 +140,35 @@ class Test extends BaseCurrencyCloudVCRTestCase
             );
 
         $this->validateObjectStrictName($beneficiary, $dummy);
+    }
+
+    /** @test */
+    public function canVerifyAccount()
+    {
+        VCR::insertCassette('Actions/can_verify_account.yaml');
+
+        $accountVerificationRequest = new AccountVerificationRequest();
+        $accountVerificationRequest
+                ->setCountry('GB')
+                ->setCurrency("GBP")
+                ->setAccountNumber('73515966')
+                ->setRoutingCodeType1('sort_code')
+                ->setRoutingCodeValue1('015561')
+                ->setPaymentTypes(['regular'])
+                ->setBeneficiaryEntityType('Individual')
+                ->setBeneficiaryFirstName('Ricard')
+                ->setBeneficiaryLastName('Sousa');
+
+        $response = $this->getAuthenticatedClient()
+            ->beneficiaries()
+            ->verifyAccount($accountVerificationRequest);
+
+        $dummy =
+            json_decode(
+                '{"answer":"okay","actual_name":null,"reason_code":"AV100","reason":null,"reason_type":null}', true
+            );
+
+        $this->validateObjectStrictName($response, $dummy);
     }
 
     /** @test */

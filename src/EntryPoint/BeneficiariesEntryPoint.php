@@ -3,6 +3,7 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Beneficiaries;
+use CurrencyCloud\Model\AccountVerificationRequest;
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
@@ -30,6 +31,22 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             )
         );
         return $this->createBeneficiaryFromResponse($response, true);
+    }
+
+    /**
+     * @param AccountVerificationRequest $accountVerificationRequest
+     *
+     * @return AccountVerificationResponse
+     */
+    public function verifyAccount(AccountVerificationRequest $accountVerificationRequest)
+    {
+        $response = $this->request(
+            'POST',
+            'beneficiaries/account_verification',
+            [],
+            $this->convertAccountVerificationRequestToRequest($accountVerificationRequest)
+        );
+        return $response;
     }
 
     /**
@@ -186,6 +203,28 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 
         return $common + [
             'creator_contact_id' => $beneficiary->getCreatorContactId()
+        ];
+    }
+
+    /**
+     * @param AccountVerificationRequest $request
+     *
+     * @return array
+     */
+    protected function convertAccountVerificationRequestToRequest(AccountVerificationRequest $request)
+    {
+        return [
+            'payment_type' => $request->getPaymentType(),
+            'bank_country' => $request->getBankCountry(),
+            'currency' => $request->getCurrency(),
+            'account_number' => $request->getAccountNumber(),
+            'beneficiary_entity_type' => $request->getBeneficiaryEntityType(),
+            'beneficiary_company_name' => $request->getBeneficiaryCompanyName(),
+            'beneficiary_first_name' => $request->getBeneficiaryFirstName(),
+            'beneficiary_last_name' => $request->getBeneficiaryLastName(),
+            'routing_code_type_1' => $request->getRoutingCodeType1(),
+            'routing_code_value_1' => $request->getRoutingCodeValue1(),
+            'secondary_reference_data' => $request->getSecondaryReferenceData()
         ];
     }
 
