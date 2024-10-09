@@ -204,6 +204,10 @@ Once a feature has been marked as deprecated, we no longer develop the code or i
 # Support
 We actively support the latest version of the SDK. We support the immediate previous version on best-efforts basis. All other versions are no longer supported nor maintained.
 
+# Security Consideration
+1. Authentication
+    1. All data under [this folder](tests/VCR) provide and return dummy credentials to verify that authentication workflows behave as expected.
+
 # Copyright
 Copyright (c) 2015-2021 Currencycloud. See [LICENSE][license] for details.
 
