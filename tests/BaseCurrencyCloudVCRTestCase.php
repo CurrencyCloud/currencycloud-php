@@ -8,6 +8,7 @@ use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\AuthenticateEntryPoint;
 use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
+use CurrencyCloud\EntryPoint\CollectionsScreeningEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
 use CurrencyCloud\EntryPoint\FundingEntryPoint;
@@ -58,7 +59,8 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
     protected function getClient(
         $loginId = 'rjnienaber@gmail.com',
         $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
-    ) {
+    )
+    {
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
@@ -100,7 +102,8 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client),
-            new FundingEntryPoint($client)
+            new FundingEntryPoint($client),
+            new CollectionsScreeningEntryPoint($client)
         );
     }
 

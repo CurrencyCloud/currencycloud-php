@@ -17,6 +17,7 @@ use CurrencyCloud\EntryPoint\ReportsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EntryPoint\FundingEntryPoint;
+use CurrencyCloud\EntryPoint\CollectionsScreeningEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
@@ -102,6 +103,10 @@ class CurrencyCloud
      * @var FundingEntryPoint
      */
     private $fundingEntryPoint;
+    /**
+     * @var CollectionsScreeningEntryPoint
+     */
+    private $collectionsScreeningEntryPoint;
 
     public static $SDK_VERSION = "3.9.0";
 
@@ -123,26 +128,29 @@ class CurrencyCloud
      * @param TransfersEntryPoint $transfersEntryPoint
      * @param VansEntryPoint $vanEntryPoint
      * @param FundingEntryPoint $fundingEntryPoint
+     * @param CollectionsScreeningEntryPoint $collectionsScreeningEntryPoint
      */
     public function __construct(
-        Session $session,
-        AuthenticateEntryPoint $authenticateEntryPoint,
-        AccountsEntryPoint $accountsEntryPoint,
-        BalancesEntryPoint $balancesEntryPoint,
-        BeneficiariesEntryPoint $beneficiariesEntryPoint,
-        ContactsEntryPoint $contactsEntryPoint,
-        ConversionsEntryPoint $conversionsEntryPoint,
-        PayersEntryPoint $payersEntryPoint,
-        IbansEntryPoint $ibansEntryPoint,
-        PaymentsEntryPoint $paymentsEntryPoint,
-        ReferenceEntryPoint $referenceEntryPoint,
-        ReportsEntryPoint $reportsEntryPoint,
-        RatesEntryPoint $ratesEntryPoint,
-        TransactionsEntryPoint $transactionsEntryPoint,
-        TransfersEntryPoint $transfersEntryPoint,
-        VansEntryPoint $vanEntryPoint,
-        FundingEntryPoint $fundingEntryPoint
-    ) {
+        Session                        $session,
+        AuthenticateEntryPoint         $authenticateEntryPoint,
+        AccountsEntryPoint             $accountsEntryPoint,
+        BalancesEntryPoint             $balancesEntryPoint,
+        BeneficiariesEntryPoint        $beneficiariesEntryPoint,
+        ContactsEntryPoint             $contactsEntryPoint,
+        ConversionsEntryPoint          $conversionsEntryPoint,
+        PayersEntryPoint               $payersEntryPoint,
+        IbansEntryPoint                $ibansEntryPoint,
+        PaymentsEntryPoint             $paymentsEntryPoint,
+        ReferenceEntryPoint            $referenceEntryPoint,
+        ReportsEntryPoint              $reportsEntryPoint,
+        RatesEntryPoint                $ratesEntryPoint,
+        TransactionsEntryPoint         $transactionsEntryPoint,
+        TransfersEntryPoint            $transfersEntryPoint,
+        VansEntryPoint                 $vanEntryPoint,
+        FundingEntryPoint              $fundingEntryPoint,
+        CollectionsScreeningEntryPoint $collectionsScreeningEntryPoint
+    )
+    {
         $this->referenceEntryPoint = $referenceEntryPoint;
         $this->session = $session;
         $this->authenticateEntryPoint = $authenticateEntryPoint;
@@ -160,6 +168,7 @@ class CurrencyCloud
         $this->transfersEntryPoint = $transfersEntryPoint;
         $this->vansEntryPoint = $vanEntryPoint;
         $this->fundingEntryPoint = $fundingEntryPoint;
+        $this->collectionsScreeningEntryPoint = $collectionsScreeningEntryPoint;
     }
 
     /**
@@ -183,13 +192,13 @@ class CurrencyCloud
             $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
 
             $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
-                    new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
+                new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
             ], -255);
             $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
                 new SessionTimeoutListener($client, $authenticateEntryPoint), 'onClientHttpErrorEvent'
             ], -254);
             $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
-                    new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
+                new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
             ], -255);
         } else {
             $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
@@ -212,7 +221,8 @@ class CurrencyCloud
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client),
-            new FundingEntryPoint($client)
+            new FundingEntryPoint($client),
+            new CollectionsScreeningEntryPoint($client)
         );
     }
 
@@ -342,6 +352,14 @@ class CurrencyCloud
     public function funding()
     {
         return $this->fundingEntryPoint;
+    }
+
+    /**
+     * @return CollectionsScreeningEntryPoint
+     */
+    public function collections()
+    {
+        return $this->collectionsScreeningEntryPoint;
     }
 
     /**
