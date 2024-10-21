@@ -3,7 +3,6 @@
 namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\EntryPoint\CollectionsScreeningEntryPoint;
-use CurrencyCloud\EntryPoint\CollectionsScreeningEntryPoint_;
 use CurrencyCloud\Model\ScreeningResponse;
 use CurrencyCloud\Model\Result;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
