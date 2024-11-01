@@ -16,7 +16,6 @@ class CollectionsScreeningEntryPointTest extends BaseCurrencyCloudTestCase
     public function canCompleteScreening()
     {
         $transactionId = "2f944410-bfe3-4d25-a301-9048c260d2cc";
-        $authToken = "038022bcd2f372cac7bab448db7b5c3b";
         $accepted = "true";
         $reason = "Accepted";
 
@@ -24,32 +23,25 @@ class CollectionsScreeningEntryPointTest extends BaseCurrencyCloudTestCase
         $clientMock = $this->getMockedClient(
             json_decode(json_encode(
                 [
-                    "transactionId" => $transactionId,
-                    "accountId" => "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9",
-                    "houseAccountId" => "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9",
+                    "transaction_id" => $transactionId,
+                    "account_id" => "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9",
+                    "house_account_id" => "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9",
                     "result" => [
                         'accepted' => $accepted,
                         'reason' => $reason
                     ]
                 ])), "PUT", sprintf('collections_screening/%s/complete', $transactionId),
             [],
-            $payload = [
+            [
                 'accepted' => $accepted,
                 'reason' => $reason
-            ],
-            [
-                'headers' => [
-                    'X-Auth-Token' => $authToken,
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ]
-            ],
-            true
+            ]
         );
 
         $entryPoint = new CollectionsScreeningEntryPoint($clientMock);
 
         //Calling the method to be tested
-        $screeningTransaction = $entryPoint->canCompleteScreening($transactionId, $authToken, $accepted, $reason);
+        $screeningTransaction = $entryPoint->canCompleteScreening($transactionId, $accepted, $reason);
 
         //Asserting the response values
         $this->assertInstanceOf(ScreeningResponse::class, $screeningTransaction);

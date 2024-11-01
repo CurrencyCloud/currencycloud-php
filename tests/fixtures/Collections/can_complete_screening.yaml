@@ -1,16 +1,14 @@
-
 -
-  request:
-    method: PUT
-    url: 'https://devapi.currencycloud.com/v2/collections_screening/2f944410-bfe3-4d25-a301-9048c260d2cc/complete'
-    headers:
-      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
-      Content-Type: application/x-www-form-urlencoded
-    body: "--d6f58a5ca8668b7196438dea35ed1d5c9ef813d6\r\nContent-Disposition: form-data; name=\"accepted\"\r\nContent-Length: 4\r\n\r\nTrue\r\n--d6f58a5ca8668b7196438dea35ed1d5c9ef813d6\r\nContent-Disposition: form-data; name=\"reason\"\r\nContent-Length: 8\r\n\r\nAccepted\r\n--d6f58a5ca8668b7196438dea35ed1d5c9ef813d6--\r\n"
-  response:
-    status:
-      code: 200
-    headers:
-      Content-Type: application/json
-    body: '{"transaction_id": "2f944410-bfe3-4d25-a301-9048c260d2cc","account_id": "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9","house_account_id": "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9","result": {"reason": "Accepted","accepted": true}}'
-  index: 0
+    request:
+        method: PUT
+        url: 'https://devapi.currencycloud.com/v2/collections_screening/2f944410-bfe3-4d25-a301-9048c260d2cc/complete'
+        headers:
+            Content-Type: application/x-www-form-urlencoded
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: "--0f76a25e4b18c4e0f70427578d4109a0dec50f0a\r\nContent-Disposition: form-data; name=\"accepted\"\r\nContent-Length: 1\r\n\r\n1\r\n--0f76a25e4b18c4e0f70427578d4109a0dec50f0a\r\nContent-Disposition: form-data; name=\"reason\"\r\nContent-Length: 8\r\n\r\nAccepted\r\n--0f76a25e4b18c4e0f70427578d4109a0dec50f0a--\r\n"
+    response:
+        status: 200
+        headers:
+            Content-Type: application/json
+        body: '{"transaction_id": "2f944410-bfe3-4d25-a301-9048c260d2cc","account_id": "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9","house_account_id": "7a116d7d-6310-40ae-8d54-0ffbe41dc1c9","result": {"reason": "Accepted","accepted": true}}'
+    index: 0

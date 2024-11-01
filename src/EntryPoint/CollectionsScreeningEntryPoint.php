@@ -14,35 +14,23 @@ class CollectionsScreeningEntryPoint extends AbstractEntryPoint
 
     /**
      * @param $transactionId
-     * @param $authToken
      * @param $accepted
      * @param $reason
      * @return ScreeningResponse
      */
     public function canCompleteScreening($transactionId,
-                                         $authToken,
                                          $accepted,
                                          $reason): ScreeningResponse
     {
-
-        $payload = [
-            'accepted' => $accepted,
-            'reason' => $reason
-        ];
-
         // PUT request to complete screening transaction
         $response = $this->request(
             'PUT',
             sprintf('collections_screening/%s/complete', $transactionId),
             [],
-            $payload,
             [
-                'headers' => [
-                    'X-Auth-Token' => $authToken,
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ]
-            ],
-            true
+                'accepted' => $accepted,
+                'reason' => $reason
+            ]
         );
 
         //Generate ScreeningResponse object from the response
@@ -57,9 +45,9 @@ class CollectionsScreeningEntryPoint extends AbstractEntryPoint
     {
         $result = new Result($response->result->accepted, $response->result->reason);
         return new ScreeningResponse(
-            $response->transactionId,
-            $response->accountId,
-            $response->houseAccountId,
+            $response->transaction_id,
+            $response->account_id,
+            $response->house_account_id,
             $result
         );
     }
