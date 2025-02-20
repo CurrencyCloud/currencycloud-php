@@ -84,7 +84,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'related_entity_short_reference' => null,
                 'status' => null,
                 'type' => null,
-                'reason' => null,
+                'reason' => null, // Deprecated
                 'on_behalf_of' => null,
                 'amount_from' => null,
                 'amount_to' => null,
@@ -149,7 +149,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'related_entity_short_reference' => 'H',
                 'status' => 'I',
                 'type' => 'J',
-                'reason' => 'K',
+                'reason' => 'K', // Deprecated
                 'on_behalf_of' => 'L',
                 'amount_from' => 'A',
                 'amount_to' => 'B',
