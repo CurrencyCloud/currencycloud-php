@@ -12,3 +12,81 @@
       Content-Type: application/json
       X-Request-Id: 'd6da7f65-d73b-4ad0-b86c-7603f316c44d'
     body: '{    "error_code": "auth_failed",    "error_messages": {"username": [ {                "code": "invalid_supplied_credentials",                "message": "Authentication failed with the supplied credentials",                "params": {}            }        ]    }}'
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: ''
+            Accept-Encoding: ''
+            Content-Type: 'multipart/form-data; boundary=b9ff3598b13418cf31dca27545698848ca977007'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/3.10.1'
+            Accept: ''
+        body: "--b9ff3598b13418cf31dca27545698848ca977007\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--b9ff3598b13418cf31dca27545698848ca977007\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--b9ff3598b13418cf31dca27545698848ca977007--\r\n"
+    response:
+        status:
+            http_version: '1.1'
+            code: '401'
+            message: Unauthorized
+        headers:
+            Date: 'Fri, 09 May 2025 13:10:10 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            access-control-allow-headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,apikey,testKey,X-Auth-Token,Origin,Authority,User-Agent,x-google-recaptcha-v3-token,Authorization'
+            access-control-allow-methods: POST
+            access-control-allow-origin: '*'
+            access-control-expose-headers: ''
+            Cache-Control: 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0, private'
+            expires: '0'
+            pragma: no-cache
+            vary: Origin
+            x-content-type-options: nosniff
+            x-envoy-upstream-service-time: '68'
+            x-request-id: 915fd22c-5183-4adf-b9a5-c958e4e408c6
+            cf-cache-status: DYNAMIC
+            Set-Cookie: '__cf_bm=hybT.W8dlWtuc3QCJ05lPpqUU4p8_ucNJVg4UBdRmOw-1746796210-1.0.1.1-CztkdYWUODKvHmcYtBXx1gW2HQL6bZ4C5Dwt14qYz5lnBf5ZyPYrodfTEutBF8S7zs6jAZjhBL.H5bhS.6Nhd7Fq_91AadwPadOBI9UAxDY; path=/; expires=Fri, 09-May-25 13:40:10 GMT; domain=.currencycloud.com; HttpOnly; Secure; SameSite=None'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains'
+            Server: cloudflare
+            CF-RAY: 93d16f7afe161b80-DUB
+        body: '{"error_code":"auth_failed","error_messages":{"username":[{"code":"invalid_supplied_credentials","message":"Authentication failed with the supplied credentials","params":{}}]}}'
+        curl_info:
+            url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+            content_type: application/json;charset=utf-8
+            http_code: 401
+            header_size: 1145
+            request_size: 585
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 0.164021
+            namelookup_time: 0.037258
+            connect_time: 0.041648
+            pretransfer_time: 0.066381
+            size_upload: 363.0
+            size_download: 176.0
+            speed_download: 1073.0
+            speed_upload: 2213.0
+            download_content_length: -1.0
+            upload_content_length: 363.0
+            starttransfer_time: 0.163961
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: 172.64.149.206
+            certinfo: {  }
+            primary_port: 443
+            local_ip: 10.27.177.159
+            local_port: 36246
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: HTTPS
+            appconnect_time_us: 66331
+            connect_time_us: 41648
+            namelookup_time_us: 37258
+            pretransfer_time_us: 66381
+            redirect_time_us: 0
+            starttransfer_time_us: 163961
+            total_time_us: 164021
+    index: 0
