@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
 # Currencycloud API v2 PHP client
-## Version: 3.10.1
+## Version: 4.0.0
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
@@ -199,8 +199,8 @@ Once a feature has been marked as deprecated, we no longer develop the code or i
 
 ### List of features being deprecated
 ```
-2025-02-28
-- 'reason' query parameter in transactions/find
+2025-05-13
+- GET /payments/{id}/submission (to be removed 2025-10-01)
 ```
 # Support
 We actively support the latest version of the SDK. We support the immediate previous version on best-efforts basis. All other versions are no longer supported nor maintained.
