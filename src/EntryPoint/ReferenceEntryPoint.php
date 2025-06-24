@@ -37,16 +37,16 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     }
 
     /**
-     * @param string|null $currency
-     * @param string|null $bankAccountCountry
-     * @param string|null $beneficiaryCountry
+     * @param string $currency
+     * @param string $bankAccountCountry
+     * @param string $beneficiaryCountry
      *
      * @return BeneficiaryRequiredDetail[]
      */
     public function beneficiaryRequiredDetails(
-        $currency = null,
-        $bankAccountCountry = null,
-        $beneficiaryCountry = null
+        $currency,
+        $bankAccountCountry,
+        $beneficiaryCountry
     ) {
         $response = $this->request(
             'GET',

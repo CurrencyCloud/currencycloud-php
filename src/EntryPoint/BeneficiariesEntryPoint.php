@@ -3,6 +3,8 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Beneficiaries;
+use CurrencyCloud\Model\AccountVerificationRequest;
+use CurrencyCloud\Model\AccountVerificationResponse;
 use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
@@ -25,11 +27,28 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             [],
             $this->convertBeneficiaryToRequest(
                 $beneficiary,
+                $onBehalfOf,
                 true,
-                $onBehalfOf
             )
         );
         return $this->createBeneficiaryFromResponse($response, true);
+    }
+
+    /**
+     * @param AccountVerificationRequest $accountVerificationRequest
+     *
+     * @return AccountVerificationResponse
+     */
+    public function verifyAccount(AccountVerificationRequest $accountVerificationRequest)
+    {
+        $response = $this->request(
+            'POST',
+            'beneficiaries/account_verification',
+            [],
+            $this->convertAccountVerificationRequestToRequest($accountVerificationRequest)
+        );
+        return new AccountVerificationResponse($response->answer, $response->actual_name, $response->reason_code,
+        $response->reason, $response->reason_type);
     }
 
     /**
@@ -127,8 +146,12 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
      *
      * @return array
      */
-    protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, $convertForValidate = false, $convertForUpdate = false)
-	{
+    protected function convertBeneficiaryToRequest(
+        Beneficiary $beneficiary,
+        $onBehalfOf = null,
+        $convertForValidate = false,
+        $convertForUpdate = false
+    ) {
         $isDefaultBeneficiary = $beneficiary->isDefaultBeneficiary();
         $common = [
             'bank_country' => $beneficiary->getBankCountry(),
@@ -161,6 +184,9 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_identification_value' => $beneficiary->getBeneficiaryIdentificationValue(),
             'payment_types' => $beneficiary->getPaymentTypes()
         ];
+        if ($onBehalfOf) {
+            $common['on_behalf_of'] = $onBehalfOf;
+        }
 
         if ($convertForValidate) {
             return $common;
@@ -179,6 +205,28 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 
         return $common + [
             'creator_contact_id' => $beneficiary->getCreatorContactId()
+        ];
+    }
+
+    /**
+     * @param AccountVerificationRequest $request
+     *
+     * @return array
+     */
+    protected function convertAccountVerificationRequestToRequest(AccountVerificationRequest $request)
+    {
+        return [
+            'payment_type' => $request->getPaymentType(),
+            'bank_country' => $request->getBankCountry(),
+            'currency' => $request->getCurrency(),
+            'account_number' => $request->getAccountNumber(),
+            'beneficiary_entity_type' => $request->getBeneficiaryEntityType(),
+            'beneficiary_company_name' => $request->getBeneficiaryCompanyName(),
+            'beneficiary_first_name' => $request->getBeneficiaryFirstName(),
+            'beneficiary_last_name' => $request->getBeneficiaryLastName(),
+            'routing_code_type_1' => $request->getRoutingCodeType1(),
+            'routing_code_value_1' => $request->getRoutingCodeValue1(),
+            'secondary_reference_data' => $request->getSecondaryReferenceData()
         ];
     }
 

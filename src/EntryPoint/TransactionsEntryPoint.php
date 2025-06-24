@@ -112,8 +112,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
             'related_entity_id' => $transaction->getRelatedEntityId(),
             'related_entity_short_reference' => $transaction->getRelatedEntityShortReference(),
             'status' => $transaction->getStatus(),
-            'type' => $transaction->getType(),
-            'reason' => $transaction->getReason()
+            'type' => $transaction->getType()
         ];
     }
 
@@ -138,7 +137,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
             ->setReason($response->reason)
             ->setSettlesAt((null === $response->settles_at) ? null : new DateTime($response->settles_at))
             ->setCreatedAt((null === $response->created_at) ? null : new DateTime($response->created_at))
-            ->setCompletedAt((null === $response->created_at) ? null : new DateTime($response->created_at))
+            ->setCompletedAt((null === $response->completed_at) ? null : new DateTime($response->completed_at))
             ->setUpdatedAt((null === $response->updated_at) ? null : new DateTime($response->updated_at));
 
         $this->setIdProperty($transaction, $response->id);
