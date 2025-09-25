@@ -143,6 +143,195 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
+    public function validate()
+    {
+        $data = '{"validation_result": "success"}';
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b833b6a13cc");
+
+        $payer = new Payer();
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            [
+                'body' => json_decode($data),
+                'headers' => [
+                    'x-sca-id' => ['123e4567-e89b-12d3-a456-426614174000'],
+                    'x-sca-required' => ['true'],
+                    'x-sca-type' => ['SMS']
+                ]
+            ],
+            'POST',
+            'payments/validate',
+            [],
+            [
+                'currency' => 'GBP',
+                'amount' => '1000',
+                'reason' => 'Invoice payment',
+                'beneficiary_id' => '24b58031-ed62-4555-89d8-3c285392d340',
+                'conversion_id' => null,
+                'unique_request_id' => '68b833b6a13cc',
+                'charge_type' => null,
+                'fee_currency' => null,
+                'fee_amount' => null,
+                'invoice_number' => null,
+                'invoice_date' => null,
+                'reference' => 'TestPayment',
+                'payment_date' => null,
+                'payment_type' => 'regular',
+                'purpose_code' => null,
+                'payer_entity_type' => null,
+                'payer_company_name' => null,
+                'payer_first_name' => null,
+                'payer_last_name' => null,
+                'payer_city' => null,
+                'payer_address' => null,
+                'payer_postcode' => null,
+                'payer_state_or_province' => null,
+                'payer_country' => null,
+                'payer_date_of_birth' => null,
+                'payer_identification_type' => null,
+                'payer_identification_value' => null,
+            ],
+            [
+                'include_response_headers' => true,
+                'headers' => [
+                    'x-sca-to-authenticated-user' => 'true'
+                ]
+            ]
+        ));
+
+        $item = $entryPoint->validate($payment, $payer, null, true);
+
+        $this->validateObjectStrictName($item, json_decode($data, true));
+    }
+
+    /**
+     * @test
+     */
+    public function canValidateAndCreateWithSCA()
+    {
+        $data = '{"validation_result": "success"}';
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b833b6a13cc");
+
+        $payer = new Payer();
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            [
+                'body' => json_decode($data),
+                'headers' => [
+                    'x-sca-id' => ['123e4567-e89b-12d3-a456-426614174000'],
+                    'x-sca-required' => ['true'],
+                    'x-sca-type' => ['SMS']
+                ]
+            ],
+            'POST',
+            'payments/validate',
+            [],
+            [
+                'currency' => 'GBP',
+                'amount' => '1000',
+                'reason' => 'Invoice payment',
+                'beneficiary_id' => '24b58031-ed62-4555-89d8-3c285392d340',
+                'conversion_id' => null,
+                'unique_request_id' => '68b833b6a13cc',
+                'charge_type' => null,
+                'fee_currency' => null,
+                'fee_amount' => null,
+                'invoice_number' => null,
+                'invoice_date' => null,
+                'reference' => 'TestPayment',
+                'payment_date' => null,
+                'payment_type' => 'regular',
+                'purpose_code' => null,
+                'payer_entity_type' => null,
+                'payer_company_name' => null,
+                'payer_first_name' => null,
+                'payer_last_name' => null,
+                'payer_city' => null,
+                'payer_address' => null,
+                'payer_postcode' => null,
+                'payer_state_or_province' => null,
+                'payer_country' => null,
+                'payer_date_of_birth' => null,
+                'payer_identification_type' => null,
+                'payer_identification_value' => null
+            ],
+            [
+                'include_response_headers' => true,
+                'headers' => [
+                    'x-sca-to-authenticated-user' => 'true'
+                ]
+            ]
+        ));
+
+        $paymentValidationResult = $entryPoint->validate($payment, $payer, null, true);
+
+        $this->validateObjectStrictName($paymentValidationResult, json_decode($data, true));
+
+        $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","short_reference":"140416-GGJBNQ001","beneficiary_id":"24b58031-ed62-4555-89d8-3c285392d340","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"Test payment","reason":"Invoice Payment","payment_date":"2023-12-31T23:59:59.000Z","transferred_at":"2023-12-31T23:59:59.000Z","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","created_at":"2023-12-31T23:59:59.000Z","updated_at":"2023-12-31T23:59:59.000Z","unique_request_id":"68b833b6a13cc","failure_returned_amount":"","purpose_code":"","fee_amount":"10.00","fee_currency":"EUR","invoice_number":"INV01","invoice_date":"2023-07-03", "payer_details_source": null, "charge_type": null }';
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b833b6a13cc");
+
+        $payer = new Payer();
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'payments/create',
+            [],
+            [
+                'currency' => 'GBP',
+                'amount' => '1000',
+                'reason' => 'Invoice payment',
+                'beneficiary_id' => '24b58031-ed62-4555-89d8-3c285392d340',
+                'conversion_id' => null,
+                'unique_request_id' => '68b833b6a13cc',
+                'charge_type' => null,
+                'fee_currency' => null,
+                'fee_amount' => null,
+                'invoice_number' => null,
+                'invoice_date' => null,
+                'reference' => 'TestPayment',
+                'payment_date' => null,
+                'payment_type' => 'regular',
+                'purpose_code' => null,
+                'payer_entity_type' => null,
+                'payer_company_name' => null,
+                'payer_first_name' => null,
+                'payer_last_name' => null,
+                'payer_city' => null,
+                'payer_address' => null,
+                'payer_postcode' => null,
+                'payer_state_or_province' => null,
+                'payer_country' => null,
+                'payer_date_of_birth' => null,
+                'payer_identification_type' => null,
+                'payer_identification_value' => null,
+                'on_behalf_of' => null
+            ],
+            [
+                'headers' => [
+                    'x-sca-id' => '123e4567-e89b-12d3-a456-426614174000',
+                    'x-sca-token' => '123456'
+                ]
+            ]
+        ));
+
+        $paymentResult = $entryPoint->create($payment, $payer, null, $paymentValidationResult->getScaId(), "123456");
+
+        $this->validateObjectStrictName($paymentResult, json_decode($data, true));
+    }
+
+    /**
+     * @test
+     */
     public function canDelete()
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';

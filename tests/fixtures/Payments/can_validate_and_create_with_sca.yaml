@@ -1,0 +1,64 @@
+-
+    request:
+        method: POST
+        url: https://devapi.currencycloud.com/v2/payments/validate
+        headers:
+            Content-Type: 'multipart/form-data; boundary=1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0'
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: '--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; currency=GBP&amount=1000&reason=Invoice+payment&beneficiary_id=24b58031-ed62-4555-89d8-3c285392d340&conversion_id=&unique_request_id=68b833b6a13cc&charge_type=&fee_currency=&fee_amount=&invoice_number=&invoice_date=&reference=TestPayment&payment_date=&payment_type=regular&purpose_code=&payer_entity_type=&payer_company_name=&payer_first_name=&payer_last_name=&payer_city=&payer_address=&payer_postcode=&payer_state_or_province=&payer_country=&payer_date_of_birth=&payer_identification_type=&payer_identification_value=\r\nContent-Length: 464\r\n\r\n2416c8fe-0486-4fc3-82d9-4dc9a44eba9a\r\n'
+    response:
+        status: 200
+        headers:
+            Date: Thu, 08 Nov 2018 14:14:45 GMT
+            Content-Type: application/json
+            X-Request-Id: 'b63b7349-a5b1-40d3-a624-c57ecc79ef9f'
+            x-sca-id: '123e4567-e89b-12d3-a456-426614174000'
+            x-sca-required: 'true'
+            x-sca-type: 'SMS'
+        body: '{"validation_result": "success"}'
+-
+    request:
+        method: POST
+        url: https://devapi.currencycloud.com/v2/payments/create
+        headers:
+            Content-Type: 'multipart/form-data; boundary=1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0'
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: '--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; currency=GBP&amount=1000&reason=Invoice+payment&beneficiary_id=24b58031-ed62-4555-89d8-3c285392d340&conversion_id=&unique_request_id=68b833b6a13cc&charge_type=&fee_currency=&fee_amount=&invoice_number=&invoice_date=&reference=TestPayment&payment_date=&payment_type=regular&purpose_code=&payer_entity_type=&payer_company_name=&payer_first_name=&payer_last_name=&payer_city=&payer_address=&payer_postcode=&payer_state_or_province=&payer_country=&payer_date_of_birth=&payer_identification_type=&payer_identification_value=\r\nContent-Length: 464\r\n\r\n2416c8fe-0486-4fc3-82d9-4dc9a44eba9a\r\n'
+    response:
+        status: 200
+        headers:
+            Date: Thu, 08 Nov 2018 14:14:45 GMT
+            Content-Type: application/json
+            X-Request-Id: 'b63b7349-a5b1-40d3-a624-c57ecc79ef9f'
+            x-sca-id: '123e4567-e89b-12d3-a456-426614174000'
+            x-sca-token: '123456'
+        body: '{
+            "id": "543477161-91de-012f-e284-1e0030c7f3123",
+            "short_reference": "140416-GGJBNQ001",
+            "beneficiary_id": "24b58031-ed62-4555-89d8-3c285392d340",
+            "conversion_id": "049bab6d-fe2a-42e1-be0f-531c59f838ea",
+            "amount": "1000.00",
+            "currency": "GBP",
+            "status": "ready_to_send",
+            "payment_type": "regular",
+            "reference": "Test payment",
+            "reason": "Invoice Payment",
+            "payment_date": "2023-12-31T23:59:59.000Z",
+            "transferred_at": "2023-12-31T23:59:59.000Z",
+            "authorisation_steps_required": "0",
+            "creator_contact_id": "ab3477161-91de-012f-e284-1e0030c7f35c",
+            "last_updater_contact_id": "ab3477161-91de-012f-e284-1e0030c7f35c",
+            "failure_reason": "",
+            "payer_id": "",
+            "created_at": "2023-12-31T23:59:59.000Z",
+            "updated_at": "2023-12-31T23:59:59.000Z",
+            "unique_request_id": "68b833b6a13cc",
+            "failure_returned_amount": "",
+            "purpose_code": "",
+            "fee_amount": "10.00",
+            "fee_currency": "EUR",
+            "invoice_number": "INV01",
+            "invoice_date": "2023-07-03",
+            "payer_details_source": "",
+            "charge_type": ""
+            }'

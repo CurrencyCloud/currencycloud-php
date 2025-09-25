@@ -40,8 +40,14 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         $data,
         callable $converterToRequest,
         callable $converterFromResponse,
-        $onBehalfOf = null
+        $onBehalfOf = null,
+        array $headers = []
     ) {
+
+        $options = [];
+        if (!empty($headers)) {
+            $options['headers'] = $headers;
+        }
 
         $response = $this->request(
             'POST',
@@ -49,7 +55,8 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             [],
             call_user_func($converterToRequest, $data) + [
                 'on_behalf_of' => $onBehalfOf
-            ]
+            ],
+            $options
         );
         $data = call_user_func($converterFromResponse, $response);
         $this->entityManager->add($data);

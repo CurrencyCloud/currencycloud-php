@@ -8,6 +8,7 @@ use CurrencyCloud\Model\Authorisations;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Model\Payment;
+use CurrencyCloud\Model\PaymentValidationResult;
 use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
@@ -26,21 +27,32 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
      * @param Payment $payment
      * @param Payer|null $payer
      * @param null|string $onBehalfOf
+     * @param null|string $scaId
+     * @param null|string $scaToken
      *
      * @return Payment
      * @throws \Exception
      */
-    public function create(Payment $payment, Payer $payer = null, $onBehalfOf = null)
+    public function create(Payment $payment, Payer $payer = null, $onBehalfOf = null, $scaId = null, $scaToken = null)
     {
         if (null === $payer) {
             $payer = new Payer();
+        }
+
+        $headers = [];
+        if ($scaId !== null) {
+            $headers['x-sca-id'] = $scaId;
+        }
+        if ($scaToken !== null) {
+            $headers['x-sca-token'] = $scaToken;
         }
 
         return $this->doCreate('payments/create', $payment, function ($payment) use ($payer) {
             return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer);
         }, function (stdClass $response) {
             return $this->createPaymentFromResponse($response);
-        }, $onBehalfOf);
+        }, $onBehalfOf,
+        $headers);
     }
 
     /**
@@ -143,6 +155,47 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
 
         $this->setIdProperty($payment, $response->id);
         return $payment;
+    }
+
+    /**
+     * @param Payment $payment
+     * @param Payer|null $payer
+     * @param null|string $onBehalfOf
+     * @param false|bool $scaToAuthenticatedUser
+     *
+     * @return PaymentValidationResult
+     * @throws \Exception
+     */
+    public function validate(Payment $payment, Payer $payer = null, $onBehalfOf = null, bool $scaToAuthenticatedUser = false)
+    {
+        if (null === $payer) {
+            $payer = new Payer();
+        }
+
+        $queryParams = [];
+        if ($onBehalfOf !== null) {
+            $queryParams['on_behalf_of'] = $onBehalfOf;
+        }
+
+        // Include custom headers and return headers in response
+        $options = [];
+        $options['include_response_headers'] = true;
+        if ($scaToAuthenticatedUser) {
+            $options['headers']['x-sca-to-authenticated-user'] = 'true';
+        }
+
+        $response = $this->request(
+            'POST',
+            'payments/validate',
+            $queryParams,
+            $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer),
+            $options
+        );
+
+        return new PaymentValidationResult(
+            $response['body']->validation_result,
+            $response['headers']
+        );
     }
 
     /**

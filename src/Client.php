@@ -124,6 +124,13 @@ class Client
                         $response->getBody()
                             ->getContents()
                     );
+                    // Return response headers if requested.
+                    if (isset($options['include_response_headers']) && $options['include_response_headers']) {
+                        return [
+                            'body' => $data,
+                            'headers' => $response->getHeaders()
+                        ];
+                    }
                     return $data;
                 default:
                     //Everything that's not 200 consider error and dispatch event

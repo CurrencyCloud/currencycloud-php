@@ -21,7 +21,7 @@
             Expect: ''
             Accept-Encoding: ''
             Content-Type: 'multipart/form-data; boundary=5a141b9ce4a26b70fbefc9166d778806eaa1f9f0'
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.0.0'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.1.0'
             Accept: ''
         body: "--5a141b9ce4a26b70fbefc9166d778806eaa1f9f0\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--5a141b9ce4a26b70fbefc9166d778806eaa1f9f0\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--5a141b9ce4a26b70fbefc9166d778806eaa1f9f0--\r\n"
     response:
@@ -102,7 +102,7 @@
             Expect: ''
             Accept-Encoding: ''
             Content-Type: 'multipart/form-data; boundary=2a02a9c570de46f19905e04660357c77d124db3e'
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.0.0'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.1.0'
             Accept: ''
         body: "--2a02a9c570de46f19905e04660357c77d124db3e\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--2a02a9c570de46f19905e04660357c77d124db3e\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--2a02a9c570de46f19905e04660357c77d124db3e--\r\n"
     response:
@@ -183,7 +183,7 @@
             Expect: ''
             Accept-Encoding: ''
             Content-Type: 'multipart/form-data; boundary=3b1d6e25252fca1dbb268f326bf50a63c69d55e4'
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.0.0'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.1.0'
             Accept: ''
         body: "--3b1d6e25252fca1dbb268f326bf50a63c69d55e4\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--3b1d6e25252fca1dbb268f326bf50a63c69d55e4\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--3b1d6e25252fca1dbb268f326bf50a63c69d55e4--\r\n"
     response:
@@ -264,7 +264,7 @@
             Expect: ''
             Accept-Encoding: ''
             Content-Type: 'multipart/form-data; boundary=15eeecf2fd495c04831c7da833e05cab08a6c6b8'
-            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.0.0'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.1.0'
             Accept: ''
         body: "--15eeecf2fd495c04831c7da833e05cab08a6c6b8\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--15eeecf2fd495c04831c7da833e05cab08a6c6b8\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--15eeecf2fd495c04831c7da833e05cab08a6c6b8--\r\n"
     response:
@@ -335,4 +335,82 @@
             effective_method: POST
             capath: ''
             cainfo: ''
+    index: 0
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+        headers:
+            Host: devapi.currencycloud.com
+            Expect: ''
+            Accept-Encoding: ''
+            Content-Type: 'multipart/form-data; boundary=c8d4da16524fca1286600d32519b694752fbc030'
+            User-Agent: 'CurrencyCloudSDK/2.0 PHP/4.1.0'
+            Accept: ''
+        body: "--c8d4da16524fca1286600d32519b694752fbc030\r\nContent-Disposition: form-data; name=\"login_id\"\r\nContent-Length: 20\r\n\r\nrjnienaber@gmail.com\r\n--c8d4da16524fca1286600d32519b694752fbc030\r\nContent-Disposition: form-data; name=\"api_key\"\r\nContent-Length: 64\r\n\r\nef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0\r\n--c8d4da16524fca1286600d32519b694752fbc030--\r\n"
+    response:
+        status:
+            http_version: '1.1'
+            code: '401'
+            message: Unauthorized
+        headers:
+            Date: 'Thu, 25 Sep 2025 10:33:34 GMT'
+            Content-Type: application/json;charset=utf-8
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            CF-RAY: 9849dd39385a122c-DUB
+            access-control-allow-headers: 'authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,apikey,testKey,X-Auth-Token,Origin,Authority,User-Agent,x-google-recaptcha-v3-token,Authorization'
+            access-control-allow-methods: POST
+            access-control-allow-origin: '*'
+            access-control-expose-headers: ''
+            Cache-Control: 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0, private'
+            expires: '0'
+            pragma: no-cache
+            vary: Origin
+            x-content-type-options: nosniff
+            x-envoy-upstream-service-time: '35'
+            x-request-id: b83c648d-cb27-440a-8e21-feebfc3216a8
+            cf-cache-status: DYNAMIC
+            Set-Cookie: '__cf_bm=d6WYZKziEehu8grueQ_NtSbvBAlipI8RZ13bU0EcGPw-1758796414-1.0.1.1-iTSw2q12ztChfNfkOuuF6b8HNrFLLlZnOAhaQjYabVVcbEqFA2oiyYyOnXatb9X2dXkFmmCRVlWDXhI4rlHfsTT8eanecZg68vxMEXxA_J4; path=/; expires=Thu, 25-Sep-25 11:03:34 GMT; domain=.currencycloud.com; HttpOnly; Secure; SameSite=None'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains'
+            Server: cloudflare
+        body: '{"error_code":"auth_failed","error_messages":{"username":[{"code":"invalid_supplied_credentials","message":"Authentication failed with the supplied credentials","params":{}}]}}'
+        curl_info:
+            url: 'https://devapi.currencycloud.com/v2/authenticate/api'
+            content_type: application/json;charset=utf-8
+            http_code: 401
+            header_size: 1145
+            request_size: 584
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 0.104474
+            namelookup_time: 0.00978
+            connect_time: 0.014673
+            pretransfer_time: 0.037984
+            size_upload: 363.0
+            size_download: 176.0
+            speed_download: 1684.0
+            speed_upload: 3474.0
+            download_content_length: -1.0
+            upload_content_length: 363.0
+            starttransfer_time: 0.104401
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: 104.18.38.50
+            certinfo: {  }
+            primary_port: 443
+            local_ip: 10.27.141.191
+            local_port: 34048
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: HTTPS
+            appconnect_time_us: 37933
+            connect_time_us: 14673
+            namelookup_time_us: 9780
+            pretransfer_time_us: 37984
+            redirect_time_us: 0
+            starttransfer_time_us: 104401
+            total_time_us: 104474
     index: 0
