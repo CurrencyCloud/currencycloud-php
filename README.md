@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
+![packagist](https://img.shields.io/packagist/v/currency-cloud/client)
 
 # Currencycloud API v2 PHP client
-## Version: 4.0.0
+## Version: 4.1.0
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
-for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
+for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/guides/getting-started/introduction/). 
 
 If you have any queries or you require support, please contact our development team at development@currencycloud.com.  Please quote your login id in any correspondence as this makes
 it simpler for us to locate your account and give you the support you need.
@@ -38,7 +38,7 @@ require 'vendor/autoload.php';
 ```
 
 # Usage
-You can register for demo API key at [developer.currencycloud.com](https://developer.currencycloud.com/api-register/). 
+You can register for demo API key at [developer.currencycloud.com](https://developer.currencycloud.com/register-for-an-api-key/). 
 
 An example in PHP 7:
 
@@ -96,7 +96,7 @@ foreach ($balances->getBalances() as $balance) {
 $client->authenticate()->close();
 ```
 
-For a slightly longer example, see [cook-book.php](/examples/cook-book.php), which is an implementation of the [Cookbook](https://developer.currencycloud.com/documentation/getting-started/cookbook/) from the documentation.
+For a slightly longer example, see [cook-book.php](/examples/cook-book.php).
 
 ## Common Patterns
 ### Reusing client for multiple requests

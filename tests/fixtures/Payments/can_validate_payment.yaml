@@ -1,0 +1,18 @@
+-
+    request:
+        method: POST
+        url: https://devapi.currencycloud.com/v2/payments/validate
+        headers:
+            Content-Type: 'multipart/form-data; boundary=1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0'
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+        body: '--1612e8ca4da42e3f8fedfaf00acc0593e5a19fc0\r\nContent-Disposition: form-data; currency=GBP&amount=1000&reason=Invoice+payment&beneficiary_id=24b58031-ed62-4555-89d8-3c285392d340&conversion_id=&unique_request_id=68b833b6a13cc&charge_type=&fee_currency=&fee_amount=&invoice_number=&invoice_date=&reference=TestPayment&payment_date=&payment_type=regular&purpose_code=&payer_entity_type=&payer_company_name=&payer_first_name=&payer_last_name=&payer_city=&payer_address=&payer_postcode=&payer_state_or_province=&payer_country=&payer_date_of_birth=&payer_identification_type=&payer_identification_value=\r\nContent-Length: 464\r\n\r\n2416c8fe-0486-4fc3-82d9-4dc9a44eba9a\r\n'
+    response:
+        status: 200
+        headers:
+            Date: Thu, 08 Nov 2018 14:14:45 GMT
+            Content-Type: application/json
+            X-Request-Id: 'b63b7349-a5b1-40d3-a624-c57ecc79ef9f'
+            x-sca-id: '123e4567-e89b-12d3-a456-426614174000'
+            x-sca-required: 'true'
+            x-sca-type: 'SMS'
+        body: '{"validation_result": "success"}'

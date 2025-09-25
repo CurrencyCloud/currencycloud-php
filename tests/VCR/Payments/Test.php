@@ -1,6 +1,8 @@
 <?php
 namespace CurrencyCloud\Tests\VCR\Payments;
 
+use CurrencyCloud\Model\Payment;
+use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use VCR\VCR;
 
@@ -33,6 +35,46 @@ class Test extends BaseCurrencyCloudVCRTestCase {
             $this->assertSame($value['auth_steps_required'], $authorisations->getAuthorisations()[$key]->getAuthSteptsRequired());
             $this->assertSame($value['short_reference'], $authorisations->getAuthorisations()[$key]->getShortReference());
         }
+    }
+
+    /** @test */
+    public function canValidatePayment()
+    {
+        VCR::insertCassette('Payments/can_validate_payment.yaml');
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b8338d3f074");
+
+        $validationResult = $this->getAuthenticatedClient()->payments()->validate(
+            $payment, new Payer(), null, true
+        );
+        $this->assertSame("success", $validationResult->getValidationResult());
+        $this->assertSame('true', $validationResult->getScaRequired());
+        $this->assertSame("SMS", $validationResult->getScaType());
+        $this->assertSame("123e4567-e89b-12d3-a456-426614174000", $validationResult->getScaId());
+    }
+
+    /** @test */
+    public function canValidateAndCreatePaymentWithSCA()
+    {
+        VCR::insertCassette('Payments/can_validate_and_create_with_sca.yaml');
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b8338d3f074");
+
+        $validationResult = $this->getAuthenticatedClient()->payments()->validate(
+            $payment, new Payer(), null, true
+        );
+        $this->assertSame("success", $validationResult->getValidationResult());
+        $this->assertSame("true", $validationResult->getScaRequired());
+        $this->assertSame("SMS", $validationResult->getScaType());
+        $this->assertSame("123e4567-e89b-12d3-a456-426614174000", $validationResult->getScaId());
+
+        $paymentResult = $this->getAuthenticatedClient()->payments()->create($payment, new Payer(), null, $validationResult->getValidationResult(), "123456");
+        $this->assertSame("543477161-91de-012f-e284-1e0030c7f3123", $paymentResult->getId());
+        $this->assertSame("1000.00", $paymentResult->getAmount());
     }
 
     /** @test */
