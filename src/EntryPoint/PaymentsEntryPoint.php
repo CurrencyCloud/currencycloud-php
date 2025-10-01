@@ -12,9 +12,7 @@ use CurrencyCloud\Model\PaymentValidationResult;
 use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
-use CurrencyCloud\Model\PaymentSubmission;
 use CurrencyCloud\Model\PaymentSubmissionInfo;
-use CurrencyCloud\Model\PurposeCode;
 use CurrencyCloud\Model\QuotePaymentFee;
 use CurrencyCloud\Model\PaymentTrackingInfo;
 use DateTime;
@@ -362,31 +360,6 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         }
 
         return new Authorisations($authorisations);
-    }
-
-    /**
-     * @param string $id
-     * @param string|null $onBehalfOf
-     * @return PaymentSubmission
-     */
-    public function retrieveSubmission($id, $onBehalfOf = null){
-        $response = $this->request('GET', sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
-
-        return $this->createPaymentSubmissionFromResponse($response);
-    }
-
-    /**
-     * @param stdClass $response
-     * @return PaymentSubmission
-     */
-    protected function createPaymentSubmissionFromResponse($response){
-        $paymentSubmission = new PaymentSubmission(
-            $response->status,
-            $response->mt103,
-            $response->submission_ref
-        );
-
-        return $paymentSubmission;
     }
 
     /**
