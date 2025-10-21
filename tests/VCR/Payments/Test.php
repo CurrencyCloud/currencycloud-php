@@ -111,4 +111,30 @@ class Test extends BaseCurrencyCloudVCRTestCase {
         $this->assertSame($dummy['short_reference'], $paymentConfirmation->getShortReference());
         $this->assertSame($dummy['status'], $paymentConfirmation->getStatus());
     }
+
+    /** @test */
+    public function canRetryPaymentNotification()
+    {
+        VCR::insertCassette('Payments/can_retry_payment_notification.yaml');
+
+        $response = $this->getAuthenticatedClient()
+            ->payments()
+            ->retryPaymentNotifications('796e0d7d-bae6-4d8a-b217-3cf9ee80a350', 'payment_released_notification');
+
+        $this->assertNotNull($response);
+
+    }
+
+    /** @test */
+    public function canHandleInvalidRetryPaymentNotificationType()
+    {
+        VCR::insertCassette('Payments/can_handle_retry_payment_notification_invalid_type.yaml');
+
+        $this->setExpectedException(\CurrencyCloud\Exception\BadRequestException::class);
+
+        $this->getAuthenticatedClient()
+            ->payments()
+            ->retryPaymentNotifications('796e0d7d-bae6-4d8a-b217-3cf9ee80a350', 'payment_notification');
+
+    }
 }

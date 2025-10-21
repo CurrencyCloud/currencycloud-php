@@ -3,13 +3,13 @@
 use CurrencyCloud\Criteria\FindReportsCriteria;
 use CurrencyCloud\Criteria\PaymentReportCriteria;
 use CurrencyCloud\Model\Pagination;
-use CurrencyCloud\Model\Report;
 use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 use VCR\VCR;
 use CurrencyCloud\Exception\AuthenticationException;
 use CurrencyCloud\Exception\ForbiddenException;
 
+VCR::configure()->setMode('none');
 
 class Test extends BaseCurrencyCloudVCRTestCase{
 
