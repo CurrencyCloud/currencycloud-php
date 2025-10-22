@@ -551,4 +551,22 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
 
         return $paymentEvent;
     }
+
+    /**
+     * @param string $id
+     * @param string $notificationType
+     *
+     * @return stdClass
+     */
+    public function retryPaymentNotifications($id, $notificationType)
+    {
+        $response = $this->request(
+            'POST',
+            sprintf('payments/%s/notifications/retry', $id),
+            [
+                'notification_type' => $notificationType,
+            ]);
+
+        return $response;
+    }
 }

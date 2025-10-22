@@ -1,0 +1,24 @@
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/payments/796e0d7d-bae6-4d8a-b217-3cf9ee80a350/notifications/retry?notification_type=payment_notification'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 400
+        headers:
+            Date: 'Wed, 31 Oct 2018 11:57:56 GMT'
+            Content-Type: application/json
+            X-Request-Id: 7f0aa045-7175-4276-8d4d-4fd9d5e67a98
+        body: '{
+            "error_code": "payment_notification_retry_failed",
+            "error_messages": {
+              "notification_type": [{
+                "code": "notification_type_not_in_range",
+                "message": "notification_type should be in range: payment_ready_to_send_notification, payment_released_notification, payment_failed_notification",
+                "params": {
+                  "range": "payment_ready_to_send_notification, payment_released_notification, payment_failed_notification"
+                }
+              }]
+            }
+          }'

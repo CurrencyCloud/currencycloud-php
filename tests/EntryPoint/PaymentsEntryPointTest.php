@@ -1225,4 +1225,20 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 
     }
 
+    public function canRetryPaymentNotification()
+    {
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode('{}'),
+                'POST',
+                'payments/796e0d7d-bae6-4d8a-b217-3cf9ee80a350/notifications/retry',
+                [
+                    "notification_type" => "payment_failed_notification",
+                ]
+            )
+        );
+        $response = $entryPoint->retryPaymentNotifications('796e0d7d-bae6-4d8a-b217-3cf9ee80a350', 'payment_failed_notification');
+        $this->assertNotNull($response);
+    }
+
 }

@@ -1,0 +1,13 @@
+-
+    request:
+        method: POST
+        url: 'https://devapi.currencycloud.com/v2/payments/796e0d7d-bae6-4d8a-b217-3cf9ee80a350/notifications/retry?notification_type=payment_released_notification'
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 200
+        headers:
+            Date: 'Wed, 31 Oct 2018 11:57:56 GMT'
+            Content-Type: application/json
+            X-Request-Id: 7f0aa045-7175-4276-8d4d-4fd9d5e67a98
+        body: '{}'
