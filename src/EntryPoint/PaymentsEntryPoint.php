@@ -159,12 +159,12 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
      * @param Payment $payment
      * @param Payer|null $payer
      * @param null|string $onBehalfOf
-     * @param false|bool $scaToAuthenticatedUser
+     * @param null|bool $scaToAuthenticatedUser
      *
      * @return PaymentValidationResult
      * @throws \Exception
      */
-    public function validate(Payment $payment, Payer $payer = null, $onBehalfOf = null, bool $scaToAuthenticatedUser = false)
+    public function validate(Payment $payment, Payer $payer = null, $onBehalfOf = null, ?bool $scaToAuthenticatedUser = null)
     {
         if (null === $payer) {
             $payer = new Payer();
@@ -178,8 +178,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         // Include custom headers and return headers in response
         $options = [];
         $options['include_response_headers'] = true;
-        if ($scaToAuthenticatedUser) {
-            $options['headers']['x-sca-to-authenticated-user'] = 'true';
+        if ($scaToAuthenticatedUser !== null) {
+            $options['headers']['x-sca-to-authenticated-user'] = $scaToAuthenticatedUser ? 'true' : 'false';
         }
 
         $response = $this->request(
