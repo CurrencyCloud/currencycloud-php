@@ -3,9 +3,11 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Account;
+use CurrencyCloud\Model\AccountCreateRequest;
 use CurrencyCloud\Model\Accounts;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\AccountPaymentChargesSetting;
+use CurrencyCloud\Model\AccountComplianceSetting;
 use DateTime;
 use stdClass;
 
@@ -13,17 +15,27 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
 {
 
     /**
-     * @param Account $account
+     * @param Account|AccountCreateRequest $createRequest
      *
      * @return Account
      */
-    public function create(Account $account)
+    public function create($createRequest)
     {
-        return $this->doCreate('accounts/create', $account, function ($account) {
-            return $this->convertAccountToRequest($account);
-        }, function (stdClass $response) {
-            return $this->createAccountFromResponse($response);
-        });
+        if ($createRequest instanceof AccountCreateRequest) {
+            return $this->doCreate('accounts/create', $createRequest, function ($createRequest) {
+                return $createRequest->convertToRequest();
+            }, function (stdClass $response) {
+                return $this->createAccountFromResponse($response);
+            });
+        } else if ($createRequest instanceof Account) {
+            $account = $createRequest;
+
+            return $this->doCreate('accounts/create', $account, function ($account) {
+                return $this->convertAccountToRequest($account);
+            }, function (stdClass $response) {
+                return $this->createAccountFromResponse($response);
+            });
+        }
     }
 
     /**
@@ -116,10 +128,15 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         $isApiTrading = $account->isApiTrading();
         $isOnlineTrading = $account->isOnlineTrading();
         $isPhoneTrading = $account->isPhoneTrading();
+        $identificationExpiration = $account->getIdentificationExpiration();
+
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),
             'identification_value' => $account->getIdentificationValue(),
+            'identification_expiration' => (null === $identificationExpiration) ? null : $identificationExpiration->format('Y-m-d'),
+            'identification_issuer' => $account->getIdentificationIssuer(),
+            'legal_entity_sub_type' => $account->getLegalEntitySubType(),
             'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
                 ($isTermsAndConditionsAccepted ? 'true' : 'false'),
             'api_trading' => (null === $isApiTrading) ? null :
@@ -159,6 +176,18 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
                 ->setApiTrading($response->api_trading)
                 ->setOnlineTrading($response->online_trading)
                 ->setPhoneTrading($response->phone_trading);
+
+        if (property_exists($response, "legal_entity_sub_type")) {
+            $account = $account->setLegalEntitySubType($response->legal_entity_sub_type);
+        }
+        if (property_exists($response, "identification_issuer")) {
+            $account = $account->setIdentificationIssuer($response->identification_issuer);
+        }
+        if (property_exists($response, "identification_expiration")) {
+            $account = $account->setIdentificationExpiration(
+                (null !== $response->identification_expiration) ? new DateTime($response->identification_expiration) : null
+            );
+        }
 
         $this->setIdProperty($account, $response->id);
         return $account;
@@ -200,5 +229,34 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
 
         return new AccountPaymentChargesSetting($response->charge_settings_id, $response->account_id,
             $response->charge_type, $response->enabled, $response->default);
+    }
+
+    /**
+     * @param string $accountId
+     *
+     * @return AccountComplianceSetting
+     */
+    public function getComplianceSettings(string $accountId)
+    {
+        $response = $this->request('GET', sprintf('accounts/%s/compliance_settings', $accountId));
+
+        return AccountComplianceSetting::createFromResponse($response);
+    }
+
+    /**
+     * @param AccountComplianceSetting $settings
+     *
+     * @return AccountComplianceSetting
+     */
+    public function updateComplianceSettings(AccountComplianceSetting $settings)
+    {
+        $response = $this->request(
+            'POST',
+            sprintf('accounts/%s/compliance_settings', $settings->getAccountId()),
+            [],
+            $settings->convertToRequest()
+        );
+
+        return AccountComplianceSetting::createFromResponse($response);
     }
 }
