@@ -18,6 +18,10 @@ class Account implements EntityInterface
     /**
      * @var string
      */
+    private $legalEntitySubType;
+    /**
+     * @var string
+     */
     private $accountName;
     /**
      * @var string
@@ -71,6 +75,14 @@ class Account implements EntityInterface
      * @var string
      */
     private $identificationValue;
+    /**
+     * @var DateTime
+     */
+    private $identificationExpiration;
+    /**
+     * @var string
+     */
+    private $identificationIssuer;
     /**
      * @var string
      */
@@ -129,6 +141,25 @@ class Account implements EntityInterface
     public function setLegalEntityType($legalEntityType)
     {
         $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLegalEntitySubType()
+    {
+        return $this->legalEntitySubType;
+    }
+
+    /**
+     * @param string $legalEntitySubType
+     *
+     * @return $this
+     */
+    public function setLegalEntitySubType($legalEntitySubType)
+    {
+        $this->legalEntitySubType = (null === $legalEntitySubType) ? null : (string) $legalEntitySubType;
         return $this;
     }
 
@@ -397,6 +428,45 @@ class Account implements EntityInterface
         $this->identificationValue = (null === $identificationValue) ? null : (string) $identificationValue;
         return $this;
     }
+
+    /**
+     * @return DateTime
+     */
+    public function getIdentificationExpiration()
+    {
+        return $this->identificationExpiration;
+    }
+
+    /**
+     * @param DateTime $identificationExpiration
+     *
+     * @return $this
+     */
+    public function setIdentificationExpiration(DateTime $identificationExpiration)
+    {
+        $this->identificationExpiration = (null === $identificationExpiration) ? null : $identificationExpiration;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentificationIssuer()
+    {
+        return $this->identificationIssuer;
+    }
+
+    /**
+     * @param string $identificationIssuer
+     *
+     * @return $this
+     */
+    public function setIdentificationIssuer($identificationIssuer)
+    {
+        $this->identificationIssuer = (null === $identificationIssuer) ? null : (string) $identificationIssuer;
+        return $this;
+    }
+
 
     /**
      * @return string
