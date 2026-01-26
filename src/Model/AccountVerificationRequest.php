@@ -44,13 +44,33 @@ class AccountVerificationRequest
      * @var string
      */
     private $routingCodeValue1;
+
+    /**
+     * @var string
+     */
+    private $routingCodeType2;
+    /**
+     * @var string
+     */
+    private $routingCodeValue2;
+
     /**
      * @var string
      */
     private $secondaryReferenceData;
 
+    /**
+     * @var string
+     */
+    private $bicSwift;
 
-    public function __construct($paymentType = null, $bankCountry = null, $currency = null, $accountNumber = null, $beneficiaryEntityType = null, $beneficiaryCompanyName = null, $beneficiaryFirstName = null, $beneficiaryLastName = null, $routingCodeType1 = null, $routingCodeValue1 = null, $secondaryReferenceData = null)
+    /**
+     * @var string
+     */
+    private $iban;
+
+
+    public function __construct($paymentType = null, $bankCountry = null, $currency = null, $accountNumber = null, $beneficiaryEntityType = null, $beneficiaryCompanyName = null, $beneficiaryFirstName = null, $beneficiaryLastName = null, $routingCodeType1 = null, $routingCodeValue1 = null, $routingCodeType2 = null, $routingCodeValue2 = null, $secondaryReferenceData = null, $bicSwift = null, $iban = null)
     {
         $this->paymentType = $paymentType;
         $this->bankCountry = $bankCountry;
@@ -62,7 +82,11 @@ class AccountVerificationRequest
         $this->beneficiaryLastName = $beneficiaryLastName;
         $this->routingCodeType1 = $routingCodeType1;
         $this->routingCodeValue1 = $routingCodeValue1;
+        $this->routingCodeType2 = $routingCodeType2;
+        $this->routingCodeValue2 = $routingCodeValue2;
         $this->secondaryReferenceData = $secondaryReferenceData;
+        $this->bicSwift = $bicSwift;
+        $this->iban = $iban;
     }
 
     /**
@@ -258,19 +282,95 @@ class AccountVerificationRequest
     /**
      * @return string
      */
+    public function getRoutingCodeType2()
+    {
+        return $this->routingCodeType2;
+    }
+
+    /**
+     * @param string $routingCodeType2
+     *
+     * @return $this
+     */
+    public function setRoutingCodeType2($routingCodeType2)
+    {
+        $this->routingCodeType2 = (string) $routingCodeType2;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoutingCodeValue2()
+    {
+        return $this->routingCodeValue2;
+    }
+
+    /**
+     * @param string $routingCodeValue2
+     *
+     * @return $this
+     */
+    public function setRoutingCodeValue2($routingCodeValue2)
+    {
+        $this->routingCodeValue2 = (string) $routingCodeValue2;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getSecondaryReferenceData()
     {
         return $this->secondaryReferenceData;
     }
 
     /**
-     * @param string $routingCodeValue1
+     * @param string $secondaryReferenceData
      *
      * @return $this
      */
     public function setSecondaryReferenceData($secondaryReferenceData)
     {
         $this->secondaryReferenceData = (string) $secondaryReferenceData;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBicSwift()
+    {
+        return $this->bicSwift;
+    }
+
+    /**
+     * @param string $bicSwift
+     *
+     * @return $this
+     */
+    public function setBicSwift($bicSwift)
+    {
+        $this->bicSwift = (string) $bicSwift;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param string $iban
+     *
+     * @return $this
+     */
+    public function setIban($iban)
+    {
+        $this->iban = (string) $iban;
         return $this;
     }
 }
