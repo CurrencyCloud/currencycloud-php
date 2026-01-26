@@ -28,7 +28,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             $this->convertBeneficiaryToRequest(
                 $beneficiary,
                 $onBehalfOf,
-                true,
+                true
             )
         );
         return $this->createBeneficiaryFromResponse($response, true);
@@ -226,7 +226,11 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_last_name' => $request->getBeneficiaryLastName(),
             'routing_code_type_1' => $request->getRoutingCodeType1(),
             'routing_code_value_1' => $request->getRoutingCodeValue1(),
-            'secondary_reference_data' => $request->getSecondaryReferenceData()
+            'routing_code_type_2' => $request->getRoutingCodeType2(),
+            'routing_code_value_2' => $request->getRoutingCodeValue2(),
+            'secondary_reference_data' => $request->getSecondaryReferenceData(),
+            'bic_swift' => $request->getBicSwift(),
+            'iban' => $request->getIban()
         ];
     }
 

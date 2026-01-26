@@ -157,7 +157,8 @@ class Test extends BaseCurrencyCloudVCRTestCase
                 ->setPaymentType(['regular'])
                 ->setBeneficiaryEntityType('Individual')
                 ->setBeneficiaryFirstName('Ricard')
-                ->setBeneficiaryLastName('Sousa');
+                ->setBeneficiaryLastName('Sousa')
+                ->setIban('GB33BUKB20201555555555');
 
         $response = $this->getAuthenticatedClient()
             ->beneficiaries()
@@ -165,7 +166,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
 
         $dummy =
             json_decode(
-                '{"answer":"okay","actual_name":null,"reason_code":"AV100","reason":null,"reason_type":null}', true
+                '{"answer":"full_match","actual_name":null,"reason_code":"AV100","reason":null,"reason_type":null}', true
             );
 
         $this->validateObjectStrictName($response, $dummy);
