@@ -38,7 +38,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'api_trading' => 'true',
         'online_trading' => 'true',
         'phone_trading' => 'true',
-        'identification_expiration' => '2014-02-13',
+        'identification_expiration' => null,
         'identification_issuer' => 'US',
         'legal_entity_sub_type' => 'limited_liability_company'
     ];

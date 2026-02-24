@@ -438,13 +438,13 @@ class Account implements EntityInterface
     }
 
     /**
-     * @param DateTime $identificationExpiration
+     * @param DateTime|null $identificationExpiration
      *
      * @return $this
      */
-    public function setIdentificationExpiration(DateTime $identificationExpiration)
+    public function setIdentificationExpiration(DateTime $identificationExpiration = null)
     {
-        $this->identificationExpiration = (null === $identificationExpiration) ? null : $identificationExpiration;
+        $this->identificationExpiration = $identificationExpiration;
         return $this;
     }
 
