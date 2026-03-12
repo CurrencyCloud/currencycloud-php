@@ -111,7 +111,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
                 'Y-m-d'
             ),
             'payer_identification_type' => $payer->getIdentificationType(),
-            'payer_identification_value' => $payer->getIdentificationValue()
+            'payer_identification_value' => $payer->getIdentificationValue(),
+            'payer_ultimate_account_number' => $payer->getUltimateAccountNumber()
         ];
     }
 

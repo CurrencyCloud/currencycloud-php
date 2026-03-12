@@ -67,6 +67,10 @@ class Payer
      * @var DateTime|null
      */
     private $updatedAt;
+    /**
+     * @var null|string
+     */
+    private $ultimateAccountNumber;
 
     /**
      * @param string|null $legalEntityType
@@ -83,6 +87,7 @@ class Payer
      * @param DateTime|null $dateOfBirth
      * @param DateTime|null $createdAt
      * @param DateTime|null $updatedAt
+     * @param string|null $ultimateAccountNumber
      */
     public function __construct(
         $legalEntityType = null,
@@ -98,7 +103,8 @@ class Payer
         $postcode = null,
         DateTime $dateOfBirth = null,
         DateTime $createdAt = null,
-        DateTime $updatedAt = null
+        DateTime $updatedAt = null,
+        $ultimateAccountNumber = null
     ) {
         $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
         $this->companyName = (null === $companyName) ? null : (string) $companyName;
@@ -114,6 +120,7 @@ class Payer
         $this->dateOfBirth = $dateOfBirth;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+        $this->ultimateAccountNumber = (null === $ultimateAccountNumber) ? null : (string) $ultimateAccountNumber;
     }
 
     /**
@@ -235,6 +242,14 @@ class Payer
     {
         return $this->updatedAt;
     }
+    /**
+     * @return null|string
+     */
+    public function getUltimateAccountNumber()
+    {
+        return $this->ultimateAccountNumber;
+    }
+
 
     /**
      * @param null|string $legalEntityType
@@ -387,6 +402,17 @@ class Payer
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @param null|string $ultimateAccountNumber
+     *
+     * @return $this
+     */
+    public function setUltimateAccountNumber($ultimateAccountNumber)
+    {
+        $this->ultimateAccountNumber = $ultimateAccountNumber;
         return $this;
     }
 }

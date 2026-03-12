@@ -56,7 +56,8 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'fee_amount' => null,
                 'fee_currency' => null,
                 'invoice_number' => null,
-                'invoice_date' => null
+                'invoice_date' => null,
+                'payer_ultimate_account_number' => null
             ]
         ));
 
@@ -131,7 +132,8 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'fee_amount' => '12.34',
                 'fee_currency' => 'GBP',
                 'invoice_number' => 'INV01',
-                'invoice_date' => '2023-07-03'
+                'invoice_date' => '2023-07-03',
+                'payer_ultimate_account_number' => null
             ]
         ));
 
@@ -152,6 +154,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setUniqueRequestId("68b833b6a13cc");
 
         $payer = new Payer();
+        $payer->setUltimateAccountNumber('12345678');
 
         $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
             [
@@ -193,6 +196,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'payer_date_of_birth' => null,
                 'payer_identification_type' => null,
                 'payer_identification_value' => null,
+                'payer_ultimate_account_number' => '12345678'
             ],
             [
                 'include_response_headers' => true,
@@ -259,7 +263,8 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'payer_country' => null,
                 'payer_date_of_birth' => null,
                 'payer_identification_type' => null,
-                'payer_identification_value' => null
+                'payer_identification_value' => null,
+                'payer_ultimate_account_number' => null
             ],
             [
                 'include_response_headers' => true,
@@ -314,7 +319,8 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'payer_date_of_birth' => null,
                 'payer_identification_type' => null,
                 'payer_identification_value' => null,
-                'on_behalf_of' => null
+                'on_behalf_of' => null,
+                'payer_ultimate_account_number' => null
             ],
             [
                 'headers' => [
@@ -473,7 +479,8 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'fee_amount' => null,
                 'fee_currency' => null,
                 'invoice_number' => null,
-                'invoice_date' => null
+                'invoice_date' => null,
+                'payer_ultimate_account_number' => null
             ]
         )
         );
@@ -527,7 +534,8 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'fee_amount' => null,
                 'fee_currency' => null,
                 'invoice_number' => null,
-                'invoice_date' => null
+                'invoice_date' => null,
+                'payer_ultimate_account_number' => null
             ]
         )
         );
