@@ -1,7 +1,6 @@
 ![packagist](https://img.shields.io/packagist/v/currency-cloud/client)
 
 # Currencycloud API v2 PHP client
-## Version: 6.4.0
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/guides/getting-started/introduction/). 
