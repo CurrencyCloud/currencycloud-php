@@ -4,6 +4,8 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\FundingAccount;
 use CurrencyCloud\Model\FundingAccounts;
+use CurrencyCloud\Model\FundingTransaction;
+use CurrencyCloud\Model\SenderInformation;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
@@ -85,6 +87,73 @@ class FundingEntryPoint extends AbstractEntryPoint
         }
 
         return $fundingAccounts;
+    }
+
+    /**
+     * @param string $id
+     * @param null|string $onBehalfOf
+     *
+     * @return FundingTransaction
+     */
+    public function retrieveFundingTransaction($id, $onBehalfOf = null)
+    {
+        $response = $this->request(
+            'GET',
+            sprintf('funding_transactions/%s', $id),
+            [
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
+
+        return $this->createFundingTransactionFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $response
+     *
+     * @return FundingTransaction
+     */
+    protected function createFundingTransactionFromResponse(stdClass $response)
+    {
+        $sender = null;
+        if (isset($response->sender)) {
+            $sender = $this->createSenderInformationFromResponse($response->sender);
+        }
+
+        return new FundingTransaction(
+            $response->id,
+            $response->amount,
+            $response->currency,
+            $response->rail,
+            $response->additional_information,
+            $response->receiving_account_routing_code,
+            new DateTime($response->value_date),
+            $response->receiving_account_number,
+            $response->receiving_account_iban,
+            new DateTime($response->created_at),
+            new DateTime($response->updated_at),
+            new DateTime($response->completed_at),
+            $sender
+        );
+    }
+
+    /**
+     * @param stdClass $response
+     *
+     * @return SenderInformation
+     */
+    protected function createSenderInformationFromResponse(stdClass $response)
+    {
+        return new SenderInformation(
+            $response->sender_account_number,
+            $response->sender_address,
+            $response->sender_bic,
+            $response->sender_country,
+            $response->sender_iban,
+            $response->sender_id,
+            $response->sender_name,
+            $response->sender_routing_code
+        );
     }
 
 }

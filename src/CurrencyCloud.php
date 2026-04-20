@@ -6,6 +6,7 @@ use CurrencyCloud\EntryPoint\AccountsEntryPoint;
 use CurrencyCloud\EntryPoint\AuthenticateEntryPoint;
 use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
+use CurrencyCloud\EntryPoint\CollectionsEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
 use CurrencyCloud\EntryPoint\IbansEntryPoint;
@@ -102,8 +103,12 @@ class CurrencyCloud
      * @var FundingEntryPoint
      */
     private $fundingEntryPoint;
+    /**
+     * @var CollectionsEntryPoint
+     */
+    private $collectionsEntryPoint;
 
-    public static $SDK_VERSION = "6.4.0";
+    public static $SDK_VERSION = "6.5.0";
 
     /**
      * @param Session $session
@@ -123,6 +128,7 @@ class CurrencyCloud
      * @param TransfersEntryPoint $transfersEntryPoint
      * @param VansEntryPoint $vanEntryPoint
      * @param FundingEntryPoint $fundingEntryPoint
+     * @param CollectionsEntryPoint $collectionsEntryPoint
      */
     public function __construct(
         Session $session,
@@ -141,7 +147,8 @@ class CurrencyCloud
         TransactionsEntryPoint $transactionsEntryPoint,
         TransfersEntryPoint $transfersEntryPoint,
         VansEntryPoint $vanEntryPoint,
-        FundingEntryPoint $fundingEntryPoint
+        FundingEntryPoint $fundingEntryPoint,
+        CollectionsEntryPoint $collectionsEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
         $this->session = $session;
@@ -160,6 +167,7 @@ class CurrencyCloud
         $this->transfersEntryPoint = $transfersEntryPoint;
         $this->vansEntryPoint = $vanEntryPoint;
         $this->fundingEntryPoint = $fundingEntryPoint;
+        $this->collectionsEntryPoint = $collectionsEntryPoint;
     }
 
     /**
@@ -212,7 +220,8 @@ class CurrencyCloud
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
             new VansEntryPoint($entityManager, $client),
-            new FundingEntryPoint($client)
+            new FundingEntryPoint($client),
+            new CollectionsEntryPoint($client)
         );
     }
 
@@ -342,6 +351,14 @@ class CurrencyCloud
     public function funding()
     {
         return $this->fundingEntryPoint;
+    }
+
+    /**
+     * @return CollectionsEntryPoint
+     */
+    public function collections()
+    {
+        return $this->collectionsEntryPoint;
     }
 
     /**

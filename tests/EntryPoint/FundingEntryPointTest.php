@@ -149,4 +149,121 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
 
 
     }
+
+    /**
+     * @test
+     */
+    public function canRetrieveFundingTransaction()
+    {
+        $data = '{
+            "id": "4924919a-6c28-11ee-a3e3-63774946bad2",
+            "amount": "1.11",
+            "currency": "USD",
+            "rail": "SEPA",
+            "additional_information": "ABCD20231016143117",
+            "receiving_account_routing_code": "123456789",
+            "value_date": "2022-12-03T10:00:00+00:00",
+            "receiving_account_number": "32847346",
+            "receiving_account_iban": null,
+            "created_at": "2022-12-03T10:15:30+00:00",
+            "updated_at": "2022-12-03T10:15:30+00:00",
+            "completed_at": "2022-12-03T10:15:30+00:00",
+            "sender": {
+                "sender_account_number": "8119645406",
+                "sender_address": "Some street",
+                "sender_bic": null,
+                "sender_country": "GB",
+                "sender_iban": null,
+                "sender_id": "5c675fa4-fdf0-4ee6-b5bb-156b36765433",
+                "sender_name": "Test sender",
+                "sender_routing_code": null
+            }
+        }';
+
+        $entryPoint = new FundingEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'funding_transactions/4924919a-6c28-11ee-a3e3-63774946bad2',
+                [
+                    'on_behalf_of' => null
+                ]
+            )
+        );
+
+        $transaction = $entryPoint->retrieveFundingTransaction('4924919a-6c28-11ee-a3e3-63774946bad2');
+
+        $this->assertSame("4924919a-6c28-11ee-a3e3-63774946bad2", $transaction->getId());
+        $this->assertSame("1.11", $transaction->getAmount());
+        $this->assertSame("USD", $transaction->getCurrency());
+        $this->assertSame("SEPA", $transaction->getRail());
+        $this->assertSame("ABCD20231016143117", $transaction->getAdditionalInformation());
+        $this->assertSame("123456789", $transaction->getReceivingAccountRoutingCode());
+        $this->assertSame("32847346", $transaction->getReceivingAccountNumber());
+        $this->assertNull($transaction->getReceivingAccountIban());
+        $this->assertSame("2022-12-03T10:00:00+00:00", $transaction->getValueDate()->format(DateTime::RFC3339));
+        $this->assertSame("2022-12-03T10:15:30+00:00", $transaction->getCreatedAt()->format(DateTime::RFC3339));
+        $this->assertSame("2022-12-03T10:15:30+00:00", $transaction->getUpdatedAt()->format(DateTime::RFC3339));
+        $this->assertSame("2022-12-03T10:15:30+00:00", $transaction->getCompletedAt()->format(DateTime::RFC3339));
+
+        $sender = $transaction->getSender();
+        $this->assertSame("8119645406", $sender->getAccountNumber());
+        $this->assertSame("Some street", $sender->getAddress());
+        $this->assertNull($sender->getBic());
+        $this->assertSame("GB", $sender->getCountry());
+        $this->assertNull($sender->getIban());
+        $this->assertSame("5c675fa4-fdf0-4ee6-b5bb-156b36765433", $sender->getId());
+        $this->assertSame("Test sender", $sender->getName());
+        $this->assertNull($sender->getRoutingCode());
+    }
+
+    /**
+     * @test
+     */
+    public function canRetrieveFundingTransactionOnBehalfOf()
+    {
+        $data = '{
+            "id": "4924919a-6c28-11ee-a3e3-63774946bad2",
+            "amount": "1.11",
+            "currency": "USD",
+            "rail": "SEPA",
+            "additional_information": "ABCD20231016143117",
+            "receiving_account_routing_code": "123456789",
+            "value_date": "2022-12-03T10:00:00+00:00",
+            "receiving_account_number": "32847346",
+            "receiving_account_iban": null,
+            "created_at": "2022-12-03T10:15:30+00:00",
+            "updated_at": "2022-12-03T10:15:30+00:00",
+            "completed_at": "2022-12-03T10:15:30+00:00",
+            "sender": {
+                "sender_account_number": "8119645406",
+                "sender_address": "Some street",
+                "sender_bic": null,
+                "sender_country": "GB",
+                "sender_iban": null,
+                "sender_id": "5c675fa4-fdf0-4ee6-b5bb-156b36765433",
+                "sender_name": "Test sender",
+                "sender_routing_code": null
+            }
+        }';
+
+        $entryPoint = new FundingEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'funding_transactions/4924919a-6c28-11ee-a3e3-63774946bad2',
+                [
+                    'on_behalf_of' => 'ef257ee1-91de-012f-e2a5-1e0030c7f352'
+                ]
+            )
+        );
+
+        $transaction = $entryPoint->retrieveFundingTransaction(
+            '4924919a-6c28-11ee-a3e3-63774946bad2',
+            'ef257ee1-91de-012f-e2a5-1e0030c7f352'
+        );
+
+        $this->assertSame("4924919a-6c28-11ee-a3e3-63774946bad2", $transaction->getId());
+        $this->assertSame("USD", $transaction->getCurrency());
+    }
 }
