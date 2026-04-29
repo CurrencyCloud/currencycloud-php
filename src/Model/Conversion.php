@@ -125,6 +125,10 @@ class Conversion
      * @var string
      */
     private $conversionDatePreference;
+    /**
+     * @var string
+     */
+    private $quoteId;
 
     /**
      * @param string $buyCurrency
@@ -686,6 +690,25 @@ class Conversion
     public function setConversionDatePreference($conversionDatePreference)
     {
         $this->conversionDatePreference = $conversionDatePreference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuoteId()
+    {
+        return $this->quoteId;
+    }
+
+    /**
+     * @param string $quoteId
+     *
+     * @return $this
+     */
+    public function setQuoteId($quoteId)
+    {
+        $this->quoteId = $quoteId;
         return $this;
     }
 }

@@ -608,8 +608,8 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                 'client_buy_amount' => null,
                 'client_sell_amount' => null,
                 'unique_request_id' => null,
-                'on_behalf_of' => null
-
+                'on_behalf_of' => null,
+                'quote_id' => null
             ]
         ));
 

@@ -177,11 +177,28 @@ class Beneficiary implements EntityInterface
      * @param $name
      *
      * @return Beneficiary
+     * @deprecated Use createWithRequired() instead. bank_account_holder_name is now optional.
      */
     public static function create($bankAccountHolderName, $bankCountry, $currency, $name)
     {
         return (new Beneficiary())->setBankAccountHolderName($bankAccountHolderName)
             ->setBankCountry($bankCountry)
+            ->setCurrency($currency)
+            ->setName($name);
+    }
+
+    /**
+     * Creates a beneficiary with only required fields.
+     *
+     * @param $bankCountry
+     * @param $currency
+     * @param $name
+     *
+     * @return Beneficiary
+     */
+    public static function createWithRequired($bankCountry, $currency, $name)
+    {
+        return (new Beneficiary())->setBankCountry($bankCountry)
             ->setCurrency($currency)
             ->setName($name);
     }
@@ -735,13 +752,13 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * @param string $bankAccountHolderName
+     * @param string|null $bankAccountHolderName
      *
      * @return $this
      */
-    public function setBankAccountHolderName($bankAccountHolderName)
+    public function setBankAccountHolderName($bankAccountHolderName = null)
     {
-        $this->bankAccountHolderName = (string) $bankAccountHolderName;
+        $this->bankAccountHolderName = (null === $bankAccountHolderName) ? null : (string) $bankAccountHolderName;
         return $this;
     }
 
