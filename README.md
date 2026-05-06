@@ -198,6 +198,7 @@ Once a feature has been marked as deprecated, we no longer develop the code or i
 
 ### List of features being deprecated
 ```
+- 2026-04-29: Beneficiary::create() - Use Beneficiary::createWithRequired() instead
 ```
 # Support
 We actively support the latest version of the SDK. We support the immediate previous version on best-efforts basis. All other versions are no longer supported nor maintained.

@@ -100,7 +100,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
         VCR::insertCassette('Actions/can_create.yaml');
 
         $beneficiary =
-            Beneficiary::create('Test User', 'GB', 'GBP', 'Test User')
+            Beneficiary::createWithRequired('GB', 'GBP', 'Test User')
                 ->setAccountNumber('12345678')
                 ->setRoutingCodeType1('sort_code')
                 ->setRoutingCodeValue1('123456')
