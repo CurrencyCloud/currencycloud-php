@@ -188,7 +188,7 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * Creates a beneficiary with only required fields.
+     * Creates a beneficiary with only required fields. name is optional.
      *
      * @param $bankCountry
      * @param $currency
@@ -196,7 +196,7 @@ class Beneficiary implements EntityInterface
      *
      * @return Beneficiary
      */
-    public static function createWithRequired($bankCountry, $currency, $name)
+    public static function createWithRequired($bankCountry, $currency, $name = null)
     {
         return (new Beneficiary())->setBankCountry($bankCountry)
             ->setCurrency($currency)
@@ -771,13 +771,13 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName($name = null)
     {
-        $this->name = (string) $name;
+        $this->name = (null === $name) ? null : (string) $name;
         return $this;
     }
 
