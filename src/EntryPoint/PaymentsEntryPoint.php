@@ -547,6 +547,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             new PaymentTrackingInfo\ForeignExchangeDetails($paymentEventResponse->foreign_exchange_details->source_currency,
                 $paymentEventResponse->foreign_exchange_details->target_currency,
                 $paymentEventResponse->foreign_exchange_details->rate) : null);
+        $paymentEvent->setInstructionIdentification($paymentEventResponse->instruction_identification ?? null);
         $paymentEvent->setLastUpdateTime(null !== $paymentEventResponse->last_update_time ?
             new DateTime($paymentEventResponse->last_update_time) : null);
 
