@@ -254,6 +254,10 @@ class PaymentEvent
      */
     private $foreignExchangeDetails;
     /**
+     * @var string
+     */
+    private $instructionIdentification;
+    /**
      * @var DateTime
      */
     private $lastUpdateTime;
@@ -529,6 +533,22 @@ class PaymentEvent
     public function setForeignExchangeDetails(ForeignExchangeDetails $foreignExchangeDetails = null)
     {
         $this->foreignExchangeDetails = $foreignExchangeDetails;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInstructionIdentification()
+    {
+        return $this->instructionIdentification;
+    }
+
+    /**
+     * @param string $instructionIdentification
+     */
+    public function setInstructionIdentification(string $instructionIdentification = null)
+    {
+        $this->instructionIdentification = $instructionIdentification;
     }
 
     /**
