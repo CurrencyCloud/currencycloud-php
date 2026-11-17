@@ -888,6 +888,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": null,
                          "foreign_exchange_details": null,
+                         "instruction_identification": "ABC123",
                          "last_update_time": "2019-07-10T15:39:08+00:00"
                      },
                      {
@@ -908,6 +909,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": null,
                          "foreign_exchange_details": null,
+                         "instruction_identification": null,
                          "last_update_time": "2019-07-10T14:22:41+00:00"
                      },
                      {
@@ -931,6 +933,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": null,
                          "foreign_exchange_details": null,
+                         "instruction_identification": null,
                          "last_update_time": "2019-07-10T14:22:41+00:00"
                      },
                      {
@@ -951,6 +954,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": null,
                          "foreign_exchange_details": null,
+                         "instruction_identification": null,
                          "last_update_time": "2019-07-10T14:22:41+00:00"
                      },
                      {
@@ -971,6 +975,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": null,
                          "foreign_exchange_details": null,
+                         "instruction_identification": null,
                          "last_update_time": "2019-07-10T14:22:41+00:00"
                      },
                      {
@@ -991,6 +996,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": null,
                          "foreign_exchange_details": null,
+                         "instruction_identification": null,
                          "last_update_time": "2019-07-10T14:22:41+00:00"
                      },
                      {
@@ -1027,6 +1033,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                          "charge_amount": null,
                          "charge_type": "shared",
                          "foreign_exchange_details": null,
+                         "instruction_identification": null,
                          "last_update_time": "2019-07-09T13:20:50+00:00"
                      }
                  ]
@@ -1069,6 +1076,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getChargeType());
         $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getChargeAmount());
         $this->assertEmpty($trackingInfo->getPaymentEvents()[0]->getForeignExchangeDetails());
+        $this->assertSame("ABC123", $trackingInfo->getPaymentEvents()[0]->getInstructionIdentification());
         $this->assertSame( "2019-07-10T15:39:08+00:00",
             $trackingInfo->getPaymentEvents()[0]->getLastUpdateTime()->format(DateTime::RFC3339));
 
@@ -1228,6 +1236,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame("shared", $trackingInfo->getPaymentEvents()[6]->getChargeType());
         $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getChargeAmount());
         $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getForeignExchangeDetails());
+        $this->assertEmpty($trackingInfo->getPaymentEvents()[6]->getInstructionIdentification());
         $this->assertSame( "2019-07-09T13:20:50+00:00",
             $trackingInfo->getPaymentEvents()[6]->getLastUpdateTime()->format(DateTime::RFC3339));
 
